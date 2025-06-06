@@ -1,0 +1,4 @@
+/* sticky */
+.sticky-section {
+  @apply sticky h-[calc(100vh-65px)] overflow-y-auto py-6 top-[65px];
+}
