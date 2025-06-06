@@ -22,16 +22,16 @@ export default async function PostPage(props: PageProps) {
   // 원본 마크다운에서 heading 추출
   const headings = extractHeadings(post.rawMarkdown);
   return (
-    <div className="flex">
-      <main className="flex-1 p-6">
+    <div className="flex h-full">
+      <main className="flex-1 border-border border-r p-6">
         <PostContent
           title={post.title}
           date={post.date}
           contentHtml={post.contentHtml}
         />
       </main>
-      <aside className="w-1/5 border-l p-4">
-        <h2 className="text-xl font-bold mb-4">🧭 목차</h2>
+      <aside className="hidden xl:block w-64 border-l bg-white dark:bg-zinc-900">
+        <h2 className="text-xl font-bold mb-4 p-4">목차</h2>
         <PostIndex headings={headings} />
       </aside>
     </div>
