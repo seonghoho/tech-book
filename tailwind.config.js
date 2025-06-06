@@ -1,7 +1,12 @@
 module.exports = {
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx,html}"],
+  darkMode: "class",
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        border: "var(--border-color)",
+      },
+    },
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require("@tailwindcss/typography")],
