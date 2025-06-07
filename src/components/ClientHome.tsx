@@ -17,7 +17,7 @@ export default function ClientHome({ data }: Props) {
 
   return (
     <main className="p-8">
-      <h1 className="text-2xl font-bold mb-6">📚 글 목록</h1>
+      <h1 className="text-2xl font-bold mb-6">글 목록</h1>
       {Object.entries(data).map(([category, posts]) => (
         <div key={category} className="mb-4 border rounded">
           <button

@@ -3,12 +3,16 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+type HeaderProps = {
+  onToggleSidebar?: () => void;
+};
+
 const navLinks = [
   { label: "About", href: "/about" },
   { label: "글 목록", href: "/" },
 ];
 
-export default function Header() {
+export default function Header({ onToggleSidebar }: HeaderProps) {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
@@ -37,7 +41,11 @@ export default function Header() {
           {/* 왼쪽: 로고 및 햄버거 메뉴  */}
           <div className="flex items-center gap-4">
             {/* 햄버거 버튼: 1024px 이하에서 표시  */}
-            <button className="lg:hidden block" aria-label="Open sidebar">
+            <button
+              className="lg:hidden block"
+              aria-label="Open sidebar"
+              onClick={onToggleSidebar}
+            >
               <svg
                 className="w-6 h-6 text-gray-700 dark:text-white"
                 fill="none"

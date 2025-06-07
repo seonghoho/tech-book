@@ -10,7 +10,7 @@ export type PostMeta = {
   date: string;
 };
 
-export const getPostsByCategory = () => {
+export function getPostsByCategory() {
   const categories = fs
     .readdirSync(postsDirectory)
     .filter((name) =>
@@ -38,7 +38,7 @@ export const getPostsByCategory = () => {
   });
 
   return result;
-};
+}
 
 // export const getAllPosts = (): PostMeta[] => {
 //   const fileNames = fs.readdirSync(postsDirectory);

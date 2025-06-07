@@ -2,7 +2,7 @@ import { unified } from "unified";
 import remarkParse from "remark-parse";
 import { visit } from "unist-util-visit";
 
-export const extractHeadings = (markdown: string) => {
+export function extractHeadings(markdown: string) {
   const tree = unified().use(remarkParse).parse(markdown);
 
   const headings: { text: string; depth: number; id: string }[] = [];
@@ -22,4 +22,4 @@ export const extractHeadings = (markdown: string) => {
   });
 
   return headings;
-};
+}
