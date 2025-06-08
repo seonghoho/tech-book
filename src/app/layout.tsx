@@ -11,7 +11,7 @@ export default function RootLayout({
   const postsByCategory = getPostsByCategory();
   return (
     <html lang="ko" className="">
-      <body className="flex flex-col h-full bg-white dark:bg-black text-black dark:text-white">
+      <body className="flex flex-col h-full bg-white dark:bg-dark text-dark dark:text-bright">
         <ClientHeaderWithSidebar Sidebar={<Sidebar data={postsByCategory} />} />
 
         <div className="flex flex-1 h-full max-w-screen-2xl mx-auto w-full px-4 sm:px-6 lg:px-8">

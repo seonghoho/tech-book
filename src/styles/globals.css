@@ -5,11 +5,11 @@
 @tailwind utilities;
 
 html {
-  @apply bg-white text-black;
+  @apply bg-[#F1F1F1] text-[#0F0F0F];
 }
 
 html.dark {
-  @apply bg-black text-white;
+  @apply bg-[#0F0F0F] text-[#F1F1F1];
 }
 
 body {

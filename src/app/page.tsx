@@ -9,7 +9,7 @@ export default function Home() {
     <main className="p-8">
       <h1 className="text-2xl font-bold mb-6">글 목록</h1>
       {Object.entries(postsByCategory).map(([category, posts]) => (
-        <div key={category} className="mb-4 border rounded">
+        <div key={category} className="mb-4 border border-[#e9e9e9] rounded">
           <div className="w-full text-left px-4 py-2 bg-green-100 dark:bg-zinc-800 font-semibold rounded-t">
             {categoryMap[category] ?? category}
           </div>

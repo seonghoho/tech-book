@@ -36,7 +36,7 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-30 w-full bg-white dark:bg-black border-b border-[#e9e9e9]">
+    <header className="sticky top-0 z-30 w-full bg-white dark:bg-dark border-b border-[#e9e9e9]">
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* 왼쪽: 로고 및 햄버거 메뉴  */}
@@ -47,12 +47,12 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
               aria-label="Open sidebar"
               onClick={onToggleSidebar}
             >
-              <MenuIcon className="w-6 h-6 text-gray-700 dark:text-white" />
+              <MenuIcon className="w-6 h-6 text-gray-700 dark:text-bright" />
             </button>
             {/* 로고  */}
             <Link
               href="/"
-              className="text-xl font-bold text-black dark:text-white"
+              className="text-xl font-bold text-dark dark:text-bright"
             >
               TECH BOOK
             </Link>
