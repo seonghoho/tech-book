@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 module.exports = {
   darkMode: "class",
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
@@ -12,6 +13,7 @@ module.exports = {
       typography: (theme) => ({
         DEFAULT: {
           css: {
+            maxWidth: "100%",
             h1: {
               fontSize: theme("fontSize.3xl")[0],
               fontWeight: "700",
@@ -52,6 +54,7 @@ module.exports = {
         },
         dark: {
           css: {
+            maxWidth: "100%",
             color: theme("colors.gray.200"),
             h1: { color: theme("colors.bright") },
             h2: { color: theme("colors.gray.100") },
@@ -77,6 +80,8 @@ module.exports = {
       }),
     },
   },
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("tailwind-scrollbar-hide"),
+  ],
 };
