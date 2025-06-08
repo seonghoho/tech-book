@@ -1,6 +1,6 @@
 "use client";
 
-import { MenuIcon } from "@/assets/svg";
+import { MenuIcon, MoonIcon, SunIcon } from "@/assets/svg";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -36,7 +36,7 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-30 w-full bg-white dark:bg-black shadow border-b">
+    <header className="sticky top-0 z-30 w-full bg-white dark:bg-black border-b border-[#e9e9e9]">
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* 왼쪽: 로고 및 햄버거 메뉴  */}
@@ -74,7 +74,11 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
               onClick={toggleTheme}
               className="text-lg ml-4 hover:opacity-70"
             >
-              <span id="theme-icon">🌙</span>
+              {isDark ? (
+                <MoonIcon id="theme-icon" className="w-8 h-8" />
+              ) : (
+                <SunIcon id="theme-icon" className="w-8 h-8" />
+              )}
             </button>
           </div>
         </div>
