@@ -16,7 +16,7 @@ export default function Sidebar({ data }: Props) {
     setOpenCategory((prev) => (prev === category ? null : category));
   };
 
-  const ref = useRef<HTMLUListElement>(null);
+  const refs = useRef<Record<string, HTMLUListElement>>({});
 
   return (
     <div className="space-y-4">
@@ -31,25 +31,23 @@ export default function Sidebar({ data }: Props) {
             >
               <span>{categoryMap[category] ?? category}</span>
               {isOpen ? (
-                <ChevronDownIcon className="w-4 h-4 text-[#0F1B2A] dark:text-white" />
+                <ChevronDownIcon className="w-4 h-4 text-[#0F1B2A] dark:text-bright" />
               ) : (
-                <ChevronRightIcon className="w-4 h-4 text-[#0F1B2A] dark:text-white" />
+                <ChevronRightIcon className="w-4 h-4 text-[#0F1B2A] dark:text-bright" />
               )}
             </button>
             <div
               className="overflow-hidden transition-all duration-300 ease-in-out"
               style={{
                 height: isOpen
-                  ? `${
-                      (ref.current?.scrollHeight &&
-                        ref.current?.scrollHeight * posts.length) ||
-                      0
-                    }px`
+                  ? `${refs.current[category]?.offsetHeight || 0}px`
                   : "0px",
               }}
             >
               <ul
-                ref={ref}
+                ref={(el: HTMLUListElement | null) => {
+                  if (el) refs.current[category] = el;
+                }}
                 className="mt-1 ml-4 space-y-1 border-l border-border"
               >
                 {posts.map((post) => (
