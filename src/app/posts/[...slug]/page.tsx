@@ -27,8 +27,8 @@ export default async function PostPage({ params }: PageProps) {
   const headings = extractHeadings(post.rawMarkdown);
 
   return (
-    <div className="flex h-full">
-      <main className="flex-1 overflow-y-auto border-border xl:border-r py-6 lg:px-6">
+    <div className="flex w-full h-full">
+      <main className="flex flex-1 overflow-y-auto scrollbar-hide xl:border-border xl:border-r py-6">
         <PostContent
           title={post.title}
           date={post.date}
