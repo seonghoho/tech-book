@@ -1,6 +1,9 @@
 import "@/styles/globals.css";
+// components
+import ThemeInitializer from "@/components/ThemeInitializer";
 import ClientHeaderWithSidebar from "@/components/ClientHeaderWithSidebar";
 import Sidebar from "@/components/Sidebar";
+// function
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
 
 export default function RootLayout({
@@ -12,6 +15,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className="h-full">
       <body className="flex flex-col w-full h-full bg-white dark:bg-dark text-dark dark:text-bright">
+        <ThemeInitializer />
         <ClientHeaderWithSidebar Sidebar={<Sidebar data={postsByCategory} />} />
 
         <div className="flex w-full h-full lg:max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
