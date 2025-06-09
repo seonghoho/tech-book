@@ -2,7 +2,7 @@
 
 import { MenuIcon, MoonIcon, SunIcon } from "@/assets/svg";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type HeaderProps = {
   onToggleSidebar?: () => void;
@@ -14,7 +14,7 @@ const navLinks = [
 ];
 
 export default function Header({ onToggleSidebar }: HeaderProps) {
-  const [isDark, setIsDark] = useState(localStorage.theme === "dark");
+  const [isDark, setIsDark] = useState(false);
 
   const toggleTheme = () => {
     const nextTheme = !isDark;
@@ -22,6 +22,10 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
     document.documentElement.classList.toggle("dark", nextTheme);
     window.localStorage.setItem("theme", nextTheme ? "dark" : "light");
   };
+
+  useEffect(() => {
+    if (window.localStorage.theme === "dark") setIsDark(true);
+  }, []);
 
   return (
     <header className="sticky top-0 z-30 w-full bg-white dark:bg-dark border-b border-[#e9e9e9]">
