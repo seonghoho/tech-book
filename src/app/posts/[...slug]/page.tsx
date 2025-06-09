@@ -4,7 +4,7 @@ import { extractHeadings } from "@/lib/getPostContent";
 import { getPostData } from "@/lib/posts";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
 
-export async function generateStaticParams() {
+export function generateStaticParams(): { slug: string[] }[] {
   const postsByCategory = getPostsByCategory();
   const allPosts = Object.values(postsByCategory).flat();
 
@@ -13,17 +13,17 @@ export async function generateStaticParams() {
   }));
 }
 
-type PageProps = {
-  params: { slug: string[] };
-};
+interface PageProps {
+  params: Promise<{ slug: string[] }>; // 비동기 타입
+}
 
 export default async function PostPage({ params }: PageProps) {
-  const slug = params.slug?.join("/");
-  if (!slug) {
-    throw new Error("Slug is missing or invalid.");
-  }
+  const { slug } = await params;
+  const slugString = slug.join("/");
 
-  const post = await getPostData(slug);
+  if (!slugString) throw new Error("Slug is missing.");
+
+  const post = await getPostData(slugString);
   const headings = extractHeadings(post.rawMarkdown);
 
   return (
