@@ -1,8 +1,13 @@
-import PostContent from "@/components/PostContent";
+// import PostContent from "@/components/PostContent";
 import PostIndex from "@/components/PostIndex";
 import { extractHeadings } from "@/lib/getPostContent";
 import { getPostData } from "@/lib/posts";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
+import dynamic from "next/dynamic";
+
+const PostContent = dynamic(() => import("@/components/PostContent"), {
+  ssr: true, // optional
+});
 
 export function generateStaticParams(): { slug: string[] }[] {
   const postsByCategory = getPostsByCategory();
