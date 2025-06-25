@@ -17,7 +17,38 @@ export function generateStaticParams(): { slug: string[] }[] {
     slug: post.slug.split("/"),
   }));
 }
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
+  const slugString = slug.join("/");
+  const post = await getPostData(slugString);
 
+  return {
+    title: post.title,
+    description:
+      post.description ?? `${post.title}에 대한 기술 블로그 포스트입니다.`,
+    openGraph: {
+      title: post.title,
+      description: post.description ?? `${post.title} 관련 정보`,
+      url: `https://tech-book-lime.vercel.app/posts/${slugString}`,
+      siteName: "TechBook",
+      images: [
+        {
+          url: "/og-image.png",
+          width: 1200,
+          height: 630,
+        },
+      ],
+      locale: "ko_KR",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description ?? `${post.title} 관련 정보`,
+      images: ["/og-image.png"],
+    },
+  };
+}
 interface PageProps {
   params: Promise<{ slug: string[] }>; // 비동기 타입
 }
@@ -37,6 +68,7 @@ export default async function PostPage({ params }: PageProps) {
         <PostContent
           title={post.title}
           date={post.date}
+          description={post.description}
           contentHtml={post.contentHtml}
         />
       </main>

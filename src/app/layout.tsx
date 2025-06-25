@@ -9,6 +9,40 @@ import Loading from "@/app/posts/[...slug]/loading";
 // function
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
 
+export const metadata = {
+  title: "TechBook - 기술 블로그",
+  description: "프론트엔드와 웹 기술을 정리한 기술 블로그입니다.",
+  keywords: ["Next.js", "React", "Frontend", "기술 블로그", "Tech Blog"],
+  authors: [
+    { name: "Choi Seongho", url: "https://tech-book-lime.vercel.app/" },
+  ],
+  openGraph: {
+    title: "TechBook",
+    description: "프론트엔드와 웹 기술을 정리한 기술 블로그입니다.",
+    url: "https://tech-book-lime.vercel.app/",
+    siteName: "TechBook",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TechBook",
+    description: "프론트엔드와 웹 기술을 정리한 기술 블로그입니다.",
+    images: ["/og-image.png"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  },
+};
 export default function RootLayout({
   children,
 }: {
@@ -27,9 +61,8 @@ export default function RootLayout({
           </aside>
 
           <main className="w-full lg:w-[calc(100%-256px)] h-[calc(100vh-65px)]">
-            {children}
+            <Suspense fallback={<Loading />}>{children}</Suspense>
           </main>
-          <Suspense fallback={<Loading />} />
         </div>
       </body>
     </html>
