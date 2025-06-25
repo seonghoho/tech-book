@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 // components
 import ThemeInitializer from "@/components/ThemeInitializer";
@@ -51,6 +52,7 @@ export default function RootLayout({
   const postsByCategory = getPostsByCategory();
   return (
     <html lang="ko" className="h-full">
+      <Analytics />
       <body className="flex flex-col w-full h-full bg-white dark:bg-dark text-dark dark:text-bright">
         <ThemeInitializer />
         <ClientHeaderWithSidebar Sidebar={<SidebarServer />} />
