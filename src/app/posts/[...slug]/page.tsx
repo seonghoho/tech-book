@@ -17,8 +17,8 @@ export function generateStaticParams(): { slug: string[] }[] {
     slug: post.slug.split("/"),
   }));
 }
-export async function generateMetadata({ params }: PageProps) {
-  const { slug } = await params;
+export async function generateMetadata({ params }: PagePropsMetadata) {
+  const { slug } = params;
   const slugString = slug.join("/");
   const post = await getPostData(slugString);
 
@@ -49,6 +49,11 @@ export async function generateMetadata({ params }: PageProps) {
     },
   };
 }
+
+interface PagePropsMetadata {
+  params: { slug: string[] };
+}
+
 interface PageProps {
   params: Promise<{ slug: string[] }>; // 비동기 타입
 }

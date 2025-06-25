@@ -21,7 +21,10 @@ export default function PostIndex({ headings }: { headings: Heading[] }) {
             key={`${h.id}-${h.depth}-${Math.random().toString(36)}`}
             className={indentClassMap[h.depth] || "ml-0"}
           >
-            <a href={`#${h.id}`} className="hover:underline text-gray">
+            <a
+              href={`#${h.id}`}
+              className="hover:underline text-gray-800 dark:text-gray-200"
+            >
               {h.text}
             </a>
           </li>
