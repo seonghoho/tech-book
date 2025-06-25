@@ -6,3 +6,4 @@ export { Phone as PhoneIcon } from "@/assets/svg/Phone";
 export { Sun as SunIcon } from "@/assets/svg/Sun";
 export { ChevronDown as ChevronDownIcon } from "@/assets/svg/ChevronDown";
 export { ChevronRight as ChevronRightIcon } from "@/assets/svg/ChevronRight";
+export { Logo as LogoSvgIcon } from "@/assets/svg/Logo";
