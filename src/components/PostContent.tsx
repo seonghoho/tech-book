@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+
 type Props = {
   title: string;
   date: string;
@@ -28,6 +30,7 @@ export default function PostContent({
           className="prose dark:prose-invert max-w-none"
           dangerouslySetInnerHTML={{ __html: contentHtml }}
         />
+        <Footer/>
       </div>
     </article>
   );
