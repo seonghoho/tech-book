@@ -14,9 +14,10 @@ const page = () => {
         <Image
           className="rounded-xl"
           src="/images/Profile.JPG"
-          alt="profile-image"
+          alt="프로필 사진"
           width={300}
           height={400}
+          priority
         />
       </div>
       <div className="flex flex-col flex-1 justify-between py-14">

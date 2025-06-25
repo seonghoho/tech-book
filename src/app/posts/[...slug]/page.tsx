@@ -9,6 +9,10 @@ const PostContent = dynamic(() => import("@/components/PostContent"), {
   ssr: true, // optional
 });
 
+interface PageProps {
+  params: Promise<{ slug: string[] }>; // 비동기 타입
+}
+
 export function generateStaticParams(): { slug: string[] }[] {
   const postsByCategory = getPostsByCategory();
   const allPosts = Object.values(postsByCategory).flat();
@@ -17,8 +21,8 @@ export function generateStaticParams(): { slug: string[] }[] {
     slug: post.slug.split("/"),
   }));
 }
-export async function generateMetadata({ params }: PagePropsMetadata) {
-  const { slug } = params;
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
   const slugString = slug.join("/");
   const post = await getPostData(slugString);
 
@@ -48,14 +52,6 @@ export async function generateMetadata({ params }: PagePropsMetadata) {
       images: ["/og-image.png"],
     },
   };
-}
-
-interface PagePropsMetadata {
-  params: { slug: string[] };
-}
-
-interface PageProps {
-  params: Promise<{ slug: string[] }>; // 비동기 타입
 }
 
 export default async function PostPage({ params }: PageProps) {
