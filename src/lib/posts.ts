@@ -29,6 +29,6 @@ export async function getPostData(slug: string) {
     slug,
     contentHtml,
     rawMarkdown: content,
-    ...(data as { title: string; date: string }),
+    ...(data as { title: string; date: string; description: string }),
   };
 }
