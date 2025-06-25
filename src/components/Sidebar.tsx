@@ -51,13 +51,15 @@ export default function Sidebar({ data }: Props) {
                 className="mt-1 ml-4 space-y-1 border-l border-border"
               >
                 {posts.map((post) => (
-                  <Link key={post.slug} href={`/posts/${post.slug}`}>
-                    <li className="w-full py-2 cursor-pointer group hover:bg-slate-100 dark:hover:bg-zinc-800">
-                      <span className="pl-4 group-hover:underline text-gray">
-                        {post.title}
-                      </span>
-                    </li>
-                  </Link>
+                  <li key={post.slug} className="w-full">
+                    <Link href={`/posts/${post.slug}`}>
+                      <div className="py-2 cursor-pointer group hover:bg-slate-100 dark:hover:bg-zinc-800">
+                        <span className="pl-4 group-hover:underline text-gray-800 dark:text-gray-200">
+                          {post.title}
+                        </span>
+                      </div>
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>

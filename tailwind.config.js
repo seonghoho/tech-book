@@ -34,7 +34,7 @@ module.exports = {
               backgroundColor: theme("colors.gray.400"),
               padding: "2px 4px",
               borderRadius: "0.25rem",
-              color: theme("colors.green.600"),
+              color: theme("colors.green.700"),
             },
 
             pre: {

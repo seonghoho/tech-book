@@ -6,6 +6,7 @@
 
 html {
   @apply bg-[#F1F1F1] text-[#0F0F0F];
+  min-width: 375px;
 }
 
 html.dark {

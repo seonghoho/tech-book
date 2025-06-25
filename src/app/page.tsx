@@ -18,9 +18,9 @@ export default function Home() {
               {posts.map((post) => (
                 <li key={post.slug}>
                   <Link href={`/posts/${post.slug}`}>
-                    <div className="flex justify-between text-gray hover:underline cursor-pointer">
+                    <div className="flex justify-between text-gray-800 dark:text-gray-200 hover:underline cursor-pointer">
                       {post.title}{" "}
-                      <span className="text-sm text-gray-500">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
                         ({post.date})
                       </span>
                     </div>
