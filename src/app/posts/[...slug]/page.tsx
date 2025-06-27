@@ -60,8 +60,21 @@ export default async function PostPage({ params }: PageProps) {
 
   if (!slugString) throw new Error("Slug is missing.");
 
+  // 모든 포스트 리스트 가져오기
+  const postsByCategory = getPostsByCategory();
+  const allPosts = Object.values(postsByCategory).flat();
+
+  // 현재 포스트 정보
   const post = await getPostData(slugString);
   const headings = extractHeadings(post.rawMarkdown);
+
+  // 현재 포스트의 index 찾기
+  const currentIndex = allPosts.findIndex((p) => p.slug === slugString);
+
+  // 이전/다음 포스트 정보 구하기
+  const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+  const nextPost =
+    currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
   return (
     <div className="flex w-full h-full">
@@ -71,6 +84,16 @@ export default async function PostPage({ params }: PageProps) {
           date={post.date}
           description={post.description}
           contentHtml={post.contentHtml}
+          prevPost={
+            prevPost
+              ? { title: prevPost.title, url: `/posts/${prevPost.slug}` }
+              : null
+          }
+          nextPost={
+            nextPost
+              ? { title: nextPost.title, url: `/posts/${nextPost.slug}` }
+              : null
+          }
         />
       </main>
       <aside className="hidden xl:flex xl:flex-col w-64 gap-6 sticky-section">
