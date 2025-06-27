@@ -6,6 +6,7 @@ import { MenuIcon, MoonIcon, SunIcon, LogoSvgIcon } from "@/assets/svg";
 
 type HeaderProps = {
   onToggleSidebar?: () => void;
+  buttonRef?: React.RefObject<HTMLButtonElement | null>;
 };
 
 const navLinks = [
@@ -13,7 +14,7 @@ const navLinks = [
   { label: "Posts", href: "/" },
 ];
 
-export default function Header({ onToggleSidebar }: HeaderProps) {
+export default function Header({ onToggleSidebar, buttonRef }: HeaderProps) {
   const [isDark, setIsDark] = useState(false);
 
   const toggleTheme = () => {
@@ -35,6 +36,7 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
           <div className="flex items-center gap-2">
             {/* 햄버거 버튼: 1024px 이하에서 표시  */}
             <button
+              ref={buttonRef}
               className="lg:hidden block"
               aria-label="Open sidebar"
               onClick={onToggleSidebar}
