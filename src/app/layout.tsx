@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Suspense } from "react";
 // components
 import ThemeInitializer from "@/components/ThemeInitializer";
@@ -40,7 +41,7 @@ export const metadata = {
   },
   icons: {
     icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
+    shortcut: "/favicon-32x32.png",
     apple: "/apple-touch-icon.png",
   },
 };
@@ -53,6 +54,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className="h-full">
       <Analytics />
+      <SpeedInsights />
       <body className="flex flex-col w-full h-full bg-white dark:bg-dark text-dark dark:text-bright">
         <ThemeInitializer />
         <ClientHeaderWithSidebar Sidebar={<SidebarServer />} />
