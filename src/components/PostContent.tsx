@@ -1,10 +1,14 @@
 import Footer from "@/components/Footer";
+import { PostNavCard } from "@/components/PostNavCard";
+import { PostNav } from "@/types/post";
 
 type Props = {
   title: string;
   date: string;
   description: string;
   contentHtml: string;
+  prevPost?: PostNav | null;
+  nextPost?: PostNav | null;
 };
 
 export default function PostContent({
@@ -12,12 +16,14 @@ export default function PostContent({
   date,
   description,
   contentHtml,
+  prevPost,
+  nextPost,
 }: Props) {
   return (
     <article className="prose dark:prose-invert w-full max-w-none">
-      <div className="max-w-full lg:max-w-screen-lg w-full lg:px-8 mx-auto">
+      <div className="max-w-full lg:max-w-screen-lg w-full lg:px-8 px-1 mx-auto">
         <h1>{title}</h1>
-        <div className="flex items-center justify-between pb-4">
+        <div className="flex sm:flex-row flex-col sm:items-center justify-between pb-4">
           <div className="flex items-center text-lg text-gray-500 dark:text-gray-400">
             {description}
           </div>
@@ -30,7 +36,19 @@ export default function PostContent({
           className="prose dark:prose-invert max-w-none"
           dangerouslySetInnerHTML={{ __html: contentHtml }}
         />
-        <Footer/>
+        <div className="flex flex-row gap-4 py-8">
+          {prevPost ? (
+            <PostNavCard post={prevPost} direction="prev" />
+          ) : (
+            <div className="flex-1" />
+          )}
+          {nextPost ? (
+            <PostNavCard post={nextPost} direction="next" />
+          ) : (
+            <div className="flex-1" />
+          )}
+        </div>
+        <Footer />
       </div>
     </article>
   );
