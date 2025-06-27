@@ -14,6 +14,8 @@ module.exports = {
         DEFAULT: {
           css: {
             maxWidth: "100%",
+            "code::before": { content: "none" },
+            "code::after": { content: "none" },
             h1: {
               fontSize: theme("fontSize.3xl")[0],
               fontWeight: "700",
@@ -49,6 +51,21 @@ module.exports = {
               borderLeftColor: theme("colors.gray.200"),
               color: theme("colors.gray.600"),
               fontStyle: "italic",
+            },
+            ul: {
+              listStyleType: "disc",
+              paddingLeft: "1em", // 들여쓰기 조정
+            },
+            "ul > li::marker": {
+              color: theme("colors.gray"),
+              fontSize: "1em", // 크기 조정
+            },
+            ol: {
+              listStyleType: "decimal", // 숫자 목록
+            },
+            "ol > li::marker": {
+              color: theme("colors.orange.400"),
+              fontWeight: "bold",
             },
           },
         },
