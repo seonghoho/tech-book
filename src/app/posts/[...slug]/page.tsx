@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: PageProps) {
       siteName: "TechBook",
       images: [
         {
-          url: "/og-image.png",
+          url: `https://tech-book-lime.vercel.app/og/${slugString}`,
           width: 1200,
           height: 630,
         },
@@ -50,6 +50,9 @@ export async function generateMetadata({ params }: PageProps) {
       title: post.title,
       description: post.description ?? `${post.title} 관련 정보`,
       images: ["/og-image.png"],
+    },
+    alternates: {
+      canonical: `https://tech-book-lime.vercel.app/posts/${slugString}`,
     },
   };
 }
