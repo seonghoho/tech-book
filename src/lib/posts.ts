@@ -34,8 +34,9 @@ export async function getPostData(slug: string) {
 }
 
 export function getAllPosts() {
-  const fileNames = fs.readdirSync(postsDirectory);
-
+  const fileNames = fs
+    .readdirSync(postsDirectory)
+    .filter((fileName) => fileName.endsWith(".md"));
   return fileNames.map((fileName) => {
     const slug = fileName.replace(/\.md$/, "");
     const fullPath = path.join(postsDirectory, fileName);
