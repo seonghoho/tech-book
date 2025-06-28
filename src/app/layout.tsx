@@ -44,6 +44,7 @@ export const metadata = {
     shortcut: "/favicon-32x32.png",
     apple: "/apple-touch-icon.png",
   },
+  metadataBase: new URL("https://tech-book-lime.vercel.app"),
 };
 export default function RootLayout({
   children,

@@ -51,6 +51,7 @@ export async function generateMetadata({ params }: PageProps) {
       description: post.description ?? `${post.title} 관련 정보`,
       images: ["/og-image.png"],
     },
+    metadataBase: new URL("https://tech-book-lime.vercel.app"),
     alternates: {
       canonical: `https://tech-book-lime.vercel.app/posts/${slugString}`,
     },
