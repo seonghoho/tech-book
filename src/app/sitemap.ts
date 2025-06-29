@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { getAllPosts } from "@/lib/posts"; // 글 목록 가져오는 함수 예시
+import { getAllPosts } from "@/lib/getAllPosts";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = getAllPosts();
@@ -8,7 +8,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `https://tech-book-lime.vercel.app/posts/${post.slug}`,
     lastModified: post.date,
   }));
-
+  // console.log("posts", posts);
+  // console.log("postUrls", postUrls);
   return [
     {
       url: "https://tech-book-lime.vercel.app/",

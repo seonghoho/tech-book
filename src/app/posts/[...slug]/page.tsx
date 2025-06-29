@@ -1,7 +1,8 @@
 // import PostContent from "@/components/PostContent";
 import PostIndex from "@/components/PostIndex";
 import { extractHeadings } from "@/lib/getPostContent";
-import { getPostData } from "@/lib/posts";
+import { getPostData } from "@/lib/getPostData";
+
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
 import dynamic from "next/dynamic";
 
