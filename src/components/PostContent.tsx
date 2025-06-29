@@ -22,9 +22,9 @@ export default function PostContent({
   return (
     <article className="prose dark:prose-invert w-full max-w-none">
       <div className="max-w-full lg:max-w-screen-lg w-full lg:px-8 px-1 mx-auto">
-        <h1>{title}</h1>
+        <div className="sm:text-3xl font-semibold text-2xl pb-4">{title}</div>
         <div className="flex sm:flex-row flex-col sm:items-center justify-between pb-4">
-          <div className="flex items-center text-lg text-gray-500 dark:text-gray-400">
+          <div className="flex items-center sm:text-lg text-base text-gray-500 dark:text-gray-400">
             {description}
           </div>
           <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
