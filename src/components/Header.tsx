@@ -44,16 +44,16 @@ export default function Header({ onToggleSidebar, buttonRef }: HeaderProps) {
               <MenuIcon className="w-6 h-6 text-gray-700 dark:text-bright" />
             </button>
             {/* 로고  */}
-            <Link href="/" className="flex gap-2">
+            <Link href="/" className="flex items-center gap-2">
               <LogoSvgIcon className="w-6 h-6 text-gray-700 dark:text-bright" />
-              <div className="text-xl font-bold text-dark dark:text-bright">
+              <div className="sm:text-xl text-sm font-bold text-dark dark:text-bright">
                 TECH BOOK
               </div>
             </Link>
           </div>
           {/* 오른쪽: 다크모드 토글  */}
-          <div className="flex items-center">
-            <div className="flex items-center gap-6">
+          <div className="flex items-center sm:gap-6 gap-3">
+            <div className="flex items-center sm:gap-6 gap-3 sm:text-base text-sm">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -66,7 +66,7 @@ export default function Header({ onToggleSidebar, buttonRef }: HeaderProps) {
             </div>
             <button
               onClick={toggleTheme}
-              className="text-lg ml-4 hover:opacity-70"
+              className="text-lg hover:opacity-70"
               aria-label={isDark ? "라이트 모드로 전환" : "다크 모드로 전환"}
             >
               {isDark ? (
