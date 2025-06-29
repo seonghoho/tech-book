@@ -8,7 +8,8 @@ import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
 
-const postsDirectory = path.join(process.cwd(), "posts");
+// const postsDirectory = path.join(process.cwd(), "posts");
+const postsDirectory = path.join(process.cwd(), "src", "posts");
 
 export async function getPostData(slug: string) {
   const fullPath = path.join(postsDirectory, `${slug}.md`);
@@ -31,21 +32,4 @@ export async function getPostData(slug: string) {
     rawMarkdown: content,
     ...(data as { title: string; date: string; description: string }),
   };
-}
-
-export function getAllPosts() {
-  const fileNames = fs
-    .readdirSync(postsDirectory)
-    .filter((fileName) => fileName.endsWith(".md"));
-  return fileNames.map((fileName) => {
-    const slug = fileName.replace(/\.md$/, "");
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const { data } = matter(fileContents);
-
-    return {
-      slug,
-      ...(data as { title: string; date: string; description?: string }),
-    };
-  });
 }
