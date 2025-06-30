@@ -45,6 +45,9 @@ export const metadata = {
     apple: "/apple-touch-icon.png",
   },
   metadataBase: new URL("https://tech-book-lime.vercel.app"),
+  verification: {
+    google: "rcy_pt8MaVt2F6XAtMBTNX_w5pRzOZ0KykSGdw71p-U",
+  },
 };
 export default function RootLayout({
   children,
