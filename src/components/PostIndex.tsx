@@ -51,9 +51,9 @@ export default function PostIndex({ headings }: { headings: Heading[] }) {
   return (
     <div>
       <ul className="space-y-1 text-sm px-6">
-        {headings.map((h) => (
+        {headings.map((h, idx) => (
           <li
-            key={`${h.id}-${h.depth}`}
+            key={`${h.id}-${h.depth}-${idx}`}
             className={indentClassMap[h.depth] || "ml-0"}
           >
             <a
