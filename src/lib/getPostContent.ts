@@ -16,7 +16,7 @@ export function extractHeadings(markdown: string) {
     const id = text
       .toLowerCase()
       .replace(/\s+/g, "-")
-      .replace(/[^\w\-]/g, "");
+      .replace(/[^가-힣\w\-]/g, "");
 
     headings.push({ text, depth: node.depth, id });
   });
