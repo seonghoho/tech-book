@@ -2,9 +2,11 @@
   "name": "tech-book",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build:posts": "node --loader ts-node/esm src/scripts/buildPosts.ts",
+    "build": "npm run build:posts && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -35,6 +37,7 @@
     "eslint-config-next": "15.3.3",
     "postcss": "^8.5.4",
     "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }
