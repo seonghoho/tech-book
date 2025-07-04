@@ -1,10 +1,12 @@
 import { type MetadataRoute } from "next";
 import posts from "../../public/posts.json";
+export const dynamic = "force-dynamic";
+export const revalidate = 3600; // 1시간(3600초)마다 자동 갱신
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = posts.map((post) => ({
     url: `https://tech-book-lime.vercel.app/posts/${post.slug}`,
-    lastModified: post.date,
+    lastModified: new Date(post.date).toISOString(),
   }));
 
   return [
