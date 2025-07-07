@@ -10,7 +10,7 @@ export function PostNavCard({
   return (
     <a
       href={post.url}
-      className={`flex flex-col border-2 border-[#d9d9d9] rounded-lg p-4 w-full hover:shadow-md hover:shadow-emerald-100 transition-all bg-gray-50 dark:bg-[#1a1a1a]`}
+      className={`flex flex-col border-2 border-[#d9d9d9] rounded-lg p-4 w-full hover:shadow-sm hover:border-green-200 transition-all bg-gray-50 dark:bg-[#1a1a1a]`}
       style={{ alignItems: direction === "prev" ? "flex-start" : "flex-end" }}
     >
       <span className="text-xs text-gray-400 mb-1">

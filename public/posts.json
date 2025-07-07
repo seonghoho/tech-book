@@ -18,12 +18,6 @@
     "description": "모던 자바스크립트 Deep Dive : 6장 데이터 타입에 대해 알아봅니다."
   },
   {
-    "slug": "svg-editor/test-post",
-    "title": "목차 테스트 글",
-    "date": "2025-06-04",
-    "description": "설명 테스트"
-  },
-  {
     "slug": "svg-editor/use-line",
     "title": "useLine 로직 합치기",
     "date": "2024-12-19",
