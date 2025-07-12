@@ -6,7 +6,7 @@ export default function Home() {
   const postsByCategory = getPostsByCategory();
 
   return (
-    <main className="p-8">
+    <main className="sm:p-8 py-8">
       <h1 className="text-2xl font-bold mb-6">글 목록</h1>
       {Object.entries(postsByCategory).map(([category, posts]) => (
         <div key={category} className="mb-4 border border-[#e9e9e9] rounded">

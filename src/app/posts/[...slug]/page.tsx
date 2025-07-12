@@ -83,7 +83,7 @@ export default async function PostPage({ params }: PageProps) {
 
   return (
     <div className="flex w-full">
-      <main className="flex flex-1 scrollbar-hide xl:border-border xl:border-r py-6">
+      <main className="flex flex-1 overflow-y-auto scrollbar-hide xl:border-border xl:border-r py-6">
         <PostContent
           title={post.title}
           date={post.date}
