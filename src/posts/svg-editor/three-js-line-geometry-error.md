@@ -1,12 +1,12 @@
 ---
 title: "Three.js LineGeometry 시점 문제 해결"
-date: "2024-12-20"
-description: "LineGeometry로 만든 선이 시점에 따라 사라지는 문제를 CylinderGeometry로 교체해 해결한 사례입니다."
+date: "2025-07-11"
+description: "LineGeometry로 만든 선이 시점에 따라 사라지는 문제를 해결합니다."
 ---
 
 ## 1. 문제 상황
 
-![Line Geometry 오류](/public/images/svg-editor/02_threejs-line-geometry-01.png)
+![Line Geometry 오류](/images/svg-editor/02_threejs-line-geometry-01.png)
 
 **Three.js** 다각형 전개도 모듈에서 내부 실선이 시점에 따라 간헐적으로 보이지 않는 문제가 발생했습니다.
 
@@ -103,7 +103,7 @@ function createRectangleWithEdges() {
 
 ## 4. 결과
 
-![CylinderGeometry 사용한 결과](/public/images/svg-editor/02_threejs-line-geometry-02.png)
+![CylinderGeometry 사용한 결과](/images/svg-editor/02_threejs-line-geometry-02.png)
 
 `Line`으로 구현했던 선들이 **CylinderGeometry**로 대체되면서 시점에 상관없이 선이 항상 안정적으로 보이도록 수정되었습니다.
 
