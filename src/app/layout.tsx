@@ -56,19 +56,19 @@ export default function RootLayout({
 }) {
   const postsByCategory = getPostsByCategory();
   return (
-    <html lang="ko" className="h-full">
+    <html lang="ko">
       <Analytics />
       <SpeedInsights />
-      <body className="flex flex-col w-full h-full bg-white dark:bg-dark text-dark dark:text-bright">
+      <body className="flex flex-col w-full min-h-screen bg-white dark:bg-[#0F0F0F] text-dark dark:text-bright">
         <ThemeInitializer />
         <ClientHeaderWithSidebar Sidebar={<SidebarServer />} />
 
-        <div className="flex w-full h-full lg:max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex w-full flex-1 lg:max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <aside className="hidden lg:block w-0 lg:w-64 shrink-0 border-r border-border sticky-section">
             <Sidebar data={postsByCategory} />
           </aside>
 
-          <main className="w-full lg:w-[calc(100%-256px)] h-[calc(100vh-65px)]">
+          <main className="w-full lg:w-[calc(100%-256px)]">
             <Suspense fallback={<Loading />}>{children}</Suspense>
           </main>
         </div>

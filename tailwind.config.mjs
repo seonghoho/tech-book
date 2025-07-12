@@ -10,7 +10,7 @@ const config = {
         border: "#e0e0e0",
         gray: "#868e96",
         dark: "#0F0F0F",
-        bright: "#F1F1F1",
+        bright: "#FFFFFF",
       },
       typography: (theme) => ({
         DEFAULT: {
