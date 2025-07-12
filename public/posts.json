@@ -19,7 +19,7 @@
   },
   {
     "slug": "svg-editor/three-js-line-geometry-error",
-    "title": "Three.js LineGeometry 시점 문제 해결",
+    "title": "Three.js LineGeometry 문제 해결",
     "date": "2025-07-11",
     "description": "LineGeometry로 만든 선이 시점에 따라 사라지는 문제를 해결합니다."
   },
