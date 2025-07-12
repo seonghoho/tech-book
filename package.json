@@ -4,9 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "generate-sitemap": "node --loader ts-node/esm scripts/generate-sitemap.ts",
     "dev": "next dev --turbopack",
-    "build:posts": "node --loader ts-node/esm src/scripts/buildPosts.ts",
-    "build": "npm run build:posts && next build",
+    "build:posts": "node --loader ts-node/esm scripts/buildPosts.ts",
+    "build": "npm run generate-sitemap && npm run build:posts && next build",
     "start": "next start",
     "lint": "next lint"
   },
