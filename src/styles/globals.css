@@ -17,3 +17,10 @@ body {
   min-width: 350px;
   background-color: inherit;
 }
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  @apply scroll-m-24;
+}

@@ -14,7 +14,7 @@ description: "두 점으로 그리는 도형 4가지의 로직을 하나의 객�
 
 이에 따라 동일한 구조를 가진 도형은 하나의 Class로 통합하여 관리하기로 했습니다.
 
-## 2. `getPathAttribute` 함수
+## 2. getPathAttribute 함수
 
 `type` 값에 따라 두 점의 좌표로 SVG Path를 다르게 만들어 반환합니다.
 
