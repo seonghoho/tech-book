@@ -1,12 +1,12 @@
 import { getAllPosts } from "@/lib/getAllPosts";
-import PostIndex from "@/components/PostIndex";
+import PostIndex from "@/components/posts/PostIndex";
 import { extractHeadings } from "@/lib/getPostContent";
 import { getPostData } from "@/lib/getPostData";
 
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
 import dynamic from "next/dynamic";
 
-const PostContent = dynamic(() => import("@/components/PostContent"), {
+const PostContent = dynamic(() => import("@/components/posts/PostContent"), {
   ssr: true, // optional
 });
 
@@ -62,7 +62,7 @@ export default async function PostPage({ params }: PageProps) {
   if (!slugString) throw new Error("Slug is missing.");
 
   // 모든 포스트 리스트 가져오기
-  const postsByCategory = getPostsByCategory('game');
+  const postsByCategory = getPostsByCategory("game");
   const allPosts = Object.values(postsByCategory).flat();
 
   // 현재 포스트 정보
@@ -82,7 +82,7 @@ export default async function PostPage({ params }: PageProps) {
       <main className="flex flex-1 overflow-y-auto scrollbar-hide xl:border-border xl:border-r py-6">
         <PostContent
           title={post.title}
-          date={post.date}
+          date={new Date(post.date).toISOString().split('T')[0]}
           description={post.description}
           contentHtml={post.contentHtml}
           prevPost={

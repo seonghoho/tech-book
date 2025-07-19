@@ -1,12 +1,12 @@
-// import PostContent from "@/components/PostContent";
-import PostIndex from "@/components/PostIndex";
+// import PostContent from "@/components/posts/PostContent";
+import PostIndex from "@/components/posts/PostIndex";
 import { extractHeadings } from "@/lib/getPostContent";
 import { getPostData } from "@/lib/getPostData";
 
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
 import dynamic from "next/dynamic";
 
-const PostContent = dynamic(() => import("@/components/PostContent"), {
+const PostContent = dynamic(() => import("@/components/posts/PostContent"), {
   ssr: true, // optional
 });
 
@@ -15,7 +15,7 @@ interface PageProps {
 }
 
 export function generateStaticParams(): { slug: string[] }[] {
-  const postsByCategory = getPostsByCategory('post');
+  const postsByCategory = getPostsByCategory("post");
   const allPosts = Object.values(postsByCategory).flat();
 
   return allPosts.map((post) => ({
@@ -66,7 +66,7 @@ export default async function PostPage({ params }: PageProps) {
   if (!slugString) throw new Error("Slug is missing.");
 
   // 모든 포스트 리스트 가져오기
-  const postsByCategory = getPostsByCategory('post');
+  const postsByCategory = getPostsByCategory("post");
   const allPosts = Object.values(postsByCategory).flat();
 
   // 현재 포스트 정보

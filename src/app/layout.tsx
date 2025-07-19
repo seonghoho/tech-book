@@ -3,9 +3,9 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Suspense } from "react";
 // components
-import ThemeInitializer from "@/components/ThemeInitializer";
-import ClientHeaderWithSidebar from "@/components/ClientHeaderWithSidebar";
-import SidebarContainer from "@/components/SidebarContainer";
+import ThemeInitializer from "@/components/common/ThemeInitializer";
+import ClientHeaderWithSidebar from "@/components/layout/ClientHeaderWithSidebar";
+import SidebarContainer from "@/components/layout/SidebarContainer";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
 import Loading from "@/app/posts/[...slug]/loading";
 
