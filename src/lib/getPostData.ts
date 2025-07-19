@@ -12,15 +12,9 @@ import remarkGfm from "remark-gfm";
 const postsDirectory = path.join(process.cwd(), "src", "posts");
 
 export async function getPostData(slug: string) {
-  const postFilePath = path.join(postsDirectory, "post", `${slug}.md`);
-  const gameFilePath = path.join(postsDirectory, "game", `${slug}.md`);
+  const fullPath = path.join(postsDirectory, `${slug}.md`);
 
-  let fullPath;
-  if (fs.existsSync(postFilePath)) {
-    fullPath = postFilePath;
-  } else if (fs.existsSync(gameFilePath)) {
-    fullPath = gameFilePath;
-  } else {
+  if (!fs.existsSync(fullPath)) {
     throw new Error(`Post not found for slug: ${slug}`);
   }
 

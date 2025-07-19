@@ -62,7 +62,7 @@ export default async function PostPage({ params }: PageProps) {
   if (!slugString) throw new Error("Slug is missing.");
 
   // 모든 포스트 리스트 가져오기
-  const postsByCategory = getPostsByCategory();
+  const postsByCategory = getPostsByCategory('game');
   const allPosts = Object.values(postsByCategory).flat();
 
   // 현재 포스트 정보

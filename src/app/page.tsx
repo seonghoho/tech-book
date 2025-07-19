@@ -3,7 +3,7 @@ import { categoryMap } from "@/lib/categoryMap";
 import Link from "next/link";
 
 export default function Home() {
-  const postsByCategory = getPostsByCategory();
+  const postsByCategory = getPostsByCategory('post');
 
   return (
     <main className="sm:p-8 py-8">

@@ -1,30 +1,42 @@
 [
   {
-    "slug": "mordern-js-deep-dive/04",
+    "slug": "game/pixel-runner/01-pixel-runner",
+    "title": "01. pixi.js로 게임만들기",
+    "date": "2025-07-19",
+    "description": "javascript 라이브러리 pixi.js에 대해"
+  },
+  {
+    "slug": "post/mordern-js-deep-dive/04",
     "title": "04장 변수",
     "date": "2025-06-24",
     "description": "모던 자바스크립트 Deep Dive : 4장 변수를 알아봅시다."
   },
   {
-    "slug": "mordern-js-deep-dive/05",
+    "slug": "post/mordern-js-deep-dive/05",
     "title": "05장 표현식과 문",
     "date": "2025-06-25",
     "description": "모던 자바스크립트 Deep Dive : 5장 표현식과 문에 대해 알아봅니다."
   },
   {
-    "slug": "mordern-js-deep-dive/06",
+    "slug": "post/mordern-js-deep-dive/06",
     "title": "06장 데이터 타입",
     "date": "2025-06-26",
     "description": "모던 자바스크립트 Deep Dive : 6장 데이터 타입에 대해 알아봅니다."
   },
   {
-    "slug": "svg-editor/three-js-line-geometry-error",
+    "slug": "post/mordern-js-deep-dive/07",
+    "title": "07장 연산자",
+    "date": "2025-07-16",
+    "description": "모던 자바스크립트 Deep Dive : 7장 연산자에 대해 알아봅니다."
+  },
+  {
+    "slug": "post/svg-editor/three-js-line-geometry-error",
     "title": "Three.js LineGeometry 문제 해결",
     "date": "2025-07-11",
     "description": "LineGeometry로 만든 선이 시점에 따라 사라지는 문제를 해결합니다."
   },
   {
-    "slug": "svg-editor/use-line",
+    "slug": "post/svg-editor/use-line",
     "title": "useLine 로직 통합하기",
     "date": "2024-12-19",
     "description": "두 점으로 그리는 도형 4가지의 로직을 하나의 객체로 통합합니다."

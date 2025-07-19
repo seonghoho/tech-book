@@ -6,7 +6,7 @@ const postsDirectory = path.join(process.cwd(), "src", "posts");
 
 import { PostMeta } from "@/types/post";
 
-export function getPostsByCategory(type: 'post' | 'game' = 'post') {
+export function getPostsByCategory(type: 'post' | 'game') {
   const currentDirectory = path.join(postsDirectory, type);
 
   const categories = fs
@@ -28,7 +28,7 @@ export function getPostsByCategory(type: 'post' | 'game' = 'post') {
       const { data } = matter(content);
 
       return {
-        slug: `${category}/${slug}`,
+        slug: `${type}/${category}/${slug}`,
         title: data.title,
         date: data.date,
       };
