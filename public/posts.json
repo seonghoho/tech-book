@@ -6,6 +6,12 @@
     "description": "javascript 라이브러리 pixi.js에 대해"
   },
   {
+    "slug": "game/space-shooter/01-space-shooter",
+    "title": "Space Shooter",
+    "date": "2025-07-19T00:00:00.000Z",
+    "description": "A classic arcade space shooter game built with Pixi.js."
+  },
+  {
     "slug": "post/mordern-js-deep-dive/04",
     "title": "04장 변수",
     "date": "2025-06-24",
