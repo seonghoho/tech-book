@@ -1,5 +1,5 @@
-import Footer from "@/components/Footer";
-import { PostNavCard } from "@/components/PostNavCard";
+import Footer from "@/components/common/Footer";
+import { PostNavCard } from "./PostNavCard";
 import { PostNav } from "@/types/post";
 
 type Props = {

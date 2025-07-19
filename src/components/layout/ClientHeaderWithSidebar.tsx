@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import Header from "./Header";
+import Header from "../common/Header";
 
 type Props = {
   Sidebar: React.ReactNode;

@@ -13,10 +13,10 @@ type Props = {
 export default function Sidebar({ data, categoryMap }: Props) {
   const [openCategory, setOpenCategory] = useState<string | null>(null);
   const pathname = usePathname();
-  const isGamePath = pathname.startsWith("/games");
+  const isPostPath = pathname.startsWith("/posts") || pathname === "/";
 
-  const routeName = isGamePath ? "games" : "posts";
-  console.log(pathname);
+  const routeName = isPostPath ? "posts" : "games";
+
   const toggleCategory = (category: string) => {
     setOpenCategory((prev) => (prev === category ? null : category));
   };
