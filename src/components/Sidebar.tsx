@@ -1,17 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { PostMeta } from "@/lib/getPostsByCategory";
+import { PostMeta } from "@/types/post";
 import { useState, useRef } from "react";
 import { ChevronDownIcon, ChevronRightIcon } from "@/assets/svg";
-import { categoryMap } from "@/lib/categoryMap";
+import { usePathname } from "next/navigation";
 
 type Props = {
   data: Record<string, PostMeta[]>;
+  categoryMap: Record<string, string>;
 };
-export default function Sidebar({ data }: Props) {
+export default function Sidebar({ data, categoryMap }: Props) {
   const [openCategory, setOpenCategory] = useState<string | null>(null);
+  const pathname = usePathname();
+  const isGamePath = pathname.startsWith("/games");
 
+  const routeName = isGamePath ? "games" : "posts";
+  console.log(pathname);
   const toggleCategory = (category: string) => {
     setOpenCategory((prev) => (prev === category ? null : category));
   };
@@ -52,7 +57,7 @@ export default function Sidebar({ data }: Props) {
               >
                 {posts.map((post) => (
                   <li key={post.slug} className="w-full">
-                    <Link href={`/posts/${post.slug}`}>
+                    <Link href={`/${routeName}/${post.slug}`}>
                       <div className="py-2 cursor-pointer group hover:bg-slate-100 dark:hover:bg-zinc-800">
                         <span className="pl-4 group-hover:underline text-gray-800 dark:text-gray-200">
                           {post.title}

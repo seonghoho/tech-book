@@ -4,7 +4,9 @@ import matter from "gray-matter";
 
 const postsDirectory = path.join(process.cwd(), "src", "posts");
 
-export function getAllPosts() {
+export function getAllPosts(type?: 'post' | 'game') {
+  const targetDirectory = type ? path.join(postsDirectory, type) : postsDirectory;
+
   function getMdFilesRecursively(dir: string): string[] {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
 
@@ -22,7 +24,7 @@ export function getAllPosts() {
     return files;
   }
 
-  const mdFilePaths = getMdFilesRecursively(postsDirectory);
+  const mdFilePaths = getMdFilesRecursively(targetDirectory);
 
   return mdFilePaths.map((fullPath) => {
     const slug = path.relative(postsDirectory, fullPath).replace(/\.md$/, "");

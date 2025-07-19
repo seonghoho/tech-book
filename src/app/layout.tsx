@@ -5,11 +5,9 @@ import { Suspense } from "react";
 // components
 import ThemeInitializer from "@/components/ThemeInitializer";
 import ClientHeaderWithSidebar from "@/components/ClientHeaderWithSidebar";
-import Sidebar from "@/components/Sidebar";
-import SidebarServer from "@/components/Sidebar.server";
-import Loading from "@/app/posts/[...slug]/loading";
-// function
+import SidebarContainer from "@/components/SidebarContainer";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
+import Loading from "@/app/posts/[...slug]/loading";
 
 export const metadata = {
   title: "TechBook - 기술 블로그",
@@ -54,18 +52,20 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const postsByCategory = getPostsByCategory();
+  const postData = getPostsByCategory("post");
+  const gameData = getPostsByCategory("game");
+
   return (
     <html lang="ko">
       <Analytics />
       <SpeedInsights />
       <body className="flex flex-col w-full min-h-screen bg-white dark:bg-[#0F0F0F] text-dark dark:text-bright">
         <ThemeInitializer />
-        <ClientHeaderWithSidebar Sidebar={<SidebarServer />} />
+        <ClientHeaderWithSidebar Sidebar={<SidebarContainer postData={postData} gameData={gameData} />} />
 
         <div className="flex w-full flex-1 lg:max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <aside className="hidden lg:block w-0 lg:w-64 shrink-0 border-r border-border sticky-section">
-            <Sidebar data={postsByCategory} />
+            <SidebarContainer postData={postData} gameData={gameData} />
           </aside>
 
           <main className="w-full lg:w-[calc(100%-256px)]">
