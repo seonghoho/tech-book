@@ -1,10 +1,13 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from "pixi.js";
 
-export function init(container: HTMLDivElement) {
-  const canvas = document.createElement('canvas');
+export async function init(container: HTMLDivElement) {
+  container.innerHTML = ""; // Ensure the container is empty before appending a new canvas
+
+  const canvas = document.createElement("canvas");
   container.appendChild(canvas);
 
-  const app = new PIXI.Application({
+  const app = new PIXI.Application();
+  await app.init({
     view: canvas, // Explicitly provide the canvas
     width: container.clientWidth,
     height: container.clientHeight,
@@ -14,7 +17,7 @@ export function init(container: HTMLDivElement) {
 
   // Create a red rectangle
   const rectangle = new PIXI.Graphics();
-  rectangle.beginFill(0xFF0000); // Red color
+  rectangle.beginFill(0xff0000); // Red color
   rectangle.drawRect(0, 0, 100, 100); // x, y, width, height
   rectangle.endFill();
 
@@ -36,10 +39,10 @@ export function init(container: HTMLDivElement) {
     rectangle.y = app.screen.height / 2 - rectangle.height / 2;
   };
 
-  window.addEventListener('resize', handleResize);
+  window.addEventListener("resize", handleResize);
 
   return () => {
-    window.removeEventListener('resize', handleResize);
+    window.removeEventListener("resize", handleResize);
     app.destroy(true);
     // Remove the canvas element from the container when destroying
     if (container.contains(canvas)) {

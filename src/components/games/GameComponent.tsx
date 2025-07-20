@@ -19,20 +19,26 @@ const GameComponent: React.FC<GameComponentProps> = ({ gameSlug }) => {
         destroyGameRef.current = null;
       }
 
-      gameRef.current.innerHTML = ""; // Clear previous content
+      gameRef.current.innerHTML = "";
 
-      loadGameModule(gameSlug)
-        .then((module) => {
+      const loadAndInitGame = async () => {
+        try {
+          const gameModule = await loadGameModule(gameSlug);
           if (gameRef.current) {
-            destroyGameRef.current = module.init(gameRef.current);
+            destroyGameRef.current = await gameModule.init(gameRef.current);
           }
-        })
-        .catch((error) => {
-          console.error(`Failed to load game ${gameSlug}:`, error);
+        } catch (error: unknown) {
           if (gameRef.current) {
-            gameRef.current.innerHTML = `<p class="text-center text-red-500 dark:text-red-400">Error loading game: ${error.message}</p>`;
+            const errorMessage =
+              error instanceof Error
+                ? error.message
+                : "An unknown error occurred";
+            gameRef.current.innerHTML = `<p class="text-center text-red-500 dark:text-red-400">Error loading game: ${errorMessage}</p>`;
           }
-        });
+        }
+      };
+
+      loadAndInitGame();
     }
 
     return () => {
