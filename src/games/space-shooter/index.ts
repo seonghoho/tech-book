@@ -9,8 +9,8 @@ export async function init(container: HTMLDivElement) {
   const app = new PIXI.Application();
   await app.init({
     view: canvas, // Explicitly provide the canvas
-    width: container.clientWidth,
-    height: container.clientHeight,
+    width: container.clientWidth / 2,
+    height: container.clientHeight / 2,
     backgroundColor: 0x000000, // Black background for space
     resolution: window.devicePixelRatio || 1,
   });
@@ -55,7 +55,7 @@ export async function init(container: HTMLDivElement) {
 
   // Handle resize
   const handleResize = () => {
-    app.renderer.resize(container.clientWidth, container.clientHeight);
+    app.renderer.resize(container.clientWidth / 2, container.clientHeight / 2);
     spaceship.x = app.screen.width / 2;
     spaceship.y = app.screen.height - 50;
   };
