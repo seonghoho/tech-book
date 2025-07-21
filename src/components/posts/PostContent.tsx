@@ -1,4 +1,3 @@
-import Footer from "@/components/common/Footer";
 import { PostNavCard } from "./PostNavCard";
 import { PostNav } from "@/types/post";
 
@@ -48,7 +47,6 @@ export default function PostContent({
             <div className="flex-1" />
           )}
         </div>
-        <Footer />
       </div>
     </article>
   );

@@ -2,39 +2,40 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tech-book-lime.vercel.app/</loc>
-    <lastmod>2025-07-19T23:58:22.720Z</lastmod>
+    <lastmod>2025-07-21T14:42:29.789Z</lastmod>
   </url>
   
   <url>
-    <loc>https://tech-book-lime.vercel.app/posts/game/pixel-runner/01-pixel-runner</loc>
-    <lastmod>2025-07-19</lastmod>
-  </url>
-  <url>
-    <loc>https://tech-book-lime.vercel.app/posts/game/space-shooter/01-space-shooter</loc>
-    <lastmod>2025-07-19</lastmod>
-  </url>
-  <url>
-    <loc>https://tech-book-lime.vercel.app/posts/post/mordern-js-deep-dive/04</loc>
+    <loc>https://tech-book-lime.vercel.app/posts/mordern-js-deep-dive/04</loc>
     <lastmod>2025-06-24</lastmod>
   </url>
   <url>
-    <loc>https://tech-book-lime.vercel.app/posts/post/mordern-js-deep-dive/05</loc>
+    <loc>https://tech-book-lime.vercel.app/posts/mordern-js-deep-dive/05</loc>
     <lastmod>2025-06-25</lastmod>
   </url>
   <url>
-    <loc>https://tech-book-lime.vercel.app/posts/post/mordern-js-deep-dive/06</loc>
+    <loc>https://tech-book-lime.vercel.app/posts/mordern-js-deep-dive/06</loc>
     <lastmod>2025-06-26</lastmod>
   </url>
   <url>
-    <loc>https://tech-book-lime.vercel.app/posts/post/mordern-js-deep-dive/07</loc>
+    <loc>https://tech-book-lime.vercel.app/posts/mordern-js-deep-dive/07</loc>
     <lastmod>2025-07-16</lastmod>
   </url>
   <url>
-    <loc>https://tech-book-lime.vercel.app/posts/post/svg-editor/three-js-line-geometry-error</loc>
+    <loc>https://tech-book-lime.vercel.app/posts/svg-editor/three-js-line-geometry-error</loc>
     <lastmod>2025-07-11</lastmod>
   </url>
   <url>
-    <loc>https://tech-book-lime.vercel.app/posts/post/svg-editor/use-line</loc>
+    <loc>https://tech-book-lime.vercel.app/posts/svg-editor/use-line</loc>
     <lastmod>2024-12-19</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tech-book-lime.vercel.app/games/pixel-runner/01-pixel-runner</loc>
+    <lastmod>2025-07-19</lastmod>
+  </url>
+  <url>
+    <loc>https://tech-book-lime.vercel.app/games/space-shooter/01-space-shooter</loc>
+    <lastmod>2025-07-19</lastmod>
   </url>
 </urlset>

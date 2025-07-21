@@ -13,7 +13,7 @@ type Props = {
 export default function Sidebar({ data, categoryMap }: Props) {
   const [openCategory, setOpenCategory] = useState<string | null>(null);
   const pathname = usePathname();
-  const isPostPath = pathname.startsWith("/posts") || pathname === "/";
+  const isPostPath = pathname.startsWith("/posts");
 
   const routeName = isPostPath ? "posts" : "games";
 
@@ -58,8 +58,24 @@ export default function Sidebar({ data, categoryMap }: Props) {
                 {posts.map((post) => (
                   <li key={post.slug} className="w-full">
                     <Link href={`/${routeName}/${post.slug}`}>
-                      <div className="py-2 cursor-pointer group hover:bg-slate-100 dark:hover:bg-zinc-800">
-                        <span className="pl-4 group-hover:underline text-gray-800 dark:text-gray-200">
+                      <div
+                        className={`py-2 cursor-pointer group hover:bg-slate-100 dark:hover:bg-zinc-800 ${
+                          pathname === `/${routeName}/${post.slug}`
+                            ? routeName === "games"
+                              ? "bg-blue-100 dark:bg-zinc-700"
+                              : "bg-green-100 dark:bg-zinc-700"
+                            : ""
+                        }`}
+                      >
+                        <span
+                          className={`pl-4 group-hover:underline ${
+                            pathname === `/${routeName}/${post.slug}`
+                              ? routeName === "games"
+                                ? "text-blue-700 dark:text-blue-300 font-semibold"
+                                : "text-green-700 dark:text-green-300 font-semibold"
+                              : "text-gray-800 dark:text-gray-200"
+                          }`}
+                        >
                           {post.title}
                         </span>
                       </div>

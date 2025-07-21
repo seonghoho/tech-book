@@ -1,13 +1,16 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-
-const postsDirectory = path.join(process.cwd(), "src", "posts");
-
 import { PostMeta } from "@/types/post";
 
-export function getPostsByCategory(type: 'post' | 'game') {
-  const currentDirectory = path.join(postsDirectory, type);
+const contentDirectory = path.join(process.cwd(), "src", "content");
+
+export function getPostsByCategory(type: 'posts' | 'games') {
+  const currentDirectory = path.join(contentDirectory, type);
+
+  if (!fs.existsSync(currentDirectory)) {
+    return {};
+  }
 
   const categories = fs
     .readdirSync(currentDirectory)
@@ -19,7 +22,7 @@ export function getPostsByCategory(type: 'post' | 'game') {
 
   categories.forEach((category) => {
     const categoryPath = path.join(currentDirectory, category);
-    const files = fs.readdirSync(categoryPath);
+    const files = fs.readdirSync(categoryPath).filter(file => file.endsWith('.md'));
 
     result[category] = files.map((file) => {
       const slug = file.replace(/\.md$/, "");
@@ -28,7 +31,7 @@ export function getPostsByCategory(type: 'post' | 'game') {
       const { data } = matter(content);
 
       return {
-        slug: `${type}/${category}/${slug}`,
+        slug: `${category}/${slug}`,
         title: data.title,
         date: data.date,
       };

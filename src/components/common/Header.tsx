@@ -12,7 +12,7 @@ type HeaderProps = {
 const navLinks = [
   { label: "About", href: "/about" },
   { label: "Games", href: "/games" },
-  { label: "Posts", href: "/" },
+  { label: "Posts", href: "/posts" },
 ];
 
 export default function Header({ onToggleSidebar, buttonRef }: HeaderProps) {

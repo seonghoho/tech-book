@@ -15,13 +15,13 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const posts = getAllPosts("game");
+  const posts = getAllPosts("games");
   return posts.map((post) => ({ slug: post.slug.split("/") }));
 }
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   const slugString = slug.join("/");
-  const post = await getPostData(slugString);
+  const post = await getPostData("games", slugString);
 
   return {
     title: post.title,
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps) {
     openGraph: {
       title: post.title,
       description: post.description ?? `${post.title} 관련 정보`,
-      url: `https://tech-book-lime.vercel.app/posts/${slugString}`,
+      url: `https://tech-book-lime.vercel.app/games/${slugString}`,
       siteName: "TechBook",
       images: [
         {
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: PageProps) {
     },
     metadataBase: new URL("https://tech-book-lime.vercel.app"),
     alternates: {
-      canonical: `https://tech-book-lime.vercel.app/posts/${slugString}`,
+      canonical: `https://tech-book-lime.vercel.app/games/${slugString}`,
     },
   };
 }
@@ -61,18 +61,14 @@ export default async function PostPage({ params }: PageProps) {
 
   if (!slugString) throw new Error("Slug is missing.");
 
-  // 모든 포스트 리스트 가져오기
-  const postsByCategory = getPostsByCategory("game");
+  const postsByCategory = getPostsByCategory("games");
   const allPosts = Object.values(postsByCategory).flat();
 
-  // 현재 포스트 정보
-  const post = await getPostData(slugString);
+  const post = await getPostData("games", slugString);
   const headings = extractHeadings(post.rawMarkdown);
 
-  // 현재 포스트의 index 찾기
   const currentIndex = allPosts.findIndex((p) => p.slug === slugString);
 
-  // 이전/다음 포스트 정보 구하기
   const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
   const nextPost =
     currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
@@ -87,12 +83,12 @@ export default async function PostPage({ params }: PageProps) {
           contentHtml={post.contentHtml}
           prevPost={
             prevPost
-              ? { title: prevPost.title, url: `/posts/${prevPost.slug}` }
+              ? { title: prevPost.title, url: `/games/${prevPost.slug}` }
               : null
           }
           nextPost={
             nextPost
-              ? { title: nextPost.title, url: `/posts/${nextPost.slug}` }
+              ? { title: nextPost.title, url: `/games/${nextPost.slug}` }
               : null
           }
         />
@@ -104,3 +100,4 @@ export default async function PostPage({ params }: PageProps) {
     </div>
   );
 }
+

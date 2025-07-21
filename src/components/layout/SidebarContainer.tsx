@@ -13,7 +13,7 @@ type Props = {
 
 export default function SidebarContainer({ postData, gameData }: Props) {
   const pathname = usePathname();
-  const isPostPath = pathname.startsWith("/posts") || pathname === "/";
+  const isPostPath = pathname.startsWith("/posts");
 
   const data = isPostPath ? postData : gameData;
   const currentCategoryMap = isPostPath ? categoryMap : gameCategoryMap;

@@ -2,9 +2,12 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
-const postsDirectory = path.join(process.cwd(), "src", "posts");
+const contentDirectory = path.join(process.cwd(), "src", "content");
 
 function getMdFilesRecursively(dir: string): string[] {
+  if (!fs.existsSync(dir)) {
+    return [];
+  }
   const entries = fs.readdirSync(dir, { withFileTypes: true });
 
   return entries.flatMap((entry) => {
@@ -19,13 +22,17 @@ function getMdFilesRecursively(dir: string): string[] {
   });
 }
 
-const mdFilePaths = getMdFilesRecursively(postsDirectory);
+const postFiles = getMdFilesRecursively(path.join(contentDirectory, 'posts'));
+const gameFiles = getMdFilesRecursively(path.join(contentDirectory, 'games'));
 
-const posts = mdFilePaths.map((fullPath) => {
-  const slug = path.relative(postsDirectory, fullPath).replace(/\.md$/, "");
+const allFiles = [...postFiles, ...gameFiles];
+
+const posts = allFiles.map((fullPath) => {
+  const type = fullPath.includes(`${path.sep}posts${path.sep}`) ? 'posts' : 'games';
+  const slug = path.relative(path.join(contentDirectory, type), fullPath).replace(/\\/g, '/').replace(/\.md$/, "");
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data } = matter(fileContents);
-  return { slug, ...data };
+  return { slug, type, ...data };
 });
 
 fs.writeFileSync(

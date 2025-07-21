@@ -8,14 +8,13 @@ import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
 
-// const postsDirectory = path.join(process.cwd(), "posts");
-const postsDirectory = path.join(process.cwd(), "src", "posts");
+const contentDirectory = path.join(process.cwd(), "src", "content");
 
-export async function getPostData(slug: string) {
-  const fullPath = path.join(postsDirectory, `${slug}.md`);
+export async function getPostData(type: 'posts' | 'games', slug: string) {
+  const fullPath = path.join(contentDirectory, type, `${slug}.md`);
 
   if (!fs.existsSync(fullPath)) {
-    throw new Error(`Post not found for slug: ${slug}`);
+    throw new Error(`Post not found for slug: ${slug} in ${type}`);
   }
 
   const fileContents = fs.readFileSync(fullPath, "utf8");

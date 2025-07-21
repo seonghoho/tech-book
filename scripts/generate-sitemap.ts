@@ -4,13 +4,24 @@ import { getAllPosts } from "../src/lib/getAllPosts.ts";
 
 const baseUrl = "https://tech-book-lime.vercel.app";
 
-const posts = getAllPosts();
+const posts = getAllPosts("posts");
+const games = getAllPosts("games");
 
-const urls = posts
+const postUrls = posts
   .map(
     (post) => `
   <url>
     <loc>${baseUrl}/posts/${post.slug}</loc>
+    <lastmod>${post.date}</lastmod>
+  </url>`
+  )
+  .join("");
+
+const gameUrls = games
+  .map(
+    (post) => `
+  <url>
+    <loc>${baseUrl}/games/${post.slug}</loc>
     <lastmod>${post.date}</lastmod>
   </url>`
   )
@@ -22,7 +33,8 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <loc>${baseUrl}/</loc>
     <lastmod>${new Date().toISOString()}</lastmod>
   </url>
-  ${urls}
+  ${postUrls}
+  ${gameUrls}
 </urlset>`;
 
 fs.writeFileSync(path.join(process.cwd(), "public", "sitemap.xml"), sitemap);

@@ -1,13 +1,12 @@
 import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Suspense } from "react";
 // components
 import ThemeInitializer from "@/components/common/ThemeInitializer";
+import Footer from "@/components/common/Footer";
 import ClientHeaderWithSidebar from "@/components/layout/ClientHeaderWithSidebar";
 import SidebarContainer from "@/components/layout/SidebarContainer";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
-import Loading from "@/app/posts/[...slug]/loading";
 
 export const metadata = {
   title: "TechBook - 기술 블로그",
@@ -52,26 +51,21 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const postData = getPostsByCategory("post");
-  const gameData = getPostsByCategory("game");
-
+  const postData = getPostsByCategory("posts");
+  const gameData = getPostsByCategory("games");
   return (
     <html lang="ko">
       <Analytics />
       <SpeedInsights />
       <body className="flex flex-col w-full min-h-screen bg-white dark:bg-[#0F0F0F] text-dark dark:text-bright">
         <ThemeInitializer />
-        <ClientHeaderWithSidebar Sidebar={<SidebarContainer postData={postData} gameData={gameData} />} />
-
-        <div className="flex w-full flex-1 lg:max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <aside className="hidden lg:block w-0 lg:w-64 shrink-0 border-r border-border sticky-section">
-            <SidebarContainer postData={postData} gameData={gameData} />
-          </aside>
-
-          <main className="w-full lg:w-[calc(100%-256px)]">
-            <Suspense fallback={<Loading />}>{children}</Suspense>
-          </main>
-        </div>
+        <ClientHeaderWithSidebar
+          Sidebar={<SidebarContainer postData={postData} gameData={gameData} />}
+        />
+        <main className="w-full flex-1 lg:max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );

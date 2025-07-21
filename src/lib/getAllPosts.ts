@@ -2,12 +2,15 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
-const postsDirectory = path.join(process.cwd(), "src", "posts");
+const contentDirectory = path.join(process.cwd(), "src", "content");
 
-export function getAllPosts(type?: 'post' | 'game') {
-  const targetDirectory = type ? path.join(postsDirectory, type) : postsDirectory;
+export function getAllPosts(type: 'posts' | 'games') {
+  const targetDirectory = path.join(contentDirectory, type);
 
   function getMdFilesRecursively(dir: string): string[] {
+    if (!fs.existsSync(dir)) {
+      return [];
+    }
     const entries = fs.readdirSync(dir, { withFileTypes: true });
 
     const files = entries.flatMap((entry) => {
@@ -27,12 +30,12 @@ export function getAllPosts(type?: 'post' | 'game') {
   const mdFilePaths = getMdFilesRecursively(targetDirectory);
 
   return mdFilePaths.map((fullPath) => {
-    const slug = path.relative(postsDirectory, fullPath).replace(/\.md$/, "");
+    const slug = path.relative(targetDirectory, fullPath).replace(/\\/g, '/').replace(/\.md$/, "");
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data } = matter(fileContents);
 
     return {
-      slug, // 하위 경로 포함 ex: "dir1/post"
+      slug,
       ...(data as { title: string; date: string; description?: string }),
     };
   });
