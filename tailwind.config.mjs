@@ -66,7 +66,7 @@ const config = {
               listStyleType: "decimal", // 숫자 목록
             },
             "ol > li::marker": {
-              color: theme("colors.orange.400"),
+              color: theme("colors.green.400"),
               fontWeight: "bold",
             },
           },
@@ -80,7 +80,7 @@ const config = {
             p: { color: theme("colors.gray.300") },
             code: {
               backgroundColor: theme("colors.zinc.200"),
-              color: theme("colors.orange.400"),
+              color: theme("colors.green.400"),
             },
             pre: {
               backgroundColor: theme("colors.zinc.900"),

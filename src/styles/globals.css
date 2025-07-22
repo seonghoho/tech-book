@@ -13,7 +13,8 @@ html.dark {
 }
 
 body {
-  @apply font-sans;
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR",
+    "Malgun Gothic", sans-serif;
   min-width: 350px;
   background-color: inherit;
 }
