@@ -1,51 +1,67 @@
-import * as PIXI from "pixi.js";
+import { Application, Assets } from "pixi.js";
+import { Game } from "./game/Game";
+import characterConfig from "./config/character-config.json";
 
-export async function init(container: HTMLDivElement) {
-  container.innerHTML = ""; // Ensure the container is empty before appending a new canvas
+export async function init(container: HTMLDivElement, onGameOver?: (score: number | string) => void, onScoreUpdate?: (score: number) => void) {
+  console.log("index.ts: init function started");
+  // Preload all assets
+  const assetsToLoad: string[] = [];
 
-  const canvas = document.createElement("canvas");
-  container.appendChild(canvas);
+  // Backgrounds
+  assetsToLoad.push("/assets/pixel-runner/assets/png/Background/day.png");
+  assetsToLoad.push("/assets/pixel-runner/assets/png/Background/dawn.png");
 
-  const app = new PIXI.Application();
+  // Characters
+  for (const characterName in characterConfig) {
+    for (const animName in characterConfig[characterName]) {
+      assetsToLoad.push(
+        `/assets/pixel-runner/assets/png/${characterName}/${animName}.png`,
+      );
+    }
+  }
+
+  // Obstacles
+  assetsToLoad.push("/assets/pixel-runner/assets/png/Obstacle/Rock.png");
+  assetsToLoad.push("/assets/pixel-runner/assets/png/Obstacle/Bird.png");
+
+  console.log("index.ts: Loading assets...", assetsToLoad);
+  await Assets.load(assetsToLoad);
+  console.log("index.ts: Assets loaded.");
+  console.log("index.ts: PixiJS Assets Cache:", Assets.cache);
+
+  const app = new Application();
+
+  console.log("index.ts: Initializing PixiJS application...");
   await app.init({
-    view: canvas, // Explicitly provide the canvas
+    background: "#021f4b",
     width: container.clientWidth,
-    height: container.clientHeight,
-    backgroundColor: 0x1099bb,
-    resolution: window.devicePixelRatio || 1,
+    height: 400,
   });
-  // Create a red rectangle
-  const rectangle = new PIXI.Graphics();
-  rectangle.beginFill(0xff0000); // Red color
-  rectangle.drawRect(0, 0, 100, 100); // x, y, width, height
-  rectangle.endFill();
+  console.log("index.ts: PixiJS application initialized.");
 
-  // Center the rectangle
-  rectangle.x = app.screen.width / 2 - rectangle.width / 2;
-  rectangle.y = app.screen.height / 2 - rectangle.height / 2;
+  container.appendChild(app.canvas);
+  console.log("index.ts: Canvas appended to container.");
 
-  app.stage.addChild(rectangle);
+  const game = new Game(app, onGameOver, onScoreUpdate);
+  console.log("index.ts: Game instance created.");
+  await game.init();
+  console.log("index.ts: Game initialized.");
 
-  // Simple animation
-  app.ticker.add(() => {
-    rectangle.rotation += 0.01;
-  });
-
-  // Handle resize
   const handleResize = () => {
     app.renderer.resize(container.clientWidth, container.clientHeight);
-    rectangle.x = app.screen.width / 2 - rectangle.width / 2;
-    rectangle.y = app.screen.height / 2 - rectangle.height / 2;
   };
 
   window.addEventListener("resize", handleResize);
+  console.log("index.ts: Resize listener added.");
 
-  return () => {
-    window.removeEventListener("resize", handleResize);
-    app.destroy(true);
-    // Remove the canvas element from the container when destroying
-    if (container.contains(canvas)) {
-      container.removeChild(canvas);
-    }
+  // Return the game instance and a combined destroy function
+  return {
+    gameInstance: game,
+    destroy: () => {
+      console.log("index.ts: Destroy function called.");
+      window.removeEventListener("resize", handleResize);
+      game.destroy();
+      app.destroy(true, true);
+    },
   };
 }

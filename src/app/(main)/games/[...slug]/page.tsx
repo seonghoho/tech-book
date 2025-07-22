@@ -78,7 +78,7 @@ export default async function PostPage({ params }: PageProps) {
       <main className="flex flex-1 overflow-y-auto scrollbar-hide xl:border-border xl:border-r py-6">
         <PostContent
           title={post.title}
-          date={new Date(post.date).toISOString().split('T')[0]}
+          date={new Date(post.date).toISOString().split("T")[0]}
           description={post.description}
           contentHtml={post.contentHtml}
           prevPost={
@@ -100,4 +100,3 @@ export default async function PostPage({ params }: PageProps) {
     </div>
   );
 }
-

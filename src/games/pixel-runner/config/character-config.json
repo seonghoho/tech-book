@@ -1,0 +1,188 @@
+{
+  "Fighter": {
+    "Idle": {
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Run": {
+      "frames": 8,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Walk": {
+      "frames": 8,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Jump": {
+      "frames": 10,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Attack_1": {
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Attack_2": {
+      "frames": 3,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Attack_3": {
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Shield": {
+      "frames": 2,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Hurt": {
+      "frames": 3,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Dead": {
+      "frames": 3,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    }
+  },
+  "Samurai": {
+    "Idle": {
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Run": {
+      "frames": 8,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Walk": {
+      "frames": 8,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Jump": {
+      "frames": 12,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Attack_1": {
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Attack_2": {
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Attack_3": {
+      "frames": 3,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Shield": {
+      "frames": 2,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Hurt": {
+      "frames": 2,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Dead": {
+      "frames": 3,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    }
+  },
+  "Shinobi": {
+    "Idle": {
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Run": {
+      "frames": 8,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Walk": {
+      "frames": 8,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Jump": {
+      "frames": 12,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Attack_1": {
+      "frames": 5,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Attack_2": {
+      "frames": 3,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Attack_3": {
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Shield": {
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Hurt": {
+      "frames": 2,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    },
+    "Dead": {
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "isSpriteSheet": true
+    }
+  }
+}

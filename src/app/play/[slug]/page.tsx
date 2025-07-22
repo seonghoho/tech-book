@@ -1,6 +1,6 @@
 import { games } from "@/lib/gamesData";
 import { notFound } from "next/navigation";
-import GameClientWrapper from "@/components/games/GameClientWrapper";
+import GameComponent from "@/components/games/GameComponent";
 
 interface PageProps {
   params: Promise<{
@@ -42,7 +42,7 @@ export default async function GamePlayPage({ params }: PageProps) {
         Playing {game.title}
       </h1>
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-        <GameClientWrapper gameSlug={game.playSlug} />
+        <GameComponent gameName={game.playSlug} />
       </div>
     </div>
   );
