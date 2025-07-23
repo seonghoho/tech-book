@@ -25,6 +25,7 @@ const GameComponent = ({ gameName }: GameComponentProps) => {
   const handleStartGame = () => {
     setGameState("playing");
     if (gameInstanceRef.current) {
+      console.log(gameInstanceRef.current);
       gameInstanceRef.current.start();
     }
   };

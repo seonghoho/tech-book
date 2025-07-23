@@ -9,7 +9,7 @@ export class Game {
   private player: Player;
   private ui: UI;
   private obstacleManager: ObstacleManager;
-  private background: PIXI.TilingSprite;
+  private background: PIXI.TilingSprite | null;
   private restartKeyHandler: ((e: KeyboardEvent) => void) | null = null;
   private isTabDown = false;
 
@@ -28,12 +28,12 @@ export class Game {
     onGameOver?: (score: number | string) => void,
     onScoreUpdate?: (score: number) => void
   ) {
-    console.log("Game.ts: Constructor called.");
     this.app = app;
     this.onGameOverCallback = onGameOver;
     this.onScoreUpdateCallback = onScoreUpdate;
 
-    this.background = new PIXI.TilingSprite();
+    // this.background = new PIXI.TilingSprite();
+    this.background = null;
     this.player = new Player(this.app, this);
 
     this.keyboard = new KeyboardManager();
@@ -49,7 +49,6 @@ export class Game {
   }
 
   private handleGlobalKeyDown(e: KeyboardEvent) {
-    console.log("Game.ts: handleGlobalKeyDown called.", e.code);
     if (e.code === "Tab") {
       this.isTabDown = true;
       e.preventDefault();
@@ -62,7 +61,7 @@ export class Game {
       } else if (e.code === "Digit2") {
         this.setBackground("day.png");
       }
-      return; // Don't process for player
+      return;
     }
 
     if (this.gameState === "playing") {
@@ -81,8 +80,12 @@ export class Game {
   }
 
   public async init() {
-    console.log("Game.ts: init function started.");
-    const bgTexture = PIXI.Assets.get("/assets/pixel-runner/assets/png/Background/day.png");
+    await PIXI.Assets.load(
+      "/assets/pixel-runner/assets/png/Background/day.png"
+    );
+    const bgTexture = PIXI.Assets.get(
+      "/assets/pixel-runner/assets/png/Background/day.png"
+    );
     // bgTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
     this.background = new PIXI.TilingSprite({
       texture: bgTexture,
@@ -92,8 +95,6 @@ export class Game {
     this.app.stage.addChild(this.background);
 
     await this.player.init();
-    console.log("Game.ts: Player initialized.");
-
     // 항상 UI가 맨 위에 보이도록, background 추가 후 UI 컨테이너를 한 번 더 올림
     this.app.stage.addChild(this.ui.scoreText);
     this.app.stage.addChild(this.ui.livesContainer);
@@ -101,7 +102,6 @@ export class Game {
   }
 
   public start() {
-    console.log("Game.ts: start function called.");
     this.gameState = "playing";
     this.player.reset();
     this.obstacleManager.reset();
@@ -121,27 +121,27 @@ export class Game {
   }
 
   private async setBackground(textureName: string) {
-    console.log("Game.ts: setBackground called with", textureName);
     try {
       const texturePath = `/assets/pixel-runner/assets/png/Background/${textureName}`;
-      const texture = PIXI.Assets.get(texturePath);
-      this.background.texture = texture;
+      const texture = await PIXI.Assets.get(texturePath);
+      if (this.background) this.background.texture = texture;
     } catch (error) {
-      console.error(`Game.ts: Failed to load background texture: ${textureName}`, error);
+      console.error(
+        `Game.ts: Failed to load background texture: ${textureName}`,
+        error
+      );
     }
   }
 
   private update() {
-    // console.log("Game.ts: update function called."); // Too frequent, uncomment if needed
     if (this.gameState !== "playing") return;
     this.gameTime += this.app.ticker.deltaMS / 1000;
     const remainingTime = this.gameDuration - this.gameTime;
     this.ui.updateTime(remainingTime);
-
     // Scroll background and ground
-    this.background.tilePosition.x -= this.scrollSpeed;
+    if (this.background) this.background.tilePosition.x -= this.scrollSpeed;
     // this.ground.tilePosition.x -= this.scrollSpeed;
-
+    console.log(this.player);
     this.player.update();
     this.obstacleManager.update(this.scrollSpeed, this.gameTime);
 
@@ -195,7 +195,14 @@ export class Game {
   }
 
   public destroy() {
-    console.log("Game.ts: destroy function called.");
+    if (this.background && this.app.stage.children.includes(this.background)) {
+      this.app.stage.removeChild(this.background);
+      this.background.destroy({
+        children: true,
+        texture: true,
+      });
+      this.background = null;
+    }
     if (this.app && this.app.ticker) {
       this.app.ticker.remove(this.update, this);
     }

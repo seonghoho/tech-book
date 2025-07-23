@@ -107,7 +107,6 @@ export class Player {
   }
 
   public async switchCharacter(character: Character) {
-    // Allow character switch regardless of game state for now, can be restricted later if needed
     this.character = character;
     const assetMap = this.config[this.character];
 
@@ -116,13 +115,10 @@ export class Player {
       const textures: PIXI.Texture[] = [];
 
       if (animData.isSpriteSheet) {
-        const sheetTexture = PIXI.Assets.get(
+        const sheetTexture = await PIXI.Assets.load(
           `/assets/pixel-runner/assets/png/${this.character}/${animName}.png`
         );
-        if (!sheetTexture || !sheetTexture.baseTexture) {
-          console.error(`Player.ts: sheetTexture or baseTexture is null for ${this.character}/${animName}.png`);
-          return;
-        }
+
         for (let i = 0; i < animData.frames; i++) {
           const frame = new PIXI.Rectangle(
             i * animData.frameWidth,
@@ -131,18 +127,14 @@ export class Player {
             animData.frameHeight
           );
           textures.push(
-            new PIXI.Texture({ source: sheetTexture.baseTexture, frame })
+            new PIXI.Texture({ source: sheetTexture.source, frame })
           );
         }
       } else {
         // For single image animations like Hurt, Dead
-        const texture = PIXI.Assets.get(
+        const texture = await PIXI.Assets.load(
           `/assets/pixel-runner/assets/png/${this.character}/${animName}.png`
         );
-        if (!texture) {
-          console.error(`Player.ts: texture is null for ${this.character}/${animName}.png`);
-          return;
-        }
         textures.push(texture);
       }
       this.animations[animName] = textures;
@@ -151,6 +143,7 @@ export class Player {
   }
 
   public update() {
+    console.log(`Player.ts: update - Full keys object:`, { ...this.keys });
     // --- Invincibility Timer ---
     if (this.isInvincible) {
       this.invincibleTimer -= this.app.ticker.deltaMS;
@@ -274,7 +267,9 @@ export class Player {
   }
 
   public handleKeyDown(key: string, isRepeat: boolean) {
+    console.log(`Player.ts: handleKeyDown - Key: ${key}, isRepeat: ${isRepeat}`);
     this.keys[key] = true;
+    console.log(`Player.ts: handleKeyDown - After setting ${key}:`, this.keys[key], "Full keys object:", { ...this.keys });
     if (key === "ArrowLeft" || key === "ArrowRight") {
       const direction = key === "ArrowLeft" ? "left" : "right";
       const now = Date.now();
@@ -289,7 +284,10 @@ export class Player {
       this.lastDirPressTime = now;
       this.lastDirection = direction;
     }
+
+    // Only process character switch on initial key press
     if (isRepeat) return;
+
     switch (key) {
       case "Digit1":
         this.switchCharacter("Fighter");
@@ -304,7 +302,9 @@ export class Player {
   }
 
   public handleKeyUp(key: string) {
+    console.log(`Player.ts: handleKeyUp - Key: ${key}`);
     this.keys[key] = false;
+    console.log(`Player.ts: handleKeyUp - After setting ${key}:`, this.keys[key], "Full keys object:", { ...this.keys });
     if (key === "ArrowLeft" || key === "ArrowRight") {
       this.isRunning = false;
       this.lastDirection = this.keys["ArrowLeft"]

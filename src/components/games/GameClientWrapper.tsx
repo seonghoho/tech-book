@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef } from "react";
 import { IGame } from "@/types/game";
 
@@ -17,59 +16,55 @@ const GameClientWrapper = ({
   onScoreUpdate,
 }: GameClientWrapperProps) => {
   const gameContainerRef = useRef<HTMLDivElement>(null);
-  const cleanupRef = useRef<(() => void) | null>(null);
-  const initializedRef = useRef<boolean>(false); // New ref to track initialization
 
   useEffect(() => {
+    const container = gameContainerRef.current;
+    let isActive = true;
+
+    // 🚩 이미 canvas가 있으면 아무것도 하지 않음
+    if (!gameName || !container) return;
+    if (container.querySelector("canvas")) return;
+
+    let destroy: (() => void) | null = null;
+
     const loadGame = async () => {
-      if (!gameName) {
-        console.warn("gameName is empty or undefined, skipping game load.");
-        return;
-      }
+      try {
+        console.log("=== 게임 모듈 import 시도 ===");
+        const gameModule = await import(`@/games/${gameName}`);
+        console.log("=== 게임 모듈 import 완료 ===", gameModule);
 
-      // Prevent re-initialization if already initialized
-      if (initializedRef.current) {
-        return;
-      }
-
-      if (gameContainerRef.current) {
-        gameContainerRef.current.innerHTML = "";
-        try {
-          const gameModule = await import(`@/games/${gameName}`);
-          if (gameModule && typeof gameModule.init === "function") {
-            const { gameInstance, destroy } = await gameModule.init(
-              gameContainerRef.current,
-              onGameOver,
-              onScoreUpdate
-            );
-            cleanupRef.current = () => {
-              if (destroy) destroy();
-              if (gameContainerRef.current) {
-                gameContainerRef.current.innerHTML = "";
-              }
-            };
-            if (onGameInstanceReady) {
-              onGameInstanceReady(gameInstance);
-            }
-            initializedRef.current = true; // Mark as initialized
-          } else {
-            console.error("Loaded game module does not have an init function.");
+        if (gameModule && typeof gameModule.init === "function") {
+          const result = await gameModule.init(
+            container,
+            onGameOver,
+            onScoreUpdate
+          );
+          destroy = result.destroy;
+          if (!isActive) {
+            if (destroy) destroy();
+            return;
           }
-        } catch (error) {
-          console.error("Failed to load or initialize the game:", error);
+          if (onGameInstanceReady) onGameInstanceReady(result.gameInstance);
+        } else {
+          console.error("Loaded game module does not have an init function.");
         }
+      } catch (error) {
+        console.error("Failed to load or initialize the game:", error);
       }
     };
+
     loadGame();
 
     return () => {
-      if (cleanupRef.current) {
-        cleanupRef.current();
-        cleanupRef.current = null;
+      isActive = false;
+      // 정리: destroy 실행 + 남아있는 canvas 모두 제거
+      if (destroy) destroy();
+      if (container) {
+        container.querySelectorAll("canvas").forEach((c) => c.remove());
+        container.innerHTML = "";
       }
-      initializedRef.current = false; // Reset on cleanup/unmount
     };
-  }, [gameName, onGameInstanceReady, onGameOver, onScoreUpdate]);
+  }, []);
 
   return (
     <div ref={gameContainerRef} style={{ width: "100%", height: "100%" }} />
