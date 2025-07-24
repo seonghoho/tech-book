@@ -28,6 +28,20 @@
     "description": "모던 자바스크립트 Deep Dive : 7장 연산자에 대해 알아봅니다."
   },
   {
+    "slug": "svg-editor/three-js-camera-state",
+    "type": "posts",
+    "title": "Three.js 카메라 상태 저장",
+    "date": "2025-07-24",
+    "description": "Three.js에서 카메라 상태 저장에 대해 알아봅니다."
+  },
+  {
+    "slug": "svg-editor/three-js-line-basic-meterial",
+    "type": "posts",
+    "title": "Three.js 겨냥도 구현하기",
+    "date": "2025-07-24",
+    "description": "Three.js에서 겨냥도를 구현합니다."
+  },
+  {
     "slug": "svg-editor/three-js-line-geometry-error",
     "type": "posts",
     "title": "Three.js LineGeometry 문제 해결",
