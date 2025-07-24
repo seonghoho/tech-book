@@ -18,7 +18,7 @@ export default function GameCardList() {
                       alt={game.title}
                       layout="fill"
                       objectFit="cover"
-                      className="rounded-t-lg"
+                      className="w-full h-auto rounded-t-lg object-cover"
                     />
                   ) : (
                     <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center rounded-t-lg">

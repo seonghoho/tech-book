@@ -3,7 +3,7 @@ export const games = [
     slug: "pixel-runner",
     title: "Pixel Runner",
     description: "A retro-style endless runner game.",
-    image: null, // Placeholder image
+    image: "/images/games-thumbnail/pixel-runner-thumbnail.png", // Placeholder image
     markdownPath: "game/pixel-runner/01-pixel-runner",
     playSlug: "pixel-runner",
   },
