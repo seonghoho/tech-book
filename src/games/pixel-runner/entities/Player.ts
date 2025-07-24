@@ -143,7 +143,6 @@ export class Player {
   }
 
   public update() {
-    console.log(`Player.ts: update - Full keys object:`, { ...this.keys });
     // --- Invincibility Timer ---
     if (this.isInvincible) {
       this.invincibleTimer -= this.app.ticker.deltaMS;
@@ -267,9 +266,7 @@ export class Player {
   }
 
   public handleKeyDown(key: string, isRepeat: boolean) {
-    console.log(`Player.ts: handleKeyDown - Key: ${key}, isRepeat: ${isRepeat}`);
     this.keys[key] = true;
-    console.log(`Player.ts: handleKeyDown - After setting ${key}:`, this.keys[key], "Full keys object:", { ...this.keys });
     if (key === "ArrowLeft" || key === "ArrowRight") {
       const direction = key === "ArrowLeft" ? "left" : "right";
       const now = Date.now();
@@ -302,9 +299,7 @@ export class Player {
   }
 
   public handleKeyUp(key: string) {
-    console.log(`Player.ts: handleKeyUp - Key: ${key}`);
     this.keys[key] = false;
-    console.log(`Player.ts: handleKeyUp - After setting ${key}:`, this.keys[key], "Full keys object:", { ...this.keys });
     if (key === "ArrowLeft" || key === "ArrowRight") {
       this.isRunning = false;
       this.lastDirection = this.keys["ArrowLeft"]

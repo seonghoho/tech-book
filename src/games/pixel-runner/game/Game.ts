@@ -14,10 +14,10 @@ export class Game {
   private isTabDown = false;
 
   public gameState: "ready" | "playing" | "gameOver" = "ready";
-  private scrollSpeed = 3;
+  private scrollSpeed = 10;
   private score = 0;
   private gameTime = 0;
-  private gameDuration = 30; // Game duration in seconds
+  private gameDuration = 30;
   private keyboard: KeyboardManager;
 
   private onGameOverCallback: ((score: number | string) => void) | undefined;
@@ -44,8 +44,8 @@ export class Game {
     this.app.ticker.add(() => this.update());
 
     // Register global keyboard event handlers with KeyboardManager
-    this.keyboard.register(this.handleGlobalKeyDown.bind(this));
-    this.keyboard.register(this.handleGlobalKeyUp.bind(this));
+    this.keyboard.registerKeyDown(this.handleGlobalKeyDown.bind(this));
+    this.keyboard.registerKeyUp(this.handleGlobalKeyUp.bind(this));
   }
 
   private handleGlobalKeyDown(e: KeyboardEvent) {
@@ -70,7 +70,6 @@ export class Game {
   }
 
   private handleGlobalKeyUp(e: KeyboardEvent) {
-    console.log("Game.ts: handleGlobalKeyUp called.", e.code);
     if (e.code === "Tab") {
       this.isTabDown = false;
     }
@@ -117,7 +116,7 @@ export class Game {
         this.start(); // 재시작(=초기화)
       }
     };
-    this.keyboard.register(this.restartKeyHandler);
+    this.keyboard.registerKeyDown(this.restartKeyHandler);
   }
 
   private async setBackground(textureName: string) {
@@ -141,7 +140,6 @@ export class Game {
     // Scroll background and ground
     if (this.background) this.background.tilePosition.x -= this.scrollSpeed;
     // this.ground.tilePosition.x -= this.scrollSpeed;
-    console.log(this.player);
     this.player.update();
     this.obstacleManager.update(this.scrollSpeed, this.gameTime);
 
@@ -161,27 +159,25 @@ export class Game {
   }
 
   public gameOver() {
-    console.log("Game.ts: gameOver function called.");
     this.gameState = "gameOver";
     if (this.onGameOverCallback) {
       this.onGameOverCallback(this.score);
     }
 
     if (this.restartKeyHandler) {
-      this.keyboard.unregister(this.restartKeyHandler);
+      this.keyboard.unregisterKeyDown(this.restartKeyHandler);
       this.restartKeyHandler = null;
     }
   }
 
   public winGame() {
-    console.log("Game.ts: winGame function called.");
     this.gameState = "gameOver";
     if (this.onGameOverCallback) {
       this.onGameOverCallback("WIN! 🎉");
     }
 
     if (this.restartKeyHandler) {
-      this.keyboard.unregister(this.restartKeyHandler);
+      this.keyboard.unregisterKeyDown(this.restartKeyHandler);
       this.restartKeyHandler = null;
     }
   }
