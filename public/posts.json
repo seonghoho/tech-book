@@ -35,6 +35,13 @@
     "description": "Three.js에서 카메라 상태 저장에 대해 알아봅니다."
   },
   {
+    "slug": "svg-editor/three-js-gimbal-lock",
+    "type": "posts",
+    "title": "Three.js 좌표축 클릭 시 카메라 방향 꼬임 문제",
+    "date": "2025-07-25",
+    "description": "Three.js에서 카메라 방향 꼬임 문제를 해결하는 과정을 알아봅니다."
+  },
+  {
     "slug": "svg-editor/three-js-line-basic-meterial",
     "type": "posts",
     "title": "Three.js 겨냥도 구현하기",

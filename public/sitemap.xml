@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tech-book-lime.vercel.app/</loc>
-    <lastmod>2025-07-24T08:17:41.537Z</lastmod>
+    <lastmod>2025-07-25T02:20:51.186Z</lastmod>
   </url>
   
   <url>
@@ -24,6 +24,10 @@
   <url>
     <loc>https://tech-book-lime.vercel.app/posts/svg-editor/three-js-camera-state</loc>
     <lastmod>2025-07-24</lastmod>
+  </url>
+  <url>
+    <loc>https://tech-book-lime.vercel.app/posts/svg-editor/three-js-gimbal-lock</loc>
+    <lastmod>2025-07-25</lastmod>
   </url>
   <url>
     <loc>https://tech-book-lime.vercel.app/posts/svg-editor/three-js-line-basic-meterial</loc>
