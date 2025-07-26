@@ -10,7 +10,7 @@ export default function GameCardList() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {games.map((game) => (
             <Link key={game.slug} href={`/play/${game.slug}`}>
-              <div className="bg-white dark:bg-gray-800 rounded-lg border-4 border-[#f9f9f9] shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+              <div className="bg-white dark:bg-zinc-800 rounded-lg border-4 border-[#f9f9f9] dark:border-[#797979] shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer">
                 <div className="relative w-full h-48">
                   {game.image ? (
                     <Image
@@ -18,11 +18,11 @@ export default function GameCardList() {
                       alt={game.title}
                       layout="fill"
                       objectFit="cover"
-                      className="w-full h-auto rounded-t-lg object-cover"
+                      className="w-full h-auto rounded-t-sm object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center rounded-t-lg">
-                      <span className="text-gray-500 dark:text-gray-400 text-lg font-semibold">
+                    <div className="w-full h-full bg-gray-200 dark:bg-zinc-700 flex items-center justify-center rounded-t-lg">
+                      <span className="text-gray-500 dark:text-zinc-400 text-lg font-semibold">
                         No Image
                       </span>
                     </div>
