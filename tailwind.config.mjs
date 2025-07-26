@@ -6,6 +6,9 @@ const config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
+      fontFamily: {
+        press: ['"PressStart2P"', "cursive"],
+      },
       colors: {
         border: "#e0e0e0",
         gray: "#868e96",
