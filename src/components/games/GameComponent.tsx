@@ -60,7 +60,7 @@ const GameComponent = ({ gameName }: GameComponentProps) => {
       style={{
         position: "relative",
         width: "100%",
-        height: "600px",
+        height: "100%",
         border: "1px solid #ccc",
       }}
     >
