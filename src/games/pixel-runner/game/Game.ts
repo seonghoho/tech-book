@@ -14,7 +14,7 @@ export class Game {
   private isTabDown = false;
 
   public gameState: "ready" | "playing" | "gameOver" = "ready";
-  private scrollSpeed = 10;
+  private scrollSpeed = 5;
   private score = 0;
   private gameTime = 0;
   private gameDuration = 30;
