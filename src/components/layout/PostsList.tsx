@@ -35,7 +35,9 @@ export default function PostsList({ postsByCategory, type }: PostsListProps) {
                 <li key={post.slug}>
                   <Link href={`/${routeName}/${post.slug}`}>
                     <div className="flex justify-between text-gray-800 dark:text-gray-200 hover:underline cursor-pointer">
-                      {post.title}
+                      <span className="truncate block max-w-[60%]">
+                        {post.title}
+                      </span>
                       <span className="text-sm text-gray-600 dark:text-gray-400">
                         ({post.date})
                       </span>

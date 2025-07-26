@@ -68,7 +68,7 @@ export default function Sidebar({ data, categoryMap }: Props) {
                         }`}
                       >
                         <span
-                          className={`pl-4 group-hover:underline ${
+                          className={`pl-4 group-hover:underline truncate block max-w-[90%] ${
                             pathname === `/${routeName}/${post.slug}`
                               ? routeName === "games"
                                 ? "text-blue-700 dark:text-blue-300 font-semibold"

@@ -10,7 +10,7 @@ export default function GameCardList() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {games.map((game) => (
             <Link key={game.slug} href={`/play/${game.slug}`}>
-              <div className="bg-white dark:bg-zinc-800 rounded-lg border-4 border-[#f9f9f9] dark:border-[#797979] shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+              <div className="bg-white dark:bg-zinc-800 rounded-lg border-4 border-[#f9f9f9] dark:border-[#797979] shadow-lg dark:shadow-lg overflow-hidden hover:shadow-xl dark:hover:shadow-lg transition-shadow duration-300 cursor-pointer">
                 <div className="relative w-full h-48">
                   {game.image ? (
                     <Image
