@@ -15,6 +15,9 @@ const config = {
         dark: "#0F0F0F",
         bright: "#FFFFFF",
       },
+      boxShadow: {
+        "bg-glow": "inset 0 0 30px rgba(0,0,0,0.1)",
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {

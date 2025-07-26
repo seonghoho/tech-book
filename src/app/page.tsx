@@ -13,12 +13,12 @@ export default function Home() {
       <div className="flex flex-col gap-20">
         <div className="flex flex-1 w-full justify-center space-x-4">
           <Link href="/posts">
-            <div className="px-6 py-3 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition-colors">
+            <div className="px-6 py-3 bg-green-400 text-white rounded-lg hover:bg-green-500 transition-colors">
               기술 문서 보러가기
             </div>
           </Link>
           <Link href="/games">
-            <div className="px-6 py-3 bg-green-400 text-white rounded-lg hover:bg-green-500 transition-colors">
+            <div className="px-6 py-3 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition-colors">
               웹 게임 하러가기
             </div>
           </Link>
