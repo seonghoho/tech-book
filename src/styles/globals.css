@@ -1,5 +1,6 @@
 @import "../styles/layout.css";
 @import "./fonts.css";
+@import "prismjs/themes/prism-tomorrow.css";
 
 @tailwind base;
 @tailwind components;

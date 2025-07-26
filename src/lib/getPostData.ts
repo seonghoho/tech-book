@@ -7,10 +7,11 @@ import remarkRehype from "remark-rehype";
 import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
+import rehypePrism from "rehype-prism-plus";
 
 const contentDirectory = path.join(process.cwd(), "src", "content");
 
-export async function getPostData(type: 'posts' | 'games', slug: string) {
+export async function getPostData(type: "posts" | "games", slug: string) {
   const fullPath = path.join(contentDirectory, type, `${slug}.md`);
 
   if (!fs.existsSync(fullPath)) {
@@ -24,6 +25,7 @@ export async function getPostData(type: 'posts' | 'games', slug: string) {
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkRehype)
+    .use(rehypePrism)
     .use(rehypeSlug)
     .use(rehypeStringify)
     .process(content);

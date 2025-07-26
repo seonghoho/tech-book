@@ -38,13 +38,14 @@ const config = {
             },
             p: {
               color: theme("colors.gray.700"),
-              lineHeight: "1.8",
+              // lineHeight: "1.8",
             },
             code: {
               backgroundColor: theme("colors.gray.400"),
               padding: "2px 4px",
               borderRadius: "0.25rem",
-              color: theme("colors.green.700"),
+              fontFamily: theme("fontFamily.mono"),
+              // color: theme("colors.gray.700"),
             },
 
             pre: {
@@ -54,6 +55,11 @@ const config = {
               border: `1px solid white`,
               borderRadius: "0.5rem",
               overflowX: "auto",
+              code: {
+                backgroundColor: "transparent", // prism 테마가 덮어씌움
+                padding: "0",
+                color: "inherit",
+              },
             },
             blockquote: {
               borderLeftColor: theme("colors.gray.200"),
@@ -72,7 +78,7 @@ const config = {
               listStyleType: "decimal", // 숫자 목록
             },
             "ol > li::marker": {
-              color: theme("colors.green.400"),
+              color: theme("colors.gray.400"),
               fontWeight: "bold",
             },
           },
@@ -86,7 +92,7 @@ const config = {
             p: { color: theme("colors.gray.300") },
             code: {
               backgroundColor: theme("colors.zinc.200"),
-              color: theme("colors.green.400"),
+              color: theme("colors.gray.400"),
             },
             pre: {
               backgroundColor: theme("colors.zinc.900"),
