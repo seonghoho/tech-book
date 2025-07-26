@@ -7,31 +7,12 @@ interface GameOverModalProps {
 
 const GameOverModal = ({ score, onRestart }: GameOverModalProps) => {
   return (
-    <div
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
-        color: "white",
-        zIndex: 100,
-      }}
-    >
-      <h2>Game Over</h2>
-      <h4>Your Score: {score}</h4>
+    <div className="absolute top-0 left-0 w-full h-[400px] flex flex-col justify-center items-center bg-black/70 text-white z-[100] font-press">
+      <h2 className="text-3xl mb-2">Game Over</h2>
+      <h4 className="text-xl mb-4">Your Score: {score}</h4>
       <button
         onClick={onRestart}
-        style={{
-          padding: "10px 20px",
-          fontSize: "1.2em",
-          cursor: "pointer",
-        }}
+        className="px-5 py-2 text-lg cursor-pointer bg-white text-black rounded hover:bg-gray-200"
       >
         Restart
       </button>

@@ -41,7 +41,7 @@ export default async function GamePlayPage({ params }: PageProps) {
       <h1 className="text-4xl font-bold mb-8 text-center">
         Playing {game.title}
       </h1>
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6">
         <GameComponent gameName={game.playSlug} />
       </div>
     </div>

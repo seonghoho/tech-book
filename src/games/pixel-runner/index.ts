@@ -11,7 +11,7 @@ export async function init(
     container.removeChild(container.firstChild);
   }
 
-  console.log("index.ts: init function started");
+  // console.log("index.ts: init function started");
   // Preload all assets
   const assetsToLoad: string[] = [];
 

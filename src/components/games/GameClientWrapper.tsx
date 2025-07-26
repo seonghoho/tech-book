@@ -66,9 +66,7 @@ const GameClientWrapper = ({
     };
   }, []);
 
-  return (
-    <div ref={gameContainerRef} style={{ width: "100%", height: "100%" }} />
-  );
+  return <div ref={gameContainerRef} className="w-full h-full" />;
 };
 
 export default GameClientWrapper;
