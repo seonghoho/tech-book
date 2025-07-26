@@ -5,7 +5,7 @@ import { PostMeta } from "@/types/post";
 
 const contentDirectory = path.join(process.cwd(), "src", "content");
 
-export function getPostsByCategory(type: 'posts' | 'games') {
+export function getPostsByCategory(type: "posts" | "games") {
   const currentDirectory = path.join(contentDirectory, type);
 
   if (!fs.existsSync(currentDirectory)) {
@@ -22,9 +22,11 @@ export function getPostsByCategory(type: 'posts' | 'games') {
 
   categories.forEach((category) => {
     const categoryPath = path.join(currentDirectory, category);
-    const files = fs.readdirSync(categoryPath).filter(file => file.endsWith('.md'));
+    const files = fs
+      .readdirSync(categoryPath)
+      .filter((file) => file.endsWith(".md"));
 
-    result[category] = files.map((file) => {
+    const posts = files.map((file) => {
       const slug = file.replace(/\.md$/, "");
       const fullPath = path.join(categoryPath, file);
       const content = fs.readFileSync(fullPath, "utf8");
@@ -36,6 +38,13 @@ export function getPostsByCategory(type: 'posts' | 'games') {
         date: data.date,
       };
     });
+
+    // Sort posts by date descending
+    posts.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
+
+    result[category] = posts;
   });
 
   return result;
