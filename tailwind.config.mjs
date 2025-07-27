@@ -38,6 +38,7 @@ const config = {
             },
             p: {
               color: theme("colors.gray.700"),
+              margin: "0em",
               // lineHeight: "1.8",
             },
             code: {
