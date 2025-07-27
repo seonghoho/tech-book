@@ -91,6 +91,7 @@ export default async function PostPage({ params }: PageProps) {
               ? { title: nextPost.title, url: `/games/${nextPost.slug}` }
               : null
           }
+          slugString={slugString.split("/")[0]}
         />
       </main>
       <aside className="hidden xl:flex xl:flex-col w-64 gap-6 sticky-section">

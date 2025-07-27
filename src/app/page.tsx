@@ -19,7 +19,7 @@ export default function Home() {
           </Link>
           <Link href="/games">
             <div className="px-6 py-3 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition-colors">
-              웹 게임 하러가기
+              게임 문서 보러가기
             </div>
           </Link>
         </div>

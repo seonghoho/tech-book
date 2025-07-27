@@ -42,7 +42,7 @@ export async function init(
   const app = new Application();
 
   await app.init({
-    background: "#021f4b",
+    background: "#ffffff",
     width: container.clientWidth,
     height: 400,
   });

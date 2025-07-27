@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PostNavCard } from "./PostNavCard";
 import { PostNav } from "@/types/post";
 
@@ -8,6 +9,7 @@ type Props = {
   contentHtml: string;
   prevPost?: PostNav | null;
   nextPost?: PostNav | null;
+  slugString?: string | null;
 };
 
 export default function PostContent({
@@ -17,6 +19,7 @@ export default function PostContent({
   contentHtml,
   prevPost,
   nextPost,
+  slugString,
 }: Props) {
   return (
     <article className="prose dark:prose-invert w-full">
@@ -35,6 +38,15 @@ export default function PostContent({
           className="prose dark:prose-invert"
           dangerouslySetInnerHTML={{ __html: contentHtml }}
         />
+        {slugString ? (
+          <Link href={`/play/${slugString}`}>
+            <div className="flex flex-col border-2 border-[#d9d9d9] rounded-lg p-4 mt-4 w-full hover:shadow-sm hover:border-green-500 transition-all bg-gray-50 text-[1.4rem] dark:bg-[#1a1a1a]">
+              게임하러 가기
+            </div>
+          </Link>
+        ) : (
+          ""
+        )}
         <div className="flex flex-row gap-4 py-8">
           {prevPost ? (
             <PostNavCard post={prevPost} direction="prev" />
