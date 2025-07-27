@@ -58,7 +58,7 @@ export default function PostIndex({ headings }: { headings: Heading[] }) {
           >
             <a
               href={`#${h.id}`}
-              className={`hover:underline text-gray-800 dark:text-gray-200 ${
+              className={`hover:underline text-gray-800 dark:text-gray-200 truncate block w-[110%] ${
                 activeId === h.id ? "text-blue-500 font-bold" : ""
               }`}
             >
