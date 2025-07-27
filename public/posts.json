@@ -63,11 +63,18 @@
     "description": "두 점으로 그리는 도형 4가지의 로직을 하나의 객체로 통합합니다."
   },
   {
-    "slug": "pixel-runner/01-pixel-runner",
+    "slug": "pixel-runner/01",
     "type": "games",
-    "title": "01. pixi.js로 게임만들기",
+    "title": "EP01. Pixi.js란? (픽셀게임 만들기)",
     "date": "2025-07-19",
-    "description": "javascript 라이브러리 pixi.js에 대해"
+    "description": "픽셀 게임을 만들기 위한 javascript 라이브러리 pixi.js에 대해 알아봅니다."
+  },
+  {
+    "slug": "pixel-runner/02",
+    "type": "games",
+    "title": "EP02. Sprite 이미지와 에셋에 대해",
+    "date": "2025-07-20",
+    "description": "2D 게임을 제작할 때 사용하는 sprite 이미지에 대해 학습합니다."
   },
   {
     "slug": "space-shooter/01-space-shooter",

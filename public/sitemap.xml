@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tech-book-lime.vercel.app/</loc>
-    <lastmod>2025-07-25T02:20:51.186Z</lastmod>
+    <lastmod>2025-07-27T02:42:45.143Z</lastmod>
   </url>
   
   <url>
@@ -43,8 +43,12 @@
   </url>
   
   <url>
-    <loc>https://tech-book-lime.vercel.app/games/pixel-runner/01-pixel-runner</loc>
+    <loc>https://tech-book-lime.vercel.app/games/pixel-runner/01</loc>
     <lastmod>2025-07-19</lastmod>
+  </url>
+  <url>
+    <loc>https://tech-book-lime.vercel.app/games/pixel-runner/02</loc>
+    <lastmod>2025-07-20</lastmod>
   </url>
   <url>
     <loc>https://tech-book-lime.vercel.app/games/space-shooter/01-space-shooter</loc>
