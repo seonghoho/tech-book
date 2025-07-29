@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Footer = () => {
   return (
     <footer className="w-full py-8 border-t border-border bg-white dark:bg-dark text-center text-sm text-gray-800 dark:text-gray-200">
@@ -19,6 +21,13 @@ const Footer = () => {
           >
             Who Am I?
           </a>
+          {" | "}
+          <Link
+            href="/ux-lab"
+            className="underline hover:text-black dark:hover:text-white"
+          >
+            ux-lab
+          </Link>
         </div>
       </div>
     </footer>
