@@ -1,6 +1,6 @@
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
 import PostsList from "@/components/layout/PostsList";
-import GameCardList from "@/components/layout/GameCardList";
+// import GameCardList from "@/components/layout/GameCardList";
 
 export default function GamesPage() {
   const postsByCategory = getPostsByCategory("games");
@@ -10,9 +10,9 @@ export default function GamesPage() {
       <div className="flex-1">
         <PostsList postsByCategory={postsByCategory} type="games" />
       </div>
-      <div className="flex-1">
+      {/* <div className="flex-1">
         <GameCardList />
-      </div>
+      </div> */}
     </main>
   );
 }
