@@ -57,7 +57,9 @@ export class Game {
       this.app.screen.width / 2,
       this.app.screen.height - 50
     );
-    this.app.stage.addChild(this.player.display); // display는 Player가 갖는 PIXI.Graphics 인스턴스
+    if (this.player.display) {
+      this.app.stage.addChild(this.player.display); // display는 Player가 갖는 PIXI.Sprite 인스턴스
+    }
   }
 
   public init() {
@@ -220,7 +222,7 @@ export class Game {
     if (this.gameState !== "playing") return;
     const bullet = new Bullet(
       this.app,
-      this.player.x + this.player.width / 2 - gameConfig.bulletWidth / 2,
+      this.player.x + this.player.width / 2 - gameConfig.bulletWidth / 2 - 25,
       this.player.y
     );
     this.bullets.push(bullet);
