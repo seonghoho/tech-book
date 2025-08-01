@@ -80,7 +80,7 @@
     "slug": "space-shooter/01-space-shooter",
     "type": "games",
     "title": "Space Shooter",
-    "date": "2025-07-19",
-    "description": "A classic arcade space shooter game built with Pixi.js."
+    "date": "2025-08-01",
+    "description": "A classic arcade space shooter game where you control a spaceship and shoot down incoming enemies."
   }
 ]
