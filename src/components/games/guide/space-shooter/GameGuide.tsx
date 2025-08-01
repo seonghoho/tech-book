@@ -12,13 +12,13 @@ const GameGuide = () => {
             <span>← →</span>
           </div>
           <div className="flex justify-between sm:gap-2 sm:w-auto w-48">
-            <span>점프</span>
+            <span>공격</span>
             <span>Space</span>
           </div>
-          <div className="flex justify-between sm:gap-2 sm:w-auto w-48">
+          {/* <div className="flex justify-between sm:gap-2 sm:w-auto w-48">
             <span>공격</span>
             <span>Z/X/C</span>
-          </div>
+          </div> */}
         </div>
         {/* <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-center justify-center sm:justify-between w-full sm:w-auto">
           <div className="flex justify-between sm:gap-2 sm:w-auto w-48">
