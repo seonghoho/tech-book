@@ -1,4 +1,9 @@
-import { Application } from "pixi.js";
+import { Application, Graphics } from "pixi.js";
+
+interface StarGraphic extends Graphics {
+  isStar: boolean;
+}
+
 import { Game } from "./game/Game";
 
 /**
@@ -20,13 +25,38 @@ export async function init(
   // 2. PIXI 앱 생성 및 초기화 (비동기)
   const app = new Application();
   await app.init({
-    background: "#333333",
+    background: "#000000",
     width: container.clientWidth,
     height: 400,
   });
-
   // 3. PIXI 캔버스 DOM에 추가
   container.appendChild(app.canvas);
+
+  // 별 생성
+  const starCount = 60; // 별 개수
+  for (let i = 0; i < starCount; i++) {
+    const star = new Graphics() as StarGraphic;
+    // 무작위 색상 선택
+    const colors = [0xffffff, 0xffd700, 0x87ceeb, 0xff69b4, 0x00ff00];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    star.beginFill(color);
+    star.drawRect(0, 0, 2, 2); // 작은 사각형 (도트 느낌)
+    star.endFill();
+    star.x = Math.random() * app.screen.width;
+    star.y = Math.random() * app.screen.height;
+
+    app.stage.addChild(star);
+    star.isStar = true;
+  }
+
+  // 배경 별 점멸 효과 (옵션)
+  app.ticker.add(() => {
+    app.stage.children.forEach((child) => {
+      if ((child as StarGraphic).isStar) {
+        child.alpha = 0.5 + Math.random() * 0.5; // 반짝임 효과
+      }
+    });
+  });
 
   // 4. Game 인스턴스 생성 및 초기화 (비동기)
   const game = new Game(app, onGameOver, onScoreUpdate);
