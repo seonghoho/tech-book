@@ -1,0 +1,12 @@
+{
+  "gameWidth": 800,
+  "gameHeight": 600,
+  "playerSpeed": 5,
+  "bulletSpeed": 7,
+  "bulletWidth": 5,
+  "bulletHeight": 15,
+  "enemySpeed": 2,
+  "enemyWidth": 40,
+  "enemyHeight": 40,
+  "enemySpawnInterval": 1500
+}
