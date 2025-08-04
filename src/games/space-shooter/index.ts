@@ -27,7 +27,7 @@ export async function init(
   await app.init({
     background: "#000000",
     width: container.clientWidth,
-    height: 400,
+    height: container.clientHeight,
   });
   // 3. PIXI 캔버스 DOM에 추가
   container.appendChild(app.canvas);

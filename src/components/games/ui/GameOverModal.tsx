@@ -7,7 +7,7 @@ interface GameOverModalProps {
 
 const GameOverModal = ({ score, onRestart }: GameOverModalProps) => {
   return (
-    <div className="absolute top-0 left-0 w-full h-[400px] flex flex-col justify-center items-center bg-black/70 text-white z-[100] font-press">
+    <div className="absolute top-0 left-0 w-full min-h-[500px] h-[50vh] flex flex-col justify-center items-center bg-black/70 text-white z-[100] font-press">
       <h2 className="text-3xl mb-2">Game Over</h2>
       <h4 className="text-xl mb-4">Your Score: {score}</h4>
       <button

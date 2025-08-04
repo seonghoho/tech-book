@@ -23,7 +23,8 @@ const GameComponent = ({ gameName }: GameComponentProps) => {
   const [score, setScore] = useState<number>(0);
   const gameInstanceRef = useRef<IGame | null>(null); // Ref to hold the Game class instance
 
-  const Guide = GuideComponents[gameName as keyof typeof GuideComponents] || null;
+  const Guide =
+    GuideComponents[gameName as keyof typeof GuideComponents] || null;
 
   const handleStartGame = () => {
     setGameState("playing");
@@ -60,7 +61,7 @@ const GameComponent = ({ gameName }: GameComponentProps) => {
 
   return (
     <div className="relative w-full h-full">
-      <div className="h-[400px]">
+      <div className="min-h-[500px] h-[50vh]">
         {gameState === "ready" && <StartMenu onStart={handleStartGame} />}
         {gameState === "gameOver" && (
           <GameOverModal score={score} onRestart={handleRestartGame} />
