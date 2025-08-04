@@ -38,6 +38,15 @@ export class KeyboardManager {
   }
 
   private onKeyDown = (e: KeyboardEvent) => {
+    const allowDefault =
+      e.metaKey || // macOS Command
+      (e.ctrlKey &&
+        ["c", "v", "x", "a", "z", "y"].includes(e.key.toLowerCase()));
+
+    if (!allowDefault) {
+      e.preventDefault();
+    }
+
     this.keyDownHandlers.forEach((handler) => handler(e));
   };
 
