@@ -1,7 +1,7 @@
 const GameGuide = () => {
   return (
     <div className="flex flex-col gap-4">
-      <div className="font-press flex flex-col sm:flex-row items-center justify-center font-semibold text-lg py-2">
+      <div className="font-press flex flex-col sm:flex-row items-center justify-center font-semibold text-lg py-2 gap-0 sm:gap-4">
         <span>방향키를 이용해 </span>
         <span>장애물을 제거하세요!</span>
       </div>
