@@ -1,3 +1,4 @@
+// import { SunIcon } from "@/assets/svg";
 import GameCardList from "@/components/layout/GameCardList";
 import Link from "next/link";
 
@@ -10,6 +11,9 @@ export default function Home() {
       <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
         학습한 내용과 관심사를 업로드합니다.
       </p>
+      {/* <div className="w-[400px] h-[400px]">
+        <SunIcon />
+      </div> */}
       <div className="flex flex-col gap-20">
         <div className="flex flex-1 w-full justify-center space-x-4">
           <Link href="/posts">

@@ -27,3 +27,30 @@ body {
 .prose h4 {
   @apply scroll-m-24;
 }
+
+/* 애니메이션 */
+
+@keyframes move-face {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  16% {
+    transform: translate(-1px, -1px);
+  }
+  33.34% {
+    transform: translate(-2px, 0px);
+  }
+  50% {
+    transform: translate(0px, -1px);
+  }
+  66.67% {
+    transform: translate(2px, 0px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+.move-face {
+  animation: move-face 8s linear infinite;
+}
