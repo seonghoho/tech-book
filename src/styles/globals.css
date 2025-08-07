@@ -30,18 +30,20 @@ body {
 
 /* 애니메이션 */
 
-@keyframes move-face {
+/* @keyframes move-face {
   0% {
     transform: translate(0px, 0px);
   }
   16% {
-    transform: translate(-1px, -1px);
+    transform: translate(-2px, -2px);
   }
+
   33.34% {
     transform: translate(-2px, 0px);
   }
-  50% {
-    transform: translate(0px, -1px);
+
+  48% {
+    transform: translate(2px, -2px);
   }
   66.67% {
     transform: translate(2px, 0px);
@@ -49,8 +51,25 @@ body {
   100% {
     transform: translate(0px, 0px);
   }
+} */
+
+@keyframes move-face {
+  0% {
+    transform: translate(0px, 0px);
+  }
+
+  33.34% {
+    transform: translate(0px, -2px);
+  }
+
+  66.67% {
+    transform: translate(0px, 2px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
 }
 
 .move-face {
-  animation: move-face 8s linear infinite;
+  animation: move-face 3s ease-in infinite;
 }
