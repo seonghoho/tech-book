@@ -1,79 +1,126 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
+
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      
       <url>
         <loc>https://tech-book-lime.vercel.app/</loc>
-        <lastmod>2025-08-19T04:25:37.538Z</lastmod>
+        <lastmod>2025-08-22T00:04:54.551Z</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
       </url>
+    
       <url>
         <loc>https://tech-book-lime.vercel.app/about</loc>
-        <lastmod>2025-08-19T04:25:37.538Z</lastmod>
+        <lastmod>2025-08-22T00:04:54.551Z</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
       </url>
+    
       <url>
         <loc>https://tech-book-lime.vercel.app/posts</loc>
-        <lastmod>2025-08-19T04:25:37.538Z</lastmod>
+        <lastmod>2025-08-22T00:04:54.551Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
       </url>
+    
       <url>
         <loc>https://tech-book-lime.vercel.app/games</loc>
-        <lastmod>2025-08-19T04:25:37.538Z</lastmod>
+        <lastmod>2025-08-22T00:04:54.551Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
       </url>
-  
+    
+      <url>
+        <loc>https://tech-book-lime.vercel.app/ux-lab</loc>
+        <lastmod>2025-08-22T00:04:54.551Z</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+      </url>
+    
+      
       <url>
         <loc>https://tech-book-lime.vercel.app/posts/mordern-js-deep-dive/04</loc>
-        <lastmod>2025-06-24</lastmod>
+        <lastmod>2025-06-24T00:00:00.000Z</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
       </url>
+    
       <url>
         <loc>https://tech-book-lime.vercel.app/posts/mordern-js-deep-dive/05</loc>
-        <lastmod>2025-06-25</lastmod>
+        <lastmod>2025-06-25T00:00:00.000Z</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
       </url>
+    
       <url>
         <loc>https://tech-book-lime.vercel.app/posts/mordern-js-deep-dive/06</loc>
-        <lastmod>2025-06-26</lastmod>
+        <lastmod>2025-06-26T00:00:00.000Z</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
       </url>
+    
       <url>
         <loc>https://tech-book-lime.vercel.app/posts/mordern-js-deep-dive/07</loc>
-        <lastmod>2025-07-16</lastmod>
+        <lastmod>2025-07-16T00:00:00.000Z</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
       </url>
+    
       <url>
         <loc>https://tech-book-lime.vercel.app/posts/svg-editor/three-js-camera-state</loc>
-        <lastmod>2025-07-24</lastmod>
+        <lastmod>2025-07-24T00:00:00.000Z</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
       </url>
+    
       <url>
         <loc>https://tech-book-lime.vercel.app/posts/svg-editor/three-js-gimbal-lock</loc>
-        <lastmod>2025-07-25</lastmod>
+        <lastmod>2025-07-25T00:00:00.000Z</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
       </url>
+    
       <url>
         <loc>https://tech-book-lime.vercel.app/posts/svg-editor/three-js-line-basic-meterial</loc>
-        <lastmod>2025-07-24</lastmod>
+        <lastmod>2025-07-24T00:00:00.000Z</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
       </url>
+    
       <url>
         <loc>https://tech-book-lime.vercel.app/posts/svg-editor/three-js-line-geometry-error</loc>
-        <lastmod>2025-07-11</lastmod>
+        <lastmod>2025-07-11T00:00:00.000Z</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
       </url>
+    
       <url>
         <loc>https://tech-book-lime.vercel.app/posts/svg-editor/use-line</loc>
-        <lastmod>2024-12-19</lastmod>
+        <lastmod>2024-12-19T00:00:00.000Z</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
       </url>
-  
+    
+      
       <url>
         <loc>https://tech-book-lime.vercel.app/games/pixel-runner/01</loc>
-        <lastmod>2025-07-19</lastmod>
+        <lastmod>2025-07-19T00:00:00.000Z</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
       </url>
+    
       <url>
         <loc>https://tech-book-lime.vercel.app/games/pixel-runner/02</loc>
-        <lastmod>2025-07-20</lastmod>
+        <lastmod>2025-07-20T00:00:00.000Z</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
       </url>
+    
       <url>
         <loc>https://tech-book-lime.vercel.app/games/space-shooter/01-space-shooter</loc>
-        <lastmod>2025-08-01</lastmod>
+        <lastmod>2025-08-01T00:00:00.000Z</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
       </url>
+    
+    </urlset>
   
-      <url>
-        <loc>https://tech-book-lime.vercel.app/play/pixel-runner</loc> 
-        <lastmod>2025-08-19T04:25:37.538Z</lastmod>
-      </url>
-      <url>
-        <loc>https://tech-book-lime.vercel.app/play/space-shooter</loc> 
-        <lastmod>2025-08-19T04:25:37.538Z</lastmod>
-      </url>
-</urlset>

@@ -1,81 +1,91 @@
 import fs from "fs";
-import path from "path";
-import { getAllPosts } from "../src/lib/getAllPosts.ts";
-import { games } from "../src/lib/gamesData.ts";
+import { getAllPosts } from "../src/lib/getAllPosts.js";
 
-try {
-  const siteUrl = "https://tech-book-lime.vercel.app";
+const SITE_URL = "https://tech-book-lime.vercel.app";
 
-  console.log("Getting posts...");
+const generateSitemap = () => {
   const posts = getAllPosts("posts");
-  console.log(`Found ${posts.length} posts.`);
+  const games = getAllPosts("games");
+  const today = new Date().toISOString();
 
-  console.log("Getting games...");
-  const gameArticles = getAllPosts("games"); // renamed to avoid conflict
-  console.log(`Found ${gameArticles.length} games.`);
+  const staticPages = [
+    {
+      loc: `${SITE_URL}/`,
+      priority: "1.0",
+      changefreq: "daily",
+    },
+    {
+      loc: `${SITE_URL}/about`,
+      priority: "0.8",
+      changefreq: "monthly",
+    },
+    {
+      loc: `${SITE_URL}/posts`,
+      priority: "0.8",
+      changefreq: "weekly",
+    },
+    {
+      loc: `${SITE_URL}/games`,
+      priority: "0.8",
+      changefreq: "weekly",
+    },
+    {
+      loc: `${SITE_URL}/ux-lab`,
+      priority: "0.5",
+      changefreq: "monthly",
+    },
+  ];
 
-  const postUrls = posts
-    .map((post) => {
-      if (!post || !post.slug || !post.date) {
-        console.error("Invalid post object:", post);
-        return "";
-      }
+  const staticPageXml = staticPages
+    .map(({ loc, priority, changefreq }) => {
       return `
       <url>
-        <loc>${siteUrl}/posts/${post.slug}</loc>
-        <lastmod>${post.date}</lastmod>
-      </url>`;
+        <loc>${loc}</loc>
+        <lastmod>${today}</lastmod>
+        <changefreq>${changefreq}</changefreq>
+        <priority>${priority}</priority>
+      </url>
+    `;
     })
     .join("");
 
-  const gameUrls = gameArticles
-    .map((post) => {
-      if (!post || !post.slug || !post.date) {
-        console.error("Invalid game post object:", post);
-        return "";
-      }
+  const postPagesXml = posts
+    .map(({ slug, date }) => {
       return `
       <url>
-        <loc>${siteUrl}/games/${post.slug}</loc>
-        <lastmod>${post.date}</lastmod>
-      </url>`;
+        <loc>${SITE_URL}/posts/${slug}</loc>
+        <lastmod>${new Date(date).toISOString()}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+      </url>
+    `;
     })
     .join("");
 
-  const gamePlayUrls = games // use the imported 'games'
-    .map(
-      (game) => `
+  const gamePagesXml = games
+    .map(({ slug, date }) => {
+      return `
       <url>
-        <loc>${siteUrl}/play/${game.playSlug}</loc> 
-        <lastmod>${new Date().toISOString()}</lastmod>
-      </url>`
-    )
+        <loc>${SITE_URL}/games/${slug}</loc>
+        <lastmod>${new Date(date).toISOString()}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+      </url>
+    `;
+    })
     .join("");
 
-  const staticPages = ["", "about", "posts", "games"];
+  const sitemap = `
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      ${staticPageXml}
+      ${postPagesXml}
+      ${gamePagesXml}
+    </urlset>
+  `;
 
-  const staticPageUrls = staticPages
-    .map(
-      (page) => `
-      <url>
-        <loc>${siteUrl}/${page}</loc>
-        <lastmod>${new Date().toISOString()}</lastmod>
-      </url>`
-    )
-    .join("");
+  fs.writeFileSync("public/sitemap.xml", sitemap);
 
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ${staticPageUrls}
-  ${postUrls}
-  ${gameUrls}
-  ${gamePlayUrls}
-</urlset>`;
+  console.log("Sitemap generated successfully!");
+};
 
-  fs.writeFileSync(path.join(process.cwd(), "public", "sitemap.xml"), sitemap);
-
-  console.log("✅ sitemap.xml generated");
-} catch (error) {
-  console.error("Error generating sitemap:", error);
-  process.exit(1);
-}
+generateSitemap();
