@@ -20,9 +20,9 @@ export default function GameCardList() {
                     <Image
                       src={game.image}
                       alt={game.title}
-                      layout="fill"
-                      objectFit="cover"
                       className="w-full h-auto rounded-t-sm object-cover"
+                      fill
+                      style={{ objectFit: "cover" }}
                     />
                   ) : (
                     <div className="w-full h-full bg-gray-200 dark:bg-zinc-700 flex items-center justify-center rounded-t-lg">
