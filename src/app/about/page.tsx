@@ -1,6 +1,11 @@
 import { GithubIcon, MailIcon, PhoneIcon } from "@/assets/svg";
 import Image from "next/image";
 
+export const metadata = {
+  title: "About | TechBook",
+  description: "TechBook을 운영하는 FrontEnd 개발자를 소개합니다.",
+};
+
 const page = () => {
   const contactData = [
     { icon: PhoneIcon, content: "010-5512-4339", type: "tel" },
@@ -15,7 +20,7 @@ const page = () => {
           <Image
             className="rounded-xl object-cover"
             src="/images/Profile.JPG"
-            alt="프로필 사진"
+            alt="개발자 최성호 프로필 사진"
             width={300}
             height={400}
             priority

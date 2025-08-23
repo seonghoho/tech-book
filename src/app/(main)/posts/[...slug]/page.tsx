@@ -26,13 +26,15 @@ export async function generateMetadata({ params }: PageProps) {
   const slugString = slug.join("/");
   const post = await getPostData("posts", slugString);
 
+  const excerpt = post.rawMarkdown.substring(0, 150).replace(/\n/g, " ");
+
   return {
     title: post.title,
     description:
-      post.description ?? `${post.title}에 대한 기술 블로그 포스트입니다.`,
+      post.description ?? excerpt,
     openGraph: {
       title: post.title,
-      description: post.description ?? `${post.title} 관련 정보`,
+      description: post.description ?? excerpt,
       url: `https://tech-book-lime.vercel.app/posts/${slugString}`,
       siteName: "TechBook",
       images: [
@@ -76,8 +78,36 @@ export default async function PostPage({ params }: PageProps) {
   const nextPost =
     currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://tech-book-lime.vercel.app/posts/${slugString}`,
+    },
+    headline: post.title,
+    description: post.description ?? excerpt,
+    datePublished: new Date(post.date).toISOString(),
+    author: {
+      "@type": "Person",
+      name: "Choi Seongho",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "TechBook",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://tech-book-lime.vercel.app/og-image.png",
+      },
+    },
+  };
+
   return (
     <div className="flex w-full">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <main className="flex flex-1 overflow-y-auto scrollbar-hide xl:border-border xl:border-r py-6">
         <PostContent
           title={post.title}
