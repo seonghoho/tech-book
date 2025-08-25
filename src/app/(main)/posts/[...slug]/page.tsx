@@ -30,8 +30,7 @@ export async function generateMetadata({ params }: PageProps) {
 
   return {
     title: post.title,
-    description:
-      post.description ?? excerpt,
+    description: post.description ?? excerpt,
     openGraph: {
       title: post.title,
       description: post.description ?? excerpt,
@@ -86,7 +85,7 @@ export default async function PostPage({ params }: PageProps) {
       "@id": `https://tech-book-lime.vercel.app/posts/${slugString}`,
     },
     headline: post.title,
-    description: post.description ?? excerpt,
+    description: post.description,
     datePublished: new Date(post.date).toISOString(),
     author: {
       "@type": "Person",
