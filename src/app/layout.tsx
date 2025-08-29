@@ -10,14 +10,24 @@ import { getPostsByCategory } from "@/lib/getPostsByCategory";
 
 export const metadata = {
   title: "TechBook: 개발자를 위한 기술 블로그",
-  description: "Modern JavaScript, Three.js, SVG 등 프론트엔드 기술을 깊이 있게 다루는 기술 블로그입니다.",
-  keywords: ["JavaScript", "Three.js", "SVG", "Frontend", "프론트엔드", "기술 블로그", "Tech Blog"],
+  description:
+    "Modern JavaScript, Three.js, SVG 등 프론트엔드 기술을 깊이 있게 다루는 기술 블로그입니다.",
+  keywords: [
+    "JavaScript",
+    "Three.js",
+    "SVG",
+    "Frontend",
+    "프론트엔드",
+    "기술 블로그",
+    "Tech Blog",
+  ],
   authors: [
     { name: "Choi Seongho", url: "https://tech-book-lime.vercel.app/" },
   ],
   openGraph: {
     title: "TechBook: 개발자를 위한 기술 블로그",
-    description: "Modern JavaScript, Three.js, SVG 등 프론트엔드 기술을 깊이 있게 다루는 기술 블로그입니다.",
+    description:
+      "Modern JavaScript, Three.js, SVG 등 프론트엔드 기술을 깊이 있게 다루는 기술 블로그입니다.",
     url: "https://tech-book-lime.vercel.app/",
     siteName: "TechBook",
     images: [
