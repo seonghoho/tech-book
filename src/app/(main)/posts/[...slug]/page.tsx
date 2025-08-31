@@ -6,7 +6,7 @@ import { getPostsByCategory } from "@/lib/getPostsByCategory";
 import dynamic from "next/dynamic";
 
 const PostContent = dynamic(() => import("@/components/posts/PostContent"), {
-  ssr: true, // optional
+  ssr: true, 
 });
 
 interface PageProps {
