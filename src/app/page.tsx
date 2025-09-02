@@ -1,35 +1,40 @@
-// import { SunIcon } from "@/assets/svg";
 import GameCardList from "@/components/layout/GameCardList";
-import Link from "next/link";
+import Hero from "@/components/landing/Hero";
+import RecentPostsList from "@/components/landing/RecentPostsList";
+import { getAllPosts } from "@/lib/getAllPosts";
+import AnimatedSection from "@/components/landing/AnimatedSection";
 
 export default function Home() {
+  const recentPosts = getAllPosts("posts").slice(0, 3);
+
   return (
-    <main className="flex flex-col items-center justify-center flex-1 text-center p-8">
-      <h1 className="text-4xl font-bold mb-4">
-        TechBook에 오신 것을 환영합니다
-      </h1>
-      <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
-        학습한 내용과 관심사를 업로드합니다.
-      </p>
-      {/* <div className="w-[400px] h-[400px]">
-        <SunIcon />
-      </div> */}
-      <div className="flex flex-col gap-20">
-        <div className="flex flex-1 w-full justify-center space-x-4">
-          <Link href="/posts">
-            <div className="px-6 py-3 bg-green-400 text-white rounded-lg hover:bg-green-500 transition-colors">
-              기술 문서 보러가기
-            </div>
-          </Link>
-          <Link href="/games">
-            <div className="px-6 py-3 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition-colors">
-              게임 문서 보러가기
-            </div>
-          </Link>
-        </div>
-        <div className="flex-1">
+    <main className="flex-1 bg-white dark:bg-gray-900">
+      <Hero />
+      <div className="py-16 sm:py-24 space-y-24">
+        <AnimatedSection className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+              Featured Posts
+            </h2>
+            <p className="mt-3 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              My latest thoughts on technology, development, and everything in
+              between.
+            </p>
+          </div>
+          <RecentPostsList posts={recentPosts} />
+        </AnimatedSection>
+
+        <AnimatedSection className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+              Featured Games
+            </h2>
+            <p className="mt-3 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Check out some of the interactive game development logs.
+            </p>
+          </div>
           <GameCardList />
-        </div>
+        </AnimatedSection>
       </div>
     </main>
   );

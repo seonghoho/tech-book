@@ -8,3 +8,10 @@ export type PostMeta = {
   title: string;
   date: string;
 };
+
+export type Post = {
+  slug: string;
+  title: string;
+  date: string;
+  description?: string;
+};

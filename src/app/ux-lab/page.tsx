@@ -45,15 +45,11 @@ export default function UXLabPage() {
     let pmrem: PMREMGenerator | null = null;
     const hdrLoader = new RGBELoader();
     pmrem = new PMREMGenerator(renderer);
-    hdrLoader.load(
-      // public/hdr 폴더에 HDR 넣고 경로 맞추세요. (원치 않으면 이 블록 삭제)
-      "/hdr/royal_esplanade_1k.hdr",
-      (hdr) => {
-        const envMap = pmrem!.fromEquirectangular(hdr).texture;
-        scene.environment = envMap;
-        hdr.dispose();
-      }
-    );
+    hdrLoader.load("/hdr/royal_esplanade_1k.hdr", (hdr) => {
+      const envMap = pmrem!.fromEquirectangular(hdr).texture;
+      scene.environment = envMap;
+      hdr.dispose();
+    });
 
     /** 2) 렌더 루프 */
     let raf = 0;
