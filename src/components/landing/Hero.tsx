@@ -17,7 +17,7 @@ const Hero = () => {
         </Suspense>
       </div>
       <div className="relative z-10 flex flex-col items-center justify-center">
-        <h1 className="text-5xl md:text-7xl font-bold mb-4 text-white dark:text-gray-100 tracking-tighter">
+        <h1 className="text-5xl md:text-7xl font-bold mb-4 text-black dark:text-gray-100 tracking-tighter">
           Welcome to TechBook
         </h1>
         <p className="text-lg md:text-xl text-gray-200 dark:text-gray-300 mb-8 max-w-2xl">

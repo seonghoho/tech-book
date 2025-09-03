@@ -17,20 +17,17 @@ const Scene = () => {
   const isDraggingRef = useRef(false);
 
   const [spring, api] = useSpring(() => ({
-    rotation: [0, 0, 0],
+    rotation: [0, 0, 0] as [number, number, number],
     config: { friction: 25, tension: 180 },
   }));
 
-  const bind = useDrag(
-    ({ active, movement: [mx, my] }) => {
-      isDraggingRef.current = active;
-      api.start({
-        rotation: active ? [my / 100, mx / 100, 0] : [0, 0, 0],
-      });
-      return active;
-    },
-    { pointerEvents: true }
-  );
+  const bind = useDrag(({ active, offset: [oy, ox] }) => {
+    isDraggingRef.current = active;
+    api.start({
+      rotation: [ox / 100, oy / 100, 0],
+    });
+    return active;
+  });
 
   useFrame((state, delta) => {
     if (autoRotateGroup.current && !isDraggingRef.current) {
@@ -50,8 +47,10 @@ const Scene = () => {
         castShadow
       />
       <group ref={autoRotateGroup}>
-        {/* @ts-ignore */}
-        <a.group {...spring} {...bind()}>
+        <a.group
+          {...bind()}
+          rotation={spring.rotation as unknown as [number, number, number]}
+        >
           <DiceModel />
         </a.group>
       </group>
