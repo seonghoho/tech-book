@@ -3,6 +3,19 @@ import Hero from "@/components/landing/Hero";
 import RecentPostsList from "@/components/landing/RecentPostsList";
 import { getAllPosts } from "@/lib/getAllPosts";
 import AnimatedSection from "@/components/landing/AnimatedSection";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "TechBook: 개발자를 위한 기술 블로그",
+  description:
+    "Modern JavaScript, Three.js, SVG 등 프론트엔드 기술을 깊이 있게 다루는 기술 블로그입니다.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    url: "/",
+  },
+};
 
 export default function Home() {
   const recentPosts = getAllPosts("posts").slice(0, 3);

@@ -1,9 +1,12 @@
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
 import PostsList from "@/components/layout/PostsList";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Games | TechBook",
-  description: "JavaScript와 Canvas, WebGL을 사용하여 만든 간단한 웹 게임들을 플레이해보세요.",
+  description:
+    "JavaScript와 Canvas, WebGL을 사용하여 만든 간단한 웹 게임들을 플레이해보세요.",
+  alternates: { canonical: "/games" },
 };
 
 // import GameCardList from "@/components/layout/GameCardList";

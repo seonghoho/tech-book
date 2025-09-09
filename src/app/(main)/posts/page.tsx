@@ -1,13 +1,16 @@
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
 import PostsList from "@/components/layout/PostsList";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Posts | TechBook",
-  description: "프론트엔드, JavaScript, Three.js 등 다양한 기술 주제에 대한 포스트를 확인해보세요.",
+  description:
+    "프론트엔드, JavaScript, Three.js 등 다양한 기술 주제에 대한 포스트를 확인해보세요.",
+  alternates: { canonical: "/posts" },
 };
 
 export default function PostsPage() {
-  const postsByCategory = getPostsByCategory('posts');
+  const postsByCategory = getPostsByCategory("posts");
 
   return (
     <main className="sm:p-8 py-8">

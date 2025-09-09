@@ -2,6 +2,7 @@ import { getAllPosts } from "@/lib/getAllPosts";
 import PostIndex from "@/components/posts/PostIndex";
 import { extractHeadings } from "@/lib/getPostContent";
 import { getPostData } from "@/lib/getPostData";
+import { getSiteUrl } from "@/lib/site";
 
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
 import dynamic from "next/dynamic";
@@ -30,11 +31,11 @@ export async function generateMetadata({ params }: PageProps) {
     openGraph: {
       title: post.title,
       description: post.description ?? `${post.title} 관련 정보`,
-      url: `https://tech-book-lime.vercel.app/games/${slugString}`,
+      url: `/games/${slugString}`,
       siteName: "TechBook",
       images: [
         {
-          url: `https://tech-book-lime.vercel.app/og/${slugString}`,
+          url: `/og/${slugString}`,
           width: 1200,
           height: 630,
         },
@@ -48,9 +49,9 @@ export async function generateMetadata({ params }: PageProps) {
       description: post.description ?? `${post.title} 관련 정보`,
       images: ["/og-image.png"],
     },
-    metadataBase: new URL("https://tech-book-lime.vercel.app"),
+    metadataBase: new URL(getSiteUrl()),
     alternates: {
-      canonical: `https://tech-book-lime.vercel.app/games/${slugString}`,
+      canonical: `/games/${slugString}`,
     },
   };
 }

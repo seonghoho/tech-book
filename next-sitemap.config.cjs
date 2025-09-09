@@ -1,15 +1,18 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://tech-book-lime.vercel.app',
-  generateRobotsTxt: true, 
+  siteUrl:
+    process.env.SITE_URL ||
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    "https://tech-book-lime.vercel.app",
+  generateRobotsTxt: true,
   sitemapSize: 7000,
-  changefreq: 'daily',
+  changefreq: "daily",
   priority: 1,
   robotsTxtOptions: {
     policies: [
       {
-        userAgent: '*',
-        allow: '/',
+        userAgent: "*",
+        allow: "/",
       },
     ],
   },

@@ -7,6 +7,7 @@ import Footer from "@/components/common/Footer";
 import ClientHeaderWithSidebar from "@/components/layout/ClientHeaderWithSidebar";
 import SidebarContainer from "@/components/layout/SidebarContainer";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
+import { getSiteUrl } from "@/lib/site";
 
 export const metadata = {
   title: "TechBook: 개발자를 위한 기술 블로그",
@@ -21,14 +22,12 @@ export const metadata = {
     "기술 블로그",
     "Tech Blog",
   ],
-  authors: [
-    { name: "Choi Seongho", url: "https://tech-book-lime.vercel.app/" },
-  ],
+  authors: [{ name: "Choi Seongho", url: getSiteUrl() + "/" }],
   openGraph: {
     title: "TechBook: 개발자를 위한 기술 블로그",
     description:
       "Modern JavaScript, Three.js, SVG 등 프론트엔드 기술을 깊이 있게 다루는 기술 블로그입니다.",
-    url: "https://tech-book-lime.vercel.app/",
+    url: getSiteUrl() + "/",
     siteName: "TechBook",
     images: [
       {
@@ -51,7 +50,7 @@ export const metadata = {
     shortcut: "/favicon-32x32.png",
     apple: "/apple-touch-icon.png",
   },
-  metadataBase: new URL("https://tech-book-lime.vercel.app"),
+  metadataBase: new URL(getSiteUrl()),
   verification: {
     google: "rcy_pt8MaVt2F6XAtMBTNX_w5pRzOZ0KykSGdw71p-U",
   },

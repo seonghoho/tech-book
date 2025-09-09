@@ -1,6 +1,7 @@
 import PostIndex from "@/components/posts/PostIndex";
 import { extractHeadings } from "@/lib/getPostContent";
 import { getPostData } from "@/lib/getPostData";
+import { getSiteUrl } from "@/lib/site";
 
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
 import dynamic from "next/dynamic";
@@ -34,11 +35,11 @@ export async function generateMetadata({ params }: PageProps) {
     openGraph: {
       title: post.title,
       description: post.description ?? excerpt,
-      url: `https://tech-book-lime.vercel.app/posts/${slugString}`,
+      url: `/posts/${slugString}`,
       siteName: "TechBook",
       images: [
         {
-          url: `https://tech-book-lime.vercel.app/og/${slugString}`,
+          url: `/og/${slugString}`,
           width: 1200,
           height: 630,
         },
@@ -52,9 +53,9 @@ export async function generateMetadata({ params }: PageProps) {
       description: post.description ?? `${post.title} 관련 정보`,
       images: ["/og-image.png"],
     },
-    metadataBase: new URL("https://tech-book-lime.vercel.app"),
+    metadataBase: new URL(getSiteUrl()),
     alternates: {
-      canonical: `https://tech-book-lime.vercel.app/posts/${slugString}`,
+      canonical: `/posts/${slugString}`,
     },
   };
 }
@@ -82,7 +83,7 @@ export default async function PostPage({ params }: PageProps) {
     "@type": "Article",
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://tech-book-lime.vercel.app/posts/${slugString}`,
+      "@id": `${getSiteUrl()}/posts/${slugString}`,
     },
     headline: post.title,
     description: post.description,
@@ -96,7 +97,7 @@ export default async function PostPage({ params }: PageProps) {
       name: "TechBook",
       logo: {
         "@type": "ImageObject",
-        url: "https://tech-book-lime.vercel.app/og-image.png",
+        url: `${getSiteUrl()}/og-image.png`,
       },
     },
   };

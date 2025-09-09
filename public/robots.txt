@@ -2,8 +2,5 @@
 User-agent: *
 Allow: /
 
-# Host
-Host: https://tech-book-lime.vercel.app
-
 # Sitemaps
 Sitemap: https://tech-book-lime.vercel.app/sitemap.xml
