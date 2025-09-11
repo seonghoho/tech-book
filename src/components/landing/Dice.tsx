@@ -5,7 +5,14 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, Environment } from "@react-three/drei";
 import { useSpring, a } from "@react-spring/three";
 import { useDrag } from "@use-gesture/react";
-import { Group } from "three";
+import { Group, MathUtils } from "three";
+import {
+  EffectComposer,
+  Bloom,
+  DepthOfField,
+  Noise,
+  Vignette,
+} from "@react-three/postprocessing";
 
 const DiceModel = () => {
   const { scene } = useGLTF("/models/dice.glb");
@@ -13,7 +20,7 @@ const DiceModel = () => {
 };
 
 const Scene = () => {
-  const autoRotateGroup = useRef<Group>(null);
+  const group = useRef<Group>(null);
   const isDraggingRef = useRef(false);
 
   const [spring, api] = useSpring(() => ({
@@ -29,9 +36,29 @@ const Scene = () => {
     return active;
   });
 
-  useFrame((state, delta) => {
-    if (autoRotateGroup.current && !isDraggingRef.current) {
-      autoRotateGroup.current.rotation.y += delta * 0.2;
+  useFrame((state) => {
+    if (group.current && !isDraggingRef.current) {
+      const t = state.clock.getElapsedTime();
+      group.current.rotation.x = MathUtils.lerp(
+        group.current.rotation.x,
+        Math.cos(t / 2) / 20,
+        0.1
+      );
+      group.current.rotation.y = MathUtils.lerp(
+        group.current.rotation.y,
+        Math.sin(t / 1) / 20,
+        0.1
+      );
+      group.current.rotation.z = MathUtils.lerp(
+        group.current.rotation.z,
+        Math.sin(t / 1.5) / 20,
+        0.1
+      );
+      group.current.position.y = MathUtils.lerp(
+        group.current.position.y,
+        (-2 + Math.sin(t)) / 2,
+        0.1
+      );
     }
   });
 
@@ -46,7 +73,7 @@ const Scene = () => {
         shadow-mapSize-height={2048}
         castShadow
       />
-      <group ref={autoRotateGroup}>
+      <group ref={group}>
         <a.group
           {...bind()}
           rotation={spring.rotation as unknown as [number, number, number]}
@@ -55,6 +82,17 @@ const Scene = () => {
         </a.group>
       </group>
       <Environment preset="city" />
+      <EffectComposer>
+        <Bloom luminanceThreshold={0.3} luminanceSmoothing={0.9} height={300} />
+        <DepthOfField
+          focusDistance={0}
+          focalLength={0.02}
+          bokehScale={2}
+          height={480}
+        />
+        <Noise opacity={0.02} />
+        <Vignette eskil={false} offset={0.1} darkness={1.1} />
+      </EffectComposer>
     </>
   );
 };
