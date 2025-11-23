@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 // components
+import GoogleAnalytics from "@/components/common/GoogleAnalytics";
 import ThemeInitializer from "@/components/common/ThemeInitializer";
 import Footer from "@/components/common/Footer";
 import ClientHeaderWithSidebar from "@/components/layout/ClientHeaderWithSidebar";
@@ -64,8 +65,6 @@ export default function RootLayout({
   const gameData = getPostsByCategory("games");
   return (
     <html lang="ko">
-      <Analytics />
-      <SpeedInsights />
       <body className="flex flex-col w-full min-h-screen bg-white dark:bg-[#0F0F0F] text-dark dark:text-bright">
         <ThemeInitializer />
         <ClientHeaderWithSidebar
@@ -75,6 +74,9 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <Analytics />
+        <SpeedInsights />
+        <GoogleAnalytics />
       </body>
     </html>
   );

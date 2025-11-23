@@ -1,10 +1,7 @@
-import dynamic from "next/dynamic";
+import PixelRunnerGuide from "./pixel-runner/GameGuide";
+import SpaceShooterGuide from "./space-shooter/GameGuide";
 
 export const GuideComponents = {
-  "pixel-runner": dynamic(() => import("./pixel-runner/GameGuide"), {
-    ssr: false,
-  }),
-  "space-shooter": dynamic(() => import("./space-shooter/GameGuide"), {
-    ssr: false,
-  }),
+  "pixel-runner": PixelRunnerGuide,
+  "space-shooter": SpaceShooterGuide,
 };

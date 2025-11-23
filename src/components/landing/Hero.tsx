@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSpring, animated, useTrail } from "@react-spring/web";
 
 const Dice = dynamic(() => import("@/components/landing/Dice"), {
@@ -22,10 +22,27 @@ const trans = (x: number, y: number, s: number) =>
 
 const Hero = () => {
   const ref = useRef<HTMLElement>(null);
+  const [shouldRenderDice, setShouldRenderDice] = useState(false);
   const [{ xys }, api] = useSpring(() => ({
     xys: [0, 0, 1],
     config: { mass: 5, tension: 350, friction: 40 },
   }));
+
+  // Only mount the heavy 3D canvas when the section is near the viewport.
+  useEffect(() => {
+    if (!ref.current || shouldRenderDice) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldRenderDice(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [shouldRenderDice]);
 
   // Trail animation for the text and button
   const items = [
@@ -78,13 +95,17 @@ const Hero = () => {
       className="relative w-full h-screen flex flex-col items-center justify-center text-center p-8 overflow-hidden"
     >
       <div className="absolute inset-0 w-full h-full z-0">
-        <Suspense
-          fallback={
-            <div className="w-full h-full bg-gray-200 dark:bg-gray-800" />
-          }
-        >
-          <Dice />
-        </Suspense>
+        {shouldRenderDice ? (
+          <Suspense
+            fallback={
+              <div className="w-full h-full bg-gray-200 dark:bg-gray-800" />
+            }
+          >
+            <Dice />
+          </Suspense>
+        ) : (
+          <div className="w-full h-full bg-gradient-to-b from-gray-100 via-white to-gray-100 dark:from-[#0b0b0b] dark:via-[#0f0f0f] dark:to-[#0b0b0b]" />
+        )}
         <div className="absolute inset-0 w-full h-full  z-10" />
         <div className="absolute inset-0 w-full h-full z-10" />
       </div>
