@@ -31,7 +31,7 @@ const Hero = () => {
   const items = [
     <h1
       key="hero-title"
-      className="text-5xl md:text-7xl font-bold mb-4 text-white tracking-tighter"
+      className="text-5xl md:text-7xl font-bold mb-4 text-[#777777] tracking-tighter"
     >
       Dive into the world of Interactive Development
     </h1>,
@@ -45,7 +45,7 @@ const Hero = () => {
     </p>,
     <div key="hero-cta" className="flex flex-col sm:flex-row gap-4">
       <Link href="/posts">
-        <div className="px-8 py-4 bg-white/10 text-white rounded-lg backdrop-blur-sm hover:bg-white/20 transition-all duration-300 border border-white/20 transform hover:scale-105 hover:shadow-lg">
+        <div className="px-8 py-4 bg-black/50 text-white rounded-lg backdrop-blur-sm hover:bg-black/70 transition-all duration-300 border border-gray/20 transform hover:scale-105 hover:shadow-lg">
           Explore My Works
         </div>
       </Link>
@@ -85,8 +85,8 @@ const Hero = () => {
         >
           <Dice />
         </Suspense>
-        <div className="absolute inset-0 w-full h-full bg-black/40 z-10" />
-        <div className="absolute inset-0 w-full h-full shadow-[inset_0_0_120px_rgba(0,0,0,0.9)] z-10" />
+        <div className="absolute inset-0 w-full h-full  z-10" />
+        <div className="absolute inset-0 w-full h-full z-10" />
       </div>
       <animated.div
         style={{ transform: xys.to(trans) }}

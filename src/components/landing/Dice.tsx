@@ -64,7 +64,7 @@ const Scene = () => {
 
   return (
     <>
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={1} />
       <spotLight
         position={[10, 10, 10]}
         angle={0.15}
@@ -102,7 +102,7 @@ export default function Dice() {
     <Canvas
       shadows
       dpr={[1, 2]}
-      camera={{ position: [0, 0, 8], fov: 50 }}
+      camera={{ position: [0, 0, 8], fov: 40 }}
       style={{
         width: "100%",
         height: "100%",
