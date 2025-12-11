@@ -7,6 +7,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
 import { PMREMGenerator } from "three";
+import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "UX Lab | TechBook",
+  description: "Three.js와 GSAP를 활용한 인터랙티브 실험실을 둘러보세요.",
+  path: "/ux-lab",
+});
 
 export default function UXLabPage() {
   const containerRef = useRef<HTMLDivElement>(null);

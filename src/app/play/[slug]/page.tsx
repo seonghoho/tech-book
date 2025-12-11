@@ -1,6 +1,8 @@
 import { games } from "@/lib/gamesData";
 import { notFound } from "next/navigation";
 import GameComponent from "@/components/games/GameComponent";
+import { buildPageMetadata, buildProjectJsonLd } from "@/lib/seo";
+import { absoluteUrl } from "@/lib/site";
 
 interface PageProps {
   params: Promise<{
@@ -22,10 +24,18 @@ export async function generateMetadata({ params }: PageProps) {
     return {};
   }
 
-  return {
-    title: `Play ${game.title}`,
-    description: `Play the ${game.title} game.`,
-  };
+  return buildPageMetadata({
+    title: `${game.title} 플레이 — TechBook`,
+    description: game.summary ?? `Play the ${game.title} game.`,
+    path: `/play/${game.playSlug}`,
+    images: [
+      {
+        url: absoluteUrl(game.image),
+        width: 1200,
+        height: 630,
+      },
+    ],
+  });
 }
 
 export default async function GamePlayPage({ params }: PageProps) {
@@ -36,14 +46,28 @@ export default async function GamePlayPage({ params }: PageProps) {
     notFound();
   }
 
+  const projectJsonLd = buildProjectJsonLd({
+    title: game.title,
+    description: game.summary ?? game.description,
+    path: `/play/${game.playSlug}`,
+    image: game.image,
+    technologies: game.techStack,
+  });
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8 text-center">
-        Playing {game.title}
-      </h1>
-      <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-lg p-4 sm:p-6">
-        <GameComponent gameName={game.playSlug} />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}
+      />
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold mb-8 text-center">
+          Playing {game.title}
+        </h1>
+        <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-lg p-4 sm:p-6">
+          <GameComponent gameName={game.playSlug} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

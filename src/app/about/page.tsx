@@ -1,12 +1,13 @@
 import { GithubIcon, MailIcon, PhoneIcon } from "@/assets/svg";
 import Image from "next/image";
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "About | TechBook",
   description: "TechBook을 운영하는 FrontEnd 개발자를 소개합니다.",
-  alternates: { canonical: "/about" },
-};
+  path: "/about",
+});
 
 const page = () => {
   const contactData = [

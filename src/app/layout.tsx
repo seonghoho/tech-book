@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Metadata } from "next";
 // components
 import GoogleAnalytics from "@/components/common/GoogleAnalytics";
 import ThemeInitializer from "@/components/common/ThemeInitializer";
@@ -8,31 +9,26 @@ import Footer from "@/components/common/Footer";
 import ClientHeaderWithSidebar from "@/components/layout/ClientHeaderWithSidebar";
 import SidebarContainer from "@/components/layout/SidebarContainer";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
-import { getSiteUrl } from "@/lib/site";
+import { absoluteUrl, getSiteUrl } from "@/lib/site";
+import { siteDefaults } from "@/lib/seo";
 
-export const metadata = {
-  title: "TechBook: 개발자를 위한 기술 블로그",
-  description:
-    "Modern JavaScript, Three.js, SVG 등 프론트엔드 기술을 깊이 있게 다루는 기술 블로그입니다.",
-  keywords: [
-    "JavaScript",
-    "Three.js",
-    "SVG",
-    "Frontend",
-    "프론트엔드",
-    "기술 블로그",
-    "Tech Blog",
-  ],
-  authors: [{ name: "Choi Seongho", url: getSiteUrl() + "/" }],
+export const metadata: Metadata = {
+  title: siteDefaults.title,
+  description: siteDefaults.description,
+  keywords: siteDefaults.keywords,
+  authors: [{ name: "Choi Seongho", url: absoluteUrl("/") }],
+  metadataBase: new URL(getSiteUrl()),
+  alternates: {
+    canonical: absoluteUrl("/"),
+  },
   openGraph: {
-    title: "TechBook: 개발자를 위한 기술 블로그",
-    description:
-      "Modern JavaScript, Three.js, SVG 등 프론트엔드 기술을 깊이 있게 다루는 기술 블로그입니다.",
-    url: getSiteUrl() + "/",
-    siteName: "TechBook",
+    title: siteDefaults.title,
+    description: siteDefaults.description,
+    url: absoluteUrl("/"),
+    siteName: siteDefaults.siteName,
     images: [
       {
-        url: "/og-image.png",
+        url: absoluteUrl(siteDefaults.defaultImage),
         width: 1200,
         height: 630,
       },
@@ -42,16 +38,15 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "TechBook",
-    description: "프론트엔드와 웹 기술을 정리한 기술 블로그입니다.",
-    images: ["/og-image.png"],
+    title: siteDefaults.siteName,
+    description: siteDefaults.description,
+    images: [absoluteUrl(siteDefaults.defaultImage)],
   },
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-32x32.png",
     apple: "/apple-touch-icon.png",
   },
-  metadataBase: new URL(getSiteUrl()),
   verification: {
     google: "rcy_pt8MaVt2F6XAtMBTNX_w5pRzOZ0KykSGdw71p-U",
   },
@@ -63,9 +58,25 @@ export default function RootLayout({
 }) {
   const postData = getPostsByCategory("posts");
   const gameData = getPostsByCategory("games");
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    url: getSiteUrl(),
+    name: siteDefaults.siteName,
+    description: siteDefaults.description,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${getSiteUrl()}/posts?query={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
   return (
     <html lang="ko">
       <body className="flex flex-col w-full min-h-screen bg-white dark:bg-[#0F0F0F] text-dark dark:text-bright">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         <ThemeInitializer />
         <ClientHeaderWithSidebar
           Sidebar={<SidebarContainer postData={postData} gameData={gameData} />}

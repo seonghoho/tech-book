@@ -1,18 +1,24 @@
 import PostIndex from "@/components/posts/PostIndex";
 import { extractHeadings } from "@/lib/getPostContent";
 import { getPostData } from "@/lib/getPostData";
-import { getSiteUrl } from "@/lib/site";
-
+import { absoluteUrl } from "@/lib/site";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
+import { buildArticleJsonLd, buildPageMetadata } from "@/lib/seo";
 import dynamic from "next/dynamic";
 
 const PostContent = dynamic(() => import("@/components/posts/PostContent"), {
-  ssr: true, 
+  ssr: true,
 });
 
 interface PageProps {
   params: Promise<{ slug: string[] }>;
 }
+
+const createExcerpt = (raw: string) =>
+  raw
+    .replace(/\n+/g, " ")
+    .trim()
+    .slice(0, 150);
 
 export function generateStaticParams(): { slug: string[] }[] {
   const postsByCategory = getPostsByCategory("posts");
@@ -27,37 +33,18 @@ export async function generateMetadata({ params }: PageProps) {
   const slugString = slug.join("/");
   const post = await getPostData("posts", slugString);
 
-  const excerpt = post.rawMarkdown.substring(0, 150).replace(/\n/g, " ");
+  const summary = post.description ?? createExcerpt(post.rawMarkdown);
+  const ogImage = absoluteUrl(`/og/${slugString}`);
 
-  return {
-    title: post.title,
-    description: post.description ?? excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.description ?? excerpt,
-      url: `/posts/${slugString}`,
-      siteName: "TechBook",
-      images: [
-        {
-          url: `/og/${slugString}`,
-          width: 1200,
-          height: 630,
-        },
-      ],
-      locale: "ko_KR",
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.description ?? `${post.title} 관련 정보`,
-      images: ["/og-image.png"],
-    },
-    metadataBase: new URL(getSiteUrl()),
-    alternates: {
-      canonical: `/posts/${slugString}`,
-    },
-  };
+  return buildPageMetadata({
+    title: `${post.title} — 성호의 TechBook`,
+    description: summary,
+    path: `/posts/${slugString}`,
+    type: "article",
+    images: [{ url: ogImage, width: 1200, height: 630 }],
+    publishedTime: new Date(post.date).toISOString(),
+    modifiedTime: new Date(post.date).toISOString(),
+  });
 }
 
 export default async function PostPage({ params }: PageProps) {
@@ -70,37 +57,37 @@ export default async function PostPage({ params }: PageProps) {
   const allPosts = Object.values(postsByCategory).flat();
 
   const post = await getPostData("posts", slugString);
+  const summary = post.description ?? createExcerpt(post.rawMarkdown);
   const headings = extractHeadings(post.rawMarkdown);
 
   const currentIndex = allPosts.findIndex((p) => p.slug === slugString);
+  const [category] = slugString.split("/");
+  const relatedCandidates =
+    postsByCategory[category]?.filter((p) => p.slug !== slugString) ?? [];
+  const relatedLinks = [
+    ...relatedCandidates.slice(0, 3).map((p) => ({
+      title: p.title,
+      url: `/posts/${p.slug}`,
+      categoryLabel: "관련 글",
+    })),
+    {
+      title: "게임 프로젝트도 살펴보기",
+      url: "/games",
+      categoryLabel: "Projects",
+    },
+  ];
 
   const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
   const nextPost =
     currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `${getSiteUrl()}/posts/${slugString}`,
-    },
-    headline: post.title,
-    description: post.description,
+  const jsonLd = buildArticleJsonLd({
+    title: post.title,
+    description: summary,
+    path: `/posts/${slugString}`,
     datePublished: new Date(post.date).toISOString(),
-    author: {
-      "@type": "Person",
-      name: "Choi Seongho",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "TechBook",
-      logo: {
-        "@type": "ImageObject",
-        url: `${getSiteUrl()}/og-image.png`,
-      },
-    },
-  };
+    image: absoluteUrl(`/og/${slugString}`),
+  });
 
   return (
     <div className="flex w-full">
@@ -124,6 +111,7 @@ export default async function PostPage({ params }: PageProps) {
               ? { title: nextPost.title, url: `/posts/${nextPost.slug}` }
               : null
           }
+          relatedLinks={relatedLinks}
         />
       </main>
       <aside className="hidden xl:flex xl:flex-col w-64 gap-6 sticky-section">
