@@ -102,12 +102,17 @@ export default function Dice() {
     <Canvas
       shadows
       dpr={[1, 2]}
+      gl={{ alpha: true, antialias: true }}
       camera={{ position: [0, 0, 8], fov: 40 }}
+      onCreated={({ gl }) => {
+        gl.setClearColor("#000000", 0);
+      }}
       style={{
         width: "100%",
         height: "100%",
         touchAction: "none",
         cursor: "grab",
+        background: "transparent",
       }}
     >
       <Scene />

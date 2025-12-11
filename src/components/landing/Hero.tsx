@@ -38,13 +38,6 @@ const Hero = ({ stats, featuredLinks = [] }: HeroProps) => {
     if (!ref.current || shouldRenderDice) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-
-
-
-
-
-
-        
         if (entry.isIntersecting) {
           setShouldRenderDice(true);
           observer.disconnect();
@@ -70,26 +63,26 @@ const Hero = ({ stats, featuredLinks = [] }: HeroProps) => {
   const trailItems = [
     <span
       key="badge"
-      className="inline-flex items-center gap-2 rounded-full bg-white/70 dark:bg-zinc-900/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-gray-700 dark:text-gray-200 shadow-sm ring-1 ring-gray-200/80 dark:ring-gray-800"
+      className="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-700 shadow-sm ring-1 ring-gray-200 backdrop-blur dark:bg-gray-900/80 dark:text-gray-100 dark:ring-gray-800"
     >
-      Interactive · Product-minded
+      Product Studio · Frontend
       <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
     </span>,
     <h1
       key="title"
-      className="text-3xl sm:text-3xl lg:text-4xl font-bold leading-s tracking-tight text-gray-900 dark:text-white"
+      className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight text-slate-900 dark:text-white"
     >
-      인터랙티브한 학습 도구와 서비스를
+      디자인과 데이터 흐름을 통째로 다루는
       <br />
-      동시에 만드는 개발자, 최성호입니다.
+      프론트엔드 개발자
     </h1>,
     <p
       key="desc"
-      className="text-lg sm:text-xl text-gray-700 dark:text-gray-200 max-w-2xl"
+      className="text-lg sm:text-xl text-slate-700 dark:text-gray-200 max-w-2xl"
     >
-      수학 교구 에디터, 영어 단어 학습 서비스, 여행 보드게임 등 살아있는 웹을
-      만듭니다. 복잡한 사용자 인터랙션과 상태를 다루며, 요구사항 정의부터 일정
-      관리, 외주 커뮤니케이션까지 제품 흐름을 경험했습니다.
+      학습 도구, 실시간 대시보드, 게임화된 경험을 설계하며 사용자 행동을
+      관찰하고 개선합니다. 인터랙션, 접근성, 퍼포먼스를 함께 가져가는 제품 제작
+      방식을 선호합니다.
     </p>,
   ];
 
@@ -105,12 +98,12 @@ const Hero = ({ stats, featuredLinks = [] }: HeroProps) => {
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative overflow-hidden bg-gradient-to-br from-[#f1f5ff] via-white to-[#f6fff7] dark:from-[#0c0f1a] dark:via-[#0b0e16] dark:to-[#0b1414] py-20 sm:py-24"
+      className="relative overflow-hidden bg-gradient-to-br from-[#eef2ff] via-white to-[#f3fbff] dark:from-[#0b1020] dark:via-[#0a0e18] dark:to-[#0a1514] py-20 sm:py-24"
     >
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-24 -left-16 h-80 w-80 rounded-full bg-indigo-400/25 blur-3xl" />
-        <div className="absolute bottom-10 right-10 h-72 w-72 rounded-full bg-emerald-300/20 blur-3xl" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(99,102,241,0.12),transparent_25%),radial-gradient(circle_at_90%_10%,rgba(16,185,129,0.12),transparent_25%)]" />
+        <div className="absolute -top-24 -left-16 h-80 w-80 rounded-full bg-indigo-400/20 blur-3xl" />
+        <div className="absolute bottom-10 right-10 h-72 w-72 rounded-full bg-emerald-300/15 blur-3xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(99,102,241,0.14),transparent_28%),radial-gradient(circle_at_92%_8%,rgba(16,185,129,0.12),transparent_30%),radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.06),transparent_35%)]" />
       </div>
 
       <div className="relative z-10 mx-auto flex max-w-screen-xl flex-col gap-12 px-4 sm:px-6 lg:px-8">
@@ -124,35 +117,78 @@ const Hero = ({ stats, featuredLinks = [] }: HeroProps) => {
 
             <div className="flex flex-wrap gap-3">
               {[
-                "SVG Math Editor",
-                "Three.js / Pixi.js",
-                "EdTech · 단어 학습 서비스",
-                "프로젝트 리드 & 커뮤니케이션",
-                "Vue3.js · Pinia",
-                "Next.js · FSD · SCSS",
-              ].map((keyword) => (
+                {
+                  title: "SVG Math Editor",
+                  toneClass: "bg-gradient-to-r from-indigo-400 to-indigo-500",
+                },
+                {
+                  title: "실시간 대시보드",
+                  toneClass: "bg-gradient-to-r from-emerald-400 to-emerald-500",
+                },
+                {
+                  title: "AI 튜터 플래너",
+                  toneClass: "bg-gradient-to-r from-violet-400 to-violet-500",
+                },
+                {
+                  title: "게임형 콘텐츠 CMS",
+                  toneClass: "bg-gradient-to-r from-blue-400 to-blue-500",
+                },
+                {
+                  title: "여행 보드게임",
+                  toneClass: "bg-gradient-to-r from-amber-400 to-amber-500",
+                },
+                {
+                  title: "학습 실험실",
+                  toneClass: "bg-gradient-to-r from-cyan-400 to-cyan-500",
+                },
+              ].map((item) => (
                 <span
-                  key={keyword}
-                  className="rounded-full border border-gray-200/80 bg-white/70 px-3 py-1 text-sm text-gray-700 shadow-sm backdrop-blur dark:border-gray-800 dark:bg-gray-900/70 dark:text-gray-200"
+                  key={item.title}
+                  className="inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-2 text-sm font-medium text-slate-800 shadow-sm ring-1 ring-gray-200 backdrop-blur transition hover:-translate-y-0.5 dark:bg-gray-900/70 dark:text-gray-100 dark:ring-gray-800"
                 >
-                  {keyword}
+                  <span className={`h-2 w-2 rounded-full ${item.toneClass}`} />
+                  {item.title}
                 </span>
               ))}
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-wrap gap-3">
               <Link
-                href="/posts"
-                className="inline-flex items-center justify-center rounded-xl bg-gray-900 px-6 py-3 text-sm font-semibold text-black shadow-md shadow-indigo-200 transition hover:translate-y-[-2px] hover:shadow-xl dark:bg-white dark:text-gray-900"
+                href="#projects"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-300/40 transition hover:translate-y-[-2px] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 dark:bg-white dark:text-slate-950"
               >
-                최신 글 보기
+                프로젝트 둘러보기
+                <span aria-hidden>↗</span>
               </Link>
               <Link
                 href="/games"
-                className="inline-flex items-center justify-center rounded-xl border border-gray-200 bg-white/80 px-6 py-3 text-sm font-semibold text-gray-900 shadow-sm transition hover:border-indigo-400 hover:text-indigo-600 dark:border-gray-800 dark:bg-gray-900/60 dark:text-gray-100"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-gray-200/70 bg-white/80 px-6 py-3 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur transition hover:border-indigo-400 hover:text-indigo-600 dark:border-gray-800 dark:bg-gray-900/70 dark:text-gray-100"
               >
-                게임 프로젝트 살펴보기
+                인터랙티브 데모 보기
               </Link>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-2xl border border-gray-200/80 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-gray-800 dark:bg-gray-900/70">
+                <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-200">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                  End-to-end product
+                </div>
+                <p className="mt-2 text-sm text-slate-600 dark:text-gray-300">
+                  리서치·IA·와이어프레임부터 프론트엔드 아키텍처, 성능/접근성
+                  튜닝까지 일관된 흐름으로 만듭니다.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-gray-200/80 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-gray-800 dark:bg-gray-900/70">
+                <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-gray-200">
+                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
+                  Interactive delivery
+                </div>
+                <p className="mt-2 text-sm text-slate-600 dark:text-gray-300">
+                  WebGL, 애니메이션, 실시간 데이터, 실험적인 UI를 안정적으로
+                  제공하는 것을 즐깁니다.
+                </p>
+              </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
@@ -201,35 +237,44 @@ const Hero = ({ stats, featuredLinks = [] }: HeroProps) => {
           <div className="lg:col-span-5">
             <animated.div
               style={{ transform: xys.to(trans) }}
-              className="relative overflow-hidden rounded-3xl border border-gray-200/70 bg-white/80 p-4 shadow-xl shadow-indigo-100/40 backdrop-blur dark:border-gray-800 dark:bg-gray-900/70 dark:shadow-none"
+              className="relative overflow-hidden rounded-3xl border border-white/70 bg-white/60 p-4 shadow-xl shadow-indigo-100/50 backdrop-blur dark:border-gray-800/80 dark:bg-gray-900/70 dark:shadow-none"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-emerald-400/10" />
-              <div className="absolute inset-3 rounded-2xl border border-dashed border-gray-200/70 dark:border-gray-800" />
-              <div className="relative aspect-square rounded-2xl bg-gradient-to-br from-[#0f172a] via-[#0b1223] to-[#0b1e1b] dark:from-[#0b132b] dark:via-[#0d111b] dark:to-[#0b1f1b] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-400/10 via-white/30 to-emerald-300/10 dark:from-indigo-500/10 dark:via-gray-900/60 dark:to-emerald-400/10" />
+              <div className="absolute inset-3 rounded-2xl border border-dashed border-gray-200/80 dark:border-gray-800" />
+              <div className="relative aspect-square rounded-2xl bg-[radial-gradient(circle_at_20%_20%,rgba(99,102,241,0.12),transparent_35%),radial-gradient(circle_at_80%_10%,rgba(52,211,153,0.14),transparent_40%)] dark:bg-[radial-gradient(circle_at_20%_20%,rgba(129,140,248,0.18),transparent_32%),radial-gradient(circle_at_80%_10%,rgba(52,211,153,0.18),transparent_38%)]">
                 {shouldRenderDice ? (
                   <Suspense
                     fallback={
-                      <div className="flex h-full items-center justify-center bg-gray-100 dark:bg-gray-800" />
+                      <div className="flex h-full items-center justify-center bg-white/60 dark:bg-gray-800" />
                     }
                   >
                     <Dice />
                   </Suspense>
                 ) : (
-                  <div className="flex h-full items-center justify-center bg-gradient-to-br from-gray-100 via-white to-gray-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900" />
+                  <div className="flex h-full items-center justify-center bg-gradient-to-br from-white/80 via-white to-indigo-50/70 dark:from-gray-900 dark:via-gray-800 dark:to-gray-800" />
                 )}
               </div>
-              <div className="relative mt-4 grid gap-3 rounded-2xl bg-gray-50/70 p-4 text-sm text-gray-700 shadow-sm backdrop-blur dark:bg-gray-800/70 dark:text-gray-100">
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                  Web Vitals: LCP · CLS · TBT 점검
+              <div className="relative mt-4 grid gap-2 rounded-2xl bg-white/80 p-4 text-sm text-slate-700 shadow-sm ring-1 ring-gray-200 backdrop-blur dark:bg-gray-900/70 dark:text-gray-100 dark:ring-gray-800">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    품질 체크리스트
+                  </div>
+                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-600 ring-1 ring-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-200 dark:ring-emerald-500/30">
+                    LIVE READY
+                  </span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 text-slate-600 dark:text-gray-200">
                   <span className="h-2 w-2 rounded-full bg-indigo-500" />
+                  Web Vitals (LCP · CLS · INP) 점검 및 경량화
+                </div>
+                <div className="flex items-center gap-2 text-slate-600 dark:text-gray-200">
+                  <span className="h-2 w-2 rounded-full bg-cyan-500" />
                   OG/Twitter, 구조화 데이터 자동 삽입
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 text-slate-600 dark:text-gray-200">
                   <span className="h-2 w-2 rounded-full bg-amber-500" />
-                  인터랙티브 컴포넌트는 지연 로드
+                  인터랙티브 컴포넌트는 지연 로드 및 분리
                 </div>
               </div>
             </animated.div>
