@@ -26,6 +26,7 @@ const Scene = ({
 }) => {
   const group = useRef<Group>(null);
   const isDraggingRef = useRef(false);
+  const lastInteractionRef = useRef(0);
 
   const [spring, api] = useSpring(() => ({
     rotation: [8, 0, 0] as [number, number, number],
@@ -35,6 +36,7 @@ const Scene = ({
   useDrag(
     ({ active, xy: [x, y] }) => {
       isDraggingRef.current = active;
+      lastInteractionRef.current = performance.now() / 1000;
       const rect = dragTarget.current?.getBoundingClientRect();
       if (!rect) return active;
       const centerX = rect.left + rect.width / 2;
@@ -52,14 +54,19 @@ const Scene = ({
   useFrame((state) => {
     if (group.current && !isDraggingRef.current) {
       const t = state.clock.getElapsedTime();
+      const idleSeconds = t - lastInteractionRef.current;
       group.current.rotation.x = MathUtils.lerp(
         group.current.rotation.x,
-        Math.cos(t / 2) / 20,
+        idleSeconds > 5
+          ? group.current.rotation.x + 0.006
+          : Math.cos(t / 2) / 20,
         0.1
       );
       group.current.rotation.y = MathUtils.lerp(
         group.current.rotation.y,
-        Math.sin(t / 1) / 20,
+        idleSeconds > 5
+          ? group.current.rotation.y + 0.004
+          : Math.sin(t / 1) / 20,
         0.1
       );
       group.current.rotation.z = MathUtils.lerp(
