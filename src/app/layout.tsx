@@ -93,7 +93,7 @@ export default function RootLayout({
         />
         <main
           id="main-content"
-          className="w-full flex-1 lg:max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8"
+          className="w-full flex-1 lg:max-w-screen-2xl mx-auto p-4 sm:p-6 lg:p-8"
         >
           {children}
         </main>

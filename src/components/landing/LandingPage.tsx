@@ -48,16 +48,16 @@ export default function LandingPage({
               TechBook Blog
             </p>
             <h1 className="text-3xl font-semibold text-slate-900 dark:text-white sm:text-4xl">
-              프론트엔드 문제 해결과 도구 설계를 기록합니다.
+              프론트엔드 문제 해결과 학습을 기록합니다.
             </h1>
             <p className="max-w-2xl text-base text-slate-700 dark:text-slate-200">
-              Three.js, SVG, 제품형 프론트엔드에서 마주친 트러블슈팅과 학습 내용을
-              구조적으로 정리합니다.
+              현업에서 겪은 트러블슈팅과 Three.js, SVG, TypeScript 등의 학습
+              내용을 구조적으로 정리합니다.
             </p>
           </div>
 
           <form
-            action="/posts"
+            action="/search"
             method="get"
             className="flex flex-col gap-3 sm:flex-row"
             role="search"
