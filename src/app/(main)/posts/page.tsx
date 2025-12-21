@@ -95,7 +95,11 @@ export default async function PostsPage({ searchParams }: PageProps) {
           </p>
         </div>
 
-        <form action="/posts" method="get" className="flex flex-col gap-3 sm:flex-row">
+        <form
+          action="/search"
+          method="get"
+          className="flex flex-col gap-3 sm:flex-row"
+        >
           <input
             name="query"
             defaultValue={query}
