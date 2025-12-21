@@ -1,1 +1,3 @@
-export { GET, revalidate } from "../rss/route";
+export { GET } from "../rss/route";
+
+export const revalidate = 3600;
