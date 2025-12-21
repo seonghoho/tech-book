@@ -10,6 +10,10 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/games",
 });
 
+// ISR: 게임 로그 목록은 정적 생성 + 주기적 재검증.
+export const dynamic = "force-static";
+export const revalidate = 300;
+
 // import GameCardList from "@/components/layout/GameCardList";
 
 export default function GamesPage() {

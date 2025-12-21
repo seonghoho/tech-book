@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PostNavCard } from "./PostNavCard";
 import { PostNav } from "@/types/post";
+import { categoryMap } from "@/lib/categoryMap";
 
 type ProjectInfo = {
   summary: string;
@@ -17,10 +18,24 @@ type RelatedLink = {
   categoryLabel?: string;
 };
 
+const formatDate = (value: string) => {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return new Intl.DateTimeFormat("ko-KR", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  }).format(date);
+};
+
 type Props = {
   title: string;
   date: string;
-  description: string;
+  updated?: string;
+  readingTime?: number;
+  description?: string;
+  tags?: string[];
+  category?: string;
   contentHtml: string;
   prevPost?: PostNav | null;
   nextPost?: PostNav | null;
@@ -31,7 +46,11 @@ type Props = {
 export default function PostContent({
   title,
   date,
+  updated,
+  readingTime,
   description,
+  tags,
+  category,
   contentHtml,
   prevPost,
   nextPost,
@@ -41,13 +60,61 @@ export default function PostContent({
   return (
     <article className="prose dark:prose-invert w-full">
       <div className="max-w-full lg:max-w-screen-lg w-full lg:px-8 px-1 mx-auto">
+        <nav
+          aria-label="breadcrumb"
+          className="text-xs text-slate-500 dark:text-slate-400 mb-4"
+        >
+          <Link href="/posts" className="hover:text-emerald-600">
+            Posts
+          </Link>
+          {category ? (
+            <>
+              <span className="mx-2">/</span>
+              <Link
+                href={`/categories/${category}`}
+                className="hover:text-emerald-600"
+              >
+                {categoryMap[category] ?? category}
+              </Link>
+            </>
+          ) : null}
+        </nav>
         <div className="sm:text-3xl font-semibold text-2xl pb-4">{title}</div>
-        <div className="flex sm:flex-row flex-col sm:items-center justify-between pb-4 gap-2">
-          <div className="flex items-center sm:text-lg text-base text-gray-500 dark:text-gray-400">
-            {description}
+        <div className="flex flex-col gap-3 pb-4">
+          <div className="flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
+            {category ? (
+              <Link
+                href={`/categories/${category}`}
+                className="rounded-full bg-slate-100 px-2 py-1 text-slate-600 dark:bg-slate-800 dark:text-slate-200"
+              >
+                {categoryMap[category] ?? category}
+              </Link>
+            ) : null}
+            {tags?.map((tag) => (
+              <Link
+                key={tag}
+                href={`/tags/${encodeURIComponent(tag)}`}
+                className="text-slate-500 hover:text-emerald-600 dark:text-slate-400"
+              >
+                #{tag}
+              </Link>
+            ))}
           </div>
-          <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-            {date}
+          <div className="flex sm:flex-row flex-col sm:items-center justify-between gap-2">
+            {description ? (
+              <div className="flex items-center sm:text-lg text-base text-gray-500 dark:text-gray-400">
+                {description}
+              </div>
+            ) : null}
+            <div className="flex flex-col items-start sm:items-end text-sm text-gray-500 dark:text-gray-400">
+              <span>{formatDate(date)}</span>
+              {updated ? (
+                <span className="text-xs">마지막 수정: {formatDate(updated)}</span>
+              ) : null}
+              {readingTime ? (
+                <span className="text-xs">{readingTime}분 읽기</span>
+              ) : null}
+            </div>
           </div>
         </div>
         <div className="w-full pb-4 border-t-2 border-t-[#d9d9d9]" />

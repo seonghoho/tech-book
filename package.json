@@ -7,7 +7,6 @@
     "dev": "next dev --turbopack -p 5174",
     "build:posts": "node --loader ts-node/esm scripts/buildPosts.ts",
     "build": "npm run build:posts && next build",
-    "postbuild": "next-sitemap --config next-sitemap.config.cjs",
     "start": "next start",
     "lint": "next lint"
   },

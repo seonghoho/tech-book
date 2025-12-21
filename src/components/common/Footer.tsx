@@ -16,6 +16,13 @@ const Footer = () => {
           </a>
           {" | "}
           <a
+            href="/rss"
+            className="underline hover:text-black dark:hover:text-white"
+          >
+            RSS
+          </a>
+          {" | "}
+          <a
             href="/about"
             className="underline hover:text-black dark:hover:text-white"
           >

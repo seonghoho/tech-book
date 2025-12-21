@@ -3,6 +3,7 @@ import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 
 export const runtime = "edge";
+export const revalidate = 3600;
 interface PageProps {
   params: Promise<{ slug: string[] }>; // 비동기 타입
 }
@@ -10,7 +11,9 @@ interface PageProps {
 export async function GET(request: NextRequest, context: PageProps) {
   const { slug } = await context.params;
   const slugString = slug.join("/");
-  const title = decodeURIComponent(slugString).replace(/-/g, " ");
+  const queryTitle = request.nextUrl.searchParams.get("title");
+  const fallbackTitle = decodeURIComponent(slugString).replace(/-/g, " ");
+  const title = queryTitle ? decodeURIComponent(queryTitle) : fallbackTitle;
 
   return new ImageResponse(
     React.createElement(

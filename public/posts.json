@@ -4,63 +4,134 @@
     "type": "posts",
     "title": "04장 변수",
     "date": "2025-06-24",
-    "description": "모던 자바스크립트 Deep Dive : 4장 변수를 알아봅시다."
+    "updated": "2025-06-24",
+    "description": "모던 자바스크립트 Deep Dive : 4장 변수를 알아봅시다.",
+    "image": "/og-image.png",
+    "tags": [
+      "JavaScript",
+      "Deep Dive",
+      "Variables"
+    ]
   },
   {
     "slug": "mordern-js-deep-dive/05",
     "type": "posts",
     "title": "05장 표현식과 문",
     "date": "2025-06-25",
-    "description": "모던 자바스크립트 Deep Dive : 5장 표현식과 문에 대해 알아봅니다."
+    "updated": "2025-06-25",
+    "description": "모던 자바스크립트 Deep Dive : 5장 표현식과 문에 대해 알아봅니다.",
+    "image": "/og-image.png",
+    "tags": [
+      "JavaScript",
+      "Deep Dive",
+      "Expressions"
+    ],
+    "featured": true
   },
   {
     "slug": "mordern-js-deep-dive/06",
     "type": "posts",
     "title": "06장 데이터 타입",
     "date": "2025-06-26",
-    "description": "모던 자바스크립트 Deep Dive : 6장 데이터 타입에 대해 알아봅니다."
+    "updated": "2025-06-26",
+    "description": "모던 자바스크립트 Deep Dive : 6장 데이터 타입에 대해 알아봅니다.",
+    "image": "/og-image.png",
+    "tags": [
+      "JavaScript",
+      "Deep Dive",
+      "Data Types"
+    ]
   },
   {
     "slug": "mordern-js-deep-dive/07",
     "type": "posts",
     "title": "07장 연산자",
     "date": "2025-07-16",
-    "description": "모던 자바스크립트 Deep Dive : 7장 연산자에 대해 알아봅니다."
+    "updated": "2025-07-16",
+    "description": "모던 자바스크립트 Deep Dive : 7장 연산자에 대해 알아봅니다.",
+    "image": "/og-image.png",
+    "tags": [
+      "JavaScript",
+      "Deep Dive",
+      "Operators"
+    ]
   },
   {
     "slug": "svg-editor/three-js-camera-state",
     "type": "posts",
     "title": "Three.js 카메라 상태 저장",
     "date": "2025-07-24",
-    "description": "Three.js에서 카메라 상태 저장에 대해 알아봅니다."
+    "updated": "2025-07-24",
+    "description": "Three.js에서 카메라 상태 저장에 대해 알아봅니다.",
+    "image": "/og-image.png",
+    "tags": [
+      "Three.js",
+      "WebGL",
+      "Camera",
+      "State"
+    ],
+    "featured": true
   },
   {
     "slug": "svg-editor/three-js-gimbal-lock",
     "type": "posts",
     "title": "Three.js 좌표축 클릭 시 카메라 방향 꼬임 문제",
     "date": "2025-07-25",
-    "description": "Three.js에서 카메라 방향 꼬임 문제를 해결하는 과정을 알아봅니다."
+    "updated": "2025-07-25",
+    "description": "Three.js에서 카메라 방향 꼬임 문제를 해결하는 과정을 알아봅니다.",
+    "image": "/images/svg-editor/04_threejs-gimbal-lock-01.png",
+    "tags": [
+      "Three.js",
+      "WebGL",
+      "Camera",
+      "Math"
+    ]
   },
   {
     "slug": "svg-editor/three-js-line-basic-meterial",
     "type": "posts",
     "title": "Three.js 겨냥도 구현하기",
     "date": "2025-07-24",
-    "description": "Three.js에서 겨냥도를 구현합니다."
+    "updated": "2025-07-24",
+    "description": "Three.js에서 겨냥도를 구현합니다.",
+    "image": "/images/svg-editor/03_threejs-line-meterial-01.png",
+    "tags": [
+      "Three.js",
+      "WebGL",
+      "Line",
+      "Rendering"
+    ]
   },
   {
     "slug": "svg-editor/three-js-line-geometry-error",
     "type": "posts",
     "title": "Three.js LineGeometry 문제 해결",
     "date": "2025-07-11",
-    "description": "LineGeometry로 만든 선이 시점에 따라 사라지는 문제를 해결합니다."
+    "updated": "2025-07-11",
+    "description": "LineGeometry로 만든 선이 시점에 따라 사라지는 문제를 해결합니다.",
+    "image": "/images/svg-editor/02_threejs-line-geometry-01.png",
+    "tags": [
+      "Three.js",
+      "WebGL",
+      "LineGeometry",
+      "Troubleshooting"
+    ],
+    "featured": true
   },
   {
     "slug": "svg-editor/use-line",
     "type": "posts",
     "title": "useLine 로직 통합하기",
     "date": "2024-12-19",
-    "description": "두 점으로 그리는 도형 4가지의 로직을 하나의 객체로 통합합니다."
+    "updated": "2024-12-19",
+    "description": "두 점으로 그리는 도형 4가지의 로직을 하나의 객체로 통합합니다.",
+    "image": "/og-image.png",
+    "tags": [
+      "SVG",
+      "Canvas",
+      "Architecture",
+      "Refactor"
+    ]
   },
   {
     "slug": "pixel-runner/01",

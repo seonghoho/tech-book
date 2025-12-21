@@ -13,14 +13,14 @@ import { absoluteUrl, getSiteUrl } from "@/lib/site";
 import { siteDefaults } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: siteDefaults.title,
+  title: {
+    default: siteDefaults.title,
+    template: "%s | TechBook",
+  },
   description: siteDefaults.description,
   keywords: siteDefaults.keywords,
   authors: [{ name: "Choi Seongho", url: absoluteUrl("/") }],
   metadataBase: new URL(getSiteUrl()),
-  alternates: {
-    canonical: absoluteUrl("/"),
-  },
   openGraph: {
     title: siteDefaults.title,
     description: siteDefaults.description,
@@ -41,6 +41,10 @@ export const metadata: Metadata = {
     title: siteDefaults.siteName,
     description: siteDefaults.description,
     images: [absoluteUrl(siteDefaults.defaultImage)],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
   icons: {
     icon: "/favicon.ico",
@@ -73,6 +77,12 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="flex flex-col w-full min-h-screen bg-white dark:bg-[#0F0F0F] text-dark dark:text-bright">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-slate-900 focus:shadow-lg"
+        >
+          본문으로 바로가기
+        </a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
@@ -81,7 +91,10 @@ export default function RootLayout({
         <ClientHeaderWithSidebar
           Sidebar={<SidebarContainer postData={postData} gameData={gameData} />}
         />
-        <main className="w-full flex-1 lg:max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <main
+          id="main-content"
+          className="w-full flex-1 lg:max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8"
+        >
           {children}
         </main>
         <Footer />

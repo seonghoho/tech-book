@@ -4,13 +4,23 @@ import { extractHeadings } from "@/lib/getPostContent";
 import { getPostData } from "@/lib/getPostData";
 import { absoluteUrl } from "@/lib/site";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
-import { buildArticleJsonLd, buildPageMetadata, buildProjectJsonLd } from "@/lib/seo";
+import {
+  buildArticleJsonLd,
+  buildBreadcrumbJsonLd,
+  buildPageMetadata,
+  buildProjectJsonLd,
+} from "@/lib/seo";
 import { games } from "@/lib/gamesData";
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
+import { gameCategoryMap } from "@/lib/gameCategoryMap";
 
-const PostContent = dynamic(() => import("@/components/posts/PostContent"), {
+const PostContent = nextDynamic(() => import("@/components/posts/PostContent"), {
   ssr: true, // optional
 });
+
+// SSG + ISR: 게임 로그 상세는 정적 생성 + 재검증.
+export const dynamic = "force-static";
+export const revalidate = 3600;
 
 interface PageProps {
   params: Promise<{ slug: string[] }>; // 비동기 타입
@@ -36,7 +46,7 @@ export async function generateMetadata({ params }: PageProps) {
 
   const imageUrl = gameMeta
     ? absoluteUrl(gameMeta.image)
-    : absoluteUrl(`/og/${slugString}`);
+    : absoluteUrl(`/og/${slugString}?title=${encodeURIComponent(post.title)}`);
 
   return buildPageMetadata({
     title: `${post.title} — 성호의 TechBook`,
@@ -45,7 +55,7 @@ export async function generateMetadata({ params }: PageProps) {
     type: "article",
     images: [{ url: imageUrl, width: 1200, height: 630 }],
     publishedTime: new Date(post.date).toISOString(),
-    modifiedTime: new Date(post.date).toISOString(),
+    modifiedTime: new Date(post.updated ?? post.date).toISOString(),
   });
 }
 
@@ -100,7 +110,12 @@ export default async function PostPage({ params }: PageProps) {
     description: summary,
     path: `/games/${slugString}`,
     datePublished: new Date(post.date).toISOString(),
-    image: gameMeta ? absoluteUrl(gameMeta.image) : absoluteUrl(`/og/${slugString}`),
+    dateModified: new Date(post.updated ?? post.date).toISOString(),
+    image: gameMeta
+      ? absoluteUrl(gameMeta.image)
+      : absoluteUrl(`/og/${slugString}?title=${encodeURIComponent(post.title)}`),
+    tags: post.tags,
+    category: gameCategoryMap[category] ?? category,
   });
 
   const projectJsonLd =
@@ -112,6 +127,13 @@ export default async function PostPage({ params }: PageProps) {
       image: gameMeta.image,
       technologies: gameMeta.techStack,
     });
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd({
+    items: [
+      { name: "홈", item: "/" },
+      { name: "Games", item: "/games" },
+      { name: post.title, item: `/games/${slugString}` },
+    ],
+  });
 
   return (
     <div className="flex w-full">
@@ -119,7 +141,9 @@ export default async function PostPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
-            projectJsonLd ? [articleJsonLd, projectJsonLd] : [articleJsonLd]
+            projectJsonLd
+              ? [articleJsonLd, projectJsonLd, breadcrumbJsonLd]
+              : [articleJsonLd, breadcrumbJsonLd]
           ),
         }}
       />
@@ -127,7 +151,10 @@ export default async function PostPage({ params }: PageProps) {
         <PostContent
           title={post.title}
           date={new Date(post.date).toISOString().split("T")[0]}
+          updated={post.updated}
+          readingTime={post.readingTime}
           description={summary}
+          tags={post.tags}
           contentHtml={post.contentHtml}
           prevPost={
             prevPost

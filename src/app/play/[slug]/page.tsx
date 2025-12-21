@@ -10,6 +10,10 @@ interface PageProps {
   }>;
 }
 
+// SSG: 데모 플레이 페이지는 정적 생성하되 검색엔진 인덱싱은 제한.
+export const dynamic = "force-static";
+export const revalidate = 86400;
+
 export function generateStaticParams() {
   return games.map((game) => ({
     slug: game.playSlug,
@@ -35,6 +39,10 @@ export async function generateMetadata({ params }: PageProps) {
         height: 630,
       },
     ],
+    robots: {
+      index: false,
+      follow: true,
+    },
   });
 }
 

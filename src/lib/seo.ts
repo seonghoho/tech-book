@@ -26,6 +26,7 @@ type BuildMetadataOptions = {
   images?: { url: string; width?: number; height?: number }[];
   publishedTime?: string;
   modifiedTime?: string;
+  robots?: Metadata["robots"];
 };
 
 export function buildPageMetadata({
@@ -36,6 +37,7 @@ export function buildPageMetadata({
   images,
   publishedTime,
   modifiedTime,
+  robots,
 }: BuildMetadataOptions): Metadata {
   const url = absoluteUrl(path);
   const imageList =
@@ -70,7 +72,7 @@ export function buildPageMetadata({
       description,
       images: imageList.map((img) => img.url),
     },
-    metadataBase: new URL(getSiteUrl()),
+    robots,
     ...(type === "article"
       ? {
           openGraph: {
@@ -96,6 +98,8 @@ export function buildArticleJsonLd({
   datePublished,
   dateModified,
   image = absoluteUrl(siteDefaults.defaultImage),
+  tags,
+  category,
 }: {
   title: string;
   description: string;
@@ -103,6 +107,8 @@ export function buildArticleJsonLd({
   datePublished: string;
   dateModified?: string;
   image?: string;
+  tags?: string[];
+  category?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -116,6 +122,8 @@ export function buildArticleJsonLd({
     image,
     datePublished,
     dateModified: dateModified ?? datePublished,
+    keywords: tags?.length ? tags.join(", ") : undefined,
+    articleSection: category,
     author: {
       "@type": "Person",
       name: "Choi Seongho",
@@ -129,6 +137,23 @@ export function buildArticleJsonLd({
         url: absoluteUrl(siteDefaults.defaultImage),
       },
     },
+  };
+}
+
+export function buildBreadcrumbJsonLd({
+  items,
+}: {
+  items: { name: string; item: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((entry, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: entry.name,
+      item: absoluteUrl(entry.item.startsWith("/") ? entry.item : `/${entry.item}`),
+    })),
   };
 }
 

@@ -64,7 +64,7 @@ const GameClientWrapper = ({
         container.innerHTML = "";
       }
     };
-  }, []);
+  }, [gameName, onGameInstanceReady, onGameOver, onScoreUpdate]);
 
   return <div ref={gameContainerRef} className="w-full h-full" />;
 };

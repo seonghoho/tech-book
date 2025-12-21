@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/site";
-import { getAllPosts } from "@/lib/getAllPosts";
-import { games } from "@/lib/gamesData";
+import { getAllCategories, getAllPosts, getAllTags } from "@/lib/getAllPosts";
+
+export const revalidate = 3600;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -26,10 +27,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(post.date),
   }));
 
-  const gamePlays = games.map((game) => ({
-    url: absoluteUrl(`/play/${game.playSlug}`),
+  const categories = getAllCategories("posts").map((category) => ({
+    url: absoluteUrl(`/categories/${category}`),
     lastModified: now,
   }));
 
-  return [...staticPages, ...posts, ...gameDocs, ...gamePlays];
+  const tags = getAllTags("posts").map((tag) => ({
+    url: absoluteUrl(`/tags/${encodeURIComponent(tag)}`),
+    lastModified: now,
+  }));
+
+  return [...staticPages, ...posts, ...gameDocs, ...categories, ...tags];
 }

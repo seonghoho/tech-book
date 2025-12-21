@@ -9,6 +9,9 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/about",
 });
 
+// SSG: 고정 소개 페이지는 정적 생성.
+export const dynamic = "force-static";
+
 const page = () => {
   const contactData = [
     { icon: PhoneIcon, content: "010-5512-4339", type: "tel" },

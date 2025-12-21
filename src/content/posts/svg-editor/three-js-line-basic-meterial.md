@@ -1,7 +1,10 @@
 ---
 title: "Three.js 겨냥도 구현하기"
 date: "2025-07-24"
+updated: "2025-07-24"
 description: "Three.js에서 겨냥도를 구현합니다."
+image: "/images/svg-editor/03_threejs-line-meterial-01.png"
+tags: ["Three.js", "WebGL", "Line", "Rendering"]
 ---
 
 # Three.js에서 겨냥도 구현하기

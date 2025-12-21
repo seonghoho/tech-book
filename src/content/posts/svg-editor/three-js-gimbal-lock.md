@@ -1,7 +1,10 @@
 ---
 title: "Three.js 좌표축 클릭 시 카메라 방향 꼬임 문제"
 date: "2025-07-25"
+updated: "2025-07-25"
 description: "Three.js에서 카메라 방향 꼬임 문제를 해결하는 과정을 알아봅니다."
+image: "/images/svg-editor/04_threejs-gimbal-lock-01.png"
+tags: ["Three.js", "WebGL", "Camera", "Math"]
 ---
 
 # Three.js 공간좌표 좌표축 클릭 시 카메라 방향 꼬임 문제 (업벡터 이슈)

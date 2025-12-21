@@ -3,12 +3,17 @@ import { extractHeadings } from "@/lib/getPostContent";
 import { getPostData } from "@/lib/getPostData";
 import { absoluteUrl } from "@/lib/site";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
-import { buildArticleJsonLd, buildPageMetadata } from "@/lib/seo";
-import dynamic from "next/dynamic";
+import { buildArticleJsonLd, buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
+import nextDynamic from "next/dynamic";
+import { categoryMap } from "@/lib/categoryMap";
 
-const PostContent = dynamic(() => import("@/components/posts/PostContent"), {
+const PostContent = nextDynamic(() => import("@/components/posts/PostContent"), {
   ssr: true,
 });
+
+// SSG + ISR: 글 상세는 정적 생성하되 업데이트에 대비해 재검증.
+export const dynamic = "force-static";
+export const revalidate = 3600;
 
 interface PageProps {
   params: Promise<{ slug: string[] }>;
@@ -34,16 +39,20 @@ export async function generateMetadata({ params }: PageProps) {
   const post = await getPostData("posts", slugString);
 
   const summary = post.description ?? createExcerpt(post.rawMarkdown);
-  const ogImage = absoluteUrl(`/og/${slugString}`);
+  const ogImage = absoluteUrl(
+    `/og/${slugString}?title=${encodeURIComponent(post.title)}`
+  );
+  const imageUrl = post.image ? absoluteUrl(post.image) : ogImage;
+  const modifiedTime = post.updated ?? post.date;
 
   return buildPageMetadata({
     title: `${post.title} — 성호의 TechBook`,
     description: summary,
     path: `/posts/${slugString}`,
     type: "article",
-    images: [{ url: ogImage, width: 1200, height: 630 }],
+    images: [{ url: imageUrl, width: 1200, height: 630 }],
     publishedTime: new Date(post.date).toISOString(),
-    modifiedTime: new Date(post.date).toISOString(),
+    modifiedTime: new Date(modifiedTime).toISOString(),
   });
 }
 
@@ -86,20 +95,39 @@ export default async function PostPage({ params }: PageProps) {
     description: summary,
     path: `/posts/${slugString}`,
     datePublished: new Date(post.date).toISOString(),
-    image: absoluteUrl(`/og/${slugString}`),
+    dateModified: new Date(post.updated ?? post.date).toISOString(),
+    image: post.image
+      ? absoluteUrl(post.image)
+      : absoluteUrl(`/og/${slugString}?title=${encodeURIComponent(post.title)}`),
+    tags: post.tags,
+    category: categoryMap[category] ?? category,
+  });
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd({
+    items: [
+      { name: "홈", item: "/" },
+      { name: "Posts", item: "/posts" },
+      { name: categoryMap[category] ?? category, item: `/categories/${category}` },
+      { name: post.title, item: `/posts/${slugString}` },
+    ],
   });
 
   return (
     <div className="flex w-full">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([jsonLd, breadcrumbJsonLd]),
+        }}
       />
       <main className="flex flex-1 overflow-y-auto scrollbar-hide xl:border-border xl:border-r py-6">
         <PostContent
           title={post.title}
           date={post.date}
-          description={post.description}
+          updated={post.updated}
+          readingTime={post.readingTime}
+          description={summary}
+          tags={post.tags}
+          category={category}
           contentHtml={post.contentHtml}
           prevPost={
             prevPost

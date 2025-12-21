@@ -1,5 +1,3 @@
-"use client";
-
 import { categoryMap as defaultCategoryMap } from "@/lib/categoryMap";
 import { gameCategoryMap as defaultGameCategoryMap } from "@/lib/gameCategoryMap";
 import Link from "next/link";

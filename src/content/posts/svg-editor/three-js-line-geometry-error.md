@@ -1,7 +1,11 @@
 ---
 title: "Three.js LineGeometry 문제 해결"
 date: "2025-07-11"
+updated: "2025-07-11"
 description: "LineGeometry로 만든 선이 시점에 따라 사라지는 문제를 해결합니다."
+image: "/images/svg-editor/02_threejs-line-geometry-01.png"
+tags: ["Three.js", "WebGL", "LineGeometry", "Troubleshooting"]
+featured: true
 ---
 
 ## 1. 문제 상황
