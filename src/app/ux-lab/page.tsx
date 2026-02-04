@@ -3,7 +3,7 @@ import { buildPageMetadata } from "@/lib/seo";
 import UXLabClient from "@/components/ux-lab/UXLabClient";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "UX Lab | TechBook",
+  title: "UX Lab",
   description: "Three.js와 GSAP를 활용한 인터랙티브 실험실을 둘러보세요.",
   path: "/ux-lab",
 });
