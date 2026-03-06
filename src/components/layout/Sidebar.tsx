@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { PostMeta } from "@/types/post";
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronDownIcon, ChevronRightIcon } from "@/assets/svg";
 import { usePathname } from "next/navigation";
 
@@ -24,22 +24,37 @@ export default function Sidebar({ data, categoryMap }: Props) {
 
   const refs = useRef<Record<string, HTMLUListElement>>({});
 
+  useEffect(() => {
+    const matchedCategory = Object.entries(data).find(([, posts]) =>
+      posts.some((post) => pathname === `/${routeName}/${post.slug}`)
+    )?.[0];
+
+    setOpenCategory(matchedCategory ?? Object.keys(data)[0] ?? null);
+  }, [data, pathname, routeName]);
+
   return (
-    <div className="space-y-4">
-      {/* <h2 className="text-lg font-bold mb-2">카테고리별 글</h2> */}
+    <div className="space-y-3">
+      <div className="space-y-1 px-2">
+        <p className="eyebrow-label">{isGamePath ? "Games" : "Browse"}</p>
+        <p className="muted-copy">
+          {isGamePath
+            ? "카테고리별 게임 로그를 빠르게 탐색할 수 있습니다."
+            : "기술 문서와 카테고리를 탐색할 수 있습니다."}
+        </p>
+      </div>
       {Object.entries(data).map(([category, posts]) => {
         const isOpen = openCategory === category;
         return (
           <div key={category} className="text-[14px]">
             <button
-              className="flex justify-between items-center w-full px-2 py-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded text-left font-medium"
+              className="flex w-full items-center justify-between rounded-2xl px-3 py-3 text-left font-medium text-[color:var(--color-text-secondary)] transition hover:bg-[color:var(--color-surface-elevated)] hover:text-[color:var(--color-text-primary)]"
               onClick={() => toggleCategory(category)}
             >
               <span>{categoryMap[category] ?? category}</span>
               {isOpen ? (
-                <ChevronDownIcon className="w-4 h-4 text-[#0F1B2A] dark:text-bright" />
+                <ChevronDownIcon className="h-4 w-4 text-[color:var(--color-text-muted)]" />
               ) : (
-                <ChevronRightIcon className="w-4 h-4 text-[#0F1B2A] dark:text-bright" />
+                <ChevronRightIcon className="h-4 w-4 text-[color:var(--color-text-muted)]" />
               )}
             </button>
             <div
@@ -54,27 +69,27 @@ export default function Sidebar({ data, categoryMap }: Props) {
                 ref={(el: HTMLUListElement | null) => {
                   if (el) refs.current[category] = el;
                 }}
-                className="mt-1 ml-4 space-y-1 border-l border-border"
+                className="ml-4 mt-1 space-y-1 border-l border-[color:var(--color-border)] pl-3"
               >
                 {posts.map((post) => (
                   <li key={post.slug} className="w-full">
                     <Link href={`/${routeName}/${post.slug}`}>
                       <div
-                        className={`py-2 cursor-pointer group hover:bg-slate-100 dark:hover:bg-zinc-800 ${
+                        className={`group cursor-pointer rounded-r-2xl py-2 transition ${
                           pathname === `/${routeName}/${post.slug}`
                             ? routeName === "games"
-                              ? "bg-blue-100 dark:bg-zinc-700"
-                              : "bg-green-100 dark:bg-zinc-700"
-                            : ""
+                              ? "bg-sky-500/10"
+                              : "bg-[color:var(--color-accent-soft)]"
+                            : "hover:bg-[color:var(--color-surface-elevated)]"
                         }`}
                       >
                         <span
-                          className={`pl-4 group-hover:underline truncate block max-w-[90%] ${
+                          className={`block max-w-[92%] truncate pl-4 text-sm transition ${
                             pathname === `/${routeName}/${post.slug}`
                               ? routeName === "games"
-                                ? "text-blue-700 dark:text-blue-300 font-semibold"
-                                : "text-green-700 dark:text-green-300 font-semibold"
-                              : "text-gray-800 dark:text-gray-200"
+                                ? "font-semibold text-sky-600 dark:text-sky-300"
+                                : "font-semibold text-[color:var(--color-accent)]"
+                              : "text-[color:var(--color-text-secondary)] group-hover:text-[color:var(--color-text-primary)]"
                           }`}
                         >
                           {post.title}

@@ -55,7 +55,7 @@ export default function ClientHeaderWithSidebar({ Sidebar }: Props) {
         <aside
           ref={sidebarRef}
           id="sidebar-drawer"
-          className={`lg:hidden fixed top-[66px] rounded-r-xl h-[calc(100vh-65px)] left-0 w-64 z-40 bg-white dark:bg-dark border-r border-r-[#d9d9d9] p-4  transform transition-transform duration-300 ease-in-out ${
+          className={`fixed left-0 top-[65px] z-40 h-[calc(100vh-65px)] w-72 rounded-r-[28px] border-r border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-4 shadow-[0_24px_60px_rgba(15,23,42,0.12)] transition-transform duration-300 ease-in-out lg:hidden ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >

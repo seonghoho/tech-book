@@ -10,13 +10,13 @@ export function PostNavCard({
   return (
     <a
       href={post.url}
-      className={`flex flex-col border-2 border-[#d9d9d9] rounded-lg p-4 w-full hover:shadow-sm hover:border-green-200 transition-all bg-gray-50 dark:bg-[#1a1a1a]`}
+      className="surface-panel flex w-full flex-col p-5 transition duration-200 hover:-translate-y-0.5"
       style={{ alignItems: direction === "prev" ? "flex-start" : "flex-end" }}
     >
-      <span className="text-xs text-gray-400 mb-1">
+      <span className="mb-1 text-xs text-[color:var(--color-text-muted)]">
         {direction === "prev" ? "이전 글" : "다음 글"}
       </span>
-      <span className="font-semibold text-gray-700 dark:text-gray-200 line-clamp-2 text-left">
+      <span className="line-clamp-2 text-left font-semibold text-[color:var(--color-text-primary)]">
         {post.title}
       </span>
     </a>

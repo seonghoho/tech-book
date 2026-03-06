@@ -76,10 +76,10 @@ export default function RootLayout({
   };
   return (
     <html lang="ko">
-      <body className="flex flex-col w-full min-h-screen bg-white dark:bg-[#0F0F0F] text-dark dark:text-bright">
+      <body className="flex min-h-screen w-full flex-col">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-slate-900 focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-[color:var(--color-surface)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--color-text-primary)] focus:shadow-lg"
         >
           본문으로 바로가기
         </a>
@@ -93,7 +93,7 @@ export default function RootLayout({
         />
         <main
           id="main-content"
-          className="w-full flex-1 lg:max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8"
+          className="mx-auto w-full max-w-[1360px] flex-1 px-4 sm:px-6 lg:px-8"
         >
           {children}
         </main>
