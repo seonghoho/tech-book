@@ -397,17 +397,17 @@ export default function ProjectVisual({
 
     return (
       <figure
-        className={`group relative overflow-hidden rounded-[28px] border border-slate-200/70 bg-slate-950/5 shadow-[0_18px_44px_rgba(15,23,42,0.08)] dark:border-slate-800/80 dark:bg-slate-950 ${aspectClass} ${className}`}
+        className={`group relative overflow-hidden rounded-[14px] border border-slate-200/70 bg-slate-950/10 shadow-[0_18px_44px_rgba(15,23,42,0.02)] dark:border-slate-800/80 dark:bg-slate-950 ${aspectClass} ${className}`}
       >
         <Image
           src={preview.src}
           alt={preview.alt}
           fill
           priority={priority}
-          className="object-cover transition duration-500 group-hover:scale-[1.02]"
+          className="object-fit transition duration-500 group-hover:scale-[1.04]"
           sizes="(min-width: 1280px) 40vw, (min-width: 768px) 50vw, 100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-slate-600/10 to-transparent" />
         <figcaption
           className={`absolute inset-x-0 bottom-0 font-medium text-white ${imageCaptionClass}`}
         >
