@@ -83,17 +83,17 @@ export default function Header({ onToggleSidebar, buttonRef }: HeaderProps) {
             </nav>
             <button
               onClick={toggleTheme}
-              className="flex h-11 items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-3 text-sm font-medium text-[color:var(--color-text-secondary)] transition hover:-translate-y-0.5 hover:text-[color:var(--color-text-primary)]"
+              className="flex h-10 px-1.5 items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)]  text-sm font-medium text-[color:var(--color-text-secondary)] transition hover:-translate-y-0.5 hover:text-[color:var(--color-text-primary)]"
               aria-label={isDark ? "라이트 모드로 전환" : "다크 모드로 전환"}
             >
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[color:var(--color-surface-elevated)] text-[color:var(--color-accent)]">
                 {isDark ? (
-                  <MoonIcon id="theme-icon" className="h-4 w-4" />
+                  <MoonIcon id="theme-icon" className="h-8 w-8" />
                 ) : (
-                  <SunIcon id="theme-icon" className="h-4 w-4" />
+                  <SunIcon id="theme-icon" className="h-8 w-8" />
                 )}
               </span>
-              <span className="hidden sm:block">{isDark ? "Dark" : "Light"}</span>
+              {/* <span className="hidden sm:block">{isDark ? "Dark" : "Light"}</span> */}
             </button>
           </div>
         </div>
