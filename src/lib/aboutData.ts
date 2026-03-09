@@ -49,6 +49,7 @@ export type ProjectPreview =
       title: string;
       caption: string;
       tone: "emerald" | "amber" | "sky" | "rose";
+      layout?: "flow" | "dashboard" | "split" | "stack";
       points: string[];
       aspect?: "wide" | "landscape" | "square";
     };
@@ -91,8 +92,16 @@ export const aboutProfile = {
   title: "프론트엔드 엔지니어",
   tagline: "SVG 기반 에디터와 3D 시각 도구를 설계·구현하는 프론트엔드 엔지니어",
   quote: "꾸준함을 무기로, 몰입하며 성장하는 개발자",
+  railSummary:
+    "SVG·Three.js 기반 인터랙션과 서비스 UI를 설계·구현하는 프론트엔드 엔지니어입니다.",
+  companyLabel: "플랜티엠 · Frontend Engineer",
+  stackLabel: "Vue / React / SVG / Three.js",
+  overviewTitle:
+    "복잡한 상호작용을 구현하면서도, 읽히는 구조를 남기는 프론트엔드 엔지니어입니다",
+  overviewDescription:
+    "사용자에게는 자연스럽고, 팀에게는 다루기 쉬운 화면을 만드는 것이 목표입니다. 특히 좌표 기반 인터랙션과 시각화가 필요한 제품에서 강점을 발휘합니다.",
   summary:
-    "에듀테크 스타트업 코드넛에서 SVG·Three.js 기반 수학교구 캔버스를 개발하며 복잡한 사용자 상호작용을 구조화하는 일에 집중하고 있습니다. 인터랙션 설계, 모듈화, 렌더링 최적화, 서비스 UI 통합을 함께 다루며 React·Vue 기반 팀 프로젝트에서도 실전 문제 해결 경험을 쌓았습니다.",
+    "2026년 3월부터 플랜티엠에서 프론트엔드 엔지니어로 근무하고 있습니다. 이전에는 코드넛에서 SVG·Three.js 기반 수학교구 캔버스를 개발하며 복잡한 사용자 상호작용을 구조화하는 일에 집중했고, React·Vue 기반 팀 프로젝트에서도 실전 문제 해결 경험을 쌓았습니다.",
   focus:
     "사용자 경험과 유지보수성을 함께 보는 설계, 그리고 인터랙션이 많은 화면에서도 흔들리지 않는 구조를 만드는 데 강점이 있습니다.",
   contacts: [
@@ -115,7 +124,7 @@ export const aboutProfile = {
     {
       value: "20 / 46",
       label: "직접 설계·구현한 디지털 교구",
-      description: "코드넛 실무에서 담당한 SVG 기반 수학교구 수량",
+      description: "코드넛 재직 당시 담당한 SVG 기반 수학교구 수량",
     },
     {
       value: "4개",
@@ -223,11 +232,19 @@ export const skillGroups: SkillGroup[] = [
 
 export const experienceTimeline: ExperienceItem[] = [
   {
+    company: "플랜티엠",
+    title: "프론트엔드 엔지니어",
+    period: "2026.03 - 재직 중",
+    summary:
+      "2026년 3월부터 플랜티엠에서 프론트엔드 엔지니어로 근무하고 있습니다.",
+    highlights: ["2026년 3월 플랜티엠 합류", "프론트엔드 엔지니어로 근무 중"],
+  },
+  {
     company: "코드넛",
     title: "프론트엔드 엔지니어",
-    period: "2024.08 - 재직 중",
+    period: "2024.08 - 2026.02",
     summary:
-      "SVG·Three.js 기반 수학교구 캔버스를 개발하며 프론트엔드 아키텍처 설계부터 인터랙션 구현, 렌더링 최적화, 서비스 UI 통합까지 담당하고 있습니다.",
+      "SVG·Three.js 기반 수학교구 캔버스를 개발하며 프론트엔드 아키텍처 설계부터 인터랙션 구현, 렌더링 최적화, 서비스 UI 통합까지 담당했습니다.",
     highlights: [
       "총 46종 중 20종의 디지털 교구를 직접 설계·구현",
       "클래스 기반 객체 구조로 확장성과 유지보수성 개선",
@@ -269,8 +286,8 @@ export const aboutProjects: AboutProject[] = [
     title: "MathCanvas",
     eyebrow: "대표 프로젝트",
     tagline: "SVG와 Three.js로 수학교구를 디지털화한 인터랙션 캔버스",
-    period: "2024.08 - 진행 중",
-    duration: "장기 운영",
+    period: "2024.08 - 2026.02",
+    duration: "1년 7개월",
     team: "4명 · 프론트엔드 3 / 백엔드 1",
     role: "프론트엔드 엔지니어",
     summary:
@@ -413,8 +430,10 @@ export const aboutProjects: AboutProject[] = [
       kind: "placeholder",
       label: "상권 추천",
       title: "지도 기반 상권 탐색과 실시간 소통을 한 흐름으로 연결",
-      caption: "카카오맵 선택, 추천 구역 시각화, 채팅·알림 흐름을 하나의 서비스 경험으로 설계",
+      caption:
+        "카카오맵 선택, 추천 구역 시각화, 채팅·알림 흐름을 하나의 서비스 경험으로 설계",
       tone: "amber",
+      layout: "flow",
       points: ["상권 추천", "비용 시뮬레이션", "채팅 · FCM 알림"],
       aspect: "wide",
     },
@@ -425,6 +444,7 @@ export const aboutProjects: AboutProject[] = [
         title: "좌표 기반 추천 구역 시각화",
         caption: "사용자 선택 좌표를 기준으로 추천 상권을 폴리곤으로 표현",
         tone: "amber",
+        layout: "flow",
         points: ["카카오맵", "좌표 전달", "폴리곤 렌더링"],
         aspect: "landscape",
       },
@@ -432,8 +452,10 @@ export const aboutProjects: AboutProject[] = [
         kind: "placeholder",
         label: "실시간 기능",
         title: "커뮤니티와 채팅 알림 흐름",
-        caption: "REST API, WebSocket, FCM을 결합해 실시간 상호작용 경험을 구성",
+        caption:
+          "REST API, WebSocket, FCM을 결합해 실시간 상호작용 경험을 구성",
         tone: "rose",
+        layout: "stack",
         points: ["CRUD", "WebSocket", "Push Notification"],
         aspect: "landscape",
       },
@@ -497,8 +519,10 @@ export const aboutProjects: AboutProject[] = [
       kind: "placeholder",
       label: "경기 분석",
       title: "경기 데이터, 하이라이트, 전술보드를 연결한 분석 경험",
-      caption: "영상 기반 풋살 분석 서비스를 위해 정보 밀도 높은 화면과 재사용 가능한 UI 구조를 설계",
+      caption:
+        "영상 기반 풋살 분석 서비스를 위해 정보 밀도 높은 화면과 재사용 가능한 UI 구조를 설계",
       tone: "sky",
+      layout: "dashboard",
       points: ["재사용 컴포넌트", "전술보드", "경기 상세"],
       aspect: "wide",
     },
@@ -509,6 +533,7 @@ export const aboutProjects: AboutProject[] = [
         title: "Atomic Design Pattern과 Storybook",
         caption: "컴포넌트 단위를 명확히 나눠 반복되는 화면 구성을 빠르게 조립",
         tone: "sky",
+        layout: "dashboard",
         points: ["Atom to Page", "Storybook", "Tailwind CSS"],
         aspect: "landscape",
       },
@@ -516,8 +541,10 @@ export const aboutProjects: AboutProject[] = [
         kind: "placeholder",
         label: "전술보드",
         title: "드래그 가능한 전술보드 인터랙션",
-        caption: "Zustand와 Draggable을 활용해 경기 상황을 바로 편집할 수 있는 화면 구현",
+        caption:
+          "Zustand와 Draggable을 활용해 경기 상황을 바로 편집할 수 있는 화면 구현",
         tone: "emerald",
+        layout: "stack",
         points: ["Draggable", "Zustand", "Match Detail"],
         aspect: "landscape",
       },
@@ -580,8 +607,10 @@ export const aboutProjects: AboutProject[] = [
       kind: "placeholder",
       label: "입양 흐름",
       title: "입양자와 보호소를 위한 역할별 사용자 경험 설계",
-      caption: "맞춤형 추천, 위치 기반 커뮤니티, 설문 흐름을 연결해 입양 지원 과정을 정리",
+      caption:
+        "맞춤형 추천, 위치 기반 커뮤니티, 설문 흐름을 연결해 입양 지원 과정을 정리",
       tone: "rose",
+      layout: "split",
       points: ["역할 분기", "위치 커뮤니티", "20문항 설문"],
       aspect: "wide",
     },
@@ -590,8 +619,10 @@ export const aboutProjects: AboutProject[] = [
         kind: "placeholder",
         label: "사용자 흐름",
         title: "5단계 맞춤형 입양 흐름",
-        caption: "입양 희망자의 단계별 경험을 분리해 긴 절차를 이해하기 쉽게 구성",
+        caption:
+          "입양 희망자의 단계별 경험을 분리해 긴 절차를 이해하기 쉽게 구성",
         tone: "rose",
+        layout: "flow",
         points: ["Role-based UI", "Guided Steps", "Support Flow"],
         aspect: "landscape",
       },
@@ -599,8 +630,10 @@ export const aboutProjects: AboutProject[] = [
         kind: "placeholder",
         label: "커뮤니티",
         title: "위치 기반 커뮤니티와 데이터 조회",
-        caption: "카카오맵과 React Query를 연결해 커뮤니티 탐색과 조회 흐름을 정리",
+        caption:
+          "카카오맵과 React Query를 연결해 커뮤니티 탐색과 조회 흐름을 정리",
         tone: "emerald",
+        layout: "dashboard",
         points: ["Kakao Map", "React Query", "Filtering"],
         aspect: "landscape",
       },

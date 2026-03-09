@@ -14,8 +14,12 @@ import ProjectVisual from "./ProjectVisual";
 
 const featuredProject = aboutProjects.find((project) => project.featured);
 const secondaryProjects = aboutProjects.filter((project) => !project.featured);
-const aboutRailSummary =
-  "SVG·Three.js 기반 인터랙션과 서비스 UI를 설계·구현하는 프론트엔드 엔지니어입니다.";
+const overviewFacts = [
+  { label: "Current", value: aboutProfile.companyLabel },
+  { label: "Stack", value: aboutProfile.stackLabel },
+  { label: "Core", value: "인터랙션 · 시각화 · 서비스 UI" },
+];
+const overviewStrengths = strengthHighlights.slice(0, 3);
 
 function SectionHeader({
   eyebrow,
@@ -45,84 +49,129 @@ export default function AboutPage() {
           eyebrow={aboutProfile.quote}
           name={aboutProfile.name}
           title={aboutProfile.tagline}
-          summary={aboutRailSummary}
+          summary={aboutProfile.railSummary}
           sections={[...aboutSectionLinks]}
           links={aboutProfile.contacts}
         />
 
         <div className="space-y-20 sm:space-y-24">
-          <section id="overview" className="scroll-mt-28 space-y-8">
-            <SectionHeader
-              eyebrow="Overview"
-              title="복잡한 상호작용을 구현하면서도, 읽히는 구조를 남기는 프론트엔드 엔지니어입니다"
-              description="사용자에게는 자연스럽고, 팀에게는 다루기 쉬운 화면을 만드는 것이 목표입니다. 특히 좌표 기반 인터랙션과 시각화가 필요한 제품에서 강점을 발휘합니다."
-            />
-
-            <div className="grid gap-4 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-              <article className="rounded-[30px] border border-[color:var(--color-border)] p-5 sm:p-6">
-                <div className="flex items-center gap-4">
-                  <div className="relative h-20 w-20 overflow-hidden rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-surface-muted)]">
-                    <Image
-                      src="/images/Profile.JPG"
-                      alt="최성호 프로필 사진"
-                      fill
-                      className="object-cover"
-                      sizes="80px"
-                      priority
-                    />
+          <section id="overview" className="scroll-mt-28 space-y-10">
+            <article className="surface-panel-strong mx-auto w-full max-w-[1040px] overflow-hidden p-4 sm:p-5 lg:p-6">
+              <div className="grid gap-6 min-[1600px]:grid-cols-[minmax(300px,0.86fr)_minmax(0,1.14fr)] min-[1600px]:items-stretch">
+                <div className="relative aspect-[5/4] overflow-hidden rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-muted)]">
+                  <Image
+                    src="/images/Profile.JPG"
+                    alt="최성호 프로필 사진"
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1600px) 420px, 100vw"
+                    priority
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent p-5 sm:p-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/70">
+                      Current
+                    </p>
+                    <p className="mt-2 text-lg font-semibold text-white">
+                      {aboutProfile.companyLabel}
+                    </p>
+                    <p className="mt-2 text-sm font-base leading-6 text-white">
+                      {aboutProfile.stackLabel}
+                    </p>
                   </div>
-                  <div className="space-y-1">
-                    <div className="text-base font-semibold text-[color:var(--color-text-primary)]">
-                      {aboutProfile.title}
+                </div>
+
+                <div className="flex h-full w-full flex-col justify-between">
+                  <div className="space-y-6">
+                    <div className="space-y-3">
+                      <p className="eyebrow-label">Profile Snapshot</p>
+                      <div>
+                        <h3 className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)] sm:text-3xl">
+                          {aboutProfile.title}
+                        </h3>
+                        <p className="mt-3 max-w-2xl text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
+                          {aboutProfile.railSummary}
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-sm text-[color:var(--color-text-secondary)]">
-                      코드넛 · Frontend Engineer
-                    </div>
-                    <div className="text-sm text-[color:var(--color-text-muted)]">
-                      SVG / Three.js / React / Vue
+
+                    <dl className="grid gap-3 sm:grid-cols-2 min-[1600px]:grid-cols-3">
+                      {overviewFacts.map((fact) => (
+                        <div
+                          key={fact.label}
+                          className="rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/72 px-4 py-4"
+                        >
+                          <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--color-text-muted)]">
+                            {fact.label}
+                          </dt>
+                          <dd className="mt-2 text-sm font-medium leading-6 text-[color:var(--color-text-primary)]">
+                            {fact.value}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+
+                  <div className="mt-6">
+                    <p className="text-sm font-semibold text-[color:var(--color-text-primary)]">
+                      What I Focus On
+                    </p>
+                    <div className="mt-4 grid gap-3">
+                      {overviewStrengths.map((item) => (
+                        <div
+                          key={item.title}
+                          className="flex items-start gap-3 rounded-[22px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] px-4 py-3"
+                        >
+                          <span className="mt-2 h-2 w-2 rounded-full bg-[color:var(--color-accent)]" />
+                          <div>
+                            <p className="text-sm font-semibold text-[color:var(--color-text-primary)]">
+                              {item.title}
+                            </p>
+                            <p className="mt-1 text-sm leading-6 text-[color:var(--color-text-muted)]">
+                              {item.bullets[0]}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
-                <div className="mt-5 flex flex-wrap gap-3">
-                  {aboutProfile.contacts.map((contact) => (
-                    <a
-                      key={contact.label}
-                      href={contact.href}
-                      target={contact.external ? "_blank" : undefined}
-                      rel={contact.external ? "noopener noreferrer" : undefined}
-                      className="button-secondary"
-                    >
-                      {contact.label}
-                    </a>
-                  ))}
-                </div>
-              </article>
+              </div>
+            </article>
 
-              <article className="rounded-[30px] border border-[color:var(--color-border)] p-5 sm:p-6">
+            <div className="mx-auto grid w-full max-w-[1040px] gap-6">
+              <div className="space-y-5">
+                <SectionHeader
+                  eyebrow="Overview"
+                  title={aboutProfile.overviewTitle}
+                  description={aboutProfile.overviewDescription}
+                />
+                <div className="rounded-[30px] border border-[color:var(--color-border)] px-5 py-5 sm:px-6">
+                  <p className="eyebrow-label">Context</p>
+                  <p className="mt-4 text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
+                    {aboutProfile.summary}
+                  </p>
+                </div>
+              </div>
+
+              <aside className="surface-panel p-5 sm:p-6">
                 <p className="eyebrow-label">Focus</p>
-                <p className="mt-4 text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
-                  {aboutProfile.summary}
-                </p>
-                <p className="mt-4 text-sm leading-7 text-[color:var(--color-text-muted)]">
+                <p className="mt-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
                   {aboutProfile.focus}
                 </p>
-              </article>
+                <div className="mt-5 grid gap-3">
+                  {overviewStrengths.map((item) => (
+                    <div
+                      key={item.title}
+                      className="rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] px-4 py-3 text-sm font-medium text-[color:var(--color-text-secondary)]"
+                    >
+                      {item.title}
+                    </div>
+                  ))}
+                </div>
+              </aside>
             </div>
 
-            <div className="space-y-5 text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
-              <p>
-                에듀테크 스타트업 코드넛에서 SVG·Three.js 기반 수학교구
-                캔버스를 개발하며, 화면 안에서 발생하는 복합 상호작용을
-                책임 분리와 모듈화 관점으로 설계하고 있습니다.
-              </p>
-              <p>
-                단순히 기능을 구현하는 데서 끝나지 않고, 신규 교구 추가와
-                서비스 UI 통합, 협업 과정에서의 변경 대응까지 고려한
-                프론트엔드 구조를 만드는 데 집중하고 있습니다.
-              </p>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="mx-auto grid w-full max-w-[1040px] gap-3 sm:grid-cols-2">
               {aboutProfile.metrics.map((metric) => (
                 <article
                   key={metric.label}
@@ -273,7 +322,11 @@ export default function AboutPage() {
                       {featuredProject.links[0] ? (
                         <a
                           href={featuredProject.links[0].href}
-                          target={featuredProject.links[0].external ? "_blank" : undefined}
+                          target={
+                            featuredProject.links[0].external
+                              ? "_blank"
+                              : undefined
+                          }
                           rel={
                             featuredProject.links[0].external
                               ? "noopener noreferrer"
@@ -287,7 +340,11 @@ export default function AboutPage() {
                     </div>
                   </div>
 
-                  <ProjectVisual preview={featuredProject.preview} priority />
+                  <ProjectVisual
+                    preview={featuredProject.preview}
+                    priority
+                    variant="feature"
+                  />
                 </div>
               </article>
             ) : null}
@@ -428,15 +485,15 @@ export default function AboutPage() {
                 </article>
               ))}
 
-              <aside className="rounded-[28px] border border-[color:var(--color-border)] px-5 py-5 xl:col-span-2">
+              {/* <aside className="rounded-[28px] border border-[color:var(--color-border)] px-5 py-5 xl:col-span-2">
                 <p className="eyebrow-label">Contact</p>
                 <h3 className="mt-3 text-xl font-semibold text-[color:var(--color-text-primary)]">
                   채용 담당자나 협업 상대가 빠르게 확인할 수 있도록 구성했습니다
                 </h3>
                 <p className="mt-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
                   프로젝트별 상세 페이지에서 문제 맥락, 구현 방식, 결과를 더
-                  자세히 확인할 수 있습니다. 필요한 경우 GitHub와 이메일로
-                  바로 연결할 수 있습니다.
+                  자세히 확인할 수 있습니다. 필요한 경우 GitHub와 이메일로 바로
+                  연결할 수 있습니다.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   {aboutProfile.contacts.map((contact) => (
@@ -451,7 +508,7 @@ export default function AboutPage() {
                     </a>
                   ))}
                 </div>
-              </aside>
+              </aside> */}
             </div>
           </section>
         </div>

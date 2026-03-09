@@ -109,7 +109,7 @@ export default function ProjectDetailView({
             </div>
           </div>
 
-          <ProjectVisual preview={project.preview} priority />
+          <ProjectVisual preview={project.preview} priority variant="feature" />
         </div>
       </section>
 
@@ -159,7 +159,7 @@ export default function ProjectDetailView({
           <DetailSection title="관련 화면">
             <div className="grid gap-4 md:grid-cols-2">
               {project.gallery.map((item) => (
-                <ProjectVisual key={item.caption} preview={item} />
+                <ProjectVisual key={item.caption} preview={item} variant="gallery" />
               ))}
             </div>
           </DetailSection>

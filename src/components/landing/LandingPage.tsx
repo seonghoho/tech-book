@@ -1,13 +1,20 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   aboutProfile,
   aboutProjects,
-  experienceTimeline,
   strengthHighlights,
 } from "@/lib/aboutData";
+import type { AboutProject, StrengthItem } from "@/lib/aboutData";
 import { formatDate } from "@/lib/formatDate";
-import { PostMeta } from "@/types/post";
+import type { PostMeta } from "@/types/post";
 import ProjectVisual from "@/components/about/ProjectVisual";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type CategorySummary = {
   slug: string;
@@ -28,31 +35,144 @@ type Props = {
 };
 
 const featuredProject = aboutProjects[0];
-const secondaryProjects = aboutProjects.slice(1, 4);
-const homeSectionLinks = [
-  { id: "featured-proof", label: "대표 프로젝트" },
-  { id: "hire-signal", label: "강점" },
-  { id: "selected-work", label: "다른 프로젝트" },
-  { id: "writing", label: "글" },
-  { id: "contact", label: "연락" },
+const projectDeck = aboutProjects.slice(0, 4);
+const strengthDeck = strengthHighlights.slice(0, 3);
+const heroFocusBadges = [
+  { label: "SVG Editor", description: "복합 인터랙션 구조화" },
+  { label: "Three.js View", description: "조작감과 가독성 설계" },
+  { label: "Product UI", description: "서비스 흐름과 상태 연결" },
 ];
+const landingFrameClass = "mx-auto w-full max-w-[1360px] px-4 sm:px-6 lg:px-8";
+const HEADER_HEIGHT = 64;
+const SECTION_OFFSET = 88;
 
 function SectionHeader({
   eyebrow,
   title,
   description,
+  className = "",
 }: {
   eyebrow: string;
   title: string;
   description: string;
+  className?: string;
 }) {
   return (
-    <div className="space-y-3">
+    <div className={`space-y-3 ${className}`}>
       <p className="eyebrow-label">{eyebrow}</p>
-      <h2 className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)] sm:text-3xl">
+      <h2 className="text-3xl font-semibold tracking-[-0.05em] text-[color:var(--color-text-primary)] sm:text-4xl">
         {title}
       </h2>
       <p className="max-w-2xl body-copy">{description}</p>
+    </div>
+  );
+}
+
+function ProofList({ items }: { items: string[] }) {
+  return (
+    <ul className="space-y-2 text-sm text-[color:var(--color-text-secondary)]">
+      {items.map((item) => (
+        <li key={item} className="flex gap-3">
+          <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function ProjectShowcaseCard({
+  project,
+  index,
+  mode,
+}: {
+  project: AboutProject;
+  index: number;
+  mode: "rail" | "grid";
+}) {
+  const wrapperClass =
+    mode === "rail"
+      ? "flex min-h-[68vh] min-w-[86vw] flex-col rounded-[36px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-4 shadow-[var(--shadow-soft)] sm:min-w-[78vw] sm:p-5 lg:min-w-[46vw]"
+      : "surface-panel flex h-full flex-col overflow-hidden p-4";
+
+  return (
+    <article className={wrapperClass}>
+      <div className="flex items-center justify-between gap-3">
+        <span className="eyebrow-label">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <span className="tag-chip whitespace-nowrap">{project.period}</span>
+      </div>
+
+      <div className="mt-4">
+        <h3 className="text-2xl font-semibold text-[color:var(--color-text-primary)]">
+          {project.title}
+        </h3>
+        <p className="mt-2 text-sm leading-7 text-[color:var(--color-text-secondary)]">
+          {project.tagline}
+        </p>
+      </div>
+
+      <ProjectVisual
+        preview={project.preview}
+        variant="gallery"
+        className="mt-5 min-h-[280px]"
+      />
+
+      <div className="mt-5 flex flex-1 flex-col justify-between gap-4">
+        <div className="space-y-4">
+          <ProofList items={project.cardPoints.slice(0, 2)} />
+          <div className="flex flex-wrap gap-2">
+            {project.techStack.slice(0, 4).map((stack) => (
+              <span key={stack} className="tag-chip">
+                {stack}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <Link
+          href={`/about/projects/${project.slug}`}
+          className="accent-link inline-flex text-sm font-semibold"
+        >
+          About에서 자세히 보기
+        </Link>
+      </div>
+    </article>
+  );
+}
+
+function StrengthCard({
+  item,
+  index,
+}: {
+  item: StrengthItem;
+  index: number;
+}) {
+  return (
+    <div className="surface-panel p-5 sm:p-6">
+      <div className="flex items-center justify-between gap-3">
+        <span className="eyebrow-label">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <span className="tag-chip">{item.title}</span>
+      </div>
+      <p className="mt-5 text-xl font-semibold text-[color:var(--color-text-primary)]">
+        {item.title}
+      </p>
+      <p className="mt-3 text-sm leading-7 text-[color:var(--color-text-secondary)]">
+        {item.description}
+      </p>
+      <div className="mt-5 grid gap-3">
+        {item.bullets.map((bullet) => (
+          <div
+            key={bullet}
+            className="rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] px-4 py-3 text-sm leading-6 text-[color:var(--color-text-secondary)]"
+          >
+            {bullet}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -63,97 +183,190 @@ export default function LandingPage({
   categories,
   tags,
 }: Props) {
-  const highlightedPosts =
-    (featuredPosts.length ? featuredPosts : recentPosts).slice(0, 2);
-  const currentExperience = experienceTimeline[0];
-  const previousExperience = experienceTimeline[1];
+  const rootRef = useRef<HTMLDivElement>(null);
+  const projectsSectionRef = useRef<HTMLElement>(null);
+  const projectsTrackRef = useRef<HTMLDivElement>(null);
+  const [isEnhanced, setIsEnhanced] = useState(false);
+
+  const highlightedPosts = (
+    featuredPosts.length ? featuredPosts : recentPosts
+  ).slice(0, 2);
+  const heroViewportHeight = `calc(100vh - ${HEADER_HEIGHT}px)`;
+  const pinnedViewportHeight = `calc(100vh - ${SECTION_OFFSET}px)`;
+
+  useEffect(() => {
+    const desktopQuery = window.matchMedia("(min-width: 768px)");
+    const reduceMotionQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+
+    const updateMode = () => {
+      setIsEnhanced(desktopQuery.matches && !reduceMotionQuery.matches);
+    };
+
+    updateMode();
+    desktopQuery.addEventListener("change", updateMode);
+    reduceMotionQuery.addEventListener("change", updateMode);
+
+    return () => {
+      desktopQuery.removeEventListener("change", updateMode);
+      reduceMotionQuery.removeEventListener("change", updateMode);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isEnhanced || !rootRef.current) {
+      return;
+    }
+
+    const context = gsap.context(() => {
+      const heroItems = gsap.utils.toArray<HTMLElement>("[data-landing-hero]");
+      const heroBoard = gsap.utils.toArray<HTMLElement>("[data-hero-board]");
+
+      gsap.fromTo(
+        heroItems,
+        { y: 32, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          stagger: 0.1,
+          ease: "power3.out",
+        },
+      );
+
+      if (heroBoard[0]) {
+        gsap.to(heroBoard[0], {
+          y: -10,
+          duration: 4.8,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
+
+      const projectsSection = projectsSectionRef.current;
+      const projectsTrack = projectsTrackRef.current;
+
+      if (projectsSection && projectsTrack) {
+        const getDistance = () => {
+          const trackViewportWidth =
+            projectsTrack.parentElement?.clientWidth ??
+            projectsSection.clientWidth;
+
+          return Math.max(0, projectsTrack.scrollWidth - trackViewportWidth);
+        };
+
+        if (getDistance() > 0) {
+          gsap.to(projectsTrack, {
+            x: () => -getDistance(),
+            ease: "none",
+            scrollTrigger: {
+              trigger: projectsSection,
+              start: () => `top top+=${SECTION_OFFSET}`,
+              end: () => `+=${getDistance() + window.innerHeight * 0.75}`,
+              pin: true,
+              scrub: 1,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+        }
+      }
+
+      ScrollTrigger.refresh();
+    }, rootRef);
+
+    return () => {
+      context.revert();
+    };
+  }, [isEnhanced]);
 
   return (
-    <div className="page-shell">
-      <div className="space-y-16 sm:space-y-20">
-        <section className="relative overflow-hidden rounded-[44px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-6 py-8 shadow-[var(--shadow-soft)] sm:px-8 sm:py-10 lg:px-10 lg:py-12">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(15,118,110,0.14),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(15,23,42,0.08),transparent_38%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(88,201,185,0.16),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(148,163,184,0.10),transparent_42%)]" />
+    <div
+      ref={rootRef}
+      className="relative left-1/2 right-1/2 w-screen -ml-[50vw] -mr-[50vw] overflow-x-clip bg-[color:var(--color-bg)]"
+    >
+      <section className="relative">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(15,118,110,0.16),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(15,23,42,0.08),transparent_38%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(88,201,185,0.18),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(148,163,184,0.10),transparent_42%)]" />
 
-          <div className="relative grid gap-10 xl:grid-cols-[minmax(0,1.08fr)_minmax(340px,0.92fr)] xl:items-start">
-            <div className="space-y-8">
-              <div className="space-y-5">
-                <div className="space-y-2">
-                  <p className="eyebrow-label">Choi Seongho · Frontend Engineer</p>
-                  <p className="text-sm font-medium text-[color:var(--color-text-secondary)]">
-                    코드넛 · 2024.08 - 현재
-                  </p>
-                </div>
-
-                <div className="space-y-4">
-                  <h1 className="max-w-5xl text-4xl font-semibold leading-[0.98] tracking-[-0.07em] text-[color:var(--color-text-primary)] sm:text-6xl lg:text-[4.8rem]">
-                    SVG 에디터와
-                    <span className="block text-[color:var(--color-accent)]">
-                      Three.js 시각 도구를 실무에 올리는 프론트엔드 엔지니어
-                    </span>
-                  </h1>
-                  <p className="max-w-3xl text-base leading-8 text-[color:var(--color-text-secondary)] sm:text-lg">
-                    코드넛에서 MathCanvas를 개발하며 46종 중 20종의 디지털
-                    교구를 직접 설계·구현했습니다. 복잡한 사용자 상호작용을
-                    구조화하고, 서비스 UI와 연결하며, 유지보수 가능한
-                    프론트엔드 아키텍처로 정리하는 역할에 강점이 있습니다.
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-3">
-                {aboutProfile.metrics.slice(0, 3).map((metric) => (
-                  <article
-                    key={metric.label}
-                    className="rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/70 px-4 py-4"
-                  >
-                    <div className="text-xl font-semibold text-[color:var(--color-text-primary)]">
-                      {metric.value}
-                    </div>
-                    <div className="mt-2 text-sm text-[color:var(--color-text-muted)]">
-                      {metric.label}
-                    </div>
-                  </article>
-                ))}
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  href={`/about/projects/${featuredProject.slug}`}
-                  className="button-primary"
-                >
-                  대표 프로젝트 보기
-                </Link>
-                <Link href="/about" className="button-secondary">
-                  About 보기
-                </Link>
-                <a href="mailto:chltjdgh3@naver.com" className="button-secondary">
-                  이메일 보내기
-                </a>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-2 pt-2">
-                {homeSectionLinks.map((item) => (
-                  <a
-                    key={item.id}
-                    href={`#${item.id}`}
-                    className="inline-flex items-center rounded-full border border-[color:var(--color-border)] px-4 py-2 text-sm font-medium text-[color:var(--color-text-secondary)] transition hover:border-[color:var(--color-border-strong)] hover:bg-[color:var(--color-surface-elevated)] hover:text-[color:var(--color-text-primary)]"
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </div>
+        <div
+          className={`${landingFrameClass} relative grid gap-8 pb-10 pt-12 sm:pb-12 sm:pt-16 lg:min-h-[calc(100vh-64px)] lg:grid-cols-[minmax(0,1.04fr)_minmax(360px,0.96fr)] lg:items-center lg:gap-14 lg:pb-14 lg:pt-20`}
+          style={{ minHeight: heroViewportHeight }}
+        >
+          <div data-landing-hero className="max-w-2xl">
+            <div className="inline-flex items-center gap-3 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/70 px-4 py-2 text-sm text-[color:var(--color-text-secondary)] backdrop-blur-sm">
+              <span className="h-2 w-2 rounded-full bg-[color:var(--color-accent)]" />
+              <span>
+                2026년 3월부터 플랜티엠에서 프론트엔드 엔지니어로 근무 중
+              </span>
             </div>
 
-            <div className="space-y-4">
-              <article className="rounded-[34px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] p-5 shadow-[var(--shadow-soft)]">
+            <div className="mt-8 space-y-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[color:var(--color-accent)]/90">
+                Frontend Engineer · Interaction Systems
+              </p>
+
+              <h1 className="max-w-4xl text-[clamp(2.2rem,4.6vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.08em] text-[color:var(--color-text-primary)]">
+                복잡한 인터랙션을
+                <span className="mt-2 block text-[color:var(--color-accent)]">
+                  명확한 제품 흐름으로 정리합니다
+                </span>
+              </h1>
+
+              <p className="max-w-xl text-[15px] leading-7 text-[color:var(--color-text-secondary)] sm:text-base sm:leading-8">
+                SVG 기반 편집기, Three.js 시각화, 서비스 UI를 하나의 제품
+                경험으로 연결해 왔습니다. 인터랙션이 많은 화면도 사용자는
+                자연스럽게, 팀은 관리하기 쉽게 만드는 데 집중합니다.
+              </p>
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href={`/about/projects/${featuredProject.slug}`}
+                className="button-primary"
+              >
+                대표 프로젝트 보기
+              </Link>
+              <Link href="/about" className="button-secondary">
+                About 보기
+              </Link>
+              <a href="mailto:chltjdgh3@naver.com" className="button-secondary">
+                이메일 보내기
+              </a>
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-2">
+              {heroFocusBadges.map((item) => (
+                <span
+                  key={item.label}
+                  className="inline-flex items-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/72 px-4 py-2 text-sm font-medium text-[color:var(--color-text-secondary)] backdrop-blur-sm"
+                >
+                  {item.label}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-muted)]">
+              복합 인터랙션 구조화, 3D 조작 경험, 서비스 UI 설계를 한 흐름으로
+              다룹니다.
+            </div>
+          </div>
+
+          <div data-landing-hero>
+            <div
+              data-hero-board
+              className="surface-panel-strong relative overflow-hidden rounded-[36px] p-5 sm:p-6 lg:p-7"
+            >
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(15,118,110,0.12),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.4),rgba(255,255,255,0))] dark:bg-[radial-gradient(circle_at_top,rgba(88,201,185,0.16),transparent_42%),linear-gradient(180deg,rgba(15,23,42,0.12),rgba(15,23,42,0))]" />
+
+              <div className="relative space-y-6">
                 <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="eyebrow-label">Current Focus</p>
-                    <h2 className="mt-3 text-2xl font-semibold text-[color:var(--color-text-primary)]">
-                      {featuredProject.title}
-                    </h2>
-                    <p className="mt-2 text-sm leading-7 text-[color:var(--color-text-secondary)]">
-                      {featuredProject.tagline}
+                  <div className="space-y-2">
+                    <p className="eyebrow-label">Selected Snapshot</p>
+                    <p className="max-w-sm text-sm leading-6 text-[color:var(--color-text-secondary)]">
+                      대표 프로젝트 하나로 어떤 문제를 풀어왔는지 간단히
+                      보여줍니다.
                     </p>
                   </div>
                   <span className="tag-chip whitespace-nowrap">
@@ -161,374 +374,249 @@ export default function LandingPage({
                   </span>
                 </div>
 
-                <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                  <div className="rounded-2xl border border-[color:var(--color-border)] px-4 py-3">
-                    <div className="text-xs uppercase tracking-[0.16em] text-[color:var(--color-text-muted)]">
-                      Role
-                    </div>
-                    <div className="mt-2 text-sm font-semibold text-[color:var(--color-text-primary)]">
-                      {featuredProject.role}
-                    </div>
-                  </div>
-                  <div className="rounded-2xl border border-[color:var(--color-border)] px-4 py-3">
-                    <div className="text-xs uppercase tracking-[0.16em] text-[color:var(--color-text-muted)]">
-                      Team
-                    </div>
-                    <div className="mt-2 text-sm font-semibold text-[color:var(--color-text-primary)]">
-                      {featuredProject.team}
-                    </div>
-                  </div>
-                  <div className="rounded-2xl border border-[color:var(--color-border)] px-4 py-3">
-                    <div className="text-xs uppercase tracking-[0.16em] text-[color:var(--color-text-muted)]">
-                      Domain
-                    </div>
-                    <div className="mt-2 text-sm font-semibold text-[color:var(--color-text-primary)]">
-                      에듀테크 · 인터랙션 캔버스
-                    </div>
-                  </div>
-                </div>
-
-                <ul className="mt-5 space-y-2 text-sm text-[color:var(--color-text-secondary)]">
-                  {featuredProject.cardPoints.slice(0, 3).map((point) => (
-                    <li key={point} className="flex gap-3">
-                      <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section id="featured-proof" className="scroll-mt-28 space-y-8">
-          <SectionHeader
-            eyebrow="Featured Proof"
-            title="MathCanvas는 지금 가장 강하게 보여줄 수 있는 실무 프로젝트입니다"
-            description="복합 인터랙션, 클래스 기반 설계, SVG와 Three.js를 함께 다룬 실무 경험이 가장 압축적으로 드러나는 프로젝트라 홈에서도 가장 먼저 보여줍니다."
-          />
-
-          <article className="rounded-[36px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
-            <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(340px,0.95fr)] xl:items-center">
-              <div className="space-y-6">
-                <div className="space-y-3">
+                <div className="rounded-[30px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/78 p-5 backdrop-blur-sm">
                   <div className="flex flex-wrap items-center gap-3">
-                    <p className="eyebrow-label">{featuredProject.eyebrow}</p>
-                    {featuredProject.achievement ? (
-                      <span className="tag-chip">{featuredProject.achievement}</span>
-                    ) : null}
-                  </div>
-                  <div>
-                    <h3 className="text-3xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)]">
+                    <h2 className="text-3xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)]">
                       {featuredProject.title}
-                    </h3>
-                    <p className="mt-2 text-sm font-medium text-[color:var(--color-text-secondary)]">
-                      {featuredProject.tagline}
-                    </p>
-                  </div>
-                  <p className="body-copy">{featuredProject.summary}</p>
-                </div>
-
-                <div className="grid gap-3 sm:grid-cols-3">
-                  <div className="rounded-2xl border border-[color:var(--color-border)] px-4 py-3">
-                    <div className="text-xs uppercase tracking-[0.16em] text-[color:var(--color-text-muted)]">
-                      Period
-                    </div>
-                    <div className="mt-2 text-sm font-semibold text-[color:var(--color-text-primary)]">
-                      {featuredProject.period}
-                    </div>
-                  </div>
-                  <div className="rounded-2xl border border-[color:var(--color-border)] px-4 py-3">
-                    <div className="text-xs uppercase tracking-[0.16em] text-[color:var(--color-text-muted)]">
-                      Team
-                    </div>
-                    <div className="mt-2 text-sm font-semibold text-[color:var(--color-text-primary)]">
-                      {featuredProject.team}
-                    </div>
-                  </div>
-                  <div className="rounded-2xl border border-[color:var(--color-border)] px-4 py-3">
-                    <div className="text-xs uppercase tracking-[0.16em] text-[color:var(--color-text-muted)]">
-                      Role
-                    </div>
-                    <div className="mt-2 text-sm font-semibold text-[color:var(--color-text-primary)]">
-                      {featuredProject.role}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid gap-4 lg:grid-cols-2">
-                  <div className="rounded-[28px] border border-[color:var(--color-border)] px-5 py-5">
-                    <p className="text-sm font-semibold text-[color:var(--color-text-primary)]">
-                      무엇을 만들었는가
-                    </p>
-                    <ul className="mt-4 space-y-2 text-sm text-[color:var(--color-text-secondary)]">
-                      {featuredProject.keyContributions.slice(0, 3).map((item) => (
-                        <li key={item} className="flex gap-3">
-                          <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="rounded-[28px] border border-[color:var(--color-border)] px-5 py-5">
-                    <p className="text-sm font-semibold text-[color:var(--color-text-primary)]">
-                      왜 강한 증거인가
-                    </p>
-                    <ul className="mt-4 space-y-2 text-sm text-[color:var(--color-text-secondary)]">
-                      {featuredProject.technicalHighlights.slice(0, 3).map((item) => (
-                        <li key={item} className="flex gap-3">
-                          <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {featuredProject.techStack.slice(0, 7).map((stack) => (
-                    <span key={stack} className="tag-chip">
-                      {stack}
+                    </h2>
+                    <span className="rounded-full bg-[color:var(--color-accent)]/10 px-4 py-2 text-sm font-semibold text-[color:var(--color-accent)]">
+                      {aboutProfile.metrics[0]?.value}
                     </span>
-                  ))}
+                  </div>
+                  <p className="mt-3 text-sm leading-7 text-[color:var(--color-text-secondary)]">
+                    {featuredProject.tagline}
+                  </p>
+
+                  <div className="mt-5 space-y-3">
+                    {featuredProject.cardPoints.slice(0, 3).map((item, index) => (
+                      <div
+                        key={item}
+                        className="flex items-center gap-3 rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)]/82 px-4 py-3"
+                      >
+                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[color:var(--color-accent)]/12 text-xs font-semibold text-[color:var(--color-accent)]">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span className="text-sm leading-6 text-[color:var(--color-text-secondary)]">
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="flex flex-wrap gap-3">
-                  <Link
-                    href={`/about/projects/${featuredProject.slug}`}
-                    className="button-primary"
-                  >
-                    MathCanvas 상세 보기
-                  </Link>
-                  <Link href="/about" className="button-secondary">
-                    전체 About 보기
-                  </Link>
+                  {aboutProfile.metrics.slice(1, 3).map((metric) => (
+                    <div
+                      key={metric.label}
+                      className="min-w-[11rem] rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/72 px-4 py-3 backdrop-blur-sm"
+                    >
+                      <div className="text-base font-semibold text-[color:var(--color-text-primary)]">
+                        {metric.value}
+                      </div>
+                      <div className="mt-1 text-sm leading-6 text-[color:var(--color-text-muted)]">
+                        {metric.label}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              <ProjectVisual preview={featuredProject.preview} priority />
             </div>
-          </article>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <section id="hire-signal" className="scroll-mt-28 space-y-8">
-          <SectionHeader
-            eyebrow="Why Me"
-            title="채용 관점에서 빠르게 확인할 수 있는 강점과 실무 맥락"
-            description="도구를 많이 아는지보다, 실제 제품에서 어떤 종류의 문제를 풀어왔는지가 더 중요하다고 봅니다. 그래서 강점과 경험을 함께 보여줍니다."
-          />
+      {isEnhanced ? (
+        <section
+          id="projects"
+          ref={projectsSectionRef}
+          className="relative overflow-hidden border-y border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)]"
+          style={{
+            height: pinnedViewportHeight,
+            scrollMarginTop: `${SECTION_OFFSET}px`,
+          }}
+        >
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,118,110,0.06),transparent_24%,transparent_76%,rgba(15,23,42,0.05))] dark:bg-[linear-gradient(180deg,rgba(88,201,185,0.08),transparent_26%,transparent_74%,rgba(148,163,184,0.08))]" />
+          <div
+            className={`${landingFrameClass} relative flex h-full flex-col py-6 sm:py-8 lg:py-10`}
+          >
+            <SectionHeader
+              eyebrow="Selected Work"
+              title="스크롤을 내리면 프로젝트가 가로로 이어집니다"
+              description="상세 설명은 About에 두고, 랜딩에서는 도메인과 문제 해결 방식이 한 눈에 들어오도록 압축했습니다."
+            />
 
-          <div className="grid gap-6 xl:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)]">
-            <div className="grid gap-4 md:grid-cols-2">
-              {strengthHighlights.slice(0, 4).map((item) => (
-                <article
-                  key={item.title}
-                  className="rounded-[30px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-5 py-5 transition duration-300 hover:-translate-y-0.5 hover:border-[color:var(--color-border-strong)]"
-                >
-                  <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)]">
-                    {item.title}
-                  </p>
-                  <p className="mt-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
-                    {item.description}
-                  </p>
-                  <p className="mt-4 text-sm leading-7 text-[color:var(--color-text-muted)]">
-                    {item.bullets.join(" / ")}
-                  </p>
-                </article>
-              ))}
-            </div>
-
-            <aside className="rounded-[32px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] p-5 sm:p-6">
-              <p className="eyebrow-label">Experience Snapshot</p>
-              <div className="mt-5 space-y-5">
-                <article className="rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-5 py-5">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="text-lg font-semibold text-[color:var(--color-text-primary)]">
-                        {currentExperience.company}
-                      </h3>
-                      <p className="mt-1 text-sm font-medium text-[color:var(--color-text-secondary)]">
-                        {currentExperience.title}
-                      </p>
-                    </div>
-                    <span className="text-sm text-[color:var(--color-text-muted)]">
-                      {currentExperience.period}
-                    </span>
-                  </div>
-                  <p className="mt-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
-                    {currentExperience.summary}
-                  </p>
-                  <ul className="mt-4 space-y-2 text-sm text-[color:var(--color-text-secondary)]">
-                    {currentExperience.highlights.slice(0, 3).map((item) => (
-                      <li key={item} className="flex gap-3">
-                        <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-
-                <article className="rounded-[24px] border border-[color:var(--color-border)] px-5 py-5">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="text-base font-semibold text-[color:var(--color-text-primary)]">
-                        {previousExperience.company}
-                      </h3>
-                      <p className="mt-1 text-sm text-[color:var(--color-text-secondary)]">
-                        {previousExperience.title}
-                      </p>
-                    </div>
-                    <span className="text-sm text-[color:var(--color-text-muted)]">
-                      {previousExperience.period}
-                    </span>
-                  </div>
-                  <p className="mt-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
-                    {previousExperience.highlights.slice(0, 2).join(" / ")}
-                  </p>
-                </article>
+            <div className="mt-8 overflow-hidden">
+              <div
+                ref={projectsTrackRef}
+                className="flex gap-5 will-change-transform"
+              >
+                {projectDeck.map((project, index) => (
+                  <ProjectShowcaseCard
+                    key={project.slug}
+                    project={project}
+                    index={index}
+                    mode="rail"
+                  />
+                ))}
               </div>
-            </aside>
+            </div>
           </div>
         </section>
+      ) : (
+        <section
+          id="projects"
+          className="py-14 sm:py-16 lg:py-20"
+          style={{ scrollMarginTop: `${SECTION_OFFSET}px` }}
+        >
+          <div className={landingFrameClass}>
+            <SectionHeader
+              eyebrow="Selected Work"
+              title="대표 프로젝트는 간단하게 훑고, 자세한 내용은 About에서 확인합니다"
+              description="모바일과 reduced motion 환경에서는 가로 스크롤 대신 바로 비교할 수 있는 카드 레이아웃으로 보여줍니다."
+            />
 
-        <section id="selected-work" className="scroll-mt-28 space-y-8">
+            <div className="mt-8 grid gap-6 lg:grid-cols-2">
+              {projectDeck.map((project, index) => (
+                <ProjectShowcaseCard
+                  key={project.slug}
+                  project={project}
+                  index={index}
+                  mode="grid"
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section
+        id="strengths"
+        className="py-14 sm:py-16 lg:py-20"
+        style={{ scrollMarginTop: `${SECTION_OFFSET}px` }}
+      >
+        <div className={landingFrameClass}>
           <SectionHeader
-            eyebrow="Other Projects"
-            title="도메인이 달라도, 프론트엔드 접근 방식은 일관됩니다"
-            description="지도 기반 상호작용, 실시간 커뮤니케이션, 커뮤니티 기능처럼 서로 다른 프로젝트에서도 구조화, 재사용성, 사용자 흐름 설계를 중심으로 작업했습니다."
+            eyebrow="Core Strengths"
+            title="핵심 역량은 세 가지 축으로 정리했습니다"
+            description="복잡한 화면을 설계하고, 서비스 흐름과 연결하고, 유지보수 가능한 구조로 남기는 것. 이 세 축이 제가 일하는 방식의 중심입니다."
           />
 
-          <div className="divide-y divide-[color:var(--color-border)] rounded-[32px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]">
-            {secondaryProjects.map((project) => (
-              <article
-                key={project.slug}
-                className="group px-5 py-5 transition duration-300 first:rounded-t-[32px] last:rounded-b-[32px] hover:bg-[color:var(--color-surface-elevated)] sm:px-6"
-              >
-                <div className="grid gap-4 lg:grid-cols-[170px_minmax(0,1fr)]">
-                  <div className="space-y-1 text-sm text-[color:var(--color-text-muted)]">
-                    <div>{project.period}</div>
-                    <div>{project.role}</div>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <h3 className="text-xl font-semibold text-[color:var(--color-text-primary)]">
-                        {project.title}
-                      </h3>
-                      {project.achievement ? (
-                        <span className="tag-chip">{project.achievement}</span>
-                      ) : null}
-                    </div>
-                    <p className="text-sm leading-7 text-[color:var(--color-text-secondary)]">
-                      {project.summary}
-                    </p>
-                    <p className="text-sm leading-7 text-[color:var(--color-text-muted)]">
-                      {project.cardPoints.slice(0, 2).join(" / ")}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.techStack.slice(0, 5).map((stack) => (
-                        <span key={stack} className="tag-chip">
-                          {stack}
-                        </span>
-                      ))}
-                    </div>
-                    <Link
-                      href={`/about/projects/${project.slug}`}
-                      className="accent-link inline-flex text-sm font-semibold"
-                    >
-                      프로젝트 상세 보기
-                    </Link>
-                  </div>
+          <div className="mt-8 grid gap-6 lg:grid-cols-3">
+            {strengthDeck.map((item, index) => (
+              <StrengthCard
+                key={item.title}
+                item={item}
+                index={index}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="writing"
+        className="py-14 sm:py-16 lg:py-20"
+        style={{ scrollMarginTop: `${SECTION_OFFSET}px` }}
+      >
+        <div
+          className={`${landingFrameClass} grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start`}
+        >
+          <SectionHeader
+            eyebrow="Writing"
+            title="기술 글은 작업 방식과 관심사를 보강하는 정도로만 둡니다"
+            description="랜딩에서는 방향만 보여주고, 더 깊은 탐색은 글 아카이브와 About로 이어지게 구성했습니다."
+            className="lg:col-span-2"
+          />
+
+          <div className="grid gap-4">
+            {highlightedPosts.map((post) => (
+              <article key={post.slug} className="surface-panel p-5 sm:p-6">
+                <div className="text-sm text-[color:var(--color-text-muted)]">
+                  {formatDate(post.date)}
+                  {post.readingTime ? ` · ${post.readingTime}분 읽기` : ""}
                 </div>
+                <Link
+                  href={`/posts/${post.slug}`}
+                  className="mt-3 inline-block text-xl font-semibold text-[color:var(--color-text-primary)] transition hover:text-[color:var(--color-accent)]"
+                >
+                  {post.title}
+                </Link>
+                {post.description ? (
+                  <p className="mt-3 text-sm leading-7 text-[color:var(--color-text-secondary)]">
+                    {post.description}
+                  </p>
+                ) : null}
               </article>
             ))}
           </div>
-        </section>
 
-        <section id="writing" className="scroll-mt-28 space-y-8">
-          <SectionHeader
-            eyebrow="Writing"
-            title="기술 글은 보조 증거로 두고, 읽기 쉬운 형태로 압축했습니다"
-            description="실무 문제 해결 과정을 정리한 글이 몇 편 있습니다. 홈에서는 깊이보다 방향만 보여주고, 자세한 탐색은 아카이브로 넘기는 편이 더 적절합니다."
-          />
+          <aside className="surface-panel-strong p-5 sm:p-6">
+            <p className="eyebrow-label">Topics</p>
+            <div className="mt-4 space-y-5">
+              <div>
+                <p className="text-sm font-semibold text-[color:var(--color-text-primary)]">
+                  Categories
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {categories.slice(0, 4).map((category) => (
+                    <Link
+                      key={category.slug}
+                      href={`/categories/${category.slug}`}
+                      className="tag-chip"
+                    >
+                      {category.label}
+                      <span className="ml-2 text-[color:var(--color-text-muted)]">
+                        {category.count}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
 
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-            <div className="divide-y divide-[color:var(--color-border)] rounded-[30px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]">
-              {highlightedPosts.map((post) => (
-                <article
-                  key={post.slug}
-                  className="group px-5 py-5 transition duration-300 first:rounded-t-[30px] last:rounded-b-[30px] hover:bg-[color:var(--color-surface-elevated)] sm:px-6"
-                >
-                  <div className="grid gap-4 lg:grid-cols-[140px_minmax(0,1fr)]">
-                    <div className="space-y-1 text-sm text-[color:var(--color-text-muted)]">
-                      <div>{formatDate(post.date)}</div>
-                      {post.readingTime ? <div>{post.readingTime}분 읽기</div> : null}
-                    </div>
-                    <div className="space-y-3">
-                      <Link
-                        href={`/posts/${post.slug}`}
-                        className="inline-block text-lg font-semibold text-[color:var(--color-text-primary)] transition group-hover:text-[color:var(--color-accent)]"
-                      >
-                        {post.title}
-                      </Link>
-                      {post.description ? (
-                        <p className="text-sm leading-7 text-[color:var(--color-text-secondary)]">
-                          {post.description}
-                        </p>
-                      ) : null}
-                    </div>
-                  </div>
-                </article>
-              ))}
+              <div>
+                <p className="text-sm font-semibold text-[color:var(--color-text-primary)]">
+                  Keywords
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {tags.slice(0, 4).map((tag) => (
+                    <Link
+                      key={tag.name}
+                      href={`/tags/${encodeURIComponent(tag.name)}`}
+                      className="tag-chip"
+                    >
+                      #{tag.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            <aside className="rounded-[30px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] px-5 py-5">
-              <p className="eyebrow-label">Topics</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {categories.slice(0, 4).map((category) => (
-                  <Link
-                    key={category.slug}
-                    href={`/categories/${category.slug}`}
-                    className="tag-chip"
-                  >
-                    {category.label}
-                    <span className="ml-2 text-[color:var(--color-text-muted)]">
-                      {category.count}
-                    </span>
-                  </Link>
-                ))}
-                {tags.slice(0, 4).map((tag) => (
-                  <Link
-                    key={tag.name}
-                    href={`/tags/${encodeURIComponent(tag.name)}`}
-                    className="tag-chip"
-                  >
-                    #{tag.name}
-                  </Link>
-                ))}
-              </div>
-              <div className="mt-5">
-                <Link href="/posts" className="accent-link text-sm font-semibold">
-                  전체 글 아카이브 보기
-                </Link>
-              </div>
-            </aside>
-          </div>
-        </section>
+            <div className="mt-6">
+              <Link href="/posts" className="accent-link text-sm font-semibold">
+                전체 글 아카이브 보기
+              </Link>
+            </div>
+          </aside>
+        </div>
+      </section>
 
-        <section id="contact" className="scroll-mt-28">
-          <article className="relative overflow-hidden rounded-[40px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-6 py-8 shadow-[var(--shadow-soft)] sm:px-8 sm:py-10">
+      <section
+        id="contact"
+        className="pb-6 pt-4 sm:pb-8 lg:pb-10"
+        style={{ scrollMarginTop: `${SECTION_OFFSET}px` }}
+      >
+        <div className={landingFrameClass}>
+          <article className="relative overflow-hidden rounded-[32px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-5 py-6 shadow-[var(--shadow-soft)] sm:px-6 sm:py-7">
             <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(15,118,110,0.10),transparent_48%,rgba(15,23,42,0.06))] dark:bg-[linear-gradient(135deg,rgba(88,201,185,0.12),transparent_48%,rgba(148,163,184,0.08))]" />
-            <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
-              <div className="space-y-4">
+            <div className="relative grid w-full gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+              <div className="space-y-3">
                 <p className="eyebrow-label">Contact</p>
-                <h2 className="max-w-2xl text-3xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)] sm:text-4xl">
-                  인터랙션 설계와 제품 구현을 함께 볼 수 있는 프론트엔드 역할을 찾고 있습니다.
+                <h2 className="max-w-2xl text-2xl font-semibold tracking-[-0.05em] text-[color:var(--color-text-primary)] sm:text-3xl">
+                  함께 이야기 나눌 수 있습니다
                 </h2>
-                <p className="max-w-2xl body-copy">
-                  SVG 기반 편집기, Three.js 시각화, 서비스 UI 통합, 구조적인
-                  상태 설계가 필요한 팀이라면 더 잘 맞을 가능성이 높습니다.
-                  이력과 상세 프로젝트는 About에서 이어서 확인할 수 있습니다.
+                <p className="max-w-2xl text-sm leading-7 text-[color:var(--color-text-secondary)]">
+                  SVG 기반 편집기, Three.js 시각화, 서비스 UI 설계 경험이
+                  필요한 팀이라면 더 잘 맞을 가능성이 높습니다.
                 </p>
               </div>
 
@@ -550,8 +638,8 @@ export default function LandingPage({
               </div>
             </div>
           </article>
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
   );
 }

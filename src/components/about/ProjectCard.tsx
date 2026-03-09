@@ -29,6 +29,7 @@ export default function ProjectCard({
         <ProjectVisual
           preview={project.preview}
           priority={project.featured}
+          variant={featured ? "feature" : "card"}
           className={featured ? "" : "min-h-[220px]"}
         />
 
