@@ -17,7 +17,9 @@ function DetailSection({
 }) {
   return (
     <section className="surface-panel p-6 sm:p-7">
-      <h2 className="text-xl font-semibold text-[color:var(--color-text-primary)]">{title}</h2>
+      <h2 className="text-xl font-semibold text-[color:var(--color-text-primary)]">
+        {title}
+      </h2>
       <div className="mt-4">{children}</div>
     </section>
   );
@@ -121,17 +123,13 @@ export default function ProjectDetailView({
                 <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
                   서비스 개요
                 </h3>
-                <p className="mt-3 body-copy">
-                  {project.overview}
-                </p>
+                <p className="mt-3 body-copy">{project.overview}</p>
               </div>
               <div>
                 <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
                   문제 맥락
                 </h3>
-                <p className="mt-3 body-copy">
-                  {project.context}
-                </p>
+                <p className="mt-3 body-copy">{project.context}</p>
               </div>
             </div>
           </DetailSection>
@@ -139,7 +137,10 @@ export default function ProjectDetailView({
           <DetailSection title="주요 기여">
             <ul className="space-y-3">
               {project.keyContributions.map((contribution) => (
-                <li key={contribution} className="surface-subtle px-4 py-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
+                <li
+                  key={contribution}
+                  className="surface-subtle px-4 py-4 text-sm leading-7 text-[color:var(--color-text-secondary)]"
+                >
                   {contribution}
                 </li>
               ))}
@@ -149,7 +150,10 @@ export default function ProjectDetailView({
           <DetailSection title="기술적 포인트">
             <ul className="space-y-3">
               {project.technicalHighlights.map((highlight) => (
-                <li key={highlight} className="surface-subtle px-4 py-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
+                <li
+                  key={highlight}
+                  className="surface-subtle px-4 py-4 text-sm leading-7 text-[color:var(--color-text-secondary)]"
+                >
                   {highlight}
                 </li>
               ))}
@@ -159,7 +163,11 @@ export default function ProjectDetailView({
           <DetailSection title="관련 화면">
             <div className="grid gap-4 md:grid-cols-2">
               {project.gallery.map((item) => (
-                <ProjectVisual key={item.caption} preview={item} variant="gallery" />
+                <ProjectVisual
+                  key={item.caption}
+                  preview={item}
+                  variant="gallery"
+                />
               ))}
             </div>
           </DetailSection>
