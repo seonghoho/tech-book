@@ -57,7 +57,7 @@ export default function AboutPage() {
         <div className="space-y-20 sm:space-y-24">
           <section id="overview" className="scroll-mt-28 space-y-10">
             <article className="surface-panel-strong mx-auto w-full max-w-[1040px] overflow-hidden p-4 sm:p-5 lg:p-6">
-              <div className="grid gap-6 min-[1600px]:grid-cols-[minmax(300px,0.86fr)_minmax(0,1.14fr)] min-[1600px]:items-stretch">
+              <div className="grid gap-6">
                 {/* <div className="relative aspect-[5/4] overflow-hidden rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-muted)]">
                   <Image
                     src="/images/Profile.JPG"
