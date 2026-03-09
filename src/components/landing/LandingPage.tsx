@@ -4,11 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {
-  aboutProfile,
-  aboutProjects,
-  strengthHighlights,
-} from "@/lib/aboutData";
+import { aboutProfile, aboutProjects, strengthHighlights } from "@/lib/aboutData";
 import type { AboutProject, StrengthItem } from "@/lib/aboutData";
 import { formatDate } from "@/lib/formatDate";
 import type { PostMeta } from "@/types/post";
@@ -63,7 +59,7 @@ function SectionHeader({
       <h2 className="text-3xl font-semibold tracking-[-0.05em] text-[color:var(--color-text-primary)] sm:text-4xl">
         {title}
       </h2>
-      <p className="max-w-2xl body-copy">{description}</p>
+      <p className="body-copy max-w-2xl">{description}</p>
     </div>
   );
 }
@@ -98,9 +94,7 @@ function ProjectShowcaseCard({
   return (
     <article className={wrapperClass}>
       <div className="flex items-center justify-between gap-3">
-        <span className="eyebrow-label">
-          {String(index + 1).padStart(2, "0")}
-        </span>
+        <span className="eyebrow-label">{String(index + 1).padStart(2, "0")}</span>
         <span className="tag-chip whitespace-nowrap">{project.period}</span>
       </div>
 
@@ -113,11 +107,7 @@ function ProjectShowcaseCard({
         </p>
       </div>
 
-      <ProjectVisual
-        preview={project.preview}
-        variant="gallery"
-        className="mt-5 min-h-[280px]"
-      />
+      <ProjectVisual preview={project.preview} variant="gallery" className="mt-5 min-h-[280px]" />
 
       <div className="mt-5 flex flex-1 flex-col justify-between gap-4">
         <div className="space-y-4">
@@ -142,19 +132,11 @@ function ProjectShowcaseCard({
   );
 }
 
-function StrengthCard({
-  item,
-  index,
-}: {
-  item: StrengthItem;
-  index: number;
-}) {
+function StrengthCard({ item, index }: { item: StrengthItem; index: number }) {
   return (
     <div className="surface-panel p-5 sm:p-6">
       <div className="flex items-center justify-between gap-3">
-        <span className="eyebrow-label">
-          {String(index + 1).padStart(2, "0")}
-        </span>
+        <span className="eyebrow-label">{String(index + 1).padStart(2, "0")}</span>
         <span className="tag-chip">{item.title}</span>
       </div>
       <p className="mt-5 text-xl font-semibold text-[color:var(--color-text-primary)]">
@@ -177,28 +159,19 @@ function StrengthCard({
   );
 }
 
-export default function LandingPage({
-  recentPosts,
-  featuredPosts,
-  categories,
-  tags,
-}: Props) {
+export default function LandingPage({ recentPosts, featuredPosts, categories, tags }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const projectsSectionRef = useRef<HTMLElement>(null);
   const projectsTrackRef = useRef<HTMLDivElement>(null);
   const [isEnhanced, setIsEnhanced] = useState(false);
 
-  const highlightedPosts = (
-    featuredPosts.length ? featuredPosts : recentPosts
-  ).slice(0, 2);
+  const highlightedPosts = (featuredPosts.length ? featuredPosts : recentPosts).slice(0, 2);
   const heroViewportHeight = `calc(100vh - ${HEADER_HEIGHT}px)`;
   const pinnedViewportHeight = `calc(100vh - ${SECTION_OFFSET}px)`;
 
   useEffect(() => {
     const desktopQuery = window.matchMedia("(min-width: 768px)");
-    const reduceMotionQuery = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    );
+    const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const updateMode = () => {
       setIsEnhanced(desktopQuery.matches && !reduceMotionQuery.matches);
@@ -251,8 +224,7 @@ export default function LandingPage({
       if (projectsSection && projectsTrack) {
         const getDistance = () => {
           const trackViewportWidth =
-            projectsTrack.parentElement?.clientWidth ??
-            projectsSection.clientWidth;
+            projectsTrack.parentElement?.clientWidth ?? projectsSection.clientWidth;
 
           return Math.max(0, projectsTrack.scrollWidth - trackViewportWidth);
         };
@@ -285,7 +257,7 @@ export default function LandingPage({
   return (
     <div
       ref={rootRef}
-      className="relative left-1/2 right-1/2 w-screen -ml-[50vw] -mr-[50vw] overflow-x-clip bg-[color:var(--color-bg)]"
+      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-x-clip bg-[color:var(--color-bg)]"
     >
       <section className="relative">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(15,118,110,0.16),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(15,23,42,0.08),transparent_38%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(88,201,185,0.18),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(148,163,184,0.10),transparent_42%)]" />
@@ -295,15 +267,13 @@ export default function LandingPage({
           style={{ minHeight: heroViewportHeight }}
         >
           <div data-landing-hero className="max-w-2xl">
-            <div className="inline-flex items-center gap-3 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/70 px-4 py-2 text-sm text-[color:var(--color-text-secondary)] backdrop-blur-sm">
+            <div className="bg-[color:var(--color-surface)]/70 inline-flex items-center gap-3 rounded-full border border-[color:var(--color-border)] px-4 py-2 text-sm text-[color:var(--color-text-secondary)] backdrop-blur-sm">
               <span className="h-2 w-2 rounded-full bg-[color:var(--color-accent)]" />
-              <span>
-                2026년 3월부터 플랜티엠에서 프론트엔드 엔지니어로 근무 중
-              </span>
+              <span>2026년 3월부터 플랜티엠에서 프론트엔드 엔지니어로 근무 중</span>
             </div>
 
             <div className="mt-8 space-y-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[color:var(--color-accent)]/90">
+              <p className="text-[color:var(--color-accent)]/90 text-xs font-semibold uppercase tracking-[0.28em]">
                 Frontend Engineer · Interaction Systems
               </p>
 
@@ -315,17 +285,13 @@ export default function LandingPage({
               </h1>
 
               <p className="max-w-xl text-[15px] leading-7 text-[color:var(--color-text-secondary)] sm:text-base sm:leading-8">
-                SVG 기반 편집기, Three.js 시각화, 서비스 UI를 하나의 제품
-                경험으로 연결해 왔습니다. 인터랙션이 많은 화면도 사용자는
-                자연스럽게, 팀은 관리하기 쉽게 만드는 데 집중합니다.
+                SVG 기반 편집기, Three.js 시각화, 서비스 UI를 하나의 제품 경험으로 연결해 왔습니다.
+                인터랙션이 많은 화면도 사용자는 자연스럽게, 팀은 관리하기 쉽게 만드는 데 집중합니다.
               </p>
             </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href={`/about/projects/${featuredProject.slug}`}
-                className="button-primary"
-              >
+              <Link href={`/about/projects/${featuredProject.slug}`} className="button-primary">
                 대표 프로젝트 보기
               </Link>
               <Link href="/about" className="button-secondary">
@@ -340,7 +306,7 @@ export default function LandingPage({
               {heroFocusBadges.map((item) => (
                 <span
                   key={item.label}
-                  className="inline-flex items-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/72 px-4 py-2 text-sm font-medium text-[color:var(--color-text-secondary)] backdrop-blur-sm"
+                  className="bg-[color:var(--color-surface)]/72 inline-flex items-center rounded-full border border-[color:var(--color-border)] px-4 py-2 text-sm font-medium text-[color:var(--color-text-secondary)] backdrop-blur-sm"
                 >
                   {item.label}
                 </span>
@@ -348,8 +314,7 @@ export default function LandingPage({
             </div>
 
             <div className="mt-4 text-sm leading-7 text-[color:var(--color-text-muted)]">
-              복합 인터랙션 구조화, 3D 조작 경험, 서비스 UI 설계를 한 흐름으로
-              다룹니다.
+              복합 인터랙션 구조화, 3D 조작 경험, 서비스 UI 설계를 한 흐름으로 다룹니다.
             </div>
           </div>
 
@@ -365,21 +330,18 @@ export default function LandingPage({
                   <div className="space-y-2">
                     <p className="eyebrow-label">Selected Snapshot</p>
                     <p className="max-w-sm text-sm leading-6 text-[color:var(--color-text-secondary)]">
-                      대표 프로젝트 하나로 어떤 문제를 풀어왔는지 간단히
-                      보여줍니다.
+                      대표 프로젝트 하나로 어떤 문제를 풀어왔는지 간단히 보여줍니다.
                     </p>
                   </div>
-                  <span className="tag-chip whitespace-nowrap">
-                    {featuredProject.period}
-                  </span>
+                  <span className="tag-chip whitespace-nowrap">{featuredProject.period}</span>
                 </div>
 
-                <div className="rounded-[30px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/78 p-5 backdrop-blur-sm">
+                <div className="bg-[color:var(--color-surface)]/78 rounded-[30px] border border-[color:var(--color-border)] p-5 backdrop-blur-sm">
                   <div className="flex flex-wrap items-center gap-3">
                     <h2 className="text-3xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)]">
                       {featuredProject.title}
                     </h2>
-                    <span className="rounded-full bg-[color:var(--color-accent)]/10 px-4 py-2 text-sm font-semibold text-[color:var(--color-accent)]">
+                    <span className="bg-[color:var(--color-accent)]/10 rounded-full px-4 py-2 text-sm font-semibold text-[color:var(--color-accent)]">
                       {aboutProfile.metrics[0]?.value}
                     </span>
                   </div>
@@ -391,9 +353,9 @@ export default function LandingPage({
                     {featuredProject.cardPoints.slice(0, 3).map((item, index) => (
                       <div
                         key={item}
-                        className="flex items-center gap-3 rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)]/82 px-4 py-3"
+                        className="bg-[color:var(--color-surface-elevated)]/82 flex items-center gap-3 rounded-2xl border border-[color:var(--color-border)] px-4 py-3"
                       >
-                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[color:var(--color-accent)]/12 text-xs font-semibold text-[color:var(--color-accent)]">
+                        <span className="bg-[color:var(--color-accent)]/12 flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold text-[color:var(--color-accent)]">
                           {String(index + 1).padStart(2, "0")}
                         </span>
                         <span className="text-sm leading-6 text-[color:var(--color-text-secondary)]">
@@ -408,7 +370,7 @@ export default function LandingPage({
                   {aboutProfile.metrics.slice(1, 3).map((metric) => (
                     <div
                       key={metric.label}
-                      className="min-w-[11rem] rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/72 px-4 py-3 backdrop-blur-sm"
+                      className="bg-[color:var(--color-surface)]/72 min-w-[11rem] rounded-full border border-[color:var(--color-border)] px-4 py-3 backdrop-blur-sm"
                     >
                       <div className="text-base font-semibold text-[color:var(--color-text-primary)]">
                         {metric.value}
@@ -446,10 +408,7 @@ export default function LandingPage({
             />
 
             <div className="mt-8 overflow-hidden">
-              <div
-                ref={projectsTrackRef}
-                className="flex gap-5 will-change-transform"
-              >
+              <div ref={projectsTrackRef} className="flex gap-5 will-change-transform">
                 {projectDeck.map((project, index) => (
                   <ProjectShowcaseCard
                     key={project.slug}
@@ -503,11 +462,7 @@ export default function LandingPage({
 
           <div className="mt-8 grid gap-6 lg:grid-cols-3">
             {strengthDeck.map((item, index) => (
-              <StrengthCard
-                key={item.title}
-                item={item}
-                index={index}
-              />
+              <StrengthCard key={item.title} item={item} index={index} />
             ))}
           </div>
         </div>
@@ -523,8 +478,8 @@ export default function LandingPage({
         >
           <SectionHeader
             eyebrow="Writing"
-            title="기술 글은 작업 방식과 관심사를 보강하는 정도로만 둡니다"
-            description="랜딩에서는 방향만 보여주고, 더 깊은 탐색은 글 아카이브와 About로 이어지게 구성했습니다."
+            title="문제를 해결하며 배운 것들을 기록합니다"
+            description="기술 선택의 이유, 구현 과정에서의 시행착오, 그리고 작업 방식에 대한 생각을 정리합니다."
             className="lg:col-span-2"
           />
 
@@ -615,8 +570,8 @@ export default function LandingPage({
                   함께 이야기 나눌 수 있습니다
                 </h2>
                 <p className="max-w-2xl text-sm leading-7 text-[color:var(--color-text-secondary)]">
-                  SVG 기반 편집기, Three.js 시각화, 서비스 UI 설계 경험이
-                  필요한 팀이라면 더 잘 맞을 가능성이 높습니다.
+                  SVG 기반 편집기, Three.js 시각화, 서비스 UI 설계 경험이 필요한 팀이라면 더 잘 맞을
+                  가능성이 높습니다.
                 </p>
               </div>
 
