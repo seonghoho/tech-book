@@ -60,6 +60,11 @@ export type AboutProject = {
   eyebrow: string;
   tagline: string;
   period: string;
+  status: string;
+  posterColor: string;
+  posterTextColor?: string;
+  posterLogoSrc?: string;
+  posterLogoAlt?: string;
   duration?: string;
   team: string;
   role: string;
@@ -67,6 +72,8 @@ export type AboutProject = {
   summary: string;
   overview: string;
   context: string;
+  tags: string[];
+  narrative: string[];
   cardPoints: string[];
   keyContributions: string[];
   technicalHighlights: string[];
@@ -92,12 +99,10 @@ export const aboutProfile = {
   title: "프론트엔드 엔지니어",
   tagline: "SVG 기반 에디터와 3D 시각 도구를 설계·구현하는 프론트엔드 엔지니어",
   quote: "꾸준함을 무기로, 몰입하며 성장하는 개발자",
-  railSummary:
-    "SVG·Three.js 기반 인터랙션과 서비스 UI를 설계·구현하는 프론트엔드 엔지니어입니다.",
+  railSummary: "SVG·Three.js 기반 인터랙션과 서비스 UI를 설계·구현하는 프론트엔드 엔지니어입니다.",
   companyLabel: "플랜티엠 · Frontend Engineer",
   stackLabel: "Vue / React / SVG / Three.js",
-  overviewTitle:
-    "복잡한 상호작용을 구현하면서도, 읽히는 구조를 남기는 프론트엔드 엔지니어입니다",
+  overviewTitle: "복잡한 상호작용을 구현하면서도, 읽히는 구조를 남기는 프론트엔드 엔지니어입니다",
   overviewDescription:
     "사용자에게는 자연스럽고, 팀에게는 다루기 쉬운 화면을 만드는 것이 목표입니다. 특히 좌표 기반 인터랙션과 시각화가 필요한 제품에서 강점을 발휘합니다.",
   summary:
@@ -176,10 +181,7 @@ export const strengthHighlights: StrengthItem[] = [
     title: "협업과 제품 커뮤니케이션",
     description:
       "외주사, 디자이너, 개발자와 주간 단위로 요구사항을 정리하고 우선순위를 조율해 개발 흐름을 맞췄습니다.",
-    bullets: [
-      "실시간 피드백 반영과 일정 조율 경험",
-      "팀 프로젝트에서 스크럼 마스터로 일정 리드",
-    ],
+    bullets: ["실시간 피드백 반영과 일정 조율 경험", "팀 프로젝트에서 스크럼 마스터로 일정 리드"],
   },
 ];
 
@@ -244,8 +246,7 @@ export const experienceTimeline: ExperienceItem[] = [
     company: "플랜티엠",
     title: "프론트엔드 엔지니어",
     period: "2026.03 - 재직 중",
-    summary:
-      "2026년 3월부터 플랜티엠에서 프론트엔드 엔지니어로 근무하고 있습니다.",
+    summary: "2026년 3월부터 플랜티엠에서 프론트엔드 엔지니어로 근무하고 있습니다.",
     highlights: ["2026년 3월 플랜티엠 합류", "프론트엔드 엔지니어로 근무 중"],
   },
   {
@@ -296,8 +297,11 @@ export const aboutProjects: AboutProject[] = [
     eyebrow: "대표 프로젝트",
     tagline: "SVG와 Three.js로 수학교구를 디지털화한 인터랙션 캔버스",
     period: "2024.08 - 2026.02",
+    status: "Active",
+    posterColor: "#0f766e",
+    posterTextColor: "#f0fdfa",
     duration: "1년 7개월",
-    team: "4명 · 프론트엔드 3 / 백엔드 1",
+    team: "4명 · FE 3 / BE 1",
     role: "프론트엔드 엔지니어",
     summary:
       "SVG 및 Three.js 기반으로 다양한 수학교구를 디지털화해 캔버스에서 배치·조작하고, 링크와 QR 코드로 수업에 공유할 수 있는 서비스입니다.",
@@ -305,6 +309,12 @@ export const aboutProjects: AboutProject[] = [
       "MathCanvas는 교사가 수학교구를 직접 배치하고 조작해 수업 자료를 만들고, 학생과 쉽게 공유할 수 있도록 설계된 캔버스 서비스입니다.",
     context:
       "쌓기나무, 평면도형, 공간좌표처럼 난도가 높은 교구를 2D와 3D 상호작용으로 자연스럽게 다뤄야 했고, 교구마다 다른 조작 규칙을 안정적으로 관리할 구조가 필요했습니다.",
+    tags: ["edutech", "editor", "svg", "threejs"],
+    narrative: [
+      "MathCanvas는 교사가 수학교구를 직접 배치하고 조작해 수업 자료를 만들고 공유할 수 있도록 만든 서비스입니다. 저는 SVG 기반 편집 인터랙션과 Vue 서비스 UI, 그리고 Three.js 기반 3D 교구 흐름을 함께 다뤘습니다.",
+      "특히 쌓기나무, 공간좌표, 평면도형처럼 조작 규칙이 서로 다른 교구를 하나의 캔버스 경험 안에서 자연스럽게 다루게 만드는 일이 핵심이었습니다. drag, rotate, place, selection 흐름을 교구별 규칙에 맞게 분기하고, PointerEvent와 KeyboardEvent를 함께 묶어 안정적으로 제어했습니다.",
+      "서비스를 계속 확장해야 하는 제품이었기 때문에 클래스 기반 모듈 구조와 store 중심 흐름을 설계해 신규 교구 추가 비용을 줄였습니다. 결과적으로 46종 중 20종의 교구를 직접 설계·구현했고, 실제 수업 현장에서 사용할 수 있는 2D·3D 인터랙션 품질을 확보했습니다.",
+    ],
     cardPoints: [
       "46종 중 20종 교구 직접 설계·구현",
       "SVG 기반 복합 인터랙션과 클래스 모듈 구조 설계",
@@ -386,8 +396,11 @@ export const aboutProjects: AboutProject[] = [
     eyebrow: "서비스 프로젝트",
     tagline: "상권 분석부터 채팅·알림까지 연결한 창업 지원 플랫폼",
     period: "2024.04 - 2024.05",
+    status: "Completed",
+    posterColor: "#f59e0b",
+    posterTextColor: "#111827",
     duration: "6주",
-    team: "6명 · 프론트엔드 3 / 백엔드 3",
+    team: "6명 · FE 3 / BE 3",
     role: "프론트엔드 엔지니어",
     achievement: "SSAFY 자율 프로젝트 경진대회 우수상",
     summary:
@@ -396,6 +409,12 @@ export const aboutProjects: AboutProject[] = [
       "예비 창업자가 상권을 분석하고 비용을 가늠하며 다른 사용자와 정보를 교환할 수 있도록 설계한 통합형 웹 서비스입니다.",
     context:
       "창업 실패의 주요 원인으로 상권 분석과 준비 부족이 언급되는 문제를 해결하기 위해, 지도 기반 추천과 실시간 소통 기능을 하나의 흐름으로 묶는 것이 핵심이었습니다.",
+    tags: ["map", "startup", "realtime"],
+    narrative: [
+      "NowDoBoss는 예비 창업자가 상권을 분석하고 비용을 계산하며, 다른 사용자와 실시간으로 소통할 수 있도록 만든 창업 지원 플랫폼입니다. 저는 지도 기반 추천 경험과 커뮤니티, 채팅, 알림 흐름을 프론트엔드에서 연결했습니다.",
+      "카카오맵 위에서 사용자가 지역을 고르고 추천 상권을 확인하는 과정이 끊기지 않도록 위치 선택, 드롭다운, 실시간 검색을 하나의 UX로 정리했습니다. 화면 좌표를 서버에 넘겨 폴리곤을 그리는 방식으로 추천 영역도 시각화했습니다.",
+      "동시에 커뮤니티 CRUD, WebSocket 채팅, FCM 푸시 알림까지 연결하면서 서로 다른 기능을 하나의 제품 경험처럼 보이게 만드는 데 집중했습니다. 이 프로젝트는 SSAFY 자율 프로젝트 경진대회 우수상으로 이어졌습니다.",
+    ],
     cardPoints: [
       "카카오맵 기반 상권 추천 흐름 개발",
       "커뮤니티·채팅·FCM 푸시 알림 구현",
@@ -454,8 +473,7 @@ export const aboutProjects: AboutProject[] = [
         kind: "image",
         src: "/images/portfolio/nowdoboss-2.jpg",
         alt: "NowDoBoss 비용 시뮬레이션 화면",
-        caption:
-          "창업 비용과 상권 데이터를 함께 비교할 수 있는 시뮬레이션 화면",
+        caption: "창업 비용과 상권 데이터를 함께 비교할 수 있는 시뮬레이션 화면",
         aspect: "landscape",
       },
       {
@@ -473,8 +491,11 @@ export const aboutProjects: AboutProject[] = [
     eyebrow: "분석 서비스",
     tagline: "드론 경기 영상을 분석해 기록과 하이라이트를 제공한 풋살 서비스",
     period: "2024.02 - 2024.04",
+    status: "Completed",
+    posterColor: "#2563eb",
+    posterTextColor: "#eff6ff",
     duration: "6주",
-    team: "5명 · 프론트엔드 2 / 백엔드 3",
+    team: "5명 · FE 2 / BE 3",
     role: "프론트엔드 엔지니어",
     achievement: "SSAFY 특화 프로젝트 경진대회 우수상",
     summary:
@@ -483,6 +504,12 @@ export const aboutProjects: AboutProject[] = [
       "고가의 분석 프로그램이나 개인 코치 없이도 아마추어가 경기 영상을 기반으로 자신의 경기를 확인하고 분석받을 수 있도록 만든 서비스입니다.",
     context:
       "경기 등록부터 다시보기, 전술보드, 커뮤니티성 연결까지 한 제품 안에서 풀어야 했고, 다양한 화면에서 재사용 가능한 UI 구조가 필요했습니다.",
+    tags: ["sports", "video", "tactics"],
+    narrative: [
+      "Mancity는 드론 경기 영상을 분석해 경기 기록, 하이라이트, 다시보기, 전술보드를 제공한 풋살 분석 서비스입니다. 저는 화면 전반의 프론트엔드 구조와 경기 관련 주요 인터페이스를 구현했습니다.",
+      "프로젝트 초반에는 Atomic Design Pattern과 Storybook으로 컴포넌트 체계를 먼저 정리했습니다. 이후 매치 목록, 상세, 등록, 수정, 다시보기, 경기 통계 같은 화면을 같은 규칙 위에서 빠르게 확장할 수 있었습니다.",
+      "전술보드는 Draggable과 Zustand를 활용해 직접 조작할 수 있게 만들었고, 마이페이지와 회원 API, 팔로우·팔로잉 흐름도 함께 담당했습니다. 기능 수가 많은 서비스에서도 UI 구조를 먼저 잡아두면 개발 속도와 유지보수성이 모두 좋아진다는 점을 확인한 작업이었습니다.",
+    ],
     cardPoints: [
       "Atomic Design Pattern과 Storybook 기반 UI 체계화",
       "매치 상세·등록·수정 및 전술보드 구현",
@@ -525,8 +552,7 @@ export const aboutProjects: AboutProject[] = [
       kind: "image",
       src: "/images/portfolio/mancity.png",
       alt: "Mancity 풋살 분석 서비스 화면",
-      caption:
-        "경기 데이터, 하이라이트, 전술 흐름을 한 화면에 담은 분석 서비스",
+      caption: "경기 데이터, 하이라이트, 전술 흐름을 한 화면에 담은 분석 서비스",
       aspect: "wide",
     },
     gallery: [
@@ -534,8 +560,7 @@ export const aboutProjects: AboutProject[] = [
         kind: "image",
         src: "/images/portfolio/mancity.png",
         alt: "Mancity 풋살 분석 서비스 화면",
-        caption:
-          "재사용 가능한 UI 구조 위에서 경기 분석 경험을 구현한 대표 화면",
+        caption: "재사용 가능한 UI 구조 위에서 경기 분석 경험을 구현한 대표 화면",
         aspect: "landscape",
       },
     ],
@@ -546,8 +571,11 @@ export const aboutProjects: AboutProject[] = [
     eyebrow: "커뮤니티 서비스",
     tagline: "입양자와 보호소를 연결한 맞춤형 유기견 입양 지원 서비스",
     period: "2024.01 - 2024.02",
+    status: "Completed",
+    posterColor: "#e11d48",
+    posterTextColor: "#fff1f2",
     duration: "6주",
-    team: "6명 · 프론트엔드 4 / 백엔드 2",
+    team: "6명 · FE 4 / BE 2",
     role: "프론트엔드 엔지니어",
     achievement: "SSAFY 공통 프로젝트 경진대회 우수상",
     summary:
@@ -556,6 +584,12 @@ export const aboutProjects: AboutProject[] = [
       "보호소에는 입양자와의 연결 창구를, 입양 희망자에게는 맞춤형 추천과 입양 이후 흐름까지 지원하는 서비스를 목표로 했습니다.",
     context:
       "입양 희망자와 보호소의 목적이 다르기 때문에 같은 서비스 안에서도 역할별로 다른 경험을 설계해야 했고, 커뮤니티와 입양 설문, 데이터 조회 흐름이 자연스럽게 이어져야 했습니다.",
+    tags: ["adoption", "community", "survey"],
+    narrative: [
+      "pawsitive는 보호소와 입양 희망자를 연결하고, 추천, 커뮤니티, 사후관리까지 이어주는 유기견 입양 지원 서비스입니다. 저는 역할별 사용자 흐름을 분리하고 설문, 데이터 조회, 위치 기반 커뮤니티를 구현했습니다.",
+      "같은 서비스 안에서도 보호소와 입양 희망자의 목적이 달랐기 때문에, 역할별로 다른 여정을 설계하는 일이 중요했습니다. 입양 희망자에게는 5단계 맞춤형 흐름을 제공하고, 설문 20문항 상태를 Jotai로 관리해 긴 입력 흐름을 단순하게 유지했습니다.",
+      "카카오맵 기반 위치 커뮤니티와 유기견 조회 API를 React Query로 연결해 데이터 흐름을 정리했고, 모바일 맥락까지 고려한 PWA 경험을 구축했습니다. 이 프로젝트는 SSAFY 공통 프로젝트 경진대회 우수상으로 마무리됐습니다.",
+    ],
     cardPoints: [
       "역할별 사용자 흐름 분기와 5단계 입양 경험 설계",
       "카카오맵 기반 위치 커뮤니티 구현",
@@ -597,8 +631,7 @@ export const aboutProjects: AboutProject[] = [
       kind: "image",
       src: "/images/portfolio/pawsitive.png",
       alt: "Pawsitive 입양 지원 서비스 화면",
-      caption:
-        "입양 추천, 커뮤니티, 설문 흐름을 연결한 반려견 입양 지원 서비스",
+      caption: "입양 추천, 커뮤니티, 설문 흐름을 연결한 반려견 입양 지원 서비스",
       aspect: "wide",
     },
     gallery: [
@@ -606,8 +639,7 @@ export const aboutProjects: AboutProject[] = [
         kind: "image",
         src: "/images/portfolio/pawsitive.png",
         alt: "Pawsitive 입양 지원 서비스 화면",
-        caption:
-          "역할별 사용자 경험과 데이터 흐름을 한 제품 안에서 정리한 화면",
+        caption: "역할별 사용자 경험과 데이터 흐름을 한 제품 안에서 정리한 화면",
         aspect: "landscape",
       },
     ],

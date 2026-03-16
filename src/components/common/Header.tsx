@@ -12,7 +12,7 @@ type HeaderProps = {
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Projects", href: "/about#projects" },
+  { label: "Projects", href: "/projects" },
   { label: "Writing", href: "/posts" },
 ];
 

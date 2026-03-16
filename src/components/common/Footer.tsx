@@ -23,6 +23,9 @@ const Footer = () => {
             <Link href="/about" className="accent-link">
               About
             </Link>
+            <Link href="/projects" className="accent-link">
+              Projects
+            </Link>
             <Link href="/posts" className="accent-link">
               Writing
             </Link>

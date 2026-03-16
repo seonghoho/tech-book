@@ -10,10 +10,9 @@ import {
   strengthHighlights,
 } from "@/lib/aboutData";
 import PortfolioRail from "@/components/portfolio/PortfolioRail";
-import ProjectVisual from "./ProjectVisual";
 
-const featuredProject = aboutProjects.find((project) => project.featured);
-const secondaryProjects = aboutProjects.filter((project) => !project.featured);
+// const featuredProject = aboutProjects.find((project) => project.featured) ?? aboutProjects[0];
+const projectArchivePreview = aboutProjects.slice(0, 4);
 const overviewFacts = [
   { label: "Current", value: aboutProfile.companyLabel },
   { label: "Stack", value: aboutProfile.stackLabel },
@@ -36,7 +35,7 @@ function SectionHeader({
       <h2 className="text-2xl font-semibold text-[color:var(--color-text-primary)] sm:text-3xl">
         {title}
       </h2>
-      <p className="max-w-2xl body-copy">{description}</p>
+      <p className="body-copy max-w-2xl">{description}</p>
     </div>
   );
 }
@@ -106,7 +105,7 @@ export default function AboutPage() {
                           sizes="200px"
                         />
                       </div>
-                      <div className="space-y-3 flex flex-col my-auto">
+                      <div className="my-auto flex flex-col space-y-3">
                         <p className="eyebrow-label">Profile Snapshot</p>
                         <div>
                           <h3 className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)] sm:text-3xl">
@@ -123,7 +122,7 @@ export default function AboutPage() {
                       {overviewFacts.map((fact) => (
                         <div
                           key={fact.label}
-                          className="rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/72 px-4 py-4"
+                          className="bg-[color:var(--color-surface)]/72 rounded-[24px] border border-[color:var(--color-border)] px-4 py-4"
                         >
                           <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--color-text-muted)]">
                             {fact.label}
@@ -269,170 +268,92 @@ export default function AboutPage() {
               description="대표 프로젝트와 저의 경험이 된 프로젝트들을 작성했습니다."
             />
 
-            {featuredProject ? (
-              <article className="rounded-[32px] border border-[color:var(--color-border)] p-5 transition duration-300 hover:border-[color:var(--color-border-strong)] hover:bg-[color:var(--color-surface)] sm:p-6">
-                <div className="space-y-8">
-                  <div className="max-w-3xl space-y-5">
-                    <div className="space-y-3">
-                      <div className="eyebrow-label flex flex-wrap items-center gap-2">
-                        <span>{featuredProject.eyebrow}</span>
-                        {featuredProject.achievement ? (
-                          <span className="rounded-full bg-[color:var(--color-accent-soft)] px-3 py-1 text-[11px] tracking-[0.14em] text-[color:var(--color-accent)]">
-                            {featuredProject.achievement}
-                          </span>
-                        ) : null}
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-semibold text-[color:var(--color-text-primary)] sm:text-3xl">
-                          {featuredProject.title}
-                        </h3>
-                        <p className="mt-2 text-sm font-medium text-[color:var(--color-text-secondary)]">
-                          {featuredProject.tagline}
-                        </p>
-                      </div>
-                      <p className="body-copy">{featuredProject.summary}</p>
-                    </div>
+            <article className="surface-panel-strong p-5 sm:p-6 lg:p-7">
+              <div className="grid gap-6">
+                {/* <div className="space-y-6">
+                  <div className="space-y-3">
+                    <p className="eyebrow-label">Project Archive</p>
+                    <h3 className="text-2xl font-semibold text-[color:var(--color-text-primary)] sm:text-3xl">
+                      목록에서 훑고, 상세에서 깊게 읽는 구조로 바꿨습니다
+                    </h3>
+                    <p className="body-copy max-w-2xl">
+                      상단 탭의 <span className="font-semibold">Projects</span>
+                      에서 전체 프로젝트를 연도 기준 목록형으로 볼 수 있고, 각
+                      프로젝트를 누르면 문제 정의, 역할, 구현 포인트, 결과를
+                      상세하게 확인할 수 있습니다.
+                    </p>
                   </div>
 
-                  <ProjectVisual
-                    preview={featuredProject.preview}
-                    priority
-                    variant="feature"
-                    className="w-full"
-                  />
+                  <dl className="grid gap-3 sm:grid-cols-3">
+                    <div className="surface-subtle px-4 py-4">
+                      <dt className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
+                        Projects
+                      </dt>
+                      <dd className="mt-2 text-sm font-medium text-[color:var(--color-text-primary)]">
+                        {aboutProjects.length}개
+                      </dd>
+                    </div>
+                    <div className="surface-subtle px-4 py-4">
+                      <dt className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
+                        Highlight
+                      </dt>
+                      <dd className="mt-2 text-sm font-medium text-[color:var(--color-text-primary)]">
+                        {featuredProject?.title ?? "대표 프로젝트"}
+                      </dd>
+                    </div>
+                    <div className="surface-subtle px-4 py-4">
+                      <dt className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
+                        Structure
+                      </dt>
+                      <dd className="mt-2 text-sm font-medium text-[color:var(--color-text-primary)]">
+                        Archive + Detail
+                      </dd>
+                    </div>
+                  </dl>
 
-                  <div className="space-y-6">
-                    <dl className="grid gap-3 sm:grid-cols-3">
-                      <div className="rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/70 px-4 py-4">
-                        <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                          Period
-                        </dt>
-                        <dd className="mt-2 text-sm text-[color:var(--color-text-primary)]">
-                          {featuredProject.period}
-                        </dd>
-                      </div>
-                      <div className="rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/70 px-4 py-4">
-                        <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                          Team
-                        </dt>
-                        <dd className="mt-2 text-sm text-[color:var(--color-text-primary)]">
-                          {featuredProject.team}
-                        </dd>
-                      </div>
-                      <div className="rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/70 px-4 py-4">
-                        <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                          Role
-                        </dt>
-                        <dd className="mt-2 text-sm text-[color:var(--color-text-primary)]">
-                          {featuredProject.role}
-                        </dd>
-                      </div>
-                    </dl>
+                  <div className="flex flex-wrap gap-3">
+                    <Link href="/projects" className="button-primary">
+                      프로젝트 전체 보기
+                    </Link>
+                    {featuredProject ? (
+                      <Link
+                        href={`/projects/${featuredProject.slug}`}
+                        className="button-secondary"
+                      >
+                        대표 프로젝트 바로 보기
+                      </Link>
+                    ) : null}
+                  </div>
+                </div> */}
 
-                    <ul className="grid gap-3 md:grid-cols-2">
-                      {featuredProject.cardPoints.slice(0, 4).map((point) => (
-                        <li
-                          key={point}
-                          className="flex gap-3 rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/55 px-4 py-4 text-sm text-[color:var(--color-text-secondary)]"
-                        >
-                          <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
-                          <span>{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="space-y-4 rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/45 px-4 py-4 sm:px-5">
-                      <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                          Stack
-                        </p>
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          {featuredProject.techStack
-                            .slice(0, 7)
-                            .map((stack) => (
-                              <span key={stack} className="tag-chip">
-                                {stack}
-                              </span>
-                            ))}
+                <div className="space-y-3">
+                  {projectArchivePreview.map((project) => (
+                    <Link
+                      key={project.slug}
+                      href={`/projects/${project.slug}`}
+                      className="surface-subtle block px-4 py-4 transition duration-300 hover:-translate-y-0.5"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
+                            {project.period}
+                          </p>
+                          <h4 className="mt-2 text-lg font-semibold text-[color:var(--color-text-primary)]">
+                            {project.title}
+                          </h4>
+                          <p className="mt-1 text-sm leading-6 text-[color:var(--color-text-secondary)]">
+                            {project.tagline}
+                          </p>
                         </div>
-                      </div>
-
-                      <div className="flex flex-wrap gap-3">
-                        <Link
-                          href={`/about/projects/${featuredProject.slug}`}
-                          className="button-secondary"
-                        >
-                          상세 보기
-                        </Link>
-                        {featuredProject.links[0] ? (
-                          <a
-                            href={featuredProject.links[0].href}
-                            target={
-                              featuredProject.links[0].external
-                                ? "_blank"
-                                : undefined
-                            }
-                            rel={
-                              featuredProject.links[0].external
-                                ? "noopener noreferrer"
-                                : undefined
-                            }
-                            className="accent-link inline-flex items-center text-sm font-semibold"
-                          >
-                            {featuredProject.links[0].label}
-                          </a>
-                        ) : null}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            ) : null}
-
-            <div className="divide-y divide-[color:var(--color-border)] rounded-[30px] border border-[color:var(--color-border)]">
-              {secondaryProjects.map((project) => (
-                <article
-                  key={project.slug}
-                  className="group px-5 py-5 transition duration-300 first:rounded-t-[30px] last:rounded-b-[30px] hover:bg-[color:var(--color-surface)] sm:px-6"
-                >
-                  <div className="grid gap-4 lg:grid-cols-[180px_minmax(0,1fr)]">
-                    <div className="space-y-1 text-sm text-[color:var(--color-text-muted)]">
-                      <div>{project.period}</div>
-                      <div>{project.team}</div>
-                    </div>
-                    <div className="space-y-3">
-                      <div className="flex flex-wrap items-center gap-3">
-                        <h3 className="text-lg font-semibold text-[color:var(--color-text-primary)]">
-                          {project.title}
-                        </h3>
-                        <span className="text-sm text-[color:var(--color-text-muted)]">
-                          {project.role}
+                        <span className="text-sm font-semibold text-[color:var(--color-accent)]">
+                          View
                         </span>
                       </div>
-                      <p className="text-sm leading-7 text-[color:var(--color-text-secondary)]">
-                        {project.summary}
-                      </p>
-                      <p className="text-sm leading-7 text-[color:var(--color-text-muted)]">
-                        {project.cardPoints.slice(0, 2).join(" / ")}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {project.techStack.slice(0, 5).map((stack) => (
-                          <span key={stack} className="tag-chip">
-                            {stack}
-                          </span>
-                        ))}
-                      </div>
-                      <Link
-                        href={`/about/projects/${project.slug}`}
-                        className="accent-link inline-flex text-sm font-semibold"
-                      >
-                        프로젝트 상세 보기
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </article>
           </section>
 
           <section id="strengths" className="scroll-mt-28 space-y-8">

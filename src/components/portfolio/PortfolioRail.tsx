@@ -36,7 +36,7 @@ export default function PortfolioRail({
   supplemental,
 }: PortfolioRailProps) {
   return (
-    <aside className="space-y-8 lg:sticky lg:top-28 lg:self-start lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:pr-2">
+    <aside className="space-y-8 lg:sticky lg:top-[108px] lg:max-h-[calc(100vh-8rem)] lg:self-start lg:overflow-y-auto lg:pr-2">
       <div className="space-y-6">
         <div className="space-y-4">
           {eyebrow ? <p className="eyebrow-label">{eyebrow}</p> : null}
@@ -48,10 +48,8 @@ export default function PortfolioRail({
               {title}
             </p>
           </div>
-          <p className="max-w-md body-copy">{summary}</p>
-          {secondaryText ? (
-            <p className="max-w-md muted-copy">{secondaryText}</p>
-          ) : null}
+          <p className="body-copy max-w-md">{summary}</p>
+          {secondaryText ? <p className="muted-copy max-w-md">{secondaryText}</p> : null}
         </div>
 
         <div className="hidden lg:block">
@@ -69,9 +67,7 @@ export default function PortfolioRail({
                 key={metric.label}
                 className="flex flex-col gap-1 border-b border-[color:var(--color-border)] px-4 py-3 last:border-b-0 sm:flex-row sm:items-baseline sm:justify-between"
               >
-                <dt className="text-sm text-[color:var(--color-text-muted)]">
-                  {metric.label}
-                </dt>
+                <dt className="text-sm text-[color:var(--color-text-muted)]">{metric.label}</dt>
                 <dd className="text-base font-semibold text-[color:var(--color-text-primary)]">
                   {metric.value}
                 </dd>

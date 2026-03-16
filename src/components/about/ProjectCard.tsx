@@ -100,7 +100,7 @@ export default function ProjectCard({
           </div>
 
           <div className="mt-6">
-            <Link href={`/about/projects/${project.slug}`} className="button-secondary">
+            <Link href={`/projects/${project.slug}`} className="button-secondary">
               상세 보기
               <span aria-hidden>{">"}</span>
             </Link>

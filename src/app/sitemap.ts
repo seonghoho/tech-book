@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     "",
     "/about",
+    "/projects",
     "/posts",
     "/games",
     "/ux-lab",
@@ -38,17 +39,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
   }));
 
-  const aboutProjectPages = aboutProjects.map((project) => ({
-    url: absoluteUrl(`/about/projects/${project.slug}`),
+  const projectPages = aboutProjects.map((project) => ({
+    url: absoluteUrl(`/projects/${project.slug}`),
     lastModified: now,
   }));
 
-  return [
-    ...staticPages,
-    ...aboutProjectPages,
-    ...posts,
-    ...gameDocs,
-    ...categories,
-    ...tags,
-  ];
+  return [...staticPages, ...projectPages, ...posts, ...gameDocs, ...categories, ...tags];
 }

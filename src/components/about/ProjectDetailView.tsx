@@ -1,6 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
-import type { AboutProject } from "@/lib/aboutData";
-import ProjectVisual from "./ProjectVisual";
+import type { AboutProject, ProjectPreview } from "@/lib/aboutData";
+import ProjectPoster from "@/components/projects/ProjectPoster";
 
 type ProjectDetailViewProps = {
   project: AboutProject;
@@ -8,20 +9,82 @@ type ProjectDetailViewProps = {
   nextProject: AboutProject | null;
 };
 
-function DetailSection({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function DetailSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="surface-panel p-6 sm:p-7">
-      <h2 className="text-xl font-semibold text-[color:var(--color-text-primary)]">
+    <section className="border-t border-[color:var(--color-border)] pt-8">
+      <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-[color:var(--color-text-muted)]">
         {title}
       </h2>
-      <div className="mt-4">{children}</div>
+      <div className="mt-5">{children}</div>
     </section>
+  );
+}
+
+function GalleryItem({ preview }: { preview: ProjectPreview }) {
+  if (preview.kind === "image") {
+    return (
+      <figure className="space-y-3">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-muted)]">
+          <Image
+            src={preview.src}
+            alt={preview.alt}
+            fill
+            sizes="(min-width: 1200px) 360px, (min-width: 768px) 40vw, 100vw"
+            className="object-cover object-center"
+          />
+        </div>
+        {preview.caption ? (
+          <figcaption className="text-sm leading-7 text-[color:var(--color-text-secondary)]">
+            {preview.caption}
+          </figcaption>
+        ) : null}
+      </figure>
+    );
+  }
+
+  return (
+    <figure className="space-y-3">
+      <div className="flex aspect-[4/3] items-center justify-center rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] p-6 text-center">
+        <div className="space-y-3">
+          <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--color-text-muted)]">
+            {preview.label}
+          </p>
+          <p className="text-xl font-semibold text-[color:var(--color-text-primary)]">
+            {preview.title}
+          </p>
+        </div>
+      </div>
+      <figcaption className="text-sm leading-7 text-[color:var(--color-text-secondary)]">
+        {preview.caption}
+      </figcaption>
+    </figure>
+  );
+}
+
+function ProjectPager({
+  project,
+  align = "left",
+}: {
+  project: AboutProject;
+  align?: "left" | "right";
+}) {
+  const alignmentClass = align === "right" ? "md:text-right" : "";
+
+  return (
+    <Link
+      href={`/projects/${project.slug}`}
+      className={`block border-t border-[color:var(--color-border)] pt-7 transition ${alignmentClass}`}
+    >
+      <p className="text-sm font-semibold text-[color:var(--color-text-primary)]">
+        {align === "right" ? `Older »` : `« Newer`}
+      </p>
+      <h3 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-[color:var(--color-accent)]">
+        {project.title}
+      </h3>
+      <p className="mt-2 text-sm leading-7 text-[color:var(--color-text-secondary)]">
+        {project.tagline}
+      </p>
+    </Link>
   );
 }
 
@@ -30,236 +93,176 @@ export default function ProjectDetailView({
   previousProject,
   nextProject,
 }: ProjectDetailViewProps) {
+  const [primaryLink, ...otherLinks] = project.links;
+
   return (
     <div className="page-shell">
-      <div className="mb-6">
-        <Link href="/about#projects" className="button-secondary">
-          <span aria-hidden>←</span>
-          About로 돌아가기
+      <div className="mx-auto max-w-[1120px]">
+        <Link href="/projects" className="button-secondary">
+          ← Projects로 돌아가기
         </Link>
-      </div>
 
-      <section className="surface-panel-strong overflow-hidden p-5 sm:p-7 lg:p-8">
-        <div className="grid gap-6 lg:grid-cols-[1fr_0.95fr] lg:items-center">
-          <div className="space-y-5">
-            <div className="eyebrow-label flex flex-wrap items-center gap-2">
-              <span>{project.eyebrow}</span>
-              {project.achievement ? (
-                <span className="rounded-full bg-[color:var(--color-accent-soft)] px-3 py-1 text-[11px] tracking-[0.14em] text-[color:var(--color-accent)]">
-                  {project.achievement}
-                </span>
-              ) : null}
-            </div>
-
-            <div className="space-y-3">
-              <h1 className="text-3xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)] sm:text-5xl">
-                {project.title}
-              </h1>
-              <p className="text-lg font-medium text-[color:var(--color-text-secondary)]">
-                {project.tagline}
-              </p>
-              <p className="max-w-3xl body-copy">{project.summary}</p>
-            </div>
-
-            <dl className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-              <div className="surface-subtle px-4 py-4">
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                  기간
-                </dt>
-                <dd className="mt-2 text-sm font-medium text-[color:var(--color-text-primary)]">
-                  {project.period}
-                </dd>
-              </div>
-              <div className="surface-subtle px-4 py-4">
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                  팀 구성
-                </dt>
-                <dd className="mt-2 text-sm font-medium text-[color:var(--color-text-primary)]">
-                  {project.team}
-                </dd>
-              </div>
-              <div className="surface-subtle px-4 py-4">
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                  역할
-                </dt>
-                <dd className="mt-2 text-sm font-medium text-[color:var(--color-text-primary)]">
-                  {project.role}
-                </dd>
-              </div>
-              <div className="surface-subtle px-4 py-4">
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                  기간 성격
-                </dt>
-                <dd className="mt-2 text-sm font-medium text-[color:var(--color-text-primary)]">
-                  {project.duration ?? "프로젝트"}
-                </dd>
-              </div>
-            </dl>
-
-            <div className="flex flex-wrap gap-3">
-              {project.links.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target={link.external ? "_blank" : undefined}
-                  rel={link.external ? "noopener noreferrer" : undefined}
-                  className="button-secondary"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
+        <section className="mt-8 grid gap-8 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-12">
+          <div className="max-w-[220px]">
+            <ProjectPoster
+              title={project.title}
+              mainColor={project.posterColor}
+              textColor={project.posterTextColor}
+              logoSrc={project.posterLogoSrc}
+              logoAlt={project.posterLogoAlt}
+              priority
+              sizes="(min-width: 1024px) 220px, 45vw"
+              className="aspect-square w-full"
+            />
           </div>
 
-          <ProjectVisual preview={project.preview} priority variant="feature" />
-        </div>
-      </section>
+          <div>
+            <h1 className="text-4xl font-semibold tracking-[-0.05em] text-[color:var(--color-text-primary)] sm:text-5xl">
+              {project.title}
+            </h1>
 
-      <div className="mt-10 grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="space-y-6">
-          <DetailSection title="프로젝트 개요">
-            <div className="grid gap-5 md:grid-cols-2">
-              <div>
-                <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                  서비스 개요
-                </h3>
-                <p className="mt-3 body-copy">{project.overview}</p>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                  문제 맥락
-                </h3>
-                <p className="mt-3 body-copy">{project.context}</p>
-              </div>
-            </div>
-          </DetailSection>
-
-          <DetailSection title="주요 기여">
-            <ul className="space-y-3">
-              {project.keyContributions.map((contribution) => (
-                <li
-                  key={contribution}
-                  className="surface-subtle px-4 py-4 text-sm leading-7 text-[color:var(--color-text-secondary)]"
-                >
-                  {contribution}
-                </li>
-              ))}
-            </ul>
-          </DetailSection>
-
-          <DetailSection title="기술적 포인트">
-            <ul className="space-y-3">
-              {project.technicalHighlights.map((highlight) => (
-                <li
-                  key={highlight}
-                  className="surface-subtle px-4 py-4 text-sm leading-7 text-[color:var(--color-text-secondary)]"
-                >
-                  {highlight}
-                </li>
-              ))}
-            </ul>
-          </DetailSection>
-
-          <DetailSection title="관련 화면">
-            <div className="grid gap-4 md:grid-cols-2">
-              {project.gallery.map((item) => (
-                <ProjectVisual
-                  key={item.caption}
-                  preview={item}
-                  variant="gallery"
-                />
-              ))}
-            </div>
-          </DetailSection>
-        </div>
-
-        <aside className="space-y-6 xl:sticky xl:top-24 xl:self-start">
-          <DetailSection title="핵심 결과">
-            <ul className="space-y-3 text-sm text-[color:var(--color-text-secondary)]">
-              {project.outcomes.map((outcome) => (
-                <li key={outcome} className="flex gap-3">
-                  <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
-                  <span>{outcome}</span>
-                </li>
-              ))}
-            </ul>
-          </DetailSection>
-
-          <DetailSection title="기술 스택">
-            <div className="flex flex-wrap gap-2">
-              {project.techStack.map((stack) => (
-                <span key={stack} className="tag-chip text-sm">
-                  {stack}
+            <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-7 text-[color:var(--color-text-secondary)] sm:text-lg">
+              <span>{project.period}</span>
+              <span aria-hidden>•</span>
+              <span>{project.status}</span>
+              {project.tags.map((tag) => (
+                <span key={tag} className="text-[color:var(--color-accent)]">
+                  #{tag}
                 </span>
               ))}
             </div>
-          </DetailSection>
 
-          <DetailSection title="바로가기">
-            <div className="space-y-3">
-              {project.links.map((link) => (
+            {primaryLink ? (
+              <div className="mt-8">
                 <a
-                  key={link.href}
-                  href={link.href}
-                  target={link.external ? "_blank" : undefined}
-                  rel={link.external ? "noopener noreferrer" : undefined}
-                  className="surface-subtle flex items-center justify-between px-4 py-3 text-sm font-medium text-[color:var(--color-text-secondary)] transition hover:-translate-y-0.5"
+                  href={primaryLink.href}
+                  target={primaryLink.external ? "_blank" : undefined}
+                  rel={primaryLink.external ? "noopener noreferrer" : undefined}
+                  className="accent-link text-xl font-semibold underline underline-offset-4"
                 >
-                  <span>{link.label}</span>
-                  <span aria-hidden>{">"}</span>
+                  {primaryLink.label} →
                 </a>
+              </div>
+            ) : null}
+
+            <div className="mt-10 max-w-4xl space-y-7 text-[15px] leading-9 text-[color:var(--color-text-secondary)] sm:text-[1.05rem]">
+              {project.narrative.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
-          </DetailSection>
-        </aside>
-      </div>
-
-      {previousProject || nextProject ? (
-        <section className="surface-panel mt-10 p-6">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <p className="eyebrow-label">이어서 보기</p>
-              <h2 className="mt-2 text-2xl font-semibold text-[color:var(--color-text-primary)]">
-                다른 프로젝트도 이어서 볼 수 있습니다
-              </h2>
-            </div>
-          </div>
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {previousProject ? (
-              <Link
-                href={`/about/projects/${previousProject.slug}`}
-                className="surface-subtle p-5 transition hover:-translate-y-0.5"
-              >
-                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--color-text-muted)]">
-                  이전 프로젝트
-                </div>
-                <div className="mt-2 text-lg font-semibold text-[color:var(--color-text-primary)]">
-                  {previousProject.title}
-                </div>
-                <p className="mt-2 text-sm text-[color:var(--color-text-secondary)]">
-                  {previousProject.tagline}
-                </p>
-              </Link>
-            ) : null}
-            {nextProject ? (
-              <Link
-                href={`/about/projects/${nextProject.slug}`}
-                className="surface-subtle p-5 transition hover:-translate-y-0.5"
-              >
-                <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--color-text-muted)]">
-                  다음 프로젝트
-                </div>
-                <div className="mt-2 text-lg font-semibold text-[color:var(--color-text-primary)]">
-                  {nextProject.title}
-                </div>
-                <p className="mt-2 text-sm text-[color:var(--color-text-secondary)]">
-                  {nextProject.tagline}
-                </p>
-              </Link>
-            ) : null}
           </div>
         </section>
-      ) : null}
+
+        <section className="mt-14 grid gap-12 xl:grid-cols-[200px_minmax(0,1fr)]">
+          <aside className="space-y-10">
+            <DetailSection title="Project facts">
+              <dl className="space-y-4 text-sm leading-7">
+                <div className="flex items-start justify-between gap-4 border-b border-[color:var(--color-border)] pb-4">
+                  <dt className="text-[color:var(--color-text-muted)]">Role</dt>
+                  <dd className="text-right text-[color:var(--color-text-primary)]">
+                    {project.role}
+                  </dd>
+                </div>
+                <div className="flex items-start justify-between gap-4 border-b border-[color:var(--color-border)] pb-4">
+                  <dt className="text-[color:var(--color-text-muted)]">Team</dt>
+                  <dd className="text-right text-[color:var(--color-text-primary)]">
+                    {project.team}
+                  </dd>
+                </div>
+                <div className="flex items-start justify-between gap-4 border-b border-[color:var(--color-border)] pb-4">
+                  <dt className="text-[color:var(--color-text-muted)]">Duration</dt>
+                  <dd className="text-right text-[color:var(--color-text-primary)]">
+                    {project.duration ?? project.period}
+                  </dd>
+                </div>
+                <div className="flex items-start justify-between gap-4">
+                  <dt className="text-[color:var(--color-text-muted)]">Status</dt>
+                  <dd className="text-right text-[color:var(--color-text-primary)]">
+                    {project.status}
+                  </dd>
+                </div>
+              </dl>
+            </DetailSection>
+
+            <DetailSection title="Stack">
+              <div className="flex flex-wrap gap-2 text-sm">
+                {project.techStack.map((stack) => (
+                  <span key={stack} className="tag-chip">
+                    {stack}
+                  </span>
+                ))}
+              </div>
+            </DetailSection>
+
+            <DetailSection title="Outcomes">
+              <ul className="space-y-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
+                {project.outcomes.map((outcome) => (
+                  <li key={outcome} className="flex gap-3">
+                    <span className="mt-[11px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
+                    <span>{outcome}</span>
+                  </li>
+                ))}
+              </ul>
+            </DetailSection>
+
+            {otherLinks.length ? (
+              <DetailSection title="More links">
+                <div className="space-y-4 text-sm leading-7">
+                  {otherLinks.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target={link.external ? "_blank" : undefined}
+                      rel={link.external ? "noopener noreferrer" : undefined}
+                      className="accent-link block underline underline-offset-4"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              </DetailSection>
+            ) : null}
+          </aside>
+          <div className="space-y-10">
+            <DetailSection title="What I worked on">
+              <ul className="space-y-4 text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
+                {project.keyContributions.map((contribution) => (
+                  <li key={contribution} className="flex gap-3">
+                    <span className="mt-[13px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
+                    <span>{contribution}</span>
+                  </li>
+                ))}
+              </ul>
+            </DetailSection>
+
+            <DetailSection title="Technical highlights">
+              <ul className="space-y-4 text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
+                {project.technicalHighlights.map((highlight) => (
+                  <li key={highlight} className="flex gap-3">
+                    <span className="mt-[13px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
+                    <span>{highlight}</span>
+                  </li>
+                ))}
+              </ul>
+            </DetailSection>
+
+            <DetailSection title="Screens">
+              <div className="grid gap-6 md:grid-cols-2">
+                {project.gallery.map((item, index) => (
+                  <GalleryItem key={`${project.slug}-gallery-${index}`} preview={item} />
+                ))}
+              </div>
+            </DetailSection>
+          </div>
+        </section>
+
+        {previousProject || nextProject ? (
+          <section className="mt-16 grid gap-8 md:grid-cols-2">
+            {previousProject ? <ProjectPager project={previousProject} align="left" /> : <div />}
+            {nextProject ? <ProjectPager project={nextProject} align="right" /> : null}
+          </section>
+        ) : null}
+      </div>
     </div>
   );
 }

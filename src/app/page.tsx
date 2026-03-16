@@ -21,7 +21,7 @@ export default function Home() {
   );
   const featuredPosts = posts.filter((post) => post.featured).slice(0, 6);
   const fallbackFeatured =
-    featuredPosts.length >= 3 ? featuredPosts : posts.slice(0, 3);
+    featuredPosts.length >= 6 ? featuredPosts : posts.slice(0, 6);
   const recentPosts = posts.slice(0, 10);
   const categoryCounts = posts.reduce<Record<string, number>>((acc, post) => {
     if (post.category) {
