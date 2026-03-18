@@ -22,19 +22,10 @@ export type HomeHeroShortcut = {
   href: string;
 };
 
-export const homeHeroContent = {
-  eyebrow: "Frontend Engineer · Interaction Systems · Technical Writing",
-  headline: "복잡한 인터랙션을 구현하고, 과정을 글로 남깁니다.",
-  description:
-    "SVG, Three.js, Vue/React 기반 프론트엔드 구현 경험을 바탕으로 실무에서 부딪힌 문제, 구조 설계, 렌더링 이슈, 인터랙션 구현 과정을 기록합니다.",
-  primaryAction: {
-    label: "글 읽기",
-    href: "/posts",
-  },
-  secondaryAction: {
-    label: "소개 보기",
-    href: "/about",
-  },
+export const homeHeroPoster = {
+  word: "ARCHIVE",
+  imageSrc: "/images/portfolio/nowdoboss-1.jpg",
+  imageAlt: "Muted urban placeholder image clipped inside the archive title.",
 } as const;
 
 export const homeAboutSiteCopy =
