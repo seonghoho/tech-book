@@ -28,6 +28,28 @@ export const homeHeroPoster = {
   imageAlt: "Muted urban placeholder image clipped inside the archive title.",
 } as const;
 
+export const homeHeroMainImages = [
+  "/images/main/me_2.jpeg",
+  "/images/main/jeju_2.jpeg",
+  "/images/main/me_1.jpeg",
+  "/images/main/baseball_1.jpeg",
+  "/images/main/cafe_1.jpeg",
+  "/images/main/cafe_2.jpeg",
+  "/images/main/jeju_1.jpeg",
+  "/images/main/jeju_2.jpeg",
+  "/images/main/jeju_3.jpeg",
+  "/images/main/me_2.jpeg",
+  "/images/main/me_3.jpeg",
+  "/images/main/sea_1.jpeg",
+  "/images/main/sky_1.jpeg",
+  "/images/main/tree_1.jpeg",
+  "/images/main/tree_2.jpeg",
+  "/images/main/tree_4.jpeg",
+  "/images/main/tree_6.jpeg",
+  // "/images/main/tree_3.jpeg",
+  // "/images/main/tree_5.jpeg",
+] as const;
+
 export const homeAboutSiteCopy =
   "해당 블로그는 구현 경험, 기술 글, 프로젝트 기록을 작성한 기술 아카이브입니다. 실무에서 마주친 프론트엔드 문제와 그 해결 과정을 차분하게 남기는 것을 목표로 합니다.";
 
