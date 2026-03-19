@@ -45,7 +45,7 @@ function FeaturedPostCard({ post, compact = false, className }: FeaturedPostCard
   return (
     <article
       className={joinClasses(
-        "surface-panel flex h-full min-w-0 flex-col border border-[color:var(--color-border)] p-5 sm:p-6",
+        "group surface-panel flex h-full min-w-0 flex-col border border-[color:var(--color-border)] p-5 transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:border-[color:var(--color-border-strong)] hover:shadow-[0_24px_60px_rgba(15,23,42,0.08)] dark:hover:shadow-[0_28px_70px_rgba(2,8,23,0.34)] sm:p-6",
         compact ? "rounded-[26px]" : undefined,
         className,
       )}
@@ -59,7 +59,7 @@ function FeaturedPostCard({ post, compact = false, className }: FeaturedPostCard
       <Link
         href={`/posts/${post.slug}`}
         className={joinClasses(
-          "mt-3 block text-[1.18rem] font-semibold leading-[1.35] tracking-[-0.04em] text-[color:var(--color-text-primary)] transition hover:text-[color:var(--color-accent)] sm:text-[1.35rem]",
+          "mt-3 block text-[1.18rem] font-semibold leading-[1.35] tracking-[-0.04em] text-[color:var(--color-text-primary)] transition-[color,transform] duration-200 ease-out hover:text-[color:var(--color-accent)] group-hover:translate-x-0.5 group-hover:text-[color:var(--color-accent)] sm:text-[1.35rem]",
           compact ? "sm:max-w-[18ch]" : undefined,
         )}
       >
@@ -92,9 +92,9 @@ function FeaturedWritingCtaButton() {
       <Link
         href="/posts"
         aria-label="전체 글 보러가기"
-        className="group inline-flex h-14 w-14 items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface)] text-[color:var(--color-text-primary)] transition hover:border-[color:var(--color-accent)] hover:bg-[rgba(37,99,235,0.08)] hover:text-[color:var(--color-accent)]"
+        className="group inline-flex h-14 w-14 items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-surface)] text-[color:var(--color-text-primary)] shadow-sm transition-[transform,border-color,background-color,color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--color-accent)] hover:bg-[rgba(37,99,235,0.08)] hover:text-[color:var(--color-accent)] active:translate-y-[1px] active:scale-[0.94] active:shadow-none"
       >
-        <ChevronRightIcon className="h-6 w-6 transition-transform duration-300 group-hover:translate-x-0.5" />
+        <ChevronRightIcon className="h-6 w-6 transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-active:translate-x-1.5 group-active:scale-90" />
       </Link>
     </div>
   );
@@ -105,10 +105,10 @@ function FeaturedWritingCtaFooter() {
     <div className="flex justify-start border-t border-[color:var(--color-border)] pt-5 sm:pt-6">
       <Link
         href="/posts"
-        className="button-secondary group w-full gap-2 px-5 py-3 sm:w-auto"
+        className="button-secondary group w-full gap-2 px-5 py-3 shadow-sm transition-[transform,border-color,background-color,color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[0.98] active:shadow-none sm:w-auto"
       >
         전체 글 보러가기
-        <ChevronRightIcon className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5" />
+        <ChevronRightIcon className="h-5 w-5 transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-active:translate-x-1.5 group-active:scale-95" />
       </Link>
     </div>
   );
