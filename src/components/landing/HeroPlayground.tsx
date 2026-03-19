@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import { Archivo_Black } from "next/font/google";
 import { homeHeroMainImages, homeHeroPoster } from "@/lib/homeContent";
 import { useArchivePosterLayout } from "./useArchivePosterLayout";
@@ -19,6 +19,8 @@ const baseMaskWordStyle: CSSProperties = {
 };
 
 export default function HeroPlayground() {
+  const [isRefreshPressed, setIsRefreshPressed] = useState(false);
+  const [refreshIconRotation, setRefreshIconRotation] = useState(0);
   const { availableHeight, isReady: isHeightReady } = useLandingSectionHeight();
   const {
     containerRef,
@@ -36,17 +38,59 @@ export default function HeroPlayground() {
     letterSpacing: `${archiveLayout.letterSpacingEm}em`,
   };
   const archiveViewBox = `0 0 ${archiveLayout.viewBoxWidth} ${archiveLayout.viewBoxHeight}`;
+  const refreshButtonClasses = [
+    "absolute bottom-8 right-8 z-[3] inline-flex h-12 w-12 items-center justify-center rounded-full border border-black/10 bg-white/70 text-[#171717]",
+    "shadow-[0_12px_30px_rgba(36,28,18,0.12)] transition-[transform,background-color,box-shadow,opacity] duration-200 ease-out",
+    "disabled:cursor-not-allowed disabled:opacity-50",
+    "dark:border-white/10 dark:bg-white/50 dark:text-[#f2ede4] dark:shadow-[0_12px_30px_rgba(0,0,0,0.24)]",
+    "max-[920px]:bottom-5 max-[920px]:right-5",
+    isRefreshPressed
+      ? "translate-y-[2px] scale-[0.94] bg-white shadow-[0_8px_18px_rgba(36,28,18,0.18)] dark:bg-white/35 dark:shadow-[0_8px_20px_rgba(0,0,0,0.3)]"
+      : "hover:-translate-y-[1px] hover:bg-white dark:hover:bg-white/60",
+  ].join(" ");
+
+  const handleAdvanceImage = () => {
+    if (isRefreshDisabled) {
+      return;
+    }
+
+    setRefreshIconRotation((currentRotation) => currentRotation + 360);
+    advanceImage();
+  };
+
+  const handleRefreshPointerDown = () => {
+    if (isRefreshDisabled) {
+      return;
+    }
+
+    setIsRefreshPressed(true);
+  };
+
+  const handleRefreshPointerRelease = () => {
+    setIsRefreshPressed(false);
+  };
 
   return (
     <section className="relative isolate overflow-hidden" style={{ height: availableHeight }}>
       <button
         type="button"
-        onClick={advanceImage}
+        onClick={handleAdvanceImage}
+        onPointerDown={handleRefreshPointerDown}
+        onPointerUp={handleRefreshPointerRelease}
+        onPointerLeave={handleRefreshPointerRelease}
+        onPointerCancel={handleRefreshPointerRelease}
+        onBlur={handleRefreshPointerRelease}
         disabled={isRefreshDisabled}
-        className="absolute bottom-8 right-8 z-[3] inline-flex h-12 w-12 items-center justify-center rounded-full border border-black/10 bg-white/70 text-[#171717] shadow-[0_12px_30px_rgba(36,28,18,0.12)] transition hover:-translate-y-[1px] hover:bg-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:bg-white/70 dark:border-white/10 dark:bg-black/30 dark:text-[#f2ede4] dark:shadow-[0_12px_30px_rgba(0,0,0,0.24)] dark:disabled:hover:bg-black/30 max-[920px]:bottom-5 max-[920px]:right-5"
+        className={refreshButtonClasses}
         aria-label="메인 이미지 새로고침"
       >
-        <span className="text-lg leading-none">↻</span>
+        <span
+          className="text-lg leading-none transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+          style={{ transform: `rotate(${refreshIconRotation}deg)` }}
+          aria-hidden="true"
+        >
+          ↻
+        </span>
       </button>
 
       <div className="relative z-[2] flex h-full flex-col">
