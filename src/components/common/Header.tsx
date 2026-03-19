@@ -46,14 +46,9 @@ export default function Header({
 
   useEffect(() => {
     const storedTheme = window.localStorage.getItem("theme");
-    const preferredTheme =
-      storedTheme === "light" || storedTheme === "dark"
-        ? storedTheme
-        : window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light";
+    const nextTheme = storedTheme === "dark" || storedTheme === "light" ? storedTheme : "light";
 
-    setIsDark(preferredTheme === "dark");
+    setIsDark(nextTheme === "dark");
   }, []);
 
   return (
