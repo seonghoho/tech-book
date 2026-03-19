@@ -4,7 +4,7 @@ import type { CSSProperties } from "react";
 import { Archivo_Black } from "next/font/google";
 import { homeHeroMainImages, homeHeroPoster } from "@/lib/homeContent";
 import { useArchivePosterLayout } from "./useArchivePosterLayout";
-import { useHeroAvailableHeight } from "./useHeroAvailableHeight";
+import { useLandingSectionHeight } from "./useLandingSectionHeight";
 import { useHeroImageDeck } from "./useHeroImageDeck";
 
 const archivoBlack = Archivo_Black({
@@ -19,7 +19,7 @@ const baseMaskWordStyle: CSSProperties = {
 };
 
 export default function HeroPlayground() {
-  const { availableHeight, isReady: isHeightReady } = useHeroAvailableHeight();
+  const { availableHeight, isReady: isHeightReady } = useLandingSectionHeight();
   const {
     containerRef,
     layout: archiveLayout,

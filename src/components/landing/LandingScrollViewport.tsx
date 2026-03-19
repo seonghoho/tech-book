@@ -14,22 +14,31 @@ function getStickyHeaderHeight() {
   return header instanceof HTMLElement ? header.getBoundingClientRect().height : 0;
 }
 
-function hasScrollableAncestor(target: EventTarget | null) {
+function getScrollableAncestorForDelta(target: EventTarget | null, deltaY: number) {
   let element = target instanceof HTMLElement ? target : null;
+  const direction = deltaY > 0 ? 1 : -1;
 
   while (element && element !== document.body) {
     const styles = window.getComputedStyle(element);
     const canScrollY =
-      /(auto|scroll|overlay)/.test(styles.overflowY) && element.scrollHeight > element.clientHeight;
+      /(auto|scroll|overlay)/.test(styles.overflowY) &&
+      element.scrollHeight > element.clientHeight + 1;
 
     if (canScrollY) {
-      return true;
+      const maxScrollTop = element.scrollHeight - element.clientHeight;
+      const currentScrollTop = element.scrollTop;
+      const canScrollDown = direction > 0 && currentScrollTop < maxScrollTop - 1;
+      const canScrollUp = direction < 0 && currentScrollTop > 1;
+
+      if (canScrollDown || canScrollUp) {
+        return element;
+      }
     }
 
     element = element.parentElement;
   }
 
-  return false;
+  return null;
 }
 
 function getSectionScrollTops(topOffsetPx: number) {
@@ -112,7 +121,7 @@ export default function LandingScrollViewport({
         return;
       }
 
-      if (hasScrollableAncestor(event.target)) {
+      if (getScrollableAncestorForDelta(event.target, event.deltaY)) {
         return;
       }
 

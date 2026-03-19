@@ -69,12 +69,6 @@ export const homeTopicBlueprints: HomeTopicBlueprint[] = [
     fallbackCount: 5,
   },
   {
-    title: "Vue / Nuxt in Practice",
-    description: "서비스 화면 설계와 상태 구조에 관한 실전 메모입니다.",
-    href: "/posts",
-    fallbackCount: 4,
-  },
-  {
     title: "Frontend Architecture",
     description: "컴포넌트 구조, 상태 경계, 유지보수성에 집중합니다.",
     href: "/tags/Architecture",
@@ -87,11 +81,5 @@ export const homeTopicBlueprints: HomeTopicBlueprint[] = [
     href: "/tags/Rendering",
     countSource: { type: "tag", key: "Rendering" },
     fallbackCount: 4,
-  },
-  {
-    title: "Career Notes",
-    description: "실무 적응, 문제 해결 방식, 개발자로서의 관찰을 남깁니다.",
-    href: "/posts",
-    fallbackCount: 2,
   },
 ];
