@@ -14,9 +14,9 @@ export async function GET() {
   const rss = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
   <channel>
-    <title>Tech Book Blog</title>
+    <title>Seonghoho 기술 블로그</title>
     <link>${base}/</link>
-    <description>Tech Book 최신 포스트</description>
+    <description>Seonghoho 기술 블로그 최신 포스트</description>
     <language>ko</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     ${sortedPosts

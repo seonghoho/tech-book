@@ -12,8 +12,7 @@ const archivoBlack = Archivo_Black({
   weight: "400",
 });
 
-const baseMaskWordStyle: CSSProperties = {
-  fill: "#000000",
+const baseWordStyle: CSSProperties = {
   fontWeight: "400",
   textTransform: "uppercase",
 };
@@ -33,7 +32,13 @@ export default function HeroPlayground() {
   );
   const isHeroReady = isHeightReady && isLayoutReady;
   const maskWordStyle: CSSProperties = {
-    ...baseMaskWordStyle,
+    ...baseWordStyle,
+    fill: "#000000",
+    fontSize: archiveLayout.fontSize,
+    letterSpacing: `${archiveLayout.letterSpacingEm}em`,
+  };
+  const shadowWordStyle: CSSProperties = {
+    ...baseWordStyle,
     fontSize: archiveLayout.fontSize,
     letterSpacing: `${archiveLayout.letterSpacingEm}em`,
   };
@@ -158,6 +163,30 @@ export default function HeroPlayground() {
                 <stop offset="0%" stopColor="#ffffff" stopOpacity="0" />
                 <stop offset="100%" stopColor="#000000" stopOpacity="0.14" />
               </linearGradient>
+
+              <filter
+                id="archive-word-shadow"
+                x="-18%"
+                y="-24%"
+                width="136%"
+                height="160%"
+                colorInterpolationFilters="sRGB"
+              >
+                <feDropShadow
+                  dx="0"
+                  dy="0"
+                  stdDeviation="12"
+                  floodColor="#f8f1e6"
+                  floodOpacity="0.16"
+                />
+                {/* <feDropShadow
+                  dx="0"
+                  dy="4"
+                  stdDeviation="18"
+                  floodColor="#000000"
+                  floodOpacity="0.20"
+                /> */}
+              </filter>
             </defs>
 
             <image
@@ -180,6 +209,18 @@ export default function HeroPlayground() {
               opacity="0.2"
               clipPath="url(#archive-pane-clip)"
             />
+
+            <text
+              x={archiveLayout.wordX}
+              y={archiveLayout.wordY}
+              textLength={archiveLayout.wordTextLength}
+              lengthAdjust="spacingAndGlyphs"
+              className={`${archivoBlack.className} archive-word-shadow`}
+              style={shadowWordStyle}
+              filter="url(#archive-word-shadow)"
+            >
+              {homeHeroPoster.word}
+            </text>
 
             <image
               href={currentImageSrc}

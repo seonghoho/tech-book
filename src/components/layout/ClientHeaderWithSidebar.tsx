@@ -3,7 +3,16 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import Header, { headerNavLinks } from "../common/Header";
+import Header, { headerNavLinks, type HeaderNavLink } from "../common/Header";
+
+const mobileHeaderNavLinks: HeaderNavLink[] = [
+  ...headerNavLinks,
+  {
+    label: "GitHub",
+    href: "https://github.com/seonghoho",
+    external: true,
+  },
+];
 
 export default function ClientHeaderWithSidebar() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -65,16 +74,29 @@ export default function ClientHeaderWithSidebar() {
             className="mt-3 rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-3 shadow-[0_24px_60px_rgba(15,23,42,0.12)]"
           >
             <nav className="flex flex-col gap-1" aria-label="모바일 전역 네비게이션">
-              {headerNavLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="rounded-2xl px-4 py-3 text-sm font-medium text-[color:var(--color-text-secondary)] transition hover:bg-[color:var(--color-surface-elevated)] hover:text-[color:var(--color-text-primary)]"
-                  onClick={() => setMobileNavOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {mobileHeaderNavLinks.map((link) =>
+                link.external ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-2xl px-4 py-3 text-sm font-medium text-[color:var(--color-text-secondary)] transition hover:bg-[color:var(--color-surface-elevated)] hover:text-[color:var(--color-text-primary)]"
+                    onClick={() => setMobileNavOpen(false)}
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="rounded-2xl px-4 py-3 text-sm font-medium text-[color:var(--color-text-secondary)] transition hover:bg-[color:var(--color-surface-elevated)] hover:text-[color:var(--color-text-primary)]"
+                    onClick={() => setMobileNavOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                ),
+              )}
             </nav>
           </div>
         </div>

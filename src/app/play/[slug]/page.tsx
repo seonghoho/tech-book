@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   return buildPageMetadata({
-    title: `${game.title} 플레이 — TechBook`,
+    title: `${game.title} 플레이`,
     description: game.summary ?? `Play the ${game.title} game.`,
     path: `/play/${game.playSlug}`,
     images: [

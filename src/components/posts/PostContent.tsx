@@ -50,7 +50,7 @@ export default function PostContent({
 }: Props) {
   return (
     <article className="page-shell w-full">
-      <div className="mx-auto w-full max-w-[88ch]">
+      <div className="mx-auto w-full max-w-[92ch]">
         <nav
           aria-label="breadcrumb"
           className="mb-4 flex flex-wrap items-center gap-2 text-xs text-[color:var(--color-text-muted)]"

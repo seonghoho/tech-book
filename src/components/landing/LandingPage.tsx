@@ -3,8 +3,8 @@ import AnimatedSection from "@/components/landing/AnimatedSection";
 import LandingFeaturedWritingSection from "@/components/landing/LandingFeaturedWritingSection";
 import LandingProjectsSection from "@/components/landing/LandingProjectsSection";
 import HeroPlayground from "@/components/landing/HeroPlayground";
-import LandingTopicBrowseSection from "@/components/landing/LandingTopicBrowseSection";
-import { homeTopicBlueprints } from "@/lib/homeContent";
+// import LandingTopicBrowseSection from "@/components/landing/LandingTopicBrowseSection";
+// import { homeTopicBlueprints } from "@/lib/homeContent";
 import type { PostMeta } from "@/types/post";
 
 type CategorySummary = {
@@ -25,40 +25,37 @@ type Props = {
   tags: TagSummary[];
 };
 
-type HomeTopicItem = {
-  title: string;
-  description: string;
-  href: string;
-  count: number;
-};
+// type HomeTopicItem = {
+//   title: string;
+//   description: string;
+//   href: string;
+//   count: number;
+// };
 
-const immersiveSectionClass =
-  "flex min-h-[calc(100dvh-3.5rem)] flex-col justify-center sm:min-h-[calc(100dvh-4rem)] lg:min-h-[calc(100dvh-5rem)]";
+// function buildTopicItems(categories: CategorySummary[], tags: TagSummary[]): HomeTopicItem[] {
+//   const categoryCountMap = new Map(categories.map((item) => [item.slug, item.count]));
+//   const tagCountMap = new Map(tags.map((item) => [item.name, item.count]));
 
-function buildTopicItems(categories: CategorySummary[], tags: TagSummary[]): HomeTopicItem[] {
-  const categoryCountMap = new Map(categories.map((item) => [item.slug, item.count]));
-  const tagCountMap = new Map(tags.map((item) => [item.name, item.count]));
+//   return homeTopicBlueprints.map((topic) => {
+//     const sourceCount =
+//       topic.countSource?.type === "category"
+//         ? categoryCountMap.get(topic.countSource.key)
+//         : topic.countSource?.type === "tag"
+//           ? tagCountMap.get(topic.countSource.key)
+//           : undefined;
 
-  return homeTopicBlueprints.map((topic) => {
-    const sourceCount =
-      topic.countSource?.type === "category"
-        ? categoryCountMap.get(topic.countSource.key)
-        : topic.countSource?.type === "tag"
-          ? tagCountMap.get(topic.countSource.key)
-          : undefined;
+//     return {
+//       title: topic.title,
+//       description: topic.description,
+//       href: topic.href,
+//       count: sourceCount ?? topic.fallbackCount,
+//     };
+//   });
+// }
 
-    return {
-      title: topic.title,
-      description: topic.description,
-      href: topic.href,
-      count: sourceCount ?? topic.fallbackCount,
-    };
-  });
-}
-
-export default function LandingPage({ recentPosts, categories, tags }: Props) {
+export default function LandingPage({ recentPosts }: Props) {
   const featuredWriting = recentPosts.slice(0, 4);
-  const topicItems = buildTopicItems(categories, tags);
+  // const topicItems = buildTopicItems(categories, tags);
   const selectedProjects = aboutProjects.slice(0, 3);
 
   return (
@@ -70,22 +67,16 @@ export default function LandingPage({ recentPosts, categories, tags }: Props) {
           </section>
         </AnimatedSection>
 
-        {featuredWriting.length ? (
-          <div className={immersiveSectionClass}>
-            <LandingFeaturedWritingSection posts={featuredWriting} />
-          </div>
-        ) : null}
+        {featuredWriting.length ? <LandingFeaturedWritingSection posts={featuredWriting} /> : null}
 
-        <div className={immersiveSectionClass}>
+        {/* <div>
           <LandingTopicBrowseSection topics={topicItems} />
-        </div>
+        </div> */}
 
-        <div className={immersiveSectionClass}>
-          <LandingProjectsSection
-            projects={selectedProjects}
-            sizes="(min-width: 1200px) 220px, (min-width: 768px) 30vw, 44vw"
-          />
-        </div>
+        <LandingProjectsSection
+          projects={selectedProjects}
+          sizes="(min-width: 1200px) 220px, (min-width: 768px) 30vw, 44vw"
+        />
       </div>
     </div>
   );

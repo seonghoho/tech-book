@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { absoluteUrl, getSiteUrl } from "./site";
 
 export const siteDefaults = {
-  siteName: "TechBook",
-  title: "TechBook: 개발자를 위한 기술 블로그",
+  siteName: "Seonghoho",
+  title: "Seonghoho 기술 블로그",
   description:
     "Modern JavaScript, Three.js, SVG 등 프론트엔드 기술을 깊이 있게 다루는 기술 블로그입니다.",
   keywords: [
@@ -20,6 +20,7 @@ export const siteDefaults = {
 
 type BuildMetadataOptions = {
   title: string;
+  absoluteTitle?: string;
   description: string;
   path: string;
   type?: "website" | "article";
@@ -31,6 +32,7 @@ type BuildMetadataOptions = {
 
 export function buildPageMetadata({
   title,
+  absoluteTitle,
   description,
   path,
   type = "website",
@@ -40,6 +42,7 @@ export function buildPageMetadata({
   robots,
 }: BuildMetadataOptions): Metadata {
   const url = absoluteUrl(path);
+  const resolvedTitle = absoluteTitle ?? title;
   const imageList =
     images ??
     [
@@ -51,14 +54,14 @@ export function buildPageMetadata({
     ];
 
   return {
-    title,
+    title: absoluteTitle ? { absolute: absoluteTitle } : title,
     description,
     keywords: siteDefaults.keywords,
     alternates: {
       canonical: url,
     },
     openGraph: {
-      title,
+      title: resolvedTitle,
       description,
       url,
       siteName: siteDefaults.siteName,
@@ -68,7 +71,7 @@ export function buildPageMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: resolvedTitle,
       description,
       images: imageList.map((img) => img.url),
     },
@@ -76,7 +79,7 @@ export function buildPageMetadata({
     ...(type === "article"
       ? {
           openGraph: {
-            title,
+            title: resolvedTitle,
             description,
             url,
             siteName: siteDefaults.siteName,

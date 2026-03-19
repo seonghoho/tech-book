@@ -48,7 +48,7 @@ const Footer = () => {
             </a>
           </div>
           <div className="text-[color:var(--color-text-muted)]">
-            © {new Date().getFullYear()} TechBook. All rights reserved.
+            © {new Date().getFullYear()} Seonghoho. All rights reserved.
           </div>
         </div>
       </div>

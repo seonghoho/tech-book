@@ -3,7 +3,7 @@ const nextConfig = {
   productionBrowserSourceMaps: true,
   async redirects() {
     const primary = process.env.PRIMARY_DOMAIN; // e.g., example.com
-    const legacy = process.env.OLD_HOST; // e.g., tech-book-lime.vercel.app
+    const legacy = process.env.OLD_HOST; // e.g., old-subdomain.vercel.app
     if (!primary || !legacy) return [];
     return [
       {

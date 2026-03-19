@@ -10,12 +10,24 @@ type HeaderProps = {
   buttonRef?: React.RefObject<HTMLButtonElement | null>;
 };
 
+export type HeaderNavLink = {
+  label: string;
+  href: string;
+  external?: boolean;
+};
+
 export const headerNavLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Projects", href: "/projects" },
   { label: "Writing", href: "/posts" },
-];
+] satisfies HeaderNavLink[];
+
+const headerSecondaryLink = {
+  label: "GitHub",
+  href: "https://github.com/seonghoho",
+  external: true,
+} satisfies HeaderNavLink;
 
 export default function Header({
   onToggleMobileNav,
@@ -70,9 +82,14 @@ export default function Header({
                   {link.label}
                 </Link>
               ))}
-              {/* <a href="mailto:chltjdgh3@naver.com" className="nav-link">
-                Contact
-              </a> */}
+              <a
+                href={headerSecondaryLink.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nav-link"
+              >
+                {headerSecondaryLink.label}
+              </a>
             </nav>
             <button
               type="button"

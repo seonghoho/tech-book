@@ -2,7 +2,7 @@ export function getSiteUrl() {
   const raw =
     process.env.NEXT_PUBLIC_SITE_URL ||
     process.env.SITE_URL ||
-    "https://tech-book-lime.vercel.app";
+    "http://localhost:3000";
   // Ensure no trailing slash
   return raw.replace(/\/$/, "");
 }

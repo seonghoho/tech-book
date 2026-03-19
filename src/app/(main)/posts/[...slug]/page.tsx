@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: PageProps) {
   const modifiedTime = post.updated ?? post.date;
 
   return buildPageMetadata({
-    title: `${post.title} — 성호의 TechBook`,
+    title: post.title,
     description: summary,
     path: `/posts/${slugString}`,
     type: "article",
@@ -112,14 +112,14 @@ export default async function PostPage({ params }: PageProps) {
   });
 
   return (
-    <div className="flex w-full">
+    <div className="w-full 2xl:grid 2xl:grid-cols-[minmax(0,1fr)_14rem] 2xl:gap-6">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify([jsonLd, breadcrumbJsonLd]),
         }}
       />
-      <main className="flex flex-1 overflow-y-auto scrollbar-hide xl:border-border xl:border-r py-6">
+      <main className="min-w-0 py-6 2xl:pr-6">
         <PostContent
           title={post.title}
           date={post.date}
@@ -142,8 +142,8 @@ export default async function PostPage({ params }: PageProps) {
           relatedLinks={relatedLinks}
         />
       </main>
-      <aside className="hidden xl:flex xl:flex-col w-64 gap-6 sticky-section">
-        <h2 className="text-xl font-bold px-6">목차</h2>
+      <aside className="sticky-section hidden shrink-0 border-l border-[color:var(--color-border)] pl-4 2xl:block 2xl:w-56 2xl:self-start">
+        <h2 className="px-4 text-xl font-bold">목차</h2>
         <PostIndex headings={headings} />
       </aside>
     </div>

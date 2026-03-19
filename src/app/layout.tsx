@@ -13,7 +13,7 @@ import { siteDefaults } from "@/lib/seo";
 export const metadata: Metadata = {
   title: {
     default: siteDefaults.title,
-    template: "%s | TechBook",
+    template: "%s | Seonghoho",
   },
   description: siteDefaults.description,
   keywords: siteDefaults.keywords,
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: siteDefaults.siteName,
+    title: siteDefaults.title,
     description: siteDefaults.description,
     images: [absoluteUrl(siteDefaults.defaultImage)],
   },

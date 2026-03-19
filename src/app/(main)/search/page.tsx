@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "검색",
-  description: "TechBook 검색 결과 페이지입니다.",
+  description: "Seonghoho 기술 블로그 검색 결과 페이지입니다.",
   path: "/search",
   robots: {
     index: false,

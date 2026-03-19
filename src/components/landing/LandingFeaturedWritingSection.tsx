@@ -1,17 +1,9 @@
-"use client";
-
 import type { CSSProperties } from "react";
 import Link from "next/link";
-import { useLayoutEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ChevronRightIcon } from "@/assets/svg";
 import { categoryMap } from "@/lib/categoryMap";
 import { formatDate } from "@/lib/formatDate";
 import type { PostMeta } from "@/types/post";
-import { useLandingSectionHeight } from "./useLandingSectionHeight";
-
-gsap.registerPlugin(ScrollTrigger);
 
 type LandingFeaturedWritingSectionProps = {
   posts: PostMeta[];
@@ -32,11 +24,6 @@ const descriptionClampStyle: CSSProperties = {
 
 function joinClasses(...classNames: Array<string | undefined>) {
   return classNames.filter(Boolean).join(" ");
-}
-
-function getStickyHeaderHeight() {
-  const header = document.querySelector("header");
-  return header instanceof HTMLElement ? header.getBoundingClientRect().height + 12 : 72;
 }
 
 function getPostLabel(post: PostMeta) {
@@ -73,7 +60,7 @@ function FeaturedPostCard({ post, compact = false, className }: FeaturedPostCard
         href={`/posts/${post.slug}`}
         className={joinClasses(
           "mt-3 block text-[1.18rem] font-semibold leading-[1.35] tracking-[-0.04em] text-[color:var(--color-text-primary)] transition hover:text-[color:var(--color-accent)] sm:text-[1.35rem]",
-          compact ? "max-w-[18ch]" : undefined,
+          compact ? "sm:max-w-[18ch]" : undefined,
         )}
       >
         {post.title}
@@ -113,60 +100,24 @@ function FeaturedWritingCtaButton() {
   );
 }
 
+function FeaturedWritingCtaFooter() {
+  return (
+    <div className="flex justify-start border-t border-[color:var(--color-border)] pt-5 sm:pt-6">
+      <Link
+        href="/posts"
+        className="button-secondary group w-full gap-2 px-5 py-3 sm:w-auto"
+      >
+        전체 글 보러가기
+        <ChevronRightIcon className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5" />
+      </Link>
+    </div>
+  );
+}
+
 export default function LandingFeaturedWritingSection({
   posts,
 }: LandingFeaturedWritingSectionProps) {
-  const mobileSectionRef = useRef<HTMLElement>(null);
-  const mobilePanelRef = useRef<HTMLDivElement>(null);
-  const mobileViewportRef = useRef<HTMLDivElement>(null);
-  const mobileTrackRef = useRef<HTMLDivElement>(null);
-  const { availableHeight, isReady } = useLandingSectionHeight();
   const featuredPosts = posts.slice(0, 4);
-
-  useLayoutEffect(() => {
-    const section = mobileSectionRef.current;
-    const panel = mobilePanelRef.current;
-    const viewport = mobileViewportRef.current;
-    const track = mobileTrackRef.current;
-
-    if (!section || !panel || !viewport || !track || !isReady || featuredPosts.length <= 1) {
-      return;
-    }
-
-    const mediaMatcher = gsap.matchMedia();
-
-    mediaMatcher.add("(max-width: 1023px)", () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        gsap.set(track, { clearProps: "transform" });
-        return;
-      }
-
-      gsap.set(track, { x: 0 });
-
-      const scrollDistance = Math.max(track.scrollWidth - viewport.clientWidth, 0);
-
-      if (scrollDistance <= 8) {
-        return;
-      }
-
-      gsap.to(track, {
-        x: -scrollDistance,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: () => `top top+=${getStickyHeaderHeight()}`,
-          end: () => `+=${scrollDistance}`,
-          scrub: 1,
-          pin: panel,
-          pinSpacing: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-    });
-
-    return () => mediaMatcher.revert();
-  }, [availableHeight, featuredPosts.length, isReady]);
 
   if (!featuredPosts.length) {
     return null;
@@ -201,12 +152,8 @@ export default function LandingFeaturedWritingSection({
         </div>
       </section>
 
-      <section ref={mobileSectionRef} className="relative lg:hidden">
-        <div
-          ref={mobilePanelRef}
-          className="surface-panel-strong grid min-h-0 grid-rows-[auto_minmax(0,1fr)] overflow-hidden"
-          style={{ height: availableHeight }}
-        >
+      <section className="lg:hidden">
+        <div className="surface-panel-strong overflow-hidden">
           <div className="border-b border-[color:var(--color-border)] px-5 pb-5 pt-5 sm:px-6 sm:pb-6 sm:pt-6">
             <div className="space-y-3">
               <p className="eyebrow-label">Featured Writing</p>
@@ -214,22 +161,21 @@ export default function LandingFeaturedWritingSection({
                 먼저 읽어볼 글
               </h2>
               <p className="body-copy max-w-2xl">
-                최근 게시글을 한 장씩 넘기며 읽고, 마지막에는 전체 글 목록으로 이동할 수 있습니다.
+                최근 게시글 4개를 먼저 살펴보고, 전체 글 목록으로 자연스럽게 이어질 수 있게
+                구성했습니다.
               </p>
             </div>
           </div>
 
-          <div
-            ref={mobileViewportRef}
-            className="flex min-h-0 items-center overflow-hidden px-5 pb-5 pt-5 sm:px-6 sm:pb-6 sm:pt-6"
-          >
-            <div
-              ref={mobileTrackRef}
-              className="grid w-full auto-cols-[100%] grid-flow-col gap-4 will-change-transform"
-            >
+          <div className="px-5 pb-5 pt-5 sm:px-6 sm:pb-6 sm:pt-6">
+            <div className="grid gap-4 sm:auto-rows-fr sm:grid-cols-2 sm:gap-6">
               {featuredPosts.map((post) => (
                 <FeaturedPostCard key={post.slug} post={post} compact className="h-full" />
               ))}
+            </div>
+
+            <div className="mt-5 sm:mt-6">
+              <FeaturedWritingCtaFooter />
             </div>
           </div>
         </div>

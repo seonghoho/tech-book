@@ -10,12 +10,12 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className="flex min-h-screen w-full flex-col">
       <SidebarContainer postData={postData} gameData={gameData} variant="mobile-subnav" />
-      <div className="mx-auto flex w-full max-w-[1360px] flex-1 gap-8 px-4 sm:px-6 lg:px-8">
-        <aside className="sticky-section hidden w-0 shrink-0 border-r border-[color:var(--color-border)] pr-6 lg:block lg:w-64">
+      <div className="flex w-full flex-1 gap-6 2xl:gap-8">
+        <aside className="sticky-section hidden shrink-0 border-r border-[color:var(--color-border)] pr-6 lg:block lg:w-64">
           <SidebarContainer postData={postData} gameData={gameData} />
         </aside>
 
-        <main className="w-full min-w-0 lg:w-[calc(100%-256px)]">
+        <main className="min-w-0 flex-1">
           <Suspense fallback={<Loading />}>{children}</Suspense>
         </main>
       </div>
