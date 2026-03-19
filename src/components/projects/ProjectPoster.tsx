@@ -29,7 +29,8 @@ export default function ProjectPoster({
   if (logoSrc) {
     return (
       <div
-        className={`relative overflow-hidden rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-muted)] grayscale transition duration-300 hover:grayscale-0 group-hover:grayscale-0 ${className}`}
+        data-project-poster="true"
+        className={`relative overflow-hidden rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-muted)] grayscale transition duration-300 will-change-[filter,transform] hover:grayscale-0 group-hover:grayscale-0 ${className}`}
         style={posterStyle}
       >
         <Image
@@ -46,7 +47,8 @@ export default function ProjectPoster({
 
   return (
     <div
-      className={`flex items-center justify-center rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] p-6 text-center grayscale transition duration-300 hover:grayscale-0 group-hover:grayscale-0 ${className}`}
+      data-project-poster="true"
+      className={`flex items-center justify-center rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] p-6 text-center grayscale transition duration-300 will-change-[filter,transform] hover:grayscale-0 group-hover:grayscale-0 ${className}`}
       style={posterStyle}
     >
       <p className="mx-auto max-w-[10ch] text-[clamp(1.2rem,2vw,2rem)] font-semibold leading-[1.2] tracking-[-0.05em]">

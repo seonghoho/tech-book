@@ -163,14 +163,12 @@ export default function LandingPinnedFeaturedGridSection({
           gridTemplateColumns: `repeat(${STACKED_COLUMNS}, minmax(0, 1fr))`,
           gridTemplateRows: `repeat(${stackedRows}, minmax(0, 1fr))`,
           minWidth: "100%",
-          height: "100%",
         }
       : {
           gridAutoFlow: "column",
           gridTemplateRows: `repeat(${HORIZONTAL_ROWS}, minmax(0, 1fr))`,
           gridAutoColumns: `${HORIZONTAL_CARD_WIDTH}px`,
           minWidth: "max-content",
-          height: "100%",
         };
 
   return (
@@ -195,11 +193,11 @@ export default function LandingPinnedFeaturedGridSection({
 
         <div
           ref={viewportRef}
-          className="min-h-0 overflow-hidden px-5 pb-5 pt-5 sm:px-6 sm:pb-6 sm:pt-6"
+          className="flex min-h-0 items-center overflow-hidden px-5 pb-5 pt-5 sm:px-6 sm:pb-6 sm:pt-6"
         >
           <div
             ref={trackRef}
-            className="grid h-full items-stretch gap-6 will-change-transform"
+            className="grid items-stretch gap-6 will-change-transform"
             style={{
               ...trackStyle,
               visibility: isLayoutReady ? "visible" : "hidden",

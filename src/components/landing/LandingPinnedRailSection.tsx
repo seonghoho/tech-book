@@ -107,14 +107,14 @@ export default function LandingPinnedRailSection({
         <div
           ref={viewportRef}
           className={joinClasses(
-            "min-h-0 overflow-hidden px-5 pb-5 pt-5 sm:px-6 sm:pb-6 sm:pt-6",
+            "flex min-h-0 items-center overflow-hidden px-5 pb-5 pt-5 sm:px-6 sm:pb-6 sm:pt-6",
             viewportClassName,
           )}
         >
           <div
             ref={trackRef}
             className={joinClasses(
-              "flex h-full min-w-max items-stretch gap-6 will-change-transform",
+              "flex min-w-max items-stretch gap-6 will-change-transform",
               trackClassName,
             )}
             data-reveal-item
