@@ -55,7 +55,7 @@ export default function AboutPage() {
 
         <div className="space-y-20 sm:space-y-24">
           <section id="overview" className="scroll-mt-28 space-y-10">
-            <article className="surface-panel-strong mx-auto w-full max-w-[1040px] overflow-hidden p-4 sm:p-5 lg:p-6">
+            <article className="surface-panel-strong mx-auto w-full max-w-[1040px] overflow-hidden p-5 sm:p-6 lg:p-7">
               <div className="grid gap-6">
                 {/* <div className="relative aspect-[5/4] overflow-hidden rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-muted)]">
                   <Image
@@ -95,8 +95,8 @@ export default function AboutPage() {
 
                 <div className="flex h-full w-full flex-col justify-between">
                   <div className="space-y-6">
-                    <div className="flex flex-row gap-8">
-                      <div className="relative h-[200px] w-[200px] overflow-hidden rounded-[18px] border border-white/20 bg-white/10 shadow-[0_10px_24px_rgba(15,23,42,0.18)]">
+                    <div className="flex flex-col gap-6 sm:flex-row sm:gap-8">
+                      <div className="relative mx-auto h-[180px] w-[180px] shrink-0 overflow-hidden rounded-[24px] border border-white/20 bg-white/10 shadow-[0_10px_24px_rgba(15,23,42,0.18)] sm:mx-0 sm:h-[200px] sm:w-[200px]">
                         <Image
                           src="/images/Profile.JPG"
                           alt=""
@@ -106,10 +106,10 @@ export default function AboutPage() {
                         />
                       </div>
                       <div className="my-auto flex flex-col space-y-3">
-                        <p className="eyebrow-label">Profile Snapshot</p>
+                        <p className="eyebrow-label">Profile</p>
                         <div>
                           <h3 className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)] sm:text-3xl">
-                            {aboutProfile.title}
+                            {aboutProfile.name } / {aboutProfile.title}
                           </h3>
                           <p className="mt-3 max-w-2xl text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
                             {aboutProfile.railSummary}
@@ -122,12 +122,12 @@ export default function AboutPage() {
                       {overviewFacts.map((fact) => (
                         <div
                           key={fact.label}
-                          className="bg-[color:var(--color-surface)]/72 rounded-[24px] border border-[color:var(--color-border)] px-4 py-4"
+                          className="surface-subtle group px-4 py-4 transition-[transform,background-color,border-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:border-[color:var(--color-border-strong)] hover:bg-[color:var(--color-surface)] hover:shadow-[0_18px_40px_rgba(15,23,42,0.06)] dark:hover:shadow-[0_22px_46px_rgba(2,8,23,0.28)]"
                         >
                           <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--color-text-muted)]">
                             {fact.label}
                           </dt>
-                          <dd className="mt-2 text-sm font-medium leading-6 text-[color:var(--color-text-primary)]">
+                          <dd className="mt-2 text-sm font-medium leading-6 text-[color:var(--color-text-primary)] transition-colors duration-200 group-hover:text-[color:var(--color-accent)]">
                             {fact.value}
                           </dd>
                         </div>
@@ -143,11 +143,11 @@ export default function AboutPage() {
                       {overviewStrengths.map((item) => (
                         <div
                           key={item.title}
-                          className="flex items-start gap-3 rounded-[22px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] px-4 py-3"
+                          className="group flex items-start gap-3 rounded-[22px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] px-4 py-3 transition-[transform,background-color,border-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--color-border-strong)] hover:bg-[color:var(--color-surface)] hover:shadow-[0_18px_40px_rgba(15,23,42,0.06)] dark:hover:shadow-[0_22px_46px_rgba(2,8,23,0.28)]"
                         >
-                          <span className="mt-2 h-2 w-2 rounded-full bg-[color:var(--color-accent)]" />
+                          <span className="mt-2 h-2 w-2 rounded-full bg-[color:var(--color-accent)] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:scale-[1.35]" />
                           <div>
-                            <p className="text-sm font-semibold text-[color:var(--color-text-primary)]">
+                            <p className="text-sm font-semibold text-[color:var(--color-text-primary)] transition-colors duration-200 group-hover:text-[color:var(--color-accent)]">
                               {item.title}
                             </p>
                             <p className="mt-1 text-sm leading-6 text-[color:var(--color-text-muted)]">
@@ -162,14 +162,14 @@ export default function AboutPage() {
               </div>
             </article>
 
-            <div className="mx-auto grid w-full max-w-[1040px] gap-6">
+            <div className="mx-auto grid w-full max-w-[1040px] gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(260px,0.9fr)]">
               <div className="space-y-5">
                 <SectionHeader
                   eyebrow="Overview"
                   title={aboutProfile.overviewTitle}
                   description={aboutProfile.overviewDescription}
                 />
-                <div className="rounded-[30px] border border-[color:var(--color-border)] px-5 py-5 sm:px-6">
+                <div className="about-card p-5 sm:p-6">
                   <p className="eyebrow-label">Context</p>
                   <p className="mt-4 text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
                     {aboutProfile.summary}
@@ -177,7 +177,7 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              <aside className="surface-panel p-5 sm:p-6">
+              <aside className="about-card p-5 sm:p-6">
                 <p className="eyebrow-label">Focus</p>
                 <p className="mt-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
                   {aboutProfile.focus}
@@ -186,7 +186,7 @@ export default function AboutPage() {
                   {overviewStrengths.map((item) => (
                     <div
                       key={item.title}
-                      className="rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] px-4 py-3 text-sm font-medium text-[color:var(--color-text-secondary)]"
+                      className="surface-subtle px-4 py-3 text-sm font-medium text-[color:var(--color-text-secondary)]"
                     >
                       {item.title}
                     </div>
@@ -199,7 +199,7 @@ export default function AboutPage() {
               {aboutProfile.metrics.map((metric) => (
                 <article
                   key={metric.label}
-                  className="rounded-3xl border border-[color:var(--color-border)] px-5 py-4 transition duration-300 hover:border-[color:var(--color-border-strong)] hover:bg-[color:var(--color-surface)]"
+                  className="about-card-interactive px-5 py-4"
                 >
                   <div className="text-xl font-semibold text-[color:var(--color-text-primary)]">
                     {metric.value}
@@ -218,19 +218,21 @@ export default function AboutPage() {
           <section id="experience" className="scroll-mt-28 space-y-8">
             <SectionHeader
               eyebrow="Experience"
-              title="학습보다 실전 맥락에서 강해진 경험을 쌓아왔습니다"
-              description="실무와 교육 과정을 분리해서 보여주되, 각각에서 어떤 역할과 역량이 만들어졌는지 바로 읽히도록 정리했습니다."
+              title="실무에서 경험을 쌓아왔습니다"
+              description="각각의 과정에서 어떤 역할과 역량이 만들어졌는지 정리했습니다."
             />
 
-            <div className="divide-y divide-[color:var(--color-border)] rounded-[30px] border border-[color:var(--color-border)]">
+            <div className="about-card overflow-hidden divide-y divide-[color:var(--color-border)]">
               {experienceTimeline.map((item) => (
                 <article
                   key={item.company}
-                  className="group px-5 py-5 transition duration-300 first:rounded-t-[30px] last:rounded-b-[30px] hover:bg-[color:var(--color-surface)] sm:px-6"
+                  className="px-5 py-5 transition duration-300 hover:bg-[color:var(--color-surface-tint)] sm:px-6"
                 >
                   <div className="grid gap-4 lg:grid-cols-[180px_minmax(0,1fr)]">
                     <div className="space-y-1 text-sm text-[color:var(--color-text-muted)]">
-                      <div>{item.period}</div>
+                      <div className="inline-flex rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[color:var(--color-accent)]">
+                        {item.period}
+                      </div>
                     </div>
                     <div className="space-y-4">
                       <div>
@@ -248,7 +250,7 @@ export default function AboutPage() {
                         {item.highlights.map((highlight) => (
                           <li
                             key={highlight}
-                            className="rounded-2xl border border-[color:var(--color-border)] px-4 py-3 text-sm text-[color:var(--color-text-secondary)]"
+                            className="surface-subtle px-4 py-3 text-sm text-[color:var(--color-text-secondary)]"
                           >
                             {highlight}
                           </li>
@@ -326,12 +328,12 @@ export default function AboutPage() {
                   </div>
                 </div> */}
 
-                <div className="space-y-3">
+                <div className="grid gap-3">
                   {projectArchivePreview.map((project) => (
                     <Link
                       key={project.slug}
                       href={`/projects/${project.slug}`}
-                      className="surface-subtle block px-4 py-4 transition duration-300 hover:-translate-y-0.5"
+                      className="about-card-interactive block px-4 py-4 sm:px-5"
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div>
@@ -363,11 +365,11 @@ export default function AboutPage() {
               description="특정 라이브러리 숙련도보다, 구현 난도가 높은 화면에서 어떤 판단을 했는지가 더 중요하다고 생각합니다."
             />
 
-            <div className="space-y-3">
+            <div className="about-card overflow-hidden divide-y divide-[color:var(--color-border)]">
               {strengthHighlights.map((item) => (
                 <article
                   key={item.title}
-                  className="group rounded-[28px] border border-transparent px-4 py-4 transition duration-300 hover:border-[color:var(--color-border)] hover:bg-[color:var(--color-surface)]"
+                  className="px-5 py-5 transition duration-300 hover:bg-[color:var(--color-surface-tint)] sm:px-6"
                 >
                   <div className="grid gap-3 lg:grid-cols-[200px_minmax(0,1fr)]">
                     <div className="text-sm font-semibold text-[color:var(--color-text-primary)]">
@@ -396,11 +398,11 @@ export default function AboutPage() {
               description="서비스 UI, 그래픽 인터랙션, 상태 구조, 협업 도구를 분리해 보면 어떤 영역에서 실전 경험이 쌓였는지 더 분명하게 드러납니다."
             />
 
-            <div className="space-y-4">
+            <div className="about-card overflow-hidden divide-y divide-[color:var(--color-border)]">
               {skillGroups.map((group) => (
                 <article
                   key={group.title}
-                  className="rounded-[28px] border border-[color:var(--color-border)] px-5 py-5 transition duration-300 hover:border-[color:var(--color-border-strong)] hover:bg-[color:var(--color-surface)] sm:px-6"
+                  className="px-5 py-5 transition duration-300 hover:bg-[color:var(--color-surface-tint)] sm:px-6"
                 >
                   <div className="grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)]">
                     <div className="space-y-2">
@@ -435,7 +437,7 @@ export default function AboutPage() {
               {growthNotes.map((note) => (
                 <article
                   key={note.title}
-                  className="rounded-[28px] border border-[color:var(--color-border)] px-5 py-5 transition duration-300 hover:border-[color:var(--color-border-strong)] hover:bg-[color:var(--color-surface)]"
+                  className="about-card-interactive px-5 py-5"
                 >
                   <h3 className="text-base font-semibold text-[color:var(--color-text-primary)]">
                     {note.title}

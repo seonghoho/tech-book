@@ -12,6 +12,7 @@
   --color-surface: #ffffff;
   --color-surface-elevated: #f8fbfd;
   --color-surface-muted: #e9eff6;
+  --color-surface-tint: #f2fbf8;
   --color-text-primary: #0f172a;
   --color-text-secondary: #475569;
   --color-text-muted: #64748b;
@@ -32,6 +33,7 @@ html.dark {
   --color-surface: #111b2a;
   --color-surface-elevated: #162234;
   --color-surface-muted: #1c283b;
+  --color-surface-tint: #15262a;
   --color-text-primary: #e5edf6;
   --color-text-secondary: #c5d0de;
   --color-text-muted: #8fa2b7;
@@ -116,9 +118,32 @@ a {
   }
 
   .surface-subtle {
-    @apply rounded-[24px] border;
+    @apply rounded-[12px] border;
     background-color: var(--color-surface-elevated);
     border-color: var(--color-border);
+  }
+
+  .about-card {
+    @apply rounded-[28px] border;
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .about-card-interactive {
+    @apply rounded-[28px] border transition duration-300;
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .about-card-interactive:hover,
+  .about-card-interactive:focus-visible {
+    transform: translateY(-2px);
+    background-color: var(--color-surface-tint);
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-medium);
+    outline: none;
   }
 
   .eyebrow-label {

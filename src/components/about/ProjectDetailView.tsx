@@ -11,7 +11,7 @@ type ProjectDetailViewProps = {
 
 function DetailSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="border-t border-[color:var(--color-border)] pt-8">
+    <section className="about-card p-5 sm:p-6">
       <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-[color:var(--color-text-muted)]">
         {title}
       </h2>
@@ -73,7 +73,7 @@ function ProjectPager({
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className={`block border-t border-[color:var(--color-border)] pt-7 transition ${alignmentClass}`}
+      className={`about-card-interactive block p-6 ${alignmentClass}`}
     >
       <p className="text-sm font-semibold text-[color:var(--color-text-primary)]">
         {align === "right" ? `Older »` : `« Newer`}
@@ -102,7 +102,7 @@ export default function ProjectDetailView({
           ← Projects로 돌아가기
         </Link>
 
-        <section className="mt-8 grid gap-8 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-12">
+        <section className="surface-panel-strong mt-8 grid gap-8 p-5 sm:p-6 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-12 lg:p-7">
           <div className="max-w-[220px]">
             <ProjectPoster
               title={project.title}
@@ -153,8 +153,8 @@ export default function ProjectDetailView({
           </div>
         </section>
 
-        <section className="mt-14 grid gap-12 xl:grid-cols-[200px_minmax(0,1fr)]">
-          <aside className="space-y-10">
+        <section className="mt-14 grid gap-6 xl:grid-cols-[280px_minmax(0,1fr)] xl:items-start">
+          <aside className="space-y-6">
             <DetailSection title="Project facts">
               <dl className="space-y-4 text-sm leading-7">
                 <div className="flex items-start justify-between gap-4 border-b border-[color:var(--color-border)] pb-4">
@@ -223,7 +223,7 @@ export default function ProjectDetailView({
               </DetailSection>
             ) : null}
           </aside>
-          <div className="space-y-10">
+          <div className="space-y-6">
             <DetailSection title="What I worked on">
               <ul className="space-y-4 text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
                 {project.keyContributions.map((contribution) => (
