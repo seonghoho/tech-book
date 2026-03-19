@@ -1,5 +1,6 @@
 export { Github as GithubIcon } from "@/assets/svg/Github";
 export { Mail as MailIcon } from "@/assets/svg/Mail";
+export { Close as CloseIcon } from "@/assets/svg/Close";
 export { Menu as MenuIcon } from "@/assets/svg/Menu";
 export { Moon as MoonIcon } from "@/assets/svg/Moon";
 export { Phone as PhoneIcon } from "@/assets/svg/Phone";

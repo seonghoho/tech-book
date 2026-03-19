@@ -7,8 +7,6 @@ import GoogleAnalytics from "@/components/common/GoogleAnalytics";
 import ThemeInitializer from "@/components/common/ThemeInitializer";
 import Footer from "@/components/common/Footer";
 import ClientHeaderWithSidebar from "@/components/layout/ClientHeaderWithSidebar";
-import SidebarContainer from "@/components/layout/SidebarContainer";
-import { getPostsByCategory } from "@/lib/getPostsByCategory";
 import { absoluteUrl, getSiteUrl } from "@/lib/site";
 import { siteDefaults } from "@/lib/seo";
 
@@ -55,13 +53,7 @@ export const metadata: Metadata = {
     google: "rcy_pt8MaVt2F6XAtMBTNX_w5pRzOZ0KykSGdw71p-U",
   },
 };
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const postData = getPostsByCategory("posts");
-  const gameData = getPostsByCategory("games");
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -88,9 +80,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <ThemeInitializer />
-        <ClientHeaderWithSidebar
-          Sidebar={<SidebarContainer postData={postData} gameData={gameData} />}
-        />
+        <ClientHeaderWithSidebar />
         <main
           id="main-content"
           className="mx-auto w-full max-w-[1360px] flex-1 px-4 sm:px-6 lg:px-8"
