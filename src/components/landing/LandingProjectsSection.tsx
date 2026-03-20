@@ -1,5 +1,3 @@
-"use client";
-
 import type { AboutProject } from "@/lib/aboutData";
 import ProjectArchiveCard from "@/components/projects/ProjectArchiveCard";
 

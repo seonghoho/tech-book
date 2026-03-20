@@ -1,5 +1,4 @@
 import { aboutProjects } from "@/lib/aboutData";
-import AnimatedSection from "@/components/landing/AnimatedSection";
 import LandingFeaturedWritingSection from "@/components/landing/LandingFeaturedWritingSection";
 import LandingProjectsSection from "@/components/landing/LandingProjectsSection";
 import HeroPlayground from "@/components/landing/HeroPlayground";
@@ -61,11 +60,9 @@ export default function LandingPage({ recentPosts }: Props) {
   return (
     <div className="page-shell">
       <div className="mx-auto flex w-full max-w-[980px] flex-col gap-14 pb-6 sm:gap-16 lg:gap-20">
-        <AnimatedSection>
-          <section>
-            <HeroPlayground />
-          </section>
-        </AnimatedSection>
+        <section>
+          <HeroPlayground />
+        </section>
 
         {featuredWriting.length ? <LandingFeaturedWritingSection posts={featuredWriting} /> : null}
 

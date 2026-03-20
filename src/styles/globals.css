@@ -284,3 +284,9 @@ a {
 html.dark .archive-word-shadow {
   opacity: 0.72;
 }
+
+@media (pointer: coarse) {
+  .hero-refresh-button {
+    display: none;
+  }
+}

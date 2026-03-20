@@ -43,17 +43,17 @@ export async function generateMetadata({ params }: PageProps) {
   const summary = post.description ?? createExcerpt(post.rawMarkdown);
   const baseSlug = slugString.split("/")[0];
   const gameMeta = games.find((game) => game.slug === baseSlug);
-
-  const imageUrl = gameMeta
-    ? absoluteUrl(gameMeta.image)
-    : absoluteUrl(`/og/${slugString}?title=${encodeURIComponent(post.title)}`);
+  const fallbackOgImage = absoluteUrl(
+    `/og/${slugString}?title=${encodeURIComponent(post.title)}`
+  );
+  const imageUrl = gameMeta ? absoluteUrl(gameMeta.image) : fallbackOgImage;
 
   return buildPageMetadata({
     title: post.title,
     description: summary,
     path: `/games/${slugString}`,
     type: "article",
-    images: [{ url: imageUrl, width: 1200, height: 630 }],
+    images: gameMeta ? [{ url: imageUrl }] : [{ url: imageUrl, width: 1200, height: 630 }],
     publishedTime: new Date(post.date).toISOString(),
     modifiedTime: new Date(post.updated ?? post.date).toISOString(),
   });
@@ -95,6 +95,9 @@ export default async function PostPage({ params }: PageProps) {
 
   const baseSlug = slugString.split("/")[0];
   const gameMeta = games.find((game) => game.slug === baseSlug);
+  const resolvedImageUrl = gameMeta
+    ? absoluteUrl(gameMeta.image)
+    : absoluteUrl(`/og/${slugString}?title=${encodeURIComponent(post.title)}`);
   const projectInfo = gameMeta
     ? {
         summary: gameMeta.summary ?? gameMeta.description,
@@ -111,9 +114,7 @@ export default async function PostPage({ params }: PageProps) {
     path: `/games/${slugString}`,
     datePublished: new Date(post.date).toISOString(),
     dateModified: new Date(post.updated ?? post.date).toISOString(),
-    image: gameMeta
-      ? absoluteUrl(gameMeta.image)
-      : absoluteUrl(`/og/${slugString}?title=${encodeURIComponent(post.title)}`),
+    image: resolvedImageUrl,
     tags: post.tags,
     category: gameCategoryMap[category] ?? category,
   });

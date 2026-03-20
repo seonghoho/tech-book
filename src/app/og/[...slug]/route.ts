@@ -6,13 +6,13 @@ export const runtime = "edge";
 export const revalidate = 3600;
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }
 
 export async function GET(request: NextRequest, context: PageProps) {
   const { slug } = await context.params;
   const queryTitle = request.nextUrl.searchParams.get("title");
-  const fallbackTitle = decodeURIComponent(slug).replace(/-/g, " ");
+  const fallbackTitle = decodeURIComponent(slug.join("/")).replace(/[-/]/g, " ");
   const title = queryTitle ? decodeURIComponent(queryTitle) : fallbackTitle;
 
   return new ImageResponse(

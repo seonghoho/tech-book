@@ -32,13 +32,7 @@ export async function generateMetadata({ params }: PageProps) {
     title: `${game.title} 플레이`,
     description: game.summary ?? `Play the ${game.title} game.`,
     path: `/play/${game.playSlug}`,
-    images: [
-      {
-        url: absoluteUrl(game.image),
-        width: 1200,
-        height: 630,
-      },
-    ],
+    images: [{ url: absoluteUrl(game.image) }],
     robots: {
       index: false,
       follow: true,

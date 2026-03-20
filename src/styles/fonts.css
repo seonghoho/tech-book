@@ -1,25 +1,4 @@
-/* Pretendard Variable Fonts */
-@font-face {
-  font-family: "Pretendard";
-  src: url("/fonts/Pretendard-Thin.woff2") format("woff2");
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Pretendard";
-  src: url("/fonts/Pretendard-ExtraLight.woff2") format("woff2");
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Pretendard";
-  src: url("/fonts/Pretendard-Light.woff2") format("woff2");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
+/* Pretendard core weights */
 @font-face {
   font-family: "Pretendard";
   src: url("/fonts/Pretendard-Regular.woff2") format("woff2");
@@ -47,24 +26,4 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-}
-@font-face {
-  font-family: "Pretendard";
-  src: url("/fonts/Pretendard-ExtraBold.woff2") format("woff2");
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Pretendard";
-  src: url("/fonts/Pretendard-Black.woff2") format("woff2");
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "PressStart2P";
-  src: url("/fonts/PressStart2P-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
 }

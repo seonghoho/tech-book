@@ -29,25 +29,12 @@ export const homeHeroPoster = {
 } as const;
 
 export const homeHeroMainImages = [
-  "/images/main/me_2.jpeg",
-  "/images/main/jeju_2.jpeg",
-  "/images/main/me_1.jpeg",
-  "/images/main/baseball_1.jpeg",
-  "/images/main/cafe_1.jpeg",
-  "/images/main/cafe_2.jpeg",
-  "/images/main/jeju_1.jpeg",
-  "/images/main/jeju_2.jpeg",
-  "/images/main/jeju_3.jpeg",
-  "/images/main/me_2.jpeg",
-  "/images/main/me_3.jpeg",
-  "/images/main/sea_1.jpeg",
-  "/images/main/sky_1.jpeg",
-  "/images/main/tree_1.jpeg",
-  "/images/main/tree_2.jpeg",
-  "/images/main/tree_4.jpeg",
-  "/images/main/tree_6.jpeg",
-  // "/images/main/tree_3.jpeg",
-  // "/images/main/tree_5.jpeg",
+  "/images/hero/hero-me-2.webp",
+  "/images/hero/hero-jeju-2.webp",
+  "/images/hero/hero-cafe-1.webp",
+  "/images/hero/hero-sea-1.webp",
+  "/images/hero/hero-sky-1.webp",
+  "/images/hero/hero-tree-1.webp",
 ] as const;
 
 export const homeAboutSiteCopy =

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import ProjectDetailView from "@/components/about/ProjectDetailView";
 import { aboutProjects, getAboutProjectBySlug, getAdjacentProjects } from "@/lib/aboutData";
 import { buildPageMetadata } from "@/lib/seo";
+import { absoluteUrl } from "@/lib/site";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -28,6 +29,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${project.title} 프로젝트`,
     description: project.summary,
     path: `/projects/${project.slug}`,
+    images:
+      project.preview.kind === "image"
+        ? [{ url: absoluteUrl(project.preview.src) }]
+        : undefined,
   });
 }
 

@@ -3,7 +3,12 @@ import { extractHeadings } from "@/lib/getPostContent";
 import { getPostData } from "@/lib/getPostData";
 import { absoluteUrl } from "@/lib/site";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
-import { buildArticleJsonLd, buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
+import {
+  buildArticleJsonLd,
+  buildBreadcrumbJsonLd,
+  buildPageMetadata,
+  siteDefaults,
+} from "@/lib/seo";
 import nextDynamic from "next/dynamic";
 import { categoryMap } from "@/lib/categoryMap";
 
@@ -42,7 +47,8 @@ export async function generateMetadata({ params }: PageProps) {
   const ogImage = absoluteUrl(
     `/og/${slugString}?title=${encodeURIComponent(post.title)}`
   );
-  const imageUrl = post.image ? absoluteUrl(post.image) : ogImage;
+  const shouldUseDynamicOg = !post.image || post.image === siteDefaults.defaultImage;
+  const imageUrl = shouldUseDynamicOg ? ogImage : absoluteUrl(post.image);
   const modifiedTime = post.updated ?? post.date;
 
   return buildPageMetadata({
@@ -50,7 +56,7 @@ export async function generateMetadata({ params }: PageProps) {
     description: summary,
     path: `/posts/${slugString}`,
     type: "article",
-    images: [{ url: imageUrl, width: 1200, height: 630 }],
+    images: shouldUseDynamicOg ? [{ url: imageUrl, width: 1200, height: 630 }] : [{ url: imageUrl }],
     publishedTime: new Date(post.date).toISOString(),
     modifiedTime: new Date(modifiedTime).toISOString(),
   });
@@ -67,6 +73,10 @@ export default async function PostPage({ params }: PageProps) {
 
   const post = await getPostData("posts", slugString);
   const summary = post.description ?? createExcerpt(post.rawMarkdown);
+  const shouldUseDynamicOg = !post.image || post.image === siteDefaults.defaultImage;
+  const resolvedImageUrl = shouldUseDynamicOg
+    ? absoluteUrl(`/og/${slugString}?title=${encodeURIComponent(post.title)}`)
+    : absoluteUrl(post.image);
   const headings = extractHeadings(post.rawMarkdown);
 
   const currentIndex = allPosts.findIndex((p) => p.slug === slugString);
@@ -96,9 +106,7 @@ export default async function PostPage({ params }: PageProps) {
     path: `/posts/${slugString}`,
     datePublished: new Date(post.date).toISOString(),
     dateModified: new Date(post.updated ?? post.date).toISOString(),
-    image: post.image
-      ? absoluteUrl(post.image)
-      : absoluteUrl(`/og/${slugString}?title=${encodeURIComponent(post.title)}`),
+    image: resolvedImageUrl,
     tags: post.tags,
     category: categoryMap[category] ?? category,
   });

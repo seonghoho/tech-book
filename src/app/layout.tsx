@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import GoogleAnalytics from "@/components/common/GoogleAnalytics";
 import ThemeInitializer from "@/components/common/ThemeInitializer";
 import Footer from "@/components/common/Footer";
+import Header from "@/components/common/Header";
 import ClientHeaderWithSidebar from "@/components/layout/ClientHeaderWithSidebar";
 import { absoluteUrl, getSiteUrl } from "@/lib/site";
 import { siteDefaults } from "@/lib/seo";
@@ -67,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     },
   };
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning style={{ colorScheme: "light" }}>
       <body className="flex min-h-screen w-full flex-col">
         <a
           href="#main-content"
@@ -80,7 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <ThemeInitializer />
-        <ClientHeaderWithSidebar />
+        <Header actions={<ClientHeaderWithSidebar />} />
         <main
           id="main-content"
           className="mx-auto w-full max-w-[1360px] flex-1 px-4 sm:px-6 lg:px-8"
