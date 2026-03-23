@@ -71,10 +71,10 @@ export default function PostContent({
           ) : null}
         </nav>
 
-        <header className="surface-panel p-6 sm:p-8">
+        <header className="surface-panel p-5 sm:p-7">
           <div className="space-y-5">
             <div className="space-y-3">
-              <h1 className="text-3xl font-semibold tracking-[-0.03em] text-[color:var(--color-text-primary)] sm:text-4xl">
+              <h1 className="text-[1.9rem] font-semibold tracking-[-0.03em] text-[color:var(--color-text-primary)] sm:text-[2.3rem] lg:text-4xl">
                 {title}
               </h1>
               {description ? <p className="body-copy">{description}</p> : null}
@@ -116,7 +116,7 @@ export default function PostContent({
 
         {projectInfo ? (
           <div className="surface-panel mt-8 grid gap-6 p-5 sm:grid-cols-2 sm:p-6">
-            <div className="relative h-56 md:h-full w-full overflow-hidden rounded-xl">
+            <div className="relative h-56 w-full overflow-hidden rounded-xl md:h-full">
               <Image
                 src={projectInfo.image}
                 alt={`${title} 썸네일`}
@@ -132,7 +132,7 @@ export default function PostContent({
               </p>
               <div className="flex flex-wrap gap-2">
                 {projectInfo.techStack.map((stack) => (
-                  <span key={stack} className="tag-chip text-sm">
+                  <span key={stack} className="tag-chip text-xs sm:text-sm">
                     {stack}
                   </span>
                 ))}
@@ -157,7 +157,7 @@ export default function PostContent({
         ) : null}
 
         <div
-          className="prose prose-lg mt-10 max-w-none dark:prose-invert"
+          className="prose mt-8 max-w-none prose-headings:tracking-[-0.02em] prose-h1:text-[1.95rem] prose-h2:text-[1.5rem] prose-h3:text-[1.2rem] prose-p:text-[15px] prose-p:leading-7 prose-li:text-[15px] prose-li:leading-7 prose-pre:px-4 prose-pre:py-4 prose-blockquote:px-5 prose-blockquote:py-4 sm:mt-10 sm:prose-h1:text-[2.3rem] sm:prose-h2:text-[1.8rem] sm:prose-h3:text-[1.35rem] sm:prose-p:text-base sm:prose-p:leading-8 sm:prose-li:text-base sm:prose-li:leading-8 sm:prose-pre:px-6 sm:prose-pre:py-6 lg:prose-lg dark:prose-invert"
           dangerouslySetInnerHTML={{ __html: contentHtml }}
         />
 
@@ -187,7 +187,7 @@ export default function PostContent({
           </div>
         ) : null}
 
-        <div className="grid gap-4 py-10 sm:grid-cols-2">
+        <div className="grid gap-3 py-8 sm:grid-cols-2 sm:gap-4 sm:py-10">
           {prevPost ? (
             <PostNavCard post={prevPost} direction="prev" />
           ) : (

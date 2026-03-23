@@ -53,7 +53,7 @@ export default function AboutPage() {
           links={aboutProfile.contacts}
         />
 
-        <div className="space-y-20 sm:space-y-24">
+        <div className="min-w-0 space-y-20 sm:space-y-24">
           <section id="overview" className="scroll-mt-28 space-y-10">
             <article className="surface-panel-strong mx-auto w-full max-w-[1040px] overflow-hidden p-5 sm:p-6 lg:p-7">
               <div className="grid gap-6">

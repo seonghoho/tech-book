@@ -8,7 +8,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   const gameData = getPostsByCategory("games");
 
   return (
-    <div className="flex min-h-screen w-full flex-col">
+    <div className="stable-screen-min flex w-full flex-col">
       <SidebarContainer postData={postData} gameData={gameData} variant="mobile-subnav" />
       <div className="flex w-full flex-1 gap-6 2xl:gap-8">
         <aside className="sticky-section hidden shrink-0 border-r border-[color:var(--color-border)] pr-6 lg:block lg:w-64">

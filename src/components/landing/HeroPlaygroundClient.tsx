@@ -4,7 +4,6 @@ import { useState, type CSSProperties } from "react";
 import { Archivo_Black } from "next/font/google";
 import { homeHeroMainImages, homeHeroPoster } from "@/lib/homeContent";
 import { useArchivePosterLayout } from "./useArchivePosterLayout";
-import { useLandingSectionHeight } from "./useLandingSectionHeight";
 import { useHeroImageDeck } from "./useHeroImageDeck";
 
 const archivoBlack = Archivo_Black({
@@ -20,8 +19,7 @@ const baseWordStyle: CSSProperties = {
 export default function HeroPlaygroundClient() {
   const [isRefreshPressed, setIsRefreshPressed] = useState(false);
   const [refreshIconRotation, setRefreshIconRotation] = useState(0);
-  const { availableHeight } = useLandingSectionHeight();
-  const { containerRef, layout: archiveLayout } = useArchivePosterLayout(availableHeight);
+  const { containerRef, layout: archiveLayout } = useArchivePosterLayout();
   const { currentImageSrc, advanceImage, isRefreshDisabled } = useHeroImageDeck(
     homeHeroMainImages,
     homeHeroPoster.imageSrc,
@@ -71,7 +69,7 @@ export default function HeroPlaygroundClient() {
   };
 
   return (
-    <section className="relative isolate overflow-hidden" style={{ height: availableHeight }}>
+    <section className="hero-playground-shell relative isolate overflow-hidden">
       <button
         type="button"
         onClick={handleAdvanceImage}

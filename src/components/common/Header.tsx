@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
+import HeaderNavLinkItem from "./HeaderNavLinkItem";
 
 type HeaderProps = {
   actions?: React.ReactNode;
@@ -30,7 +30,7 @@ export default function Header({ actions }: HeaderProps) {
       <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-2">
+            <HeaderNavLinkItem href="/" className="flex items-center gap-2">
               <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)] text-[color:var(--color-accent)] shadow-sm">
                 <Image
                   src="/logo.png"
@@ -49,14 +49,14 @@ export default function Header({ actions }: HeaderProps) {
                   Frontend Engineer
                 </span>
               </div>
-            </Link>
+            </HeaderNavLinkItem>
           </div>
           <div className="flex items-center gap-3 sm:gap-4">
             <nav className="hidden items-center gap-5 lg:flex">
               {headerNavLinks.map((link) => (
-                <Link key={link.href} href={link.href} className="nav-link">
+                <HeaderNavLinkItem key={link.href} href={link.href} className="nav-link">
                   {link.label}
-                </Link>
+                </HeaderNavLinkItem>
               ))}
               <a
                 href={headerSecondaryLink.href}

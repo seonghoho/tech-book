@@ -13,7 +13,7 @@ export const dynamic = "force-static";
 
 export default function ProjectsArchivePage() {
   return (
-    <div className="min-h-screen w-full">
+    <div className="stable-screen-min w-full">
       <ProjectsPage />
     </div>
   );

@@ -36,7 +36,7 @@ export default function PortfolioRail({
   supplemental,
 }: PortfolioRailProps) {
   return (
-    <aside className="space-y-8 lg:sticky lg:top-[108px] lg:max-h-[calc(100vh-8rem)] lg:self-start lg:overflow-y-auto lg:pr-2">
+    <aside className="min-w-0 space-y-8 lg:sticky lg:top-[108px] lg:max-h-[calc(100vh-8rem)] lg:self-start lg:overflow-y-auto lg:pr-2">
       <div className="space-y-6">
         <div className="space-y-4">
           {eyebrow ? <p className="eyebrow-label">{eyebrow}</p> : null}

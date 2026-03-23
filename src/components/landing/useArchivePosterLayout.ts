@@ -23,7 +23,7 @@ export type ArchivePosterKeyframe = {
 };
 
 const VIEWBOX_WIDTH = 1180;
-const DEFAULT_AVAILABLE_HEIGHT = 720;
+const DEFAULT_CONTAINER_HEIGHT = 720;
 const WORD_TOP_PADDING_RATIO = 0;
 const WORD_ASCENT_RATIO = 0.78;
 const WORD_DESCENT_RATIO = 0;
@@ -49,7 +49,10 @@ const DESKTOP_KEYFRAME: ArchivePosterKeyframe = {
   letterSpacingEm: -0.085,
 };
 
-const DEFAULT_LAYOUT_WIDTH = TABLET_KEYFRAME.width;
+const DEFAULT_CONTAINER_SIZE = {
+  width: TABLET_KEYFRAME.width,
+  height: DEFAULT_CONTAINER_HEIGHT,
+};
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
@@ -76,12 +79,13 @@ function interpolateKeyframes(
 function toLayout(
   keyframe: ArchivePosterKeyframe,
   containerWidth: number,
-  availableHeight?: number,
+  containerHeight: number,
 ): ArchivePosterLayout {
-  const safeContainerWidth = containerWidth > 0 ? containerWidth : DEFAULT_LAYOUT_WIDTH;
-  const safeAvailableHeight =
-    availableHeight && availableHeight > 0 ? availableHeight : DEFAULT_AVAILABLE_HEIGHT;
-  const viewBoxHeight = VIEWBOX_WIDTH * (safeAvailableHeight / safeContainerWidth);
+  const safeContainerWidth =
+    containerWidth > 0 ? containerWidth : DEFAULT_CONTAINER_SIZE.width;
+  const safeContainerHeight =
+    containerHeight > 0 ? containerHeight : DEFAULT_CONTAINER_SIZE.height;
+  const viewBoxHeight = VIEWBOX_WIDTH * (safeContainerHeight / safeContainerWidth);
   const maxFontSizeForText = viewBoxHeight / WORD_TOTAL_HEIGHT_RATIO;
   const fontSize = Math.min(keyframe.fontSize, maxFontSizeForText);
   const wordY = fontSize * (WORD_TOP_PADDING_RATIO + WORD_ASCENT_RATIO);
@@ -107,17 +111,17 @@ function toLayout(
 
 export function resolveArchivePosterLayoutWithHeight(
   width: number,
-  availableHeight?: number,
+  height: number,
 ): ArchivePosterLayout {
   if (width <= MOBILE_KEYFRAME.width) {
-    return toLayout(MOBILE_KEYFRAME, width, availableHeight);
+    return toLayout(MOBILE_KEYFRAME, width, height);
   }
 
   if (width < TABLET_KEYFRAME.width) {
     return toLayout(
       interpolateKeyframes(MOBILE_KEYFRAME, TABLET_KEYFRAME, width),
       width,
-      availableHeight,
+      height,
     );
   }
 
@@ -125,21 +129,20 @@ export function resolveArchivePosterLayoutWithHeight(
     return toLayout(
       interpolateKeyframes(TABLET_KEYFRAME, DESKTOP_KEYFRAME, width),
       width,
-      availableHeight,
+      height,
     );
   }
 
-  return toLayout(DESKTOP_KEYFRAME, width, availableHeight);
+  return toLayout(DESKTOP_KEYFRAME, width, height);
 }
 
-export function resolveArchivePosterLayout(width: number): ArchivePosterLayout {
-  return resolveArchivePosterLayoutWithHeight(width);
+export function resolveArchivePosterLayout(width: number, height: number): ArchivePosterLayout {
+  return resolveArchivePosterLayoutWithHeight(width, height);
 }
 
-export function useArchivePosterLayout(availableHeight?: number) {
+export function useArchivePosterLayout() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [containerWidth, setContainerWidth] = useState(DEFAULT_LAYOUT_WIDTH);
-  const [isReady, setIsReady] = useState(false);
+  const [containerSize, setContainerSize] = useState(DEFAULT_CONTAINER_SIZE);
 
   useLayoutEffect(() => {
     const node = containerRef.current;
@@ -148,16 +151,29 @@ export function useArchivePosterLayout(availableHeight?: number) {
       return;
     }
 
-    const syncWidth = (nextWidth?: number) => {
-      const measuredWidth = nextWidth ?? node.getBoundingClientRect().width;
+    const syncSize = (nextWidth?: number, nextHeight?: number) => {
+      const rect = node.getBoundingClientRect();
+      const measuredWidth = nextWidth ?? rect.width;
+      const measuredHeight = nextHeight ?? rect.height;
 
-      if (measuredWidth > 0) {
-        setContainerWidth(measuredWidth);
-        setIsReady(true);
+      if (measuredWidth > 0 && measuredHeight > 0) {
+        setContainerSize((currentSize) => {
+          if (
+            currentSize.width === measuredWidth &&
+            currentSize.height === measuredHeight
+          ) {
+            return currentSize;
+          }
+
+          return {
+            width: measuredWidth,
+            height: measuredHeight,
+          };
+        });
       }
     };
 
-    syncWidth();
+    syncSize();
 
     if (typeof ResizeObserver !== "undefined") {
       const observer = new ResizeObserver((entries) => {
@@ -167,7 +183,7 @@ export function useArchivePosterLayout(availableHeight?: number) {
           return;
         }
 
-        syncWidth(entry.contentRect.width);
+        syncSize(entry.contentRect.width, entry.contentRect.height);
       });
 
       observer.observe(node);
@@ -178,7 +194,7 @@ export function useArchivePosterLayout(availableHeight?: number) {
     }
 
     const handleWindowResize = () => {
-      syncWidth();
+      syncSize();
     };
 
     window.addEventListener("resize", handleWindowResize);
@@ -190,7 +206,6 @@ export function useArchivePosterLayout(availableHeight?: number) {
 
   return {
     containerRef,
-    layout: resolveArchivePosterLayoutWithHeight(containerWidth, availableHeight),
-    isReady,
+    layout: resolveArchivePosterLayout(containerSize.width, containerSize.height),
   };
 }

@@ -80,6 +80,10 @@ const rehypeImageAttrs = () => {
   };
 };
 
+const stripLeadingH1Html = (html: string) => {
+  return html.replace(/^\s*<h1\b[^>]*>[\s\S]*?<\/h1>\s*/i, "");
+};
+
 export async function getPostData(type: "posts" | "games", slug: string) {
   const fullPath = path.join(contentDirectory, type, `${slug}.md`);
 
@@ -100,7 +104,10 @@ export async function getPostData(type: "posts" | "games", slug: string) {
     .use(rehypeStringify)
     .process(content);
 
-  const contentHtml = processedContent.toString();
+  const contentHtml =
+    type === "posts"
+      ? stripLeadingH1Html(processedContent.toString())
+      : processedContent.toString();
 
   return {
     slug,

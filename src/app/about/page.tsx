@@ -13,7 +13,7 @@ export const dynamic = "force-static";
 
 const page = () => {
   return (
-    <div className="min-h-screen w-full">
+    <div className="stable-screen-min w-full">
       <AboutPage />
     </div>
   );

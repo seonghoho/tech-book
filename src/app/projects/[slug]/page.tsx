@@ -51,7 +51,7 @@ export default async function ProjectPage({ params }: PageProps) {
   const { previous, next } = getAdjacentProjects(slug);
 
   return (
-    <div className="min-h-screen w-full">
+    <div className="stable-screen-min w-full">
       <ProjectDetailView project={project} previousProject={previous} nextProject={next} />
     </div>
   );

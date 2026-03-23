@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from "@/assets/svg";
 import { headerNavLinks, type HeaderNavLink } from "../common/Header";
+import HeaderNavLinkItem from "../common/HeaderNavLinkItem";
 
 const mobileHeaderNavLinks: HeaderNavLink[] = [
   ...headerNavLinks,
@@ -124,14 +124,14 @@ export default function ClientHeaderWithSidebar() {
                     {link.label}
                   </a>
                 ) : (
-                  <Link
+                  <HeaderNavLinkItem
                     key={link.href}
                     href={link.href}
                     className="rounded-2xl px-4 py-3 text-sm font-medium text-[color:var(--color-text-secondary)] transition hover:bg-[color:var(--color-surface-elevated)] hover:text-[color:var(--color-text-primary)]"
-                    onClick={() => setMobileNavOpen(false)}
+                    onNavigate={() => setMobileNavOpen(false)}
                   >
                     {link.label}
-                  </Link>
+                  </HeaderNavLinkItem>
                 ),
               )}
             </nav>

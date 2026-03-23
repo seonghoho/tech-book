@@ -53,20 +53,19 @@ export default async function SearchPage({ searchParams }: PageProps) {
           </p>
         </div>
 
-        <form action="/search" method="get" className="flex flex-col gap-3 sm:flex-row">
-          <input
-            name="query"
-            defaultValue={query}
-            placeholder="키워드 검색"
-            className="input-shell flex-1"
-          />
-          <button
-            type="submit"
-            className="button-primary"
-          >
-            검색
-          </button>
-        </form>
+        <div className="surface-panel p-4 sm:p-5">
+          <form action="/search" method="get" className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <input
+              name="query"
+              defaultValue={query}
+              placeholder="키워드 검색"
+              className="input-shell min-w-0 w-full flex-1"
+            />
+            <button type="submit" className="button-primary w-full shrink-0 sm:w-auto">
+              검색
+            </button>
+          </form>
+        </div>
 
         <div className="grid gap-4">
           {filtered.map((post) => (

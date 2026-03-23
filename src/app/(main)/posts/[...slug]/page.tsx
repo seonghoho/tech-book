@@ -77,7 +77,7 @@ export default async function PostPage({ params }: PageProps) {
   const resolvedImageUrl = shouldUseDynamicOg
     ? absoluteUrl(`/og/${slugString}?title=${encodeURIComponent(post.title)}`)
     : absoluteUrl(post.image);
-  const headings = extractHeadings(post.rawMarkdown);
+  const headings = extractHeadings(post.rawMarkdown, { excludeDepths: [1] });
 
   const currentIndex = allPosts.findIndex((p) => p.slug === slugString);
   const [category] = slugString.split("/");

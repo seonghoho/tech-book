@@ -75,6 +75,7 @@ export default async function PostsPage({ searchParams }: PageProps) {
     const qs = params.toString();
     return `/posts${qs ? `?${qs}` : ""}`;
   };
+  const hasActiveFilters = Boolean(selectedCategory || selectedTag || query);
 
   return (
     <main className="page-shell">
@@ -87,55 +88,52 @@ export default async function PostsPage({ searchParams }: PageProps) {
           </p>
         </div>
 
-        <form
-          action="/search"
-          method="get"
-          className="flex flex-col gap-3 sm:flex-row"
-        >
-          <input
-            name="query"
-            defaultValue={query}
-            placeholder="키워드 검색"
-            className="input-shell flex-1"
-          />
-          {selectedCategory ? (
-            <input type="hidden" name="category" value={selectedCategory} />
-          ) : null}
-          {selectedTag ? (
-            <input type="hidden" name="tag" value={selectedTag} />
-          ) : null}
-          <button
-            type="submit"
-            className="button-primary"
-          >
-            검색
-          </button>
-        </form>
+        <div className="surface-panel space-y-4 p-4 sm:p-5">
+          <form action="/posts" method="get" className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <input
+              name="query"
+              defaultValue={query}
+              placeholder="키워드 검색"
+              className="input-shell min-w-0 w-full flex-1"
+            />
+            {selectedCategory ? (
+              <input type="hidden" name="category" value={selectedCategory} />
+            ) : null}
+            {selectedTag ? (
+              <input type="hidden" name="tag" value={selectedTag} />
+            ) : null}
+            <button type="submit" className="button-primary w-full shrink-0 sm:w-auto">
+              검색
+            </button>
+          </form>
 
-        <div className="flex flex-wrap gap-2 text-xs">
-          {selectedCategory ? (
-            <Link
-              href={buildHref({ category: "", page: "1" })}
-              className="tag-chip"
-            >
-              카테고리: {categoryMap[selectedCategory] ?? selectedCategory} ×
-            </Link>
-          ) : null}
-          {selectedTag ? (
-            <Link
-              href={buildHref({ tag: "", page: "1" })}
-              className="tag-chip"
-            >
-              태그: {selectedTag} ×
-            </Link>
-          ) : null}
-          {query ? (
-            <Link
-              href={buildHref({ query: "", page: "1" })}
-              className="tag-chip"
-            >
-              검색어: {query} ×
-            </Link>
+          {hasActiveFilters ? (
+            <div className="flex flex-wrap gap-2 text-xs">
+              {selectedCategory ? (
+                <Link
+                  href={buildHref({ category: "", page: "1" })}
+                  className="tag-chip max-w-full whitespace-normal break-all text-left"
+                >
+                  카테고리: {categoryMap[selectedCategory] ?? selectedCategory} ×
+                </Link>
+              ) : null}
+              {selectedTag ? (
+                <Link
+                  href={buildHref({ tag: "", page: "1" })}
+                  className="tag-chip max-w-full whitespace-normal break-all text-left"
+                >
+                  태그: {selectedTag} ×
+                </Link>
+              ) : null}
+              {query ? (
+                <Link
+                  href={buildHref({ query: "", page: "1" })}
+                  className="tag-chip max-w-full whitespace-normal break-all text-left"
+                >
+                  검색어: {query} ×
+                </Link>
+              ) : null}
+            </div>
           ) : null}
         </div>
 

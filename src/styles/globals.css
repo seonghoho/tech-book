@@ -7,6 +7,7 @@
 @tailwind utilities;
 
 :root {
+  --header-height: 4rem;
   --color-bg: #f4f7fb;
   --color-bg-muted: #edf2f7;
   --color-surface: #ffffff;
@@ -67,7 +68,6 @@ html.dark {
 body {
   font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR",
     "Malgun Gothic", sans-serif;
-  min-width: 350px;
   background-color: var(--color-bg);
   color: var(--color-text-primary);
   text-rendering: optimizeLegibility;
@@ -96,7 +96,17 @@ a {
 
 @layer components {
   .page-shell {
+    --page-shell-padding-y: 2rem;
+    --page-shell-padding-y-double: 4rem;
     @apply w-full py-8 sm:py-10;
+  }
+
+  .stable-screen-min {
+    min-height: 100vh;
+  }
+
+  .hero-playground-shell {
+    height: calc(100vh - var(--header-height) - var(--page-shell-padding-y-double));
   }
 
   .page-stack {
@@ -225,6 +235,25 @@ a {
   .nav-link:hover,
   .nav-link:focus-visible {
     color: var(--color-text-primary);
+  }
+}
+
+@media (min-width: 640px) {
+  .page-shell {
+    --page-shell-padding-y: 2.5rem;
+    --page-shell-padding-y-double: 5rem;
+  }
+}
+
+@supports (min-height: 100svh) {
+  .stable-screen-min {
+    min-height: 100svh;
+  }
+}
+
+@supports (height: 100svh) {
+  .hero-playground-shell {
+    height: calc(100svh - var(--header-height) - var(--page-shell-padding-y-double));
   }
 }
 
