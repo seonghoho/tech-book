@@ -360,7 +360,7 @@ export const aboutProjects: AboutProject[] = [
     ],
     preview: {
       kind: "image",
-      src: "/images/portfolio/mathcanvas1.png",
+      src: "/images/projects/mathcanvas/cover-og.png",
       alt: "MathCanvas 교구 편집 화면",
       caption: "SVG 기반 교구 편집과 조작 흐름을 구현한 대표 화면",
       aspect: "wide",
@@ -368,21 +368,21 @@ export const aboutProjects: AboutProject[] = [
     gallery: [
       {
         kind: "image",
-        src: "/images/portfolio/mathcanvas1.png",
+        src: "/images/projects/mathcanvas/cover-og.png",
         alt: "MathCanvas 교구 편집 화면",
         caption: "교구를 배치하고 조작할 수 있는 메인 편집 캔버스 화면",
         aspect: "landscape",
       },
       {
         kind: "image",
-        src: "/images/portfolio/mathcanvas2.png",
+        src: "/images/projects/mathcanvas/detail-02.png",
         alt: "MathCanvas 3D 교구 시각화 화면",
         caption: "Three.js 기반 3D 교구와 좌표 시각화를 연결한 구현 화면",
         aspect: "landscape",
       },
       {
         kind: "image",
-        src: "/images/portfolio/mathcanvas-admin.png",
+        src: "/images/projects/mathcanvas/detail-03.png",
         alt: "MathCanvas 관리자 화면",
         caption: "콘텐츠와 운영 흐름까지 포함해 서비스 UI를 연결한 관리자 화면",
         aspect: "landscape",
@@ -456,7 +456,7 @@ export const aboutProjects: AboutProject[] = [
     ],
     preview: {
       kind: "image",
-      src: "/images/portfolio/nowdoboss-1.jpg",
+      src: "/images/projects/nowdoboss/cover-og.jpg",
       alt: "NowDoBoss 메인 화면",
       caption: "상권 분석과 창업 지원 흐름을 한 화면에서 풀어낸 메인 화면",
       aspect: "wide",
@@ -464,21 +464,21 @@ export const aboutProjects: AboutProject[] = [
     gallery: [
       {
         kind: "image",
-        src: "/images/portfolio/nowdoboss-1.jpg",
+        src: "/images/projects/nowdoboss/cover-og.jpg",
         alt: "NowDoBoss 상권 추천 화면",
         caption: "카카오맵 기반으로 추천 상권과 주요 정보를 탐색하는 화면",
         aspect: "landscape",
       },
       {
         kind: "image",
-        src: "/images/portfolio/nowdoboss-2.jpg",
+        src: "/images/projects/nowdoboss/detail-02.jpg",
         alt: "NowDoBoss 비용 시뮬레이션 화면",
         caption: "창업 비용과 상권 데이터를 함께 비교할 수 있는 시뮬레이션 화면",
         aspect: "landscape",
       },
       {
         kind: "image",
-        src: "/images/portfolio/nowdoboss-3.jpg",
+        src: "/images/projects/nowdoboss/detail-03.jpg",
         alt: "NowDoBoss 커뮤니티 및 채팅 화면",
         caption: "커뮤니티, 채팅, 알림 흐름을 연결한 실시간 사용자 경험 화면",
         aspect: "landscape",
@@ -550,7 +550,7 @@ export const aboutProjects: AboutProject[] = [
     ],
     preview: {
       kind: "image",
-      src: "/images/portfolio/mancity.png",
+      src: "/images/projects/mancity/cover-og.png",
       alt: "Mancity 풋살 분석 서비스 화면",
       caption: "경기 데이터, 하이라이트, 전술 흐름을 한 화면에 담은 분석 서비스",
       aspect: "wide",
@@ -558,7 +558,7 @@ export const aboutProjects: AboutProject[] = [
     gallery: [
       {
         kind: "image",
-        src: "/images/portfolio/mancity.png",
+        src: "/images/projects/mancity/cover-og.png",
         alt: "Mancity 풋살 분석 서비스 화면",
         caption: "재사용 가능한 UI 구조 위에서 경기 분석 경험을 구현한 대표 화면",
         aspect: "landscape",
@@ -629,7 +629,7 @@ export const aboutProjects: AboutProject[] = [
     ],
     preview: {
       kind: "image",
-      src: "/images/portfolio/pawsitive.png",
+      src: "/images/projects/pawsitive/cover-og.png",
       alt: "Pawsitive 입양 지원 서비스 화면",
       caption: "입양 추천, 커뮤니티, 설문 흐름을 연결한 반려견 입양 지원 서비스",
       aspect: "wide",
@@ -637,7 +637,7 @@ export const aboutProjects: AboutProject[] = [
     gallery: [
       {
         kind: "image",
-        src: "/images/portfolio/pawsitive.png",
+        src: "/images/projects/pawsitive/cover-og.png",
         alt: "Pawsitive 입양 지원 서비스 화면",
         caption: "역할별 사용자 경험과 데이터 흐름을 한 제품 안에서 정리한 화면",
         aspect: "landscape",

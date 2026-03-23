@@ -24,7 +24,7 @@ export type HomeHeroShortcut = {
 
 export const homeHeroPoster = {
   word: "ARCHIVE",
-  imageSrc: "/images/portfolio/nowdoboss-1.jpg",
+  imageSrc: "/images/projects/nowdoboss/cover-og.jpg",
   imageAlt: "Muted urban placeholder image clipped inside the archive title.",
 } as const;
 

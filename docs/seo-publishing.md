@@ -23,6 +23,64 @@
 
 정책을 바꾸거나 페이지 유형을 늘릴 때는 위 지점과 함께 문서를 업데이트한다.
 
+## Image Asset Policy
+
+`public/` 에 이미지를 두는 현재 방식은 이 저장소의 운영 규모와 게시 흐름에 맞는다. 다만 단순 파일 보관이 아니라, 검색 친화적인 대표 이미지와 본문 설명 이미지를 분리해 관리해야 한다.
+
+### Asset Roles
+
+- 대표 이미지: metadata, OG, Twitter, JSON-LD에 연결되는 SEO 자산
+- 본문 이미지: 문제 상황, 구현 과정, 결과를 설명하는 문맥 자산
+- fallback OG: 대표 이미지가 없을 때만 사용하는 보조 자산
+
+대표 이미지와 본문 첫 이미지는 완전히 다른 메시지를 주지 않는 편이 좋다. 검색과 공유에서 읽히는 주제 신호가 흐려지지 않게 유지한다.
+
+### Public Directory Rule
+
+- 글 대표 이미지와 본문 이미지는 `public/images/posts/<category>/<slug>/` 아래에 둔다.
+- 프로젝트 이미지는 `public/images/projects/<project-slug>/` 아래에 둔다.
+- `frontmatter.image` 는 대표 이미지 경로를 가리킨다.
+- 본문 마크다운 이미지는 실제 공개 경로와 일치하는 `public/` 기준 절대 경로를 사용한다.
+
+권장 예시:
+
+```text
+public/images/posts/svg-editor/three-js-gimbal-lock/cover-og.webp
+public/images/posts/svg-editor/three-js-gimbal-lock/body-01.webp
+public/images/posts/svg-editor/three-js-gimbal-lock/body-02.webp
+```
+
+### Naming And Format Rule
+
+- 파일명은 `cover-og`, `thumb`, `body-01`, `detail-01`처럼 역할이 먼저 드러나게 작성한다.
+- slug와 폴더가 이미 문맥을 가지므로, 파일명은 지나치게 길게 늘리지 않는다.
+- 기본 포맷은 `webp`를 우선 고려한다.
+- 투명도가 필요하거나, 현재 런타임의 폭/높이 자동 추론을 그대로 활용해야 하는 경우 `png`를 허용한다.
+
+현재 구현 기준으로 본문 이미지의 `width` / `height` 자동 보강은 `src/lib/getPostData.ts` 에서 PNG에만 적용된다. 즉 `jpg`, `webp`를 쓰는 것은 가능하지만, 레이아웃 안정성은 별도 점검이 필요하다.
+
+### Size And Usage Rule
+
+- 대표 이미지는 공유 카드 기준으로 `1200x630` 비율을 기본으로 둔다.
+- 본문 이미지는 일반적으로 가로 `1200~1600px` 범위를 우선 고려한다.
+- 모바일 본문에서 과도하게 큰 이미지를 그대로 두지 않는다.
+- 첫 화면에서 반드시 보여야 하는 대표 이미지가 아니라면, 본문 이미지는 lazy loading 기본 전략을 유지한다.
+- 하나의 원본 이미지를 대표 이미지, 썸네일, 본문 캡처에 모두 재사용하려고 하지 않는다.
+
+### Writing Rule For Images
+
+- `alt` 텍스트는 파일명 반복이 아니라, 이미지가 설명하는 상태나 차이를 적는다.
+- 이미지 앞뒤 문단에서 왜 이 이미지가 필요한지 문맥을 제공한다.
+- 문제 상황, 중간 과정, 해결 결과 순서가 있다면 본문 이미지도 그 순서를 따른다.
+- 캡션이 필요할 정도로 중요한 비교 이미지라면, 이미지 바로 앞이나 뒤에 설명 문장을 붙인다.
+
+### Operational Recommendation
+
+- 새 글은 가능하면 대표 이미지를 함께 게시한다.
+- 대표 이미지가 없다면 fallback OG에만 의존하는 상태로 오래 두지 않는다.
+- 대표 이미지와 `description` 은 같은 검색 의도와 문제 맥락을 말해야 한다.
+- 이미지가 많은 글이라도, 핵심 설명과 직접 연결되지 않는 캡처는 남발하지 않는다.
+
 ## Page Roles
 
 ### Home
@@ -86,13 +144,16 @@
 - slug가 지나치게 일반적이거나 중복되지 않는가
 - 수정 이력이 있으면 `updated`를 관리하는가
 - 페이지가 `Projects`, `Posts`, `About` 중 어느 축을 강화하는지 분명한가
+- 대표 이미지와 본문 이미지가 각자 어떤 역할인지 분리되어 있는가
 
 ## Post-Specific Checklist
 
 - 파일 경로가 category 규칙과 맞는가
 - `title`, `date`, `description`이 모두 채워졌는가
 - `featured`는 홈에서 먼저 보여줘도 되는 글에만 사용했는가
-- `image`가 있다면 실제 공개 경로와 일치하는가
+- `image`는 대표 이미지 경로이며 실제 공개 경로와 일치하는가
+- 대표 이미지는 가능하면 `public/images/posts/<category>/<slug>/cover-og.*` 규칙을 따르는가
+- 본문 이미지는 실제 설명 흐름에 기여하며, alt와 문맥이 함께 제공되는가
 - 관련 글 또는 관련 프로젝트로 내부 링크를 연결했는가
 
 ## Project-Specific Checklist

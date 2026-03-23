@@ -3,7 +3,7 @@ title: "Three.js 좌표축 클릭 시 카메라 방향 꼬임 문제"
 date: "2025-07-25"
 updated: "2025-07-25"
 description: "Three.js에서 카메라 방향 꼬임 문제를 해결하는 과정을 알아봅니다."
-image: "/images/svg-editor/04_threejs-gimbal-lock-01.png"
+image: "/images/posts/svg-editor/three-js-gimbal-lock/cover-og.png"
 tags: ["Three.js", "WebGL", "Camera", "Math"]
 ---
 
@@ -43,7 +43,7 @@ function moveCameraToAxis(axis) {
 
 기대했던 동작은 축을 클릭할 때마다 카메라가 그 방향에서 평면의 중심을 바라보는 것이었습니다.
 
-![Three.js 공간좌표 좌표축 예시](/images/svg-editor/04_threejs-gimbal-lock-01.png)
+![Three.js 공간좌표 좌표축 예시](/images/posts/svg-editor/three-js-gimbal-lock/body-01.png)
 
 ## 이상현상: Y축(Top) 시점에서 화면이 뒤집히거나, 컨트롤이 꼬임
 
@@ -52,10 +52,10 @@ function moveCameraToAxis(axis) {
 - OrbitControls에서 마우스를 움직이면 예상과 다른 방향으로 회전하거나, 화면 전체가 뒤집혀버렸습니다.
 
 아래는 예상과 다른 위치로 이동한 시점입니다.
-![Three.js 공간좌표 좌표축 이동 문제](/images/svg-editor/04_threejs-gimbal-lock-02.png)
+![Three.js 공간좌표 좌표축 이동 문제](/images/posts/svg-editor/three-js-gimbal-lock/body-02.png)
 
 아래는 예상되는 위치로 이동한 시점입니다.
-![Three.js 공간좌표 좌표축 이동 문제](/images/svg-editor/04_threejs-gimbal-lock-03.png)
+![Three.js 공간좌표 좌표축 이동 문제](/images/posts/svg-editor/three-js-gimbal-lock/body-03.png)
 
 ## 수치 실험: x, z축에 아주 작은 값(-0.00001) 추가해보기
 
@@ -100,7 +100,7 @@ case 'top': // Y축 위에서 바라보는 경우
   break;
 ```
 
-![Three.js 공간좌표 좌표축 이동 해결](/images/svg-editor/04_threejs-gimbal-lock-04.png)
+![Three.js 공간좌표 좌표축 이동 해결](/images/posts/svg-editor/three-js-gimbal-lock/body-04.png)
 
 전체 코드는 다음과 같습니다.
 

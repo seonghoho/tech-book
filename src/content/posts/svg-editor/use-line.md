@@ -3,7 +3,7 @@ title: "useLine 로직 통합하기"
 date: "2024-12-19"
 updated: "2024-12-19"
 description: "두 점으로 그리는 도형 4가지의 로직을 하나의 객체로 통합합니다."
-image: "/og-image.png"
+image: "/images/posts/svg-editor/use-line/cover-og.png"
 tags: ["SVG", "Canvas", "Architecture", "Refactor"]
 ---
 

@@ -3,7 +3,7 @@ title: "Three.js 겨냥도 구현하기"
 date: "2025-07-24"
 updated: "2025-07-24"
 description: "Three.js에서 겨냥도를 구현합니다."
-image: "/images/svg-editor/03_threejs-line-meterial-01.png"
+image: "/images/posts/svg-editor/three-js-line-basic-meterial/cover-og.png"
 tags: ["Three.js", "WebGL", "Line", "Rendering"]
 ---
 
@@ -16,7 +16,7 @@ tags: ["Three.js", "WebGL", "Line", "Rendering"]
 
 ## 1. 문제
 
-![Three.js 겨냥도 구현 문제](/images/svg-editor/03_threejs-line-meterial-01.png)
+![Three.js 겨냥도 구현 문제](/images/posts/svg-editor/three-js-line-basic-meterial/body-01.png)
 
 - 원하는 결과:
   3D 직육면체의 겉은 **진한 실선**, 내부가 비칠 때는 **점선**만 보여서 “겨냥도”처럼 투명 박스 내부 구조가 한눈에 보이도록 하고 싶다.
@@ -140,7 +140,7 @@ return group;
 
 ## 5. 결과
 
-![Three.js 겨냥도 구현 결과](/images/svg-editor/03_threejs-line-meterial-02.png)
+![Three.js 겨냥도 구현 결과](/images/posts/svg-editor/three-js-line-basic-meterial/body-02.png)
 
 - 겉 실선은 **정확히 박스 외곽**만 표시된다.
 - **투명한 박스 안**을 볼 때, 내부에 있는 부분은 **점선만 남아 겨냥도처럼 보인다**.

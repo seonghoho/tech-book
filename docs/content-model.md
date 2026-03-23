@@ -63,7 +63,7 @@ src/content/posts/svg-editor/three-js-gimbal-lock.md
 - `tags`: 선택. 문자열 배열 또는 쉼표 구분 문자열
 - `updated`: 선택. 수정일
 - `featured`: 선택. 홈/대표 글 후보 여부
-- `image`: 선택. 대표 이미지 경로
+- `image`: 선택이지만 강하게 권장. 대표 이미지 경로이며, metadata/OG용 자산으로 사용한다.
 
 ### Writing Standard
 
@@ -72,6 +72,7 @@ src/content/posts/svg-editor/three-js-gimbal-lock.md
 - 구현 디테일이 있다면 가능한 한 실제 선택 이유와 트레이드오프를 남긴다.
 - 내부 링크를 통해 관련 프로젝트나 관련 글로 이어질 수 있게 한다.
 - `featured`는 홈에서 먼저 노출해도 되는 글에만 사용한다.
+- 대표 이미지를 둘 경우, 본문 첫 캡처가 아니라 검색/공유용 대표 자산이라는 역할로 관리한다.
 
 ## Project Model
 

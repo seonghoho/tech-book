@@ -3,7 +3,7 @@ title: "Three.js 카메라 상태 저장"
 date: "2025-07-24"
 updated: "2025-07-24"
 description: "Three.js에서 카메라 상태 저장에 대해 알아봅니다."
-image: "/og-image.png"
+image: "/images/posts/svg-editor/three-js-camera-state/cover-og.png"
 tags: ["Three.js", "WebGL", "Camera", "State"]
 featured: true
 ---
