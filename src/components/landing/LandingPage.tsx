@@ -23,7 +23,7 @@ export default function LandingPage({ recentPosts }: Props) {
 
         <LandingProjectsSection
           projects={selectedProjects}
-          sizes="(min-width: 1200px) 220px, (min-width: 768px) 30vw, 44vw"
+          sizes="(min-width: 1200px) 220px, (min-width: 768px) 30vw, (min-width: 640px) 44vw, 88vw"
         />
       </div>
     </div>
