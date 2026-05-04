@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
+import Script from "next/script";
 // components
 import GoogleAnalytics from "@/components/common/GoogleAnalytics";
 import ThemeInitializer from "@/components/common/ThemeInitializer";
@@ -89,6 +90,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884620250599904"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <Analytics />
         <SpeedInsights />
         <GoogleAnalytics />
