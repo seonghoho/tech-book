@@ -10,6 +10,7 @@ type ProjectArchiveGridProps = {
   footnote?: string;
   revealItems?: boolean;
   activatePostersOnView?: boolean;
+  posterClassName?: string;
 };
 
 export default function ProjectArchiveGrid({
@@ -20,6 +21,7 @@ export default function ProjectArchiveGrid({
   showFootnote = false,
   footnote = "프로젝트 데이터는 최신 대표 작업 4개 기준으로 정리되어 있습니다.",
   revealItems = false,
+  posterClassName,
 }: ProjectArchiveGridProps) {
   return (
     <div className="space-y-10">
@@ -30,6 +32,7 @@ export default function ProjectArchiveGrid({
             project={project}
             priority={index < priorityCount}
             sizes={sizes}
+            posterClassName={posterClassName}
             revealItem={revealItems}
           />
         ))}

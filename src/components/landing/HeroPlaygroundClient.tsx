@@ -37,11 +37,11 @@ export default function HeroPlaygroundClient() {
   };
   const archiveViewBox = `0 0 ${archiveLayout.viewBoxWidth} ${archiveLayout.viewBoxHeight}`;
   const refreshButtonClasses = [
-    "hero-refresh-button absolute bottom-8 right-8 z-[3] inline-flex h-12 w-12 items-center justify-center rounded-full border border-black/10 bg-white/70 text-[#171717]",
+    "hero-refresh-button absolute bottom-8 right-8 z-[3] inline-flex h-12 w-12 touch-manipulation items-center justify-center rounded-full border border-black/10 bg-white/70 text-[#171717] backdrop-blur-sm",
     "shadow-[0_12px_30px_rgba(36,28,18,0.12)] transition-[transform,background-color,box-shadow,opacity] duration-200 ease-out",
     "disabled:cursor-not-allowed disabled:opacity-50",
     "dark:border-white/10 dark:bg-white/50 dark:text-[#f2ede4] dark:shadow-[0_12px_30px_rgba(0,0,0,0.24)]",
-    "max-[920px]:bottom-5 max-[920px]:right-5",
+    "max-[920px]:bottom-5 max-[920px]:right-5 max-[640px]:h-11 max-[640px]:w-11",
     isRefreshPressed
       ? "translate-y-[2px] scale-[0.94] bg-white shadow-[0_8px_18px_rgba(36,28,18,0.18)] dark:bg-white/35 dark:shadow-[0_8px_20px_rgba(0,0,0,0.3)]"
       : "hover:-translate-y-[1px] hover:bg-white dark:hover:bg-white/60",

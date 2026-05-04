@@ -112,7 +112,7 @@ export default function ProjectDetailView({
               logoAlt={project.posterLogoAlt}
               priority
               sizes="(min-width: 1024px) 220px, 45vw"
-              className="aspect-square w-full"
+              className="aspect-square w-full !grayscale-0"
             />
           </div>
 

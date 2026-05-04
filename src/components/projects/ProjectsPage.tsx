@@ -17,6 +17,7 @@ export default function ProjectsPage() {
           projects={aboutProjects}
           sizes="200px"
           showFootnote
+          posterClassName="!grayscale-0"
         />
       </section>
     </div>
