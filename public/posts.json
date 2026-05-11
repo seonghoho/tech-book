@@ -57,6 +57,64 @@
     ]
   },
   {
+    "slug": "svg-editor/svg-history-snapshot-undo-redo",
+    "type": "posts",
+    "title": "SVG 에디터 undo/redo 스냅샷 설계",
+    "date": "2026-05-11",
+    "updated": "2026-05-11",
+    "description": "SVG 편집기에서 히스토리를 안정적으로 관리하기 위해 전체 객체 대신 직렬화 가능한 스냅샷을 저장한 과정입니다.",
+    "tags": [
+      "SVG",
+      "State",
+      "History",
+      "Architecture"
+    ],
+    "featured": true
+  },
+  {
+    "slug": "svg-editor/svg-pointer-coordinate-transform",
+    "type": "posts",
+    "title": "SVG 좌표 변환에서 포인터 위치가 어긋나는 문제",
+    "date": "2026-05-12",
+    "updated": "2026-05-12",
+    "description": "브라우저 좌표와 SVG 내부 좌표가 달라 드래그 위치가 어긋나는 문제를 getScreenCTM 기반으로 해결합니다.",
+    "tags": [
+      "SVG",
+      "PointerEvent",
+      "Coordinate",
+      "Troubleshooting"
+    ],
+    "featured": true
+  },
+  {
+    "slug": "svg-editor/svg-resize-handle-constraint",
+    "type": "posts",
+    "title": "SVG 도형 리사이즈 핸들 제약 조건 정리",
+    "date": "2026-05-09",
+    "updated": "2026-05-09",
+    "description": "SVG 도형 리사이즈 중 음수 크기, 중심점 이동, 최소 크기 제한을 일관된 계산 규칙으로 정리합니다.",
+    "tags": [
+      "SVG",
+      "PointerEvent",
+      "Resize",
+      "UX"
+    ]
+  },
+  {
+    "slug": "svg-editor/svg-selection-render-state",
+    "type": "posts",
+    "title": "SVG 에디터 선택 상태와 렌더링 상태 분리하기",
+    "date": "2026-05-08",
+    "updated": "2026-05-08",
+    "description": "선택, hover, drag 같은 UI 상태를 문서 데이터와 분리해 저장과 렌더링을 예측 가능하게 만든 과정입니다.",
+    "tags": [
+      "SVG",
+      "State",
+      "Architecture",
+      "Refactor"
+    ]
+  },
+  {
     "slug": "svg-editor/three-js-camera-state",
     "type": "posts",
     "title": "Three.js 카메라 상태 저장",
@@ -117,6 +175,20 @@
       "Troubleshooting"
     ],
     "featured": true
+  },
+  {
+    "slug": "svg-editor/three-js-raycaster-hit-area",
+    "type": "posts",
+    "title": "Three.js Raycaster 선택 영역 넓히기",
+    "date": "2026-05-10",
+    "updated": "2026-05-10",
+    "description": "얇은 3D 선과 작은 핸들이 Raycaster에 잘 잡히지 않는 문제를 보이지 않는 hit mesh로 해결합니다.",
+    "tags": [
+      "Three.js",
+      "Raycaster",
+      "Interaction",
+      "UX"
+    ]
   },
   {
     "slug": "svg-editor/use-line",
