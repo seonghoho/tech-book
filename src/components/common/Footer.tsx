@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="w-full border-t border-[color:var(--color-border)] bg-[color:var(--color-bg-muted)]/85">
+    <footer className="bg-[color:var(--color-bg-muted)]/85 w-full border-t border-[color:var(--color-border)]">
       <div className="mx-auto flex max-w-[1360px] flex-col gap-6 px-4 py-10 sm:px-6 lg:flex-row lg:items-end lg:justify-between lg:px-8">
         {/* <div className="max-w-xl space-y-3">
           <p className="eyebrow-label">Contact</p>
@@ -34,6 +34,9 @@ const Footer = () => {
             </Link>
             <Link href="/rss" className="accent-link">
               RSS
+            </Link>
+            <Link href="/privacy" className="accent-link">
+              Privacy
             </Link>
             <a
               href="https://github.com/seonghoho"

@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/posts",
     "/games",
     "/ux-lab",
+    "/privacy",
   ].map((path) => ({
     url: absoluteUrl(path || "/"),
     lastModified: now,
