@@ -26,6 +26,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `#${tagName} 태그`,
     description: `#${tagName} 관련 기술 포스트 모음입니다.`,
     path: `/tags/${encodeURIComponent(tagName)}`,
+    robots: {
+      index: false,
+      follow: true,
+    },
   });
 }
 
@@ -57,7 +61,7 @@ export default async function TagPage({ params, searchParams }: PageProps) {
     `/tags/${encodeURIComponent(tagName)}${page > 1 ? `?page=${page}` : ""}`;
 
   return (
-    <main className="sm:p-8 py-8">
+    <main className="py-8 sm:p-8">
       <div className="flex flex-col gap-6">
         <div className="space-y-2">
           <Link
@@ -87,9 +91,7 @@ export default async function TagPage({ params, searchParams }: PageProps) {
                     {post.title}
                   </Link>
                   {post.description ? (
-                    <p className="text-sm text-slate-600 dark:text-slate-300">
-                      {post.description}
-                    </p>
+                    <p className="text-sm text-slate-600 dark:text-slate-300">{post.description}</p>
                   ) : null}
                   <div className="flex flex-wrap gap-2 text-xs">
                     {post.category ? (
@@ -104,9 +106,7 @@ export default async function TagPage({ params, searchParams }: PageProps) {
                 </div>
                 <div className="text-xs text-slate-500 dark:text-slate-400 sm:text-right">
                   <div>{formatDate(post.date)}</div>
-                  {post.readingTime ? (
-                    <div>{post.readingTime}분 읽기</div>
-                  ) : null}
+                  {post.readingTime ? <div>{post.readingTime}분 읽기</div> : null}
                 </div>
               </div>
             </article>
@@ -124,21 +124,19 @@ export default async function TagPage({ params, searchParams }: PageProps) {
           >
             이전
           </Link>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-            (page) => (
-              <Link
-                key={page}
-                href={buildHref(page)}
-                className={`rounded-full border px-3 py-2 text-xs font-semibold ${
-                  page === safePage
-                    ? "border-emerald-400 bg-emerald-50 text-emerald-700"
-                    : "border-slate-200 text-slate-600 hover:border-emerald-300"
-                }`}
-              >
-                {page}
-              </Link>
-            )
-          )}
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+            <Link
+              key={page}
+              href={buildHref(page)}
+              className={`rounded-full border px-3 py-2 text-xs font-semibold ${
+                page === safePage
+                  ? "border-emerald-400 bg-emerald-50 text-emerald-700"
+                  : "border-slate-200 text-slate-600 hover:border-emerald-300"
+              }`}
+            >
+              {page}
+            </Link>
+          ))}
           <Link
             href={buildHref(Math.min(totalPages, safePage + 1))}
             className={`rounded-full border px-4 py-2 text-xs font-semibold ${

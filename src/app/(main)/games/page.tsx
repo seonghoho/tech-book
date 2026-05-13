@@ -5,9 +5,12 @@ import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Games",
-  description:
-    "JavaScript와 Canvas, WebGL을 사용하여 만든 간단한 웹 게임들을 플레이해보세요.",
+  description: "JavaScript와 Canvas, WebGL을 사용하여 만든 간단한 웹 게임들을 플레이해보세요.",
   path: "/games",
+  robots: {
+    index: false,
+    follow: true,
+  },
 });
 
 // ISR: 게임 로그 목록은 정적 생성 + 주기적 재검증.

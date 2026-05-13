@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 // components
+import GoogleAdsense from "@/components/common/GoogleAdsense";
 import GoogleAnalytics from "@/components/common/GoogleAnalytics";
 import ThemeInitializer from "@/components/common/ThemeInitializer";
 import Footer from "@/components/common/Footer";
@@ -10,6 +11,7 @@ import Header from "@/components/common/Header";
 import ClientHeaderWithSidebar from "@/components/layout/ClientHeaderWithSidebar";
 import { absoluteUrl, getSiteUrl } from "@/lib/site";
 import { siteDefaults } from "@/lib/seo";
+import { ADSENSE_CLIENT_ID } from "@/lib/adsense";
 
 export const metadata: Metadata = {
   title: {
@@ -53,6 +55,9 @@ export const metadata: Metadata = {
   verification: {
     google: "rcy_pt8MaVt2F6XAtMBTNX_w5pRzOZ0KykSGdw71p-U",
   },
+  other: {
+    "google-adsense-account": ADSENSE_CLIENT_ID,
+  },
 };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const websiteJsonLd = {
@@ -69,13 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   };
   return (
     <html lang="ko" suppressHydrationWarning style={{ colorScheme: "light" }}>
-      <head>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6884620250599904"
-          crossOrigin="anonymous"
-        />
-      </head>
+      <head />
       <body className="stable-screen-min flex w-full flex-col">
         <a
           href="#main-content"
@@ -96,6 +95,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
+        <GoogleAdsense />
         <Analytics />
         <SpeedInsights />
         <GoogleAnalytics />

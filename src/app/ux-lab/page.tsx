@@ -6,6 +6,10 @@ export const metadata: Metadata = buildPageMetadata({
   title: "UX Lab",
   description: "Three.js와 GSAP를 활용한 인터랙티브 실험실을 둘러보세요.",
   path: "/ux-lab",
+  robots: {
+    index: false,
+    follow: true,
+  },
 });
 
 // SSG: 실험실 페이지는 정적 생성하고 클라이언트에서 렌더링.

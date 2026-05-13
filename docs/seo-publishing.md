@@ -128,8 +128,47 @@ public/images/posts/svg-editor/three-js-gimbal-lock/body-02.webp
 ### Games
 
 - 역할: 유지 중인 실험/플레이 자산
-- 인덱싱: 현재 구현상 허용될 수 있음
+- 인덱싱: `noindex, follow`
 - 원칙: 검색과 내비게이션에서 `Projects`와 `Writing`보다 앞세우지 않는다
+
+### UX Lab
+
+- 역할: Three.js/GSAP 기반 인터랙션 실험 공간
+- 인덱싱: `noindex, follow`
+- 원칙: 포트폴리오와 글의 보조 증거로만 사용하고, 독립 검색 유입 축으로 키우지 않는다
+
+### Categories / Tags
+
+- 역할: 내부 탐색 보조
+- 인덱싱: `noindex, follow`
+- 원칙: 글 상세와 posts archive로 링크 흐름은 유지하되, 얇은 목록 페이지가 검색/광고 평가의 중심이 되지 않게 한다
+
+## AdSense Review Policy
+
+AdSense 심사와 광고 품질 신호를 고려해, Google 광고 스크립트는 핵심 퍼블리셔 콘텐츠가 있는 페이지에만 로드한다.
+
+광고 로드 허용 범위:
+
+- `/`
+- `/about`
+- `/projects`
+- `/projects/[slug]`
+- `/posts`
+- `/posts/[...slug]`
+
+광고 로드 제외 범위:
+
+- `/games`
+- `/games/[...slug]`
+- `/play`
+- `/ux-lab`
+- `/search`
+- `/categories/[category]`
+- `/tags/[tag]`
+
+이 기준은 `src/lib/adsense.ts` 와 `src/components/common/GoogleAdsense.tsx` 에서 관리한다.
+
+`/games`, `/ux-lab`, `/categories/*`, `/tags/*` 는 sitemap에서도 제외한다. 해당 페이지들은 내부 탐색과 실험 보존 목적은 유지하지만, 사이트의 대표 검색 자산이나 광고 인벤토리로 제출하지 않는다.
 
 ## Publishing Checklist
 
@@ -145,6 +184,7 @@ public/images/posts/svg-editor/three-js-gimbal-lock/body-02.webp
 - 수정 이력이 있으면 `updated`를 관리하는가
 - 페이지가 `Projects`, `Posts`, `About` 중 어느 축을 강화하는지 분명한가
 - 대표 이미지와 본문 이미지가 각자 어떤 역할인지 분리되어 있는가
+- AdSense 광고 로드 허용 범위에 포함할 만큼 충분한 게시자 콘텐츠가 있는가
 
 ## Post-Specific Checklist
 

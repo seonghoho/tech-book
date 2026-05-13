@@ -26,11 +26,7 @@ interface PageProps {
   params: Promise<{ slug: string[] }>; // 비동기 타입
 }
 
-const createExcerpt = (raw: string) =>
-  raw
-    .replace(/\n+/g, " ")
-    .trim()
-    .slice(0, 150);
+const createExcerpt = (raw: string) => raw.replace(/\n+/g, " ").trim().slice(0, 150);
 
 export async function generateStaticParams() {
   const posts = getAllPosts("games");
@@ -43,9 +39,7 @@ export async function generateMetadata({ params }: PageProps) {
   const summary = post.description ?? createExcerpt(post.rawMarkdown);
   const baseSlug = slugString.split("/")[0];
   const gameMeta = games.find((game) => game.slug === baseSlug);
-  const fallbackOgImage = absoluteUrl(
-    `/og/${slugString}?title=${encodeURIComponent(post.title)}`
-  );
+  const fallbackOgImage = absoluteUrl(`/og/${slugString}?title=${encodeURIComponent(post.title)}`);
   const imageUrl = gameMeta ? absoluteUrl(gameMeta.image) : fallbackOgImage;
 
   return buildPageMetadata({
@@ -56,6 +50,10 @@ export async function generateMetadata({ params }: PageProps) {
     images: gameMeta ? [{ url: imageUrl }] : [{ url: imageUrl, width: 1200, height: 630 }],
     publishedTime: new Date(post.date).toISOString(),
     modifiedTime: new Date(post.updated ?? post.date).toISOString(),
+    robots: {
+      index: false,
+      follow: true,
+    },
   });
 }
 
@@ -74,8 +72,7 @@ export default async function PostPage({ params }: PageProps) {
 
   const currentIndex = allPosts.findIndex((p) => p.slug === slugString);
   const [category] = slugString.split("/");
-  const relatedCandidates =
-    postsByCategory[category]?.filter((p) => p.slug !== slugString) ?? [];
+  const relatedCandidates = postsByCategory[category]?.filter((p) => p.slug !== slugString) ?? [];
   const relatedLinks = [
     ...relatedCandidates.slice(0, 3).map((p) => ({
       title: p.title,
@@ -90,8 +87,7 @@ export default async function PostPage({ params }: PageProps) {
   ];
 
   const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
-  const nextPost =
-    currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+  const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
   const baseSlug = slugString.split("/")[0];
   const gameMeta = games.find((game) => game.slug === baseSlug);
@@ -144,7 +140,7 @@ export default async function PostPage({ params }: PageProps) {
           __html: JSON.stringify(
             projectJsonLd
               ? [articleJsonLd, projectJsonLd, breadcrumbJsonLd]
-              : [articleJsonLd, breadcrumbJsonLd]
+              : [articleJsonLd, breadcrumbJsonLd],
           ),
         }}
       />
@@ -157,16 +153,8 @@ export default async function PostPage({ params }: PageProps) {
           description={summary}
           tags={post.tags}
           contentHtml={post.contentHtml}
-          prevPost={
-            prevPost
-              ? { title: prevPost.title, url: `/games/${prevPost.slug}` }
-              : null
-          }
-          nextPost={
-            nextPost
-              ? { title: nextPost.title, url: `/games/${nextPost.slug}` }
-              : null
-          }
+          prevPost={prevPost ? { title: prevPost.title, url: `/games/${prevPost.slug}` } : null}
+          nextPost={nextPost ? { title: nextPost.title, url: `/games/${nextPost.slug}` } : null}
           projectInfo={projectInfo}
           relatedLinks={relatedLinks}
         />
