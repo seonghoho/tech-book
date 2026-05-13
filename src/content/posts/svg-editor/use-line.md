@@ -1,7 +1,7 @@
 ---
 title: "useLine 로직 통합하기"
 date: "2024-12-19"
-updated: "2026-05-13"
+updated: "2024-12-19"
 description: "SVG 에디터에서 점, 선, 사각형, 원의 중복된 도형 로직을 하나의 모델로 통합한 리팩터링 과정을 정리합니다."
 image: "/images/posts/svg-editor/use-line/cover-og.png"
 tags: ["SVG", "Canvas", "Architecture", "Refactor"]

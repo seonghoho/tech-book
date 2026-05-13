@@ -1,7 +1,7 @@
 ---
 title: "SVG 도형 리사이즈 핸들 제약 조건 정리"
-date: "2026-05-09"
-updated: "2026-05-09"
+date: "2024-11-21"
+updated: "2024-11-21"
 description: "SVG 도형 리사이즈 중 음수 크기, 중심점 이동, 최소 크기 제한을 일관된 계산 규칙으로 정리합니다."
 image: "/images/posts/svg-editor/svg-resize-handle-constraint/cover-og.png"
 tags: ["SVG", "PointerEvent", "Resize", "UX"]

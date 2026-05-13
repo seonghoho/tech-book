@@ -1,7 +1,7 @@
 ---
 title: "SVG 에디터 선택 상태와 렌더링 상태 분리하기"
-date: "2026-05-08"
-updated: "2026-05-08"
+date: "2024-12-05"
+updated: "2024-12-05"
 description: "선택, hover, drag 같은 UI 상태를 문서 데이터와 분리해 저장과 렌더링을 예측 가능하게 만든 과정입니다."
 image: "/images/posts/svg-editor/svg-selection-render-state/cover-og.png"
 tags: ["SVG", "State", "Architecture", "Refactor"]

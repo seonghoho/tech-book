@@ -2,4 +2,5 @@
 export const categoryMap: Record<string, string> = {
   "mordern-js-deep-dive": "모던 자바스크립트 Deep Dive",
   "svg-editor": "SVG Editor Devlog",
+  "voca-study": "Voca Study Devlog",
 };

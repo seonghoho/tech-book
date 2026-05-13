@@ -1,7 +1,7 @@
 ---
 title: "SVG 좌표 변환에서 포인터 위치가 어긋나는 문제"
-date: "2026-05-12"
-updated: "2026-05-12"
+date: "2024-11-07"
+updated: "2024-11-07"
 description: "브라우저 좌표와 SVG 내부 좌표가 달라 드래그 위치가 어긋나는 문제를 getScreenCTM 기반으로 해결합니다."
 image: "/images/posts/svg-editor/svg-pointer-coordinate-transform/cover-og.png"
 tags: ["SVG", "PointerEvent", "Coordinate", "Troubleshooting"]

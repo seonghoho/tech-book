@@ -57,11 +57,71 @@
     ]
   },
   {
+    "slug": "svg-editor/digital-math-element-architecture",
+    "type": "posts",
+    "title": "SVG 수학교구 20종을 확장 가능하게 만든 DigitalMathElement 설계",
+    "date": "2024-09-03",
+    "updated": "2024-09-03",
+    "description": "교구마다 다른 생성, 선택, 이동, 렌더링 로직을 DigitalMathElement 기준으로 정리해 신규 교구 추가 비용을 줄인 과정입니다.",
+    "image": "/images/projects/mathcanvas/cover-og.png",
+    "tags": [
+      "SVG",
+      "TypeScript",
+      "Architecture",
+      "Refactor"
+    ]
+  },
+  {
+    "slug": "svg-editor/math-tool-interaction-rules",
+    "type": "posts",
+    "title": "교구마다 다른 drag·rotate·place 규칙을 안정적으로 분기한 방법",
+    "date": "2024-09-19",
+    "updated": "2024-09-19",
+    "description": "수학교구 캔버스에서 교구별 조작 규칙을 하나의 이벤트 흐름 안에서 안정적으로 분기한 기준을 정리합니다.",
+    "image": "/images/projects/mathcanvas/cover-og.png",
+    "tags": [
+      "SVG",
+      "Interaction",
+      "PointerEvent",
+      "Architecture"
+    ]
+  },
+  {
+    "slug": "svg-editor/math-tool-store-selection-flow",
+    "type": "posts",
+    "title": "생성된 교구 객체를 store에 등록하고 선택·편집 흐름을 추적한 구조",
+    "date": "2024-10-24",
+    "updated": "2024-10-24",
+    "description": "SVG 캔버스에서 생성된 교구 객체를 store에 등록하고 선택, 편집, 삭제 흐름을 안정적으로 추적한 방식을 정리합니다.",
+    "image": "/images/projects/mathcanvas/cover-og.png",
+    "tags": [
+      "Vue",
+      "Pinia",
+      "SVG",
+      "State"
+    ]
+  },
+  {
+    "slug": "svg-editor/pointer-keyboard-event-flow",
+    "type": "posts",
+    "title": "SVG 캔버스에서 PointerEvent와 KeyboardEvent를 함께 제어한 이유",
+    "date": "2024-10-08",
+    "updated": "2024-10-08",
+    "description": "포인터 입력과 키보드 보조 입력을 분리하지 않고 하나의 인터랙션 상태로 묶어 처리한 이유와 구현 기준을 정리합니다.",
+    "image": "/images/projects/mathcanvas/cover-og.png",
+    "tags": [
+      "SVG",
+      "PointerEvent",
+      "KeyboardEvent",
+      "Interaction"
+    ]
+  },
+  {
     "slug": "svg-editor/svg-history-snapshot-undo-redo",
     "type": "posts",
     "title": "SVG 에디터 undo/redo 스냅샷 설계",
-    "date": "2026-05-11",
-    "updated": "2026-05-11",
+    "date": "2025-01-09",
+    "updated": "2025-01-09",
     "description": "SVG 편집기에서 히스토리를 안정적으로 관리하기 위해 전체 객체 대신 직렬화 가능한 스냅샷을 저장한 과정입니다.",
     "image": "/images/posts/svg-editor/svg-history-snapshot-undo-redo/cover-og.png",
     "tags": [
@@ -76,8 +136,8 @@
     "slug": "svg-editor/svg-pointer-coordinate-transform",
     "type": "posts",
     "title": "SVG 좌표 변환에서 포인터 위치가 어긋나는 문제",
-    "date": "2026-05-12",
-    "updated": "2026-05-12",
+    "date": "2024-11-07",
+    "updated": "2024-11-07",
     "description": "브라우저 좌표와 SVG 내부 좌표가 달라 드래그 위치가 어긋나는 문제를 getScreenCTM 기반으로 해결합니다.",
     "image": "/images/posts/svg-editor/svg-pointer-coordinate-transform/cover-og.png",
     "tags": [
@@ -92,8 +152,8 @@
     "slug": "svg-editor/svg-resize-handle-constraint",
     "type": "posts",
     "title": "SVG 도형 리사이즈 핸들 제약 조건 정리",
-    "date": "2026-05-09",
-    "updated": "2026-05-09",
+    "date": "2024-11-21",
+    "updated": "2024-11-21",
     "description": "SVG 도형 리사이즈 중 음수 크기, 중심점 이동, 최소 크기 제한을 일관된 계산 규칙으로 정리합니다.",
     "image": "/images/posts/svg-editor/svg-resize-handle-constraint/cover-og.png",
     "tags": [
@@ -107,8 +167,8 @@
     "slug": "svg-editor/svg-selection-render-state",
     "type": "posts",
     "title": "SVG 에디터 선택 상태와 렌더링 상태 분리하기",
-    "date": "2026-05-08",
-    "updated": "2026-05-08",
+    "date": "2024-12-05",
+    "updated": "2024-12-05",
     "description": "선택, hover, drag 같은 UI 상태를 문서 데이터와 분리해 저장과 렌더링을 예측 가능하게 만든 과정입니다.",
     "image": "/images/posts/svg-editor/svg-selection-render-state/cover-og.png",
     "tags": [
@@ -116,6 +176,21 @@
       "State",
       "Architecture",
       "Refactor"
+    ]
+  },
+  {
+    "slug": "svg-editor/svg-threejs-canvas-experience",
+    "type": "posts",
+    "title": "2D SVG 교구와 3D Three.js 교구를 하나의 캔버스 경험으로 묶기",
+    "date": "2025-09-04",
+    "updated": "2025-09-04",
+    "description": "SVG 기반 2D 교구와 Three.js 기반 3D 교구를 같은 서비스 흐름 안에서 다루기 위해 상태와 UI 경계를 맞춘 과정을 정리합니다.",
+    "image": "/images/projects/mathcanvas/cover-og.png",
+    "tags": [
+      "SVG",
+      "Three.js",
+      "Vue",
+      "Architecture"
     ]
   },
   {
@@ -133,6 +208,21 @@
       "State"
     ],
     "featured": true
+  },
+  {
+    "slug": "svg-editor/three-js-depth-render-order",
+    "type": "posts",
+    "title": "Three.js 3D 수학교구에서 depth buffer와 renderOrder로 정보 가림 문제 해결하기",
+    "date": "2025-07-30",
+    "updated": "2025-07-30",
+    "description": "3D 수학교구에서 블록, 축, 숫자 라벨이 서로 가려지는 문제를 depthTest, depthWrite, renderOrder 기준으로 정리한 과정입니다.",
+    "image": "/images/projects/mathcanvas/detail-02.png",
+    "tags": [
+      "Three.js",
+      "WebGL",
+      "Rendering",
+      "Troubleshooting"
+    ]
   },
   {
     "slug": "svg-editor/three-js-gimbal-lock",
@@ -169,7 +259,7 @@
     "type": "posts",
     "title": "Three.js LineGeometry 문제 해결",
     "date": "2025-07-11",
-    "updated": "2026-05-13",
+    "updated": "2025-07-11",
     "description": "Three.js LineGeometry로 만든 선이 특정 시점에서 사라지는 문제를 CylinderGeometry 기반 edge로 우회한 과정을 정리합니다.",
     "image": "/images/posts/svg-editor/three-js-line-geometry-error/cover-og.png",
     "tags": [
@@ -184,8 +274,8 @@
     "slug": "svg-editor/three-js-raycaster-hit-area",
     "type": "posts",
     "title": "Three.js Raycaster 선택 영역 넓히기",
-    "date": "2026-05-10",
-    "updated": "2026-05-10",
+    "date": "2025-08-14",
+    "updated": "2025-08-14",
     "description": "얇은 3D 선과 작은 핸들이 Raycaster에 잘 잡히지 않는 문제를 보이지 않는 hit mesh로 해결합니다.",
     "image": "/images/posts/svg-editor/three-js-raycaster-hit-area/cover-og.png",
     "tags": [
@@ -200,7 +290,7 @@
     "type": "posts",
     "title": "useLine 로직 통합하기",
     "date": "2024-12-19",
-    "updated": "2026-05-13",
+    "updated": "2024-12-19",
     "description": "SVG 에디터에서 점, 선, 사각형, 원의 중복된 도형 로직을 하나의 모델로 통합한 리팩터링 과정을 정리합니다.",
     "image": "/images/posts/svg-editor/use-line/cover-og.png",
     "tags": [
@@ -208,6 +298,81 @@
       "Canvas",
       "Architecture",
       "Refactor"
+    ]
+  },
+  {
+    "slug": "voca-study/blank-quiz-state",
+    "type": "posts",
+    "title": "빈칸 채우기 퀴즈에서 선택지, 정답, 피드백 상태를 관리하는 방법",
+    "date": "2024-05-23",
+    "updated": "2024-05-23",
+    "description": "영단어 빈칸 채우기 화면에서 선택지, 제출, 정답 표시, 피드백 상태를 분리해 관리한 방식을 정리합니다.",
+    "image": "/images/portfolio/voca-study-3.png",
+    "tags": [
+      "React",
+      "State",
+      "Quiz",
+      "UX"
+    ]
+  },
+  {
+    "slug": "voca-study/definition-example-flow",
+    "type": "posts",
+    "title": "영단어 학습 화면에서 정의 보기와 예문 노출을 분리한 이유",
+    "date": "2024-05-09",
+    "updated": "2024-05-09",
+    "description": "단어, 정의, 예문을 한 번에 보여주지 않고 사용자의 학습 흐름에 맞춰 단계적으로 노출한 이유를 정리합니다.",
+    "image": "/images/portfolio/voca-study-1.png",
+    "tags": [
+      "React",
+      "UX",
+      "Learning",
+      "Interaction"
+    ]
+  },
+  {
+    "slug": "voca-study/study-session-state",
+    "type": "posts",
+    "title": "학습 타이머와 문제 진행 상태를 함께 다루는 Voca Study 세션 구조",
+    "date": "2024-05-30",
+    "updated": "2024-05-30",
+    "description": "영단어 학습 세션에서 타이머, 현재 단계, 문제 진행 상태를 분리해 예측 가능하게 관리한 기준을 정리합니다.",
+    "image": "/images/portfolio/voca-study-3.png",
+    "tags": [
+      "React",
+      "State",
+      "Learning",
+      "Architecture"
+    ]
+  },
+  {
+    "slug": "voca-study/synonym-antonym-ui",
+    "type": "posts",
+    "title": "동의어와 반의어를 함께 보여주는 단어 의미 확장 UI 설계",
+    "date": "2024-05-16",
+    "updated": "2024-05-16",
+    "description": "단어의 뜻만 외우는 화면에서 벗어나 동의어, 반의어, 예문을 함께 배치해 의미를 확장한 UI 설계 기준을 정리합니다.",
+    "image": "/images/portfolio/voca-study-2.png",
+    "tags": [
+      "React",
+      "UX",
+      "Learning",
+      "UI"
+    ]
+  },
+  {
+    "slug": "voca-study/week-progress-ui",
+    "type": "posts",
+    "title": "Voca Study에서 주차별 학습 진행률을 단계형 UI로 표현한 방법",
+    "date": "2024-05-02",
+    "updated": "2024-05-02",
+    "description": "영단어 학습 서비스에서 현재 주차, 단계 진행률, 남은 흐름을 한눈에 보여주기 위해 진행률 UI를 설계한 기준을 정리합니다.",
+    "image": "/images/portfolio/voca-study-1.png",
+    "tags": [
+      "React",
+      "UI",
+      "Learning",
+      "State"
     ]
   },
   {

@@ -1,7 +1,7 @@
 ---
 title: "SVG 에디터 undo/redo 스냅샷 설계"
-date: "2026-05-11"
-updated: "2026-05-11"
+date: "2025-01-09"
+updated: "2025-01-09"
 description: "SVG 편집기에서 히스토리를 안정적으로 관리하기 위해 전체 객체 대신 직렬화 가능한 스냅샷을 저장한 과정입니다."
 image: "/images/posts/svg-editor/svg-history-snapshot-undo-redo/cover-og.png"
 tags: ["SVG", "State", "History", "Architecture"]

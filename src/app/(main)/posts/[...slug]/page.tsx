@@ -11,6 +11,7 @@ import {
 } from "@/lib/seo";
 import nextDynamic from "next/dynamic";
 import { categoryMap } from "@/lib/categoryMap";
+import { notFound } from "next/navigation";
 
 const PostContent = nextDynamic(() => import("@/components/posts/PostContent"), {
   ssr: true,
@@ -24,11 +25,19 @@ interface PageProps {
   params: Promise<{ slug: string[] }>;
 }
 
-const createExcerpt = (raw: string) =>
-  raw
-    .replace(/\n+/g, " ")
-    .trim()
-    .slice(0, 150);
+const createExcerpt = (raw: string) => raw.replace(/\n+/g, " ").trim().slice(0, 150);
+
+const getPostOrNotFound = async (slugString: string) => {
+  try {
+    return await getPostData("posts", slugString);
+  } catch (error) {
+    if (error instanceof Error && error.message.startsWith("Post not found for slug:")) {
+      notFound();
+    }
+
+    throw error;
+  }
+};
 
 export function generateStaticParams(): { slug: string[] }[] {
   const postsByCategory = getPostsByCategory("posts");
@@ -41,12 +50,10 @@ export function generateStaticParams(): { slug: string[] }[] {
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   const slugString = slug.join("/");
-  const post = await getPostData("posts", slugString);
+  const post = await getPostOrNotFound(slugString);
 
   const summary = post.description ?? createExcerpt(post.rawMarkdown);
-  const ogImage = absoluteUrl(
-    `/og/${slugString}?title=${encodeURIComponent(post.title)}`
-  );
+  const ogImage = absoluteUrl(`/og/${slugString}?title=${encodeURIComponent(post.title)}`);
   const shouldUseDynamicOg = !post.image || post.image === siteDefaults.defaultImage;
   const imageUrl = shouldUseDynamicOg ? ogImage : absoluteUrl(post.image);
   const modifiedTime = post.updated ?? post.date;
@@ -56,7 +63,9 @@ export async function generateMetadata({ params }: PageProps) {
     description: summary,
     path: `/posts/${slugString}`,
     type: "article",
-    images: shouldUseDynamicOg ? [{ url: imageUrl, width: 1200, height: 630 }] : [{ url: imageUrl }],
+    images: shouldUseDynamicOg
+      ? [{ url: imageUrl, width: 1200, height: 630 }]
+      : [{ url: imageUrl }],
     publishedTime: new Date(post.date).toISOString(),
     modifiedTime: new Date(modifiedTime).toISOString(),
   });
@@ -71,7 +80,7 @@ export default async function PostPage({ params }: PageProps) {
   const postsByCategory = getPostsByCategory("posts");
   const allPosts = Object.values(postsByCategory).flat();
 
-  const post = await getPostData("posts", slugString);
+  const post = await getPostOrNotFound(slugString);
   const summary = post.description ?? createExcerpt(post.rawMarkdown);
   const shouldUseDynamicOg = !post.image || post.image === siteDefaults.defaultImage;
   const resolvedImageUrl = shouldUseDynamicOg
@@ -81,8 +90,7 @@ export default async function PostPage({ params }: PageProps) {
 
   const currentIndex = allPosts.findIndex((p) => p.slug === slugString);
   const [category] = slugString.split("/");
-  const relatedCandidates =
-    postsByCategory[category]?.filter((p) => p.slug !== slugString) ?? [];
+  const relatedCandidates = postsByCategory[category]?.filter((p) => p.slug !== slugString) ?? [];
   const relatedLinks = [
     ...relatedCandidates.slice(0, 3).map((p) => ({
       title: p.title,
@@ -97,8 +105,7 @@ export default async function PostPage({ params }: PageProps) {
   ];
 
   const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
-  const nextPost =
-    currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+  const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
   const jsonLd = buildArticleJsonLd({
     title: post.title,
@@ -137,16 +144,8 @@ export default async function PostPage({ params }: PageProps) {
           tags={post.tags}
           category={category}
           contentHtml={post.contentHtml}
-          prevPost={
-            prevPost
-              ? { title: prevPost.title, url: `/posts/${prevPost.slug}` }
-              : null
-          }
-          nextPost={
-            nextPost
-              ? { title: nextPost.title, url: `/posts/${nextPost.slug}` }
-              : null
-          }
+          prevPost={prevPost ? { title: prevPost.title, url: `/posts/${prevPost.slug}` } : null}
+          nextPost={nextPost ? { title: nextPost.title, url: `/posts/${nextPost.slug}` } : null}
           relatedLinks={relatedLinks}
         />
       </main>

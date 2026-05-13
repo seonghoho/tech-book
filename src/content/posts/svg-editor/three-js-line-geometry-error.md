@@ -1,7 +1,7 @@
 ---
 title: "Three.js LineGeometry 문제 해결"
 date: "2025-07-11"
-updated: "2026-05-13"
+updated: "2025-07-11"
 description: "Three.js LineGeometry로 만든 선이 특정 시점에서 사라지는 문제를 CylinderGeometry 기반 edge로 우회한 과정을 정리합니다."
 image: "/images/posts/svg-editor/three-js-line-geometry-error/cover-og.png"
 tags: ["Three.js", "WebGL", "LineGeometry", "Troubleshooting"]

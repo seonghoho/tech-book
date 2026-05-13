@@ -1,7 +1,7 @@
 ---
 title: "Three.js Raycaster 선택 영역 넓히기"
-date: "2026-05-10"
-updated: "2026-05-10"
+date: "2025-08-14"
+updated: "2025-08-14"
 description: "얇은 3D 선과 작은 핸들이 Raycaster에 잘 잡히지 않는 문제를 보이지 않는 hit mesh로 해결합니다."
 image: "/images/posts/svg-editor/three-js-raycaster-hit-area/cover-og.png"
 tags: ["Three.js", "Raycaster", "Interaction", "UX"]
