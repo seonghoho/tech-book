@@ -4,6 +4,7 @@ import { buildPageMetadata } from "@/lib/seo";
 import { getAllPosts } from "@/lib/getAllPosts";
 import { categoryMap } from "@/lib/categoryMap";
 import PostListItem from "@/components/posts/PostListItem";
+import { filterIndexablePosts } from "@/lib/contentVisibility";
 
 const POSTS_PER_PAGE = 10;
 
@@ -13,8 +14,7 @@ export const revalidate = 180;
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Posts",
-  description:
-    "프론트엔드, JavaScript, Three.js 등 다양한 기술 주제에 대한 포스트를 확인해보세요.",
+  description: "프론트엔드, JavaScript, Three.js 등 다양한 기술 주제에 대한 포스트를 확인해보세요.",
   path: "/posts",
 });
 
@@ -36,21 +36,15 @@ export default async function PostsPage({ searchParams }: PageProps) {
   const selectedCategory = resolvedSearchParams?.category ?? "";
   const currentPage = Math.max(1, Number(resolvedSearchParams?.page ?? "1"));
 
-  const posts = getAllPosts("posts").sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  const posts = filterIndexablePosts(getAllPosts("posts")).sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 
   const filtered = posts.filter((post) => {
-    const matchesCategory = selectedCategory
-      ? post.category === selectedCategory
-      : true;
-    const matchesTag = selectedTag
-      ? post.tags?.includes(selectedTag)
-      : true;
+    const matchesCategory = selectedCategory ? post.category === selectedCategory : true;
+    const matchesTag = selectedTag ? post.tags?.includes(selectedTag) : true;
     const matchesQuery = query
-      ? `${post.title} ${post.description ?? ""}`
-          .toLowerCase()
-          .includes(query.toLowerCase())
+      ? `${post.title} ${post.description ?? ""}`.toLowerCase().includes(query.toLowerCase())
       : true;
     return matchesCategory && matchesTag && matchesQuery;
   });
@@ -83,25 +77,25 @@ export default async function PostsPage({ searchParams }: PageProps) {
         <div className="space-y-3">
           <p className="eyebrow-label">Writing</p>
           <h1 className="section-title">기술 문서 목록</h1>
-          <p className="body-copy">
-            총 {filtered.length}개의 글이 검색되었습니다.
-          </p>
+          <p className="body-copy">총 {filtered.length}개의 글이 검색되었습니다.</p>
         </div>
 
         <div className="surface-panel space-y-4 p-4 sm:p-5">
-          <form action="/posts" method="get" className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <form
+            action="/posts"
+            method="get"
+            className="flex flex-col gap-3 sm:flex-row sm:items-center"
+          >
             <input
               name="query"
               defaultValue={query}
               placeholder="키워드 검색"
-              className="input-shell min-w-0 w-full flex-1"
+              className="input-shell w-full min-w-0 flex-1"
             />
             {selectedCategory ? (
               <input type="hidden" name="category" value={selectedCategory} />
             ) : null}
-            {selectedTag ? (
-              <input type="hidden" name="tag" value={selectedTag} />
-            ) : null}
+            {selectedTag ? <input type="hidden" name="tag" value={selectedTag} /> : null}
             <button type="submit" className="button-primary w-full shrink-0 sm:w-auto">
               검색
             </button>
@@ -159,21 +153,19 @@ export default async function PostsPage({ searchParams }: PageProps) {
           >
             이전
           </Link>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-            (page) => (
-              <Link
-                key={page}
-                href={buildHref({ page: String(page) })}
-                className={`rounded-full border px-3 py-2 text-xs font-semibold ${
-                  page === safePage
-                    ? "border-transparent bg-[color:var(--color-accent-soft)] text-[color:var(--color-accent)]"
-                    : "border-[color:var(--color-border)] text-[color:var(--color-text-secondary)] hover:border-[color:var(--color-border-strong)]"
-                }`}
-              >
-                {page}
-              </Link>
-            )
-          )}
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+            <Link
+              key={page}
+              href={buildHref({ page: String(page) })}
+              className={`rounded-full border px-3 py-2 text-xs font-semibold ${
+                page === safePage
+                  ? "border-transparent bg-[color:var(--color-accent-soft)] text-[color:var(--color-accent)]"
+                  : "border-[color:var(--color-border)] text-[color:var(--color-text-secondary)] hover:border-[color:var(--color-border-strong)]"
+              }`}
+            >
+              {page}
+            </Link>
+          ))}
           <Link
             href={buildHref({ page: String(Math.min(totalPages, safePage + 1)) })}
             className={`rounded-full border px-4 py-2 text-xs font-semibold ${

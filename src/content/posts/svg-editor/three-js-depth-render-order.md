@@ -1,7 +1,7 @@
 ---
 title: "Three.js 3D 수학교구에서 depth buffer와 renderOrder로 정보 가림 문제 해결하기"
 date: "2025-07-30"
-updated: "2025-07-30"
+updated: "2026-05-29"
 description: "3D 수학교구에서 블록, 축, 숫자 라벨이 서로 가려지는 문제를 depthTest, depthWrite, renderOrder 기준으로 정리한 과정입니다."
 image: "/images/projects/mathcanvas/detail-02.png"
 tags: ["Three.js", "WebGL", "Rendering", "Troubleshooting"]
@@ -42,6 +42,8 @@ const labelMaterial = new THREE.SpriteMaterial({
 ## depthTest와 depthWrite 분리
 
 라벨이나 보조선은 필요에 따라 depthTest와 depthWrite를 따로 조정했습니다.
+
+![Three.js 3D 수학교구에서 실제 물체는 depth 처리를 유지하고 라벨 보조선 선택 표시는 depthTest depthWrite renderOrder로 정보 레이어를 분리하는 구조](/images/posts/svg-editor/three-js-depth-render-order/body-01.png)
 
 ```ts
 const labelMaterial = new THREE.SpriteMaterial({

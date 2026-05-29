@@ -1,7 +1,7 @@
 ---
 title: "SVG 수학교구 20종을 확장 가능하게 만든 DigitalMathElement 설계"
 date: "2024-09-03"
-updated: "2024-09-03"
+updated: "2026-05-29"
 description: "교구마다 다른 생성, 선택, 이동, 렌더링 로직을 DigitalMathElement 기준으로 정리해 신규 교구 추가 비용을 줄인 과정입니다."
 image: "/images/projects/mathcanvas/cover-og.png"
 tags: ["SVG", "TypeScript", "Architecture", "Refactor"]
@@ -22,6 +22,8 @@ tags: ["SVG", "TypeScript", "Architecture", "Refactor"]
 
 교구마다 모양은 달라도 캔버스 입장에서 필요한 최소 동작은 비슷했습니다.
 그래서 상위 클래스를 먼저 두고, 교구가 반드시 가져야 하는 계약을 정리했습니다.
+
+![DigitalMathElement 상위 클래스가 공통 생명주기를 담당하고 하위 수학교구 클래스가 교구별 계산 규칙을 담당하는 구조](/images/posts/svg-editor/digital-math-element-architecture/body-01.png)
 
 ```ts
 abstract class DigitalMathElement {

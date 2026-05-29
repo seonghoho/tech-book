@@ -1,7 +1,7 @@
 ---
 title: "빈칸 채우기 퀴즈에서 선택지, 정답, 피드백 상태를 관리하는 방법"
 date: "2024-05-23"
-updated: "2024-05-23"
+updated: "2026-05-29"
 description: "영단어 빈칸 채우기 화면에서 선택지, 제출, 정답 표시, 피드백 상태를 분리해 관리한 방식을 정리합니다."
 image: "/images/portfolio/voca-study-3.png"
 tags: ["React", "State", "Quiz", "UX"]
@@ -29,6 +29,8 @@ tags: ["React", "State", "Quiz", "UX"]
 ## 퀴즈 상태를 단계로 나누기
 
 먼저 퀴즈의 진행 상태를 명확히 나눴습니다.
+
+![빈칸 채우기 퀴즈에서 선택 제출 피드백 상태를 분리해 제출 전 정답 노출을 막는 상태 흐름](/images/posts/voca-study/blank-quiz-state/body-01.png)
 
 ```ts
 type QuizStatus = "idle" | "selected" | "submitted";

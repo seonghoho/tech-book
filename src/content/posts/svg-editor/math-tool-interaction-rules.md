@@ -1,7 +1,7 @@
 ---
 title: "교구마다 다른 drag·rotate·place 규칙을 안정적으로 분기한 방법"
 date: "2024-09-19"
-updated: "2024-09-19"
+updated: "2026-05-29"
 description: "수학교구 캔버스에서 교구별 조작 규칙을 하나의 이벤트 흐름 안에서 안정적으로 분기한 기준을 정리합니다."
 image: "/images/projects/mathcanvas/cover-og.png"
 tags: ["SVG", "Interaction", "PointerEvent", "Architecture"]
@@ -28,6 +28,8 @@ tags: ["SVG", "Interaction", "PointerEvent", "Architecture"]
 
 해결의 시작은 “어떤 교구인가”보다 “지금 어떤 조작 중인가”를 먼저 구분하는 것이었습니다.
 교구 타입은 다르더라도 사용자의 입력 상태는 비교적 명확하게 나눌 수 있습니다.
+
+![수학교구 캔버스에서 pointerdown 시점에 조작 모드를 확정하고 교구 객체가 drag rotate place 규칙을 처리하는 구조](/images/posts/svg-editor/math-tool-interaction-rules/body-01.png)
 
 ```ts
 type InteractionMode =

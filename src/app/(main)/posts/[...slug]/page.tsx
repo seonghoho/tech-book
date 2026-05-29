@@ -9,6 +9,7 @@ import {
   buildPageMetadata,
   siteDefaults,
 } from "@/lib/seo";
+import { getPostRobots } from "@/lib/contentVisibility";
 import nextDynamic from "next/dynamic";
 import { categoryMap } from "@/lib/categoryMap";
 import { notFound } from "next/navigation";
@@ -63,6 +64,7 @@ export async function generateMetadata({ params }: PageProps) {
     description: summary,
     path: `/posts/${slugString}`,
     type: "article",
+    robots: getPostRobots(slugString),
     images: shouldUseDynamicOg
       ? [{ url: imageUrl, width: 1200, height: 630 }]
       : [{ url: imageUrl }],
@@ -91,17 +93,25 @@ export default async function PostPage({ params }: PageProps) {
   const currentIndex = allPosts.findIndex((p) => p.slug === slugString);
   const [category] = slugString.split("/");
   const relatedCandidates = postsByCategory[category]?.filter((p) => p.slug !== slugString) ?? [];
+  const projectLink =
+    category === "svg-editor"
+      ? {
+          title: "MathCanvas 프로젝트 살펴보기",
+          url: "/projects/mathcanvas",
+          categoryLabel: "Related project",
+        }
+      : {
+          title: "프로젝트 아카이브 살펴보기",
+          url: "/projects",
+          categoryLabel: "Projects",
+        };
   const relatedLinks = [
     ...relatedCandidates.slice(0, 3).map((p) => ({
       title: p.title,
       url: `/posts/${p.slug}`,
       categoryLabel: "관련 글",
     })),
-    {
-      title: "게임 프로젝트도 살펴보기",
-      url: "/games",
-      categoryLabel: "Projects",
-    },
+    projectLink,
   ];
 
   const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;

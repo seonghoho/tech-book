@@ -1,10 +1,11 @@
 import SidebarContainer from "@/components/layout/SidebarContainer";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
+import { filterIndexablePostGroups } from "@/lib/contentVisibility";
 import Loading from "@/app/(main)/posts/[...slug]/loading";
 import { Suspense } from "react";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
-  const postData = getPostsByCategory("posts");
+  const postData = filterIndexablePostGroups(getPostsByCategory("posts"));
   const gameData = getPostsByCategory("games");
 
   return (

@@ -1,7 +1,7 @@
 ---
 title: "생성된 교구 객체를 store에 등록하고 선택·편집 흐름을 추적한 구조"
 date: "2024-10-24"
-updated: "2024-10-24"
+updated: "2026-05-29"
 description: "SVG 캔버스에서 생성된 교구 객체를 store에 등록하고 선택, 편집, 삭제 흐름을 안정적으로 추적한 방식을 정리합니다."
 image: "/images/projects/mathcanvas/cover-og.png"
 tags: ["Vue", "Pinia", "SVG", "State"]
@@ -30,6 +30,8 @@ tags: ["Vue", "Pinia", "SVG", "State"]
 DOM element나 이벤트 리스너 같은 런타임 참조를 그대로 전역 상태에 넣으면 추적하기 어렵고, 저장 가능한 데이터와도 섞입니다.
 
 그래서 store에는 캔버스가 외부 UI와 공유해야 하는 상태를 중심으로 넣었습니다.
+
+![수학교구 캔버스에서 store에는 공유 상태를 두고 registry에는 런타임 교구 인스턴스를 두어 생성과 선택 흐름을 추적하는 구조](/images/posts/svg-editor/math-tool-store-selection-flow/body-01.png)
 
 ```ts
 type CanvasStoreState = {

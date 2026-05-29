@@ -1,7 +1,7 @@
 ---
 title: "2D SVG 교구와 3D Three.js 교구를 하나의 캔버스 경험으로 묶기"
 date: "2025-09-04"
-updated: "2025-09-04"
+updated: "2026-05-29"
 description: "SVG 기반 2D 교구와 Three.js 기반 3D 교구를 같은 서비스 흐름 안에서 다루기 위해 상태와 UI 경계를 맞춘 과정을 정리합니다."
 image: "/images/projects/mathcanvas/cover-og.png"
 tags: ["SVG", "Three.js", "Vue", "Architecture"]
@@ -35,6 +35,8 @@ Three.js는 WebGL scene, camera, renderer, controls를 중심으로 동작합니
 SVG 교구와 Three.js 교구는 렌더링 방식이 너무 다르기 때문에, 같은 추상화로 모든 것을 처리하려고 하면 오히려 복잡해집니다.
 
 그래서 바깥쪽 서비스 흐름만 공통화하고, 렌더링 계층은 분리했습니다.
+
+![SVG와 Three.js 교구를 하나의 캔버스 경험으로 묶기 위해 공통 store와 분리된 렌더링 계층을 연결한 구조](/images/posts/svg-editor/svg-threejs-canvas-experience/body-01.png)
 
 ```ts
 type CanvasItem =

@@ -1,7 +1,7 @@
 ---
 title: "SVG 에디터 선택 상태와 렌더링 상태 분리하기"
 date: "2024-12-05"
-updated: "2024-12-05"
+updated: "2026-05-29"
 description: "선택, hover, drag 같은 UI 상태를 문서 데이터와 분리해 저장과 렌더링을 예측 가능하게 만든 과정입니다."
 image: "/images/posts/svg-editor/svg-selection-render-state/cover-og.png"
 tags: ["SVG", "State", "Architecture", "Refactor"]
@@ -42,6 +42,8 @@ type Shape = {
 
 해결 방향은 단순했습니다.
 도형 자체의 데이터와 에디터 UI 상태를 분리했습니다.
+
+![SVG 에디터에서 문서 상태와 선택 hover drag 같은 UI 상태를 분리하고 렌더링 시점에 파생값으로 계산하는 구조](/images/posts/svg-editor/svg-selection-render-state/body-01.png)
 
 ```ts
 type DocumentState = {

@@ -33,72 +33,38 @@ export default function LandingProjectsSection({ projects, sizes }: LandingProje
   ];
 
   return (
-    <>
-      <section className="hidden lg:block">
-        <div className="surface-panel-strong relative overflow-hidden">
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-            {projects.slice(0, 3).map((project, index) => (
-              <div
-                key={project.slug}
-                className={`absolute rounded-full blur-3xl ${projectGlowClasses[index]}`}
-                style={{ backgroundColor: hexToRgba(project.posterColor, 0.16) }}
-              />
-            ))}
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.2)_0%,transparent_30%,transparent_100%)] dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.04)_0%,transparent_32%,transparent_100%)]" />
-          </div>
+    <section>
+      <div className="surface-panel-strong relative overflow-hidden">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          {projects.slice(0, 3).map((project, index) => (
+            <div
+              key={project.slug}
+              className={`absolute rounded-full blur-3xl ${projectGlowClasses[index]}`}
+              style={{ backgroundColor: hexToRgba(project.posterColor, 0.16) }}
+            />
+          ))}
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.2)_0%,transparent_30%,transparent_100%)] dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.04)_0%,transparent_32%,transparent_100%)]" />
+        </div>
 
-          <div className="relative border-b border-[color:var(--color-border)] px-4 pb-4 pt-4 sm:px-6 sm:pb-6 sm:pt-6">
-            <div className="space-y-3">
-              <p className="eyebrow-label">Projects</p>
-              <h2 className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)] sm:text-3xl">
-                프로젝트 둘러보기
-              </h2>
-              <p className="body-copy max-w-2xl">
-                대표 프로젝트 3개를 한 화면에서 바로 확인할 수 있도록 정적으로 배치했습니다.
-              </p>
-            </div>
-          </div>
-
-          <div className="relative px-4 pb-4 pt-4 sm:px-6 sm:pb-6 sm:pt-6">
-            <div className="grid w-full grid-cols-3 gap-8">
-              <StaticProjectGrid projects={projects} sizes={sizes} />
-            </div>
+        <div className="relative border-b border-[color:var(--color-border)] px-4 pb-4 pt-4 sm:px-6 sm:pb-6 sm:pt-6">
+          <div className="space-y-3">
+            <p className="eyebrow-label">Projects</p>
+            <h2 className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)] sm:text-3xl">
+              프로젝트 둘러보기
+            </h2>
+            <p className="body-copy max-w-2xl">
+              대표 프로젝트를 한 화면에서 확인하고, 각 상세 페이지에서 구현 맥락과 결과를 살펴볼 수
+              있습니다.
+            </p>
           </div>
         </div>
-      </section>
 
-      <section className="lg:hidden">
-        <div className="surface-panel-strong relative overflow-hidden">
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-            {projects.slice(0, 3).map((project, index) => (
-              <div
-                key={project.slug}
-                className={`absolute rounded-full blur-3xl ${projectGlowClasses[index]}`}
-                style={{ backgroundColor: hexToRgba(project.posterColor, 0.16) }}
-              />
-            ))}
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.2)_0%,transparent_30%,transparent_100%)] dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.04)_0%,transparent_32%,transparent_100%)]" />
-          </div>
-
-          <div className="relative border-b border-[color:var(--color-border)] px-4 pb-4 pt-4 sm:px-6 sm:pb-6 sm:pt-6">
-            <div className="space-y-3">
-              <p className="eyebrow-label">Projects</p>
-              <h2 className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)] sm:text-3xl">
-                프로젝트 둘러보기
-              </h2>
-              <p className="body-copy max-w-2xl">
-                진행한 프로젝트 내용을 자세히 확인해볼 수 있습니다.
-              </p>
-            </div>
-          </div>
-
-          <div className="relative px-4 pb-4 pt-4 sm:px-6 sm:pb-6 sm:pt-6">
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10">
-              <StaticProjectGrid projects={projects} sizes={sizes} />
-            </div>
+        <div className="relative px-4 pb-4 pt-4 sm:px-6 sm:pb-6 sm:pt-6">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3">
+            <StaticProjectGrid projects={projects} sizes={sizes} />
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
