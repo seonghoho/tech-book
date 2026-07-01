@@ -117,6 +117,36 @@
     ]
   },
   {
+    "slug": "svg-editor/svg-editor-interaction-debugging",
+    "type": "posts",
+    "title": "SVG 에디터 인터랙션이 꼬일 때 디버깅한 순서",
+    "date": "2026-06-19",
+    "updated": "2026-07-01",
+    "description": "SVG 에디터에서 drag, resize, keyboard 입력이 서로 간섭할 때 포인터 좌표, active tool, capture, 히스토리 기록 순서로 문제를 좁힌 경험입니다.",
+    "image": "/images/projects/mathcanvas/cover-og.png",
+    "tags": [
+      "SVG",
+      "PointerEvent",
+      "KeyboardEvent",
+      "Debugging"
+    ]
+  },
+  {
+    "slug": "svg-editor/svg-editor-state-boundary",
+    "type": "posts",
+    "title": "SVG 에디터에서 문서 상태와 편집 상태의 경계를 나눈 기준",
+    "date": "2026-06-18",
+    "updated": "2026-07-01",
+    "description": "SVG 에디터에서 저장해야 하는 문서 데이터와 선택, hover, drag 같은 편집 UI 상태를 분리해 히스토리와 렌더링을 안정화한 기준입니다.",
+    "image": "/images/projects/mathcanvas/cover-og.png",
+    "tags": [
+      "SVG",
+      "State",
+      "Architecture",
+      "Editor"
+    ]
+  },
+  {
     "slug": "svg-editor/svg-history-snapshot-undo-redo",
     "type": "posts",
     "title": "SVG 에디터 undo/redo 스냅샷 설계",
@@ -271,6 +301,21 @@
     "featured": true
   },
   {
+    "slug": "svg-editor/three-js-object-selection-debugging",
+    "type": "posts",
+    "title": "Three.js 오브젝트 선택이 실패할 때 확인한 것들",
+    "date": "2026-06-20",
+    "updated": "2026-07-01",
+    "description": "Three.js 편집 UI에서 클릭이 안 잡히거나 엉뚱한 객체가 선택되는 문제를 Raycaster 대상, hit mesh, userData, 선택 우선순위로 좁힌 과정입니다.",
+    "image": "/images/projects/mathcanvas/cover-og.png",
+    "tags": [
+      "Three.js",
+      "Raycaster",
+      "Debugging",
+      "Interaction"
+    ]
+  },
+  {
     "slug": "svg-editor/three-js-raycaster-hit-area",
     "type": "posts",
     "title": "Three.js Raycaster 선택 영역 넓히기",
@@ -283,6 +328,21 @@
       "Raycaster",
       "Interaction",
       "UX"
+    ]
+  },
+  {
+    "slug": "svg-editor/three-js-rendering-priority-debugging",
+    "type": "posts",
+    "title": "Three.js 렌더링 순서가 꼬일 때 depth와 renderOrder로 정리한 기준",
+    "date": "2026-06-21",
+    "updated": "2026-07-01",
+    "description": "Three.js 3D 교구에서 면, edge, 라벨, 보조선이 서로 가려질 때 depthTest, depthWrite, renderOrder를 나눠 적용한 디버깅 기준입니다.",
+    "image": "/images/projects/mathcanvas/cover-og.png",
+    "tags": [
+      "Three.js",
+      "WebGL",
+      "Rendering",
+      "Debugging"
     ]
   },
   {
