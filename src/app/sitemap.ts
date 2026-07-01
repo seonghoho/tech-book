@@ -12,6 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     (path) => ({
       url: absoluteUrl(path || "/"),
       lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: path === "" ? 1 : 0.8,
     }),
   );
 
@@ -20,11 +22,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .map((post) => ({
       url: absoluteUrl(`/posts/${post.slug}`),
       lastModified: new Date(post.updated ?? post.date),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
     }));
 
   const projectPages = aboutProjects.map((project) => ({
     url: absoluteUrl(`/projects/${project.slug}`),
     lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
   }));
 
   return [...staticPages, ...projectPages, ...posts];

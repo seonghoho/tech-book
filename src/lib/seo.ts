@@ -1,20 +1,11 @@
 import type { Metadata } from "next";
-import { absoluteUrl, getSiteUrl } from "./site";
+import { absoluteUrl, SITE_CONFIG } from "./site";
 
 export const siteDefaults = {
-  siteName: "Seonghoho",
-  title: "Seonghoho 기술 블로그",
-  description:
-    "Modern JavaScript, Three.js, SVG 등 프론트엔드 기술을 깊이 있게 다루는 기술 블로그입니다.",
-  keywords: [
-    "JavaScript",
-    "Three.js",
-    "SVG",
-    "Frontend",
-    "프론트엔드",
-    "기술 블로그",
-    "Tech Blog",
-  ],
+  siteName: SITE_CONFIG.name,
+  title: SITE_CONFIG.title,
+  description: SITE_CONFIG.description,
+  keywords: ["JavaScript", "Three.js", "SVG", "Frontend", "프론트엔드", "기술 블로그", "Tech Blog"],
   defaultImage: "/og-image.png",
 };
 
@@ -43,20 +34,21 @@ export function buildPageMetadata({
 }: BuildMetadataOptions): Metadata {
   const url = absoluteUrl(path);
   const resolvedTitle = absoluteTitle ?? title;
-  const imageList =
-    images ??
-    [
-      {
-        url: absoluteUrl(siteDefaults.defaultImage),
-        width: 1200,
-        height: 630,
-      },
-    ];
+  const imageList = images ?? [
+    {
+      url: absoluteUrl(siteDefaults.defaultImage),
+      width: 1200,
+      height: 630,
+    },
+  ];
 
   return {
     title: absoluteTitle ? { absolute: absoluteTitle } : title,
     description,
     keywords: siteDefaults.keywords,
+    authors: [{ name: SITE_CONFIG.author.name, url: SITE_CONFIG.author.url }],
+    creator: SITE_CONFIG.author.name,
+    publisher: SITE_CONFIG.name,
     alternates: {
       canonical: url,
     },
@@ -66,7 +58,7 @@ export function buildPageMetadata({
       url,
       siteName: siteDefaults.siteName,
       images: imageList,
-      locale: "ko_KR",
+      locale: SITE_CONFIG.locale,
       type,
     },
     twitter: {
@@ -84,10 +76,11 @@ export function buildPageMetadata({
             url,
             siteName: siteDefaults.siteName,
             images: imageList,
-            locale: "ko_KR",
+            locale: SITE_CONFIG.locale,
             type: "article",
             publishedTime,
             modifiedTime,
+            authors: [SITE_CONFIG.author.name],
           },
         }
       : {}),
@@ -115,39 +108,33 @@ export function buildArticleJsonLd({
 }) {
   return {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": absoluteUrl(path),
     },
+    url: absoluteUrl(path),
     headline: title,
     description,
-    image,
+    image: absoluteUrl(image),
     datePublished,
     dateModified: dateModified ?? datePublished,
-    keywords: tags?.length ? tags.join(", ") : undefined,
+    keywords: tags?.length ? tags : undefined,
     articleSection: category,
     author: {
       "@type": "Person",
-      name: "Choi Seongho",
-      url: getSiteUrl(),
+      name: SITE_CONFIG.author.name,
+      url: SITE_CONFIG.author.url,
     },
     publisher: {
-      "@type": "Organization",
-      name: siteDefaults.siteName,
-      logo: {
-        "@type": "ImageObject",
-        url: absoluteUrl(siteDefaults.defaultImage),
-      },
+      "@type": "Person",
+      name: SITE_CONFIG.author.name,
+      url: SITE_CONFIG.author.url,
     },
   };
 }
 
-export function buildBreadcrumbJsonLd({
-  items,
-}: {
-  items: { name: string; item: string }[];
-}) {
+export function buildBreadcrumbJsonLd({ items }: { items: { name: string; item: string }[] }) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -190,7 +177,8 @@ export function buildProjectJsonLd({
     softwareRequirements: technologies.join(", "),
     author: {
       "@type": "Person",
-      name: "Choi Seongho",
+      name: SITE_CONFIG.author.name,
+      url: SITE_CONFIG.author.url,
     },
   };
 }

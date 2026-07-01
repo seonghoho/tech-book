@@ -12,12 +12,6 @@ const POSTS_PER_PAGE = 10;
 export const dynamic = "force-static";
 export const revalidate = 180;
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Posts",
-  description: "프론트엔드, JavaScript, Three.js 등 다양한 기술 주제에 대한 포스트를 확인해보세요.",
-  path: "/posts",
-});
-
 type SearchParams = {
   query?: string;
   tag?: string;
@@ -27,6 +21,29 @@ type SearchParams = {
 
 interface PageProps {
   searchParams?: Promise<SearchParams>;
+}
+
+export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const hasSearchParams = Boolean(
+    resolvedSearchParams?.query ||
+    resolvedSearchParams?.tag ||
+    resolvedSearchParams?.category ||
+    (resolvedSearchParams?.page && resolvedSearchParams.page !== "1"),
+  );
+
+  return buildPageMetadata({
+    title: "Posts",
+    description:
+      "프론트엔드, JavaScript, Three.js 등 다양한 기술 주제에 대한 포스트를 확인해보세요.",
+    path: "/posts",
+    robots: hasSearchParams
+      ? {
+          index: false,
+          follow: true,
+        }
+      : undefined,
+  });
 }
 
 export default async function PostsPage({ searchParams }: PageProps) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { startTransition, useEffect, useRef, useState } from "react";
+import { startTransition, useEffect, useMemo, useRef, useState } from "react";
 
 export type HeroImageDeckState = {
   currentImageSrc: string;
@@ -75,8 +75,7 @@ function getNextDeckState(currentDeck: HeroImageDeckState) {
 }
 
 export function useHeroImageDeck(images: readonly string[], fallbackImage: string) {
-  const uniqueImages = getUniqueImages(images);
-  const uniqueImagesKey = uniqueImages.join("::");
+  const uniqueImages = useMemo(() => getUniqueImages(images), [images]);
   const initialCurrentImage = uniqueImages[0] ?? fallbackImage;
   const deckRef = useRef<HeroImageDeckState>({
     currentImageSrc: initialCurrentImage,
@@ -92,7 +91,9 @@ export function useHeroImageDeck(images: readonly string[], fallbackImage: strin
 
   useEffect(() => {
     const nextCurrentImage = uniqueImages[0] ?? fallbackImage;
-    const nextUpcomingImages = shuffleImages(uniqueImages.filter((image) => image !== nextCurrentImage));
+    const nextUpcomingImages = shuffleImages(
+      uniqueImages.filter((image) => image !== nextCurrentImage),
+    );
     const nextDeck = {
       currentImageSrc: nextCurrentImage,
       upcomingImages: nextUpcomingImages,
@@ -102,7 +103,7 @@ export function useHeroImageDeck(images: readonly string[], fallbackImage: strin
     deckRef.current = nextDeck;
     setDeck(nextDeck);
     void Promise.all([nextCurrentImage, ...nextUpcomingImages.slice(0, 2)].map(primeImage));
-  }, [fallbackImage, uniqueImagesKey]);
+  }, [fallbackImage, uniqueImages]);
 
   useEffect(() => {
     deckRef.current = deck;

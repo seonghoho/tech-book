@@ -9,19 +9,24 @@ import ThemeInitializer from "@/components/common/ThemeInitializer";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
 import ClientHeaderWithSidebar from "@/components/layout/ClientHeaderWithSidebar";
-import { absoluteUrl, getSiteUrl } from "@/lib/site";
+import { absoluteUrl, SITE_CONFIG } from "@/lib/site";
 import { siteDefaults } from "@/lib/seo";
 import { ADSENSE_CLIENT_ID } from "@/lib/adsense";
 
 export const metadata: Metadata = {
   title: {
     default: siteDefaults.title,
-    template: "%s | Seonghoho",
+    template: `%s | ${SITE_CONFIG.name}`,
   },
   description: siteDefaults.description,
   keywords: siteDefaults.keywords,
-  authors: [{ name: "Choi Seongho", url: absoluteUrl("/") }],
-  metadataBase: new URL(getSiteUrl()),
+  authors: [{ name: SITE_CONFIG.author.name, url: SITE_CONFIG.author.url }],
+  creator: SITE_CONFIG.author.name,
+  publisher: SITE_CONFIG.name,
+  metadataBase: new URL(SITE_CONFIG.url),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: siteDefaults.title,
     description: siteDefaults.description,
@@ -34,7 +39,7 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
-    locale: "ko_KR",
+    locale: SITE_CONFIG.locale,
     type: "website",
   },
   twitter: {
@@ -63,12 +68,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    url: getSiteUrl(),
+    url: SITE_CONFIG.url,
     name: siteDefaults.siteName,
     description: siteDefaults.description,
     potentialAction: {
       "@type": "SearchAction",
-      target: `${getSiteUrl()}/posts?query={search_term_string}`,
+      target: `${SITE_CONFIG.url}/posts?query={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };

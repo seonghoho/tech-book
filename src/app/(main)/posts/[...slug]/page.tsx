@@ -9,7 +9,7 @@ import {
   buildPageMetadata,
   siteDefaults,
 } from "@/lib/seo";
-import { getPostRobots } from "@/lib/contentVisibility";
+import { filterIndexablePosts, getPostRobots } from "@/lib/contentVisibility";
 import nextDynamic from "next/dynamic";
 import { categoryMap } from "@/lib/categoryMap";
 import { notFound } from "next/navigation";
@@ -42,7 +42,9 @@ const getPostOrNotFound = async (slugString: string) => {
 
 export function generateStaticParams(): { slug: string[] }[] {
   const postsByCategory = getPostsByCategory("posts");
-  const allPosts = Object.values(postsByCategory).flat();
+  const allPosts = filterIndexablePosts(Object.values(postsByCategory).flat()).sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
 
   return allPosts.map((post) => ({
     slug: post.slug.split("/"),
@@ -92,7 +94,20 @@ export default async function PostPage({ params }: PageProps) {
 
   const currentIndex = allPosts.findIndex((p) => p.slug === slugString);
   const [category] = slugString.split("/");
-  const relatedCandidates = postsByCategory[category]?.filter((p) => p.slug !== slugString) ?? [];
+  const sameCategoryPosts = allPosts.filter(
+    (candidate) => candidate.category === category && candidate.slug !== slugString,
+  );
+  const sameTagPosts = allPosts.filter(
+    (candidate) =>
+      candidate.slug !== slugString &&
+      candidate.category !== category &&
+      candidate.tags?.some((tag) => post.tags?.includes(tag)),
+  );
+  const latestPosts = allPosts.filter((candidate) => candidate.slug !== slugString);
+  const relatedCandidates = [...sameCategoryPosts, ...sameTagPosts, ...latestPosts].filter(
+    (candidate, index, candidates) =>
+      candidates.findIndex((entry) => entry.slug === candidate.slug) === index,
+  );
   const projectLink =
     category === "svg-editor"
       ? {
@@ -115,7 +130,8 @@ export default async function PostPage({ params }: PageProps) {
   ];
 
   const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
-  const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+  const nextPost =
+    currentIndex >= 0 && currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
   const jsonLd = buildArticleJsonLd({
     title: post.title,

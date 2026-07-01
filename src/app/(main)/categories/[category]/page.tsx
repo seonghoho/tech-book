@@ -1,8 +1,9 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { buildPageMetadata } from "@/lib/seo";
-import { getAllCategories, getAllPosts } from "@/lib/getAllPosts";
+import { buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
+import { getAllPosts } from "@/lib/getAllPosts";
 import { categoryMap } from "@/lib/categoryMap";
+import { filterIndexablePosts } from "@/lib/contentVisibility";
 
 const POSTS_PER_PAGE = 10;
 
@@ -16,7 +17,12 @@ interface PageProps {
 }
 
 export function generateStaticParams() {
-  return getAllCategories("posts").map((category) => ({ category }));
+  const categories = new Set(
+    filterIndexablePosts(getAllPosts("posts")).flatMap((post) =>
+      post.category ? [post.category] : [],
+    ),
+  );
+  return Array.from(categories).map((category) => ({ category }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -46,7 +52,7 @@ const formatDate = (date: string) => {
 export default async function CategoryPage({ params, searchParams }: PageProps) {
   const { category } = await params;
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
-  const posts = getAllPosts("posts")
+  const posts = filterIndexablePosts(getAllPosts("posts"))
     .filter((post) => post.category === category)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
@@ -58,9 +64,22 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
   const label = categoryMap[category] ?? category;
 
   const buildHref = (page: number) => `/categories/${category}${page > 1 ? `?page=${page}` : ""}`;
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd({
+    items: [
+      { name: "홈", item: "/" },
+      { name: "Posts", item: "/posts" },
+      { name: label, item: `/categories/${category}` },
+    ],
+  });
 
   return (
     <main className="py-8 sm:p-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd),
+        }}
+      />
       <div className="flex flex-col gap-6">
         <div className="space-y-2">
           <Link

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import AuthorBox from "./AuthorBox";
 import { PostNavCard } from "./PostNavCard";
 import { PostNav } from "@/types/post";
 import { categoryMap } from "@/lib/categoryMap";
@@ -61,10 +62,7 @@ export default function PostContent({
           {category ? (
             <>
               <span>/</span>
-              <Link
-                href={`/categories/${category}`}
-                className="accent-link"
-              >
+              <Link href={`/categories/${category}`} className="accent-link">
                 {categoryMap[category] ?? category}
               </Link>
             </>
@@ -81,23 +79,16 @@ export default function PostContent({
             </div>
 
             <div className="flex flex-wrap gap-2 text-xs">
-            {category ? (
-              <Link
-                href={`/categories/${category}`}
-                className="tag-chip"
-              >
-                {categoryMap[category] ?? category}
-              </Link>
-            ) : null}
-            {tags?.map((tag) => (
-              <Link
-                key={tag}
-                href={`/tags/${encodeURIComponent(tag)}`}
-                className="tag-chip"
-              >
-                #{tag}
-              </Link>
-            ))}
+              {category ? (
+                <Link href={`/categories/${category}`} className="tag-chip">
+                  {categoryMap[category] ?? category}
+                </Link>
+              ) : null}
+              {tags?.map((tag) => (
+                <Link key={tag} href={`/tags/${encodeURIComponent(tag)}`} className="tag-chip">
+                  #{tag}
+                </Link>
+              ))}
             </div>
 
             <div className="flex flex-col gap-3 border-t border-[color:var(--color-border)] pt-4 text-sm text-[color:var(--color-text-muted)] sm:flex-row sm:items-center sm:justify-between">
@@ -106,9 +97,7 @@ export default function PostContent({
                 {readingTime ? <span>{readingTime}분 읽기</span> : null}
               </div>
               <div className="flex flex-wrap gap-4">
-              {updated ? (
-                <span>마지막 수정: {formatDate(updated)}</span>
-              ) : null}
+                {updated ? <span>마지막 수정: {formatDate(updated)}</span> : null}
               </div>
             </div>
           </div>
@@ -127,9 +116,7 @@ export default function PostContent({
               />
             </div>
             <div className="flex flex-col gap-4">
-              <p className="body-copy">
-                {projectInfo.summary}
-              </p>
+              <p className="body-copy">{projectInfo.summary}</p>
               <div className="flex flex-wrap gap-2">
                 {projectInfo.techStack.map((stack) => (
                   <span key={stack} className="tag-chip text-xs sm:text-sm">
@@ -145,10 +132,7 @@ export default function PostContent({
                 </ul>
               ) : null}
               {projectInfo.playUrl ? (
-                <Link
-                  href={projectInfo.playUrl}
-                  className="button-primary"
-                >
+                <Link href={projectInfo.playUrl} className="button-primary">
                   프로젝트 데모 플레이
                 </Link>
               ) : null}
@@ -157,9 +141,11 @@ export default function PostContent({
         ) : null}
 
         <div
-          className="prose mt-8 max-w-none prose-headings:tracking-[-0.02em] prose-h1:text-[1.95rem] prose-h2:text-[1.5rem] prose-h3:text-[1.2rem] prose-p:text-[15px] prose-p:leading-7 prose-li:text-[15px] prose-li:leading-7 prose-pre:px-4 prose-pre:py-4 prose-blockquote:px-5 prose-blockquote:py-4 sm:mt-10 sm:prose-h1:text-[2.3rem] sm:prose-h2:text-[1.8rem] sm:prose-h3:text-[1.35rem] sm:prose-p:text-base sm:prose-p:leading-8 sm:prose-li:text-base sm:prose-li:leading-8 sm:prose-pre:px-6 sm:prose-pre:py-6 lg:prose-lg dark:prose-invert"
+          className="prose mt-8 max-w-none dark:prose-invert lg:prose-lg prose-headings:tracking-[-0.02em] prose-h1:text-[1.95rem] prose-h2:text-[1.5rem] prose-h3:text-[1.2rem] prose-p:text-[15px] prose-p:leading-7 prose-blockquote:px-5 prose-blockquote:py-4 prose-pre:px-4 prose-pre:py-4 prose-li:text-[15px] prose-li:leading-7 sm:mt-10 sm:prose-h1:text-[2.3rem] sm:prose-h2:text-[1.8rem] sm:prose-h3:text-[1.35rem] sm:prose-p:text-base sm:prose-p:leading-8 sm:prose-pre:px-6 sm:prose-pre:py-6 sm:prose-li:text-base sm:prose-li:leading-8"
           dangerouslySetInnerHTML={{ __html: contentHtml }}
         />
+
+        <AuthorBox />
 
         {relatedLinks && relatedLinks.length > 0 ? (
           <div className="surface-panel mt-10 overflow-hidden">
@@ -188,16 +174,8 @@ export default function PostContent({
         ) : null}
 
         <div className="grid gap-3 py-8 sm:grid-cols-2 sm:gap-4 sm:py-10">
-          {prevPost ? (
-            <PostNavCard post={prevPost} direction="prev" />
-          ) : (
-            <div />
-          )}
-          {nextPost ? (
-            <PostNavCard post={nextPost} direction="next" />
-          ) : (
-            <div />
-          )}
+          {prevPost ? <PostNavCard post={prevPost} direction="prev" /> : <div />}
+          {nextPost ? <PostNavCard post={nextPost} direction="next" /> : <div />}
         </div>
       </div>
     </article>

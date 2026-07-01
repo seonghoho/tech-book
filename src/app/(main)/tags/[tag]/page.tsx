@@ -1,8 +1,9 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { buildPageMetadata } from "@/lib/seo";
-import { getAllPosts, getAllTags } from "@/lib/getAllPosts";
+import { buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
+import { getAllPosts } from "@/lib/getAllPosts";
 import { categoryMap } from "@/lib/categoryMap";
+import { filterIndexablePosts } from "@/lib/contentVisibility";
 
 const POSTS_PER_PAGE = 10;
 
@@ -16,7 +17,10 @@ interface PageProps {
 }
 
 export function generateStaticParams() {
-  return getAllTags("posts").map((tag) => ({ tag: encodeURIComponent(tag) }));
+  const tags = new Set(
+    filterIndexablePosts(getAllPosts("posts")).flatMap((post) => post.tags ?? []),
+  );
+  return Array.from(tags).map((tag) => ({ tag: encodeURIComponent(tag) }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -47,7 +51,7 @@ export default async function TagPage({ params, searchParams }: PageProps) {
   const { tag } = await params;
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const tagName = decodeURIComponent(tag);
-  const posts = getAllPosts("posts")
+  const posts = filterIndexablePosts(getAllPosts("posts"))
     .filter((post) => post.tags?.includes(tagName))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
@@ -59,9 +63,22 @@ export default async function TagPage({ params, searchParams }: PageProps) {
 
   const buildHref = (page: number) =>
     `/tags/${encodeURIComponent(tagName)}${page > 1 ? `?page=${page}` : ""}`;
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd({
+    items: [
+      { name: "홈", item: "/" },
+      { name: "Posts", item: "/posts" },
+      { name: `#${tagName}`, item: `/tags/${encodeURIComponent(tagName)}` },
+    ],
+  });
 
   return (
     <main className="py-8 sm:p-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd),
+        }}
+      />
       <div className="flex flex-col gap-6">
         <div className="space-y-2">
           <Link
