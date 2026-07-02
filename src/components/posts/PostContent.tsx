@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import AuthorBox from "./AuthorBox";
+import GiscusComments from "./GiscusComments";
 import { PostNavCard } from "./PostNavCard";
+import PostCodeCopyEnhancer from "./PostCodeCopyEnhancer";
 import { PostNav } from "@/types/post";
 import { categoryMap } from "@/lib/categoryMap";
 import { formatDate } from "@/lib/formatDate";
@@ -12,12 +14,6 @@ type ProjectInfo = {
   techStack: string[];
   highlights?: string[];
   playUrl?: string;
-};
-
-type RelatedLink = {
-  title: string;
-  url: string;
-  categoryLabel?: string;
 };
 
 type Props = {
@@ -32,7 +28,7 @@ type Props = {
   prevPost?: PostNav | null;
   nextPost?: PostNav | null;
   projectInfo?: ProjectInfo | null;
-  relatedLinks?: RelatedLink[];
+  relatedLinks?: unknown[];
 };
 
 export default function PostContent({
@@ -47,11 +43,11 @@ export default function PostContent({
   prevPost,
   nextPost,
   projectInfo,
-  relatedLinks,
 }: Props) {
   return (
     <article className="page-shell w-full">
-      <div className="mx-auto w-full max-w-[92ch]">
+      <PostCodeCopyEnhancer />
+      <div className="mx-auto w-full max-w-[86ch]">
         <nav
           aria-label="breadcrumb"
           className="mb-4 flex flex-wrap items-center gap-2 text-xs text-[color:var(--color-text-muted)]"
@@ -69,10 +65,10 @@ export default function PostContent({
           ) : null}
         </nav>
 
-        <header className="surface-panel p-5 sm:p-7">
+        <header className="surface-panel p-5 sm:p-7 lg:p-8">
           <div className="space-y-5">
             <div className="space-y-3">
-              <h1 className="text-[1.9rem] font-semibold tracking-[-0.03em] text-[color:var(--color-text-primary)] sm:text-[2.3rem] lg:text-4xl">
+              <h1 className="text-[1.8rem] font-semibold leading-tight text-[color:var(--color-text-primary)] sm:text-[2.25rem] lg:text-[2.55rem]">
                 {title}
               </h1>
               {description ? <p className="body-copy">{description}</p> : null}
@@ -141,37 +137,13 @@ export default function PostContent({
         ) : null}
 
         <div
-          className="prose mt-8 max-w-none dark:prose-invert lg:prose-lg prose-headings:tracking-[-0.02em] prose-h1:text-[1.95rem] prose-h2:text-[1.5rem] prose-h3:text-[1.2rem] prose-p:text-[15px] prose-p:leading-7 prose-blockquote:px-5 prose-blockquote:py-4 prose-pre:px-4 prose-pre:py-4 prose-li:text-[15px] prose-li:leading-7 sm:mt-10 sm:prose-h1:text-[2.3rem] sm:prose-h2:text-[1.8rem] sm:prose-h3:text-[1.35rem] sm:prose-p:text-base sm:prose-p:leading-8 sm:prose-pre:px-6 sm:prose-pre:py-6 sm:prose-li:text-base sm:prose-li:leading-8"
+          className="post-body prose mt-8 max-w-none dark:prose-invert prose-headings:font-semibold prose-headings:leading-tight prose-h1:text-[1.85rem] prose-h2:mt-12 prose-h2:text-[1.45rem] prose-h3:mt-9 prose-h3:text-[1.18rem] prose-p:my-5 prose-p:text-[15px] prose-p:leading-8 prose-a:font-medium prose-blockquote:my-8 prose-blockquote:px-5 prose-blockquote:py-4 prose-li:my-1.5 prose-li:text-[15px] prose-li:leading-8 prose-ul:my-5 prose-ol:my-5 sm:mt-10 sm:prose-h1:text-[2.2rem] sm:prose-h2:text-[1.7rem] sm:prose-h3:text-[1.3rem] sm:prose-p:text-base sm:prose-p:leading-8 sm:prose-li:text-base"
           dangerouslySetInnerHTML={{ __html: contentHtml }}
         />
 
         <AuthorBox />
 
-        {relatedLinks && relatedLinks.length > 0 ? (
-          <div className="surface-panel mt-10 overflow-hidden">
-            <div className="border-b border-[color:var(--color-border)] px-5 py-3 text-sm font-semibold text-[color:var(--color-text-primary)]">
-              더 이어서 읽어보기
-            </div>
-            <div className="grid gap-3 p-4 sm:grid-cols-2">
-              {relatedLinks.map((link) => (
-                <Link
-                  key={link.url}
-                  href={link.url}
-                  className="surface-subtle group p-4 transition hover:-translate-y-0.5"
-                >
-                  {link.categoryLabel ? (
-                    <div className="mb-1 text-xs uppercase tracking-wide text-[color:var(--color-accent)]">
-                      {link.categoryLabel}
-                    </div>
-                  ) : null}
-                  <div className="font-semibold text-[color:var(--color-text-primary)] group-hover:text-[color:var(--color-accent)]">
-                    {link.title}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        ) : null}
+        <GiscusComments />
 
         <div className="grid gap-3 py-8 sm:grid-cols-2 sm:gap-4 sm:py-10">
           {prevPost ? <PostNavCard post={prevPost} direction="prev" /> : <div />}

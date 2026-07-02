@@ -74,6 +74,7 @@ export type AboutProject = {
   context: string;
   tags: string[];
   narrative: string[];
+  highlightPhrases?: string[];
   cardPoints: string[];
   keyContributions: string[];
   technicalHighlights: string[];
@@ -315,6 +316,14 @@ export const aboutProjects: AboutProject[] = [
       "특히 쌓기나무, 공간좌표, 평면도형처럼 조작 규칙이 서로 다른 교구를 하나의 캔버스 경험 안에서 자연스럽게 다루게 만드는 일이 핵심이었습니다. drag, rotate, place, selection 흐름을 교구별 규칙에 맞게 분기하고, PointerEvent와 KeyboardEvent를 함께 묶어 안정적으로 제어했습니다.",
       "서비스를 계속 확장해야 하는 제품이었기 때문에 클래스 기반 모듈 구조와 store 중심 흐름을 설계해 신규 교구 추가 비용을 줄였습니다. 결과적으로 46종 중 20종의 교구를 직접 설계·구현했고, 실제 수업 현장에서 사용할 수 있는 2D·3D 인터랙션 품질을 확보했습니다.",
     ],
+    highlightPhrases: [
+      "SVG 기반 편집 인터랙션",
+      "Three.js 기반 3D 교구 흐름",
+      "클래스 기반 모듈 구조",
+      "46종 중 20종",
+      "2D·3D 인터랙션 품질",
+      "신규 교구 확장성과 유지보수성",
+    ],
     cardPoints: [
       "46종 중 20종 교구 직접 설계·구현",
       "SVG 기반 복합 인터랙션과 클래스 모듈 구조 설계",
@@ -415,6 +424,14 @@ export const aboutProjects: AboutProject[] = [
       "카카오맵 위에서 사용자가 지역을 고르고 추천 상권을 확인하는 과정이 끊기지 않도록 위치 선택, 드롭다운, 실시간 검색을 하나의 UX로 정리했습니다. 화면 좌표를 서버에 넘겨 폴리곤을 그리는 방식으로 추천 영역도 시각화했습니다.",
       "동시에 커뮤니티 CRUD, WebSocket 채팅, FCM 푸시 알림까지 연결하면서 서로 다른 기능을 하나의 제품 경험처럼 보이게 만드는 데 집중했습니다. 이 프로젝트는 SSAFY 자율 프로젝트 경진대회 우수상으로 이어졌습니다.",
     ],
+    highlightPhrases: [
+      "지도 기반 추천 경험",
+      "카카오맵 기반 상권 추천",
+      "실시간 검색",
+      "WebSocket 기반 채팅",
+      "FCM 푸시 알림",
+      "SSAFY 자율 프로젝트 경진대회 우수상",
+    ],
     cardPoints: [
       "카카오맵 기반 상권 추천 흐름 개발",
       "커뮤니티·채팅·FCM 푸시 알림 구현",
@@ -510,6 +527,14 @@ export const aboutProjects: AboutProject[] = [
       "프로젝트 초반에는 Atomic Design Pattern과 Storybook으로 컴포넌트 체계를 먼저 정리했습니다. 이후 매치 목록, 상세, 등록, 수정, 다시보기, 경기 통계 같은 화면을 같은 규칙 위에서 빠르게 확장할 수 있었습니다.",
       "전술보드는 Draggable과 Zustand를 활용해 직접 조작할 수 있게 만들었고, 마이페이지와 회원 API, 팔로우·팔로잉 흐름도 함께 담당했습니다. 기능 수가 많은 서비스에서도 UI 구조를 먼저 잡아두면 개발 속도와 유지보수성이 모두 좋아진다는 점을 확인한 작업이었습니다.",
     ],
+    highlightPhrases: [
+      "프론트엔드 구조",
+      "Atomic Design Pattern",
+      "Storybook",
+      "전술보드",
+      "Draggable과 Zustand",
+      "SSAFY 특화 프로젝트 경진대회 우수상",
+    ],
     cardPoints: [
       "Atomic Design Pattern과 Storybook 기반 UI 체계화",
       "매치 상세·등록·수정 및 전술보드 구현",
@@ -589,6 +614,16 @@ export const aboutProjects: AboutProject[] = [
       "pawsitive는 보호소와 입양 희망자를 연결하고, 추천, 커뮤니티, 사후관리까지 이어주는 유기견 입양 지원 서비스입니다. 저는 역할별 사용자 흐름을 분리하고 설문, 데이터 조회, 위치 기반 커뮤니티를 구현했습니다.",
       "같은 서비스 안에서도 보호소와 입양 희망자의 목적이 달랐기 때문에, 역할별로 다른 여정을 설계하는 일이 중요했습니다. 입양 희망자에게는 5단계 맞춤형 흐름을 제공하고, 설문 20문항 상태를 Jotai로 관리해 긴 입력 흐름을 단순하게 유지했습니다.",
       "카카오맵 기반 위치 커뮤니티와 유기견 조회 API를 React Query로 연결해 데이터 흐름을 정리했고, 모바일 맥락까지 고려한 PWA 경험을 구축했습니다. 이 프로젝트는 SSAFY 공통 프로젝트 경진대회 우수상으로 마무리됐습니다.",
+    ],
+    highlightPhrases: [
+      "역할별 사용자 흐름",
+      "위치 기반 커뮤니티",
+      "5단계 맞춤형 흐름",
+      "20개 문항",
+      "Jotai",
+      "React Query",
+      "PWA 경험",
+      "SSAFY 공통 프로젝트 경진대회 우수상",
     ],
     cardPoints: [
       "역할별 사용자 흐름 분기와 5단계 입양 경험 설계",

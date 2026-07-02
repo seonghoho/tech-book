@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { AboutProject, ProjectPreview } from "@/lib/aboutData";
+import { splitHighlightText } from "@/lib/projectHighlights";
 import ProjectPoster from "@/components/projects/ProjectPoster";
 
 type ProjectDetailViewProps = {
@@ -18,6 +19,26 @@ function DetailSection({ title, children }: { title: string; children: React.Rea
       <div className="mt-5">{children}</div>
     </section>
   );
+}
+
+function HighlightedText({
+  text,
+  phrases,
+}: {
+  text: string;
+  phrases?: readonly string[];
+}) {
+  return splitHighlightText(text, phrases).map((segment, index) => {
+    if (!segment.highlighted) {
+      return segment.text;
+    }
+
+    return (
+      <mark key={`${segment.text}-${index}`} className="project-highlight-mark">
+        {segment.text}
+      </mark>
+    );
+  });
 }
 
 function GalleryItem({ preview }: { preview: ProjectPreview }) {
@@ -147,7 +168,9 @@ export default function ProjectDetailView({
 
             <div className="mt-10 max-w-4xl space-y-7 text-[15px] leading-9 text-[color:var(--color-text-secondary)] sm:text-[1.05rem]">
               {project.narrative.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
+                <p key={paragraph}>
+                  <HighlightedText text={paragraph} phrases={project.highlightPhrases} />
+                </p>
               ))}
             </div>
           </div>
@@ -199,7 +222,9 @@ export default function ProjectDetailView({
                 {project.outcomes.map((outcome) => (
                   <li key={outcome} className="flex gap-3">
                     <span className="mt-[11px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
-                    <span>{outcome}</span>
+                    <span>
+                      <HighlightedText text={outcome} phrases={project.highlightPhrases} />
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -229,7 +254,9 @@ export default function ProjectDetailView({
                 {project.keyContributions.map((contribution) => (
                   <li key={contribution} className="flex gap-3">
                     <span className="mt-[13px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
-                    <span>{contribution}</span>
+                    <span>
+                      <HighlightedText text={contribution} phrases={project.highlightPhrases} />
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -240,7 +267,9 @@ export default function ProjectDetailView({
                 {project.technicalHighlights.map((highlight) => (
                   <li key={highlight} className="flex gap-3">
                     <span className="mt-[13px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
-                    <span>{highlight}</span>
+                    <span>
+                      <HighlightedText text={highlight} phrases={project.highlightPhrases} />
+                    </span>
                   </li>
                 ))}
               </ul>

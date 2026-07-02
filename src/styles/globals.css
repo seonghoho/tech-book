@@ -22,6 +22,9 @@
   --color-accent: #0f766e;
   --color-accent-hover: #115e59;
   --color-accent-soft: rgba(15, 118, 110, 0.12);
+  --color-button-primary-bg: #0f766e;
+  --color-button-primary-hover: #115e59;
+  --color-button-primary-text: #ffffff;
   --color-link: #0f766e;
   --color-code: #eff4f9;
   --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.06);
@@ -43,6 +46,9 @@ html.dark {
   --color-accent: #58c9b9;
   --color-accent-hover: #7edfd1;
   --color-accent-soft: rgba(88, 201, 185, 0.18);
+  --color-button-primary-bg: #0f766e;
+  --color-button-primary-hover: #115e59;
+  --color-button-primary-text: #ffffff;
   --color-link: #7edfd1;
   --color-code: #0f1727;
   --shadow-soft: 0 18px 48px rgba(2, 8, 23, 0.28);
@@ -156,6 +162,19 @@ a {
     outline: none;
   }
 
+  .project-highlight-mark {
+    margin-inline: 0.02em;
+    border-radius: 0.18em;
+    background: linear-gradient(to top, #fff59d 45%, transparent 45%);
+    color: var(--color-text-primary);
+    font-weight: 650;
+  }
+
+  html.dark .project-highlight-mark {
+    background: linear-gradient(to top, rgba(255, 245, 157, 0.32) 45%, transparent 45%);
+    color: var(--color-text-primary);
+  }
+
   .eyebrow-label {
     @apply text-xs font-semibold uppercase tracking-[0.24em];
     color: var(--color-accent);
@@ -186,13 +205,22 @@ a {
 
   .button-primary {
     @apply inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold transition duration-200;
-    background-color: var(--color-text-primary);
-    color: #ffffff;
+    background-color: var(--color-button-primary-bg);
+    color: var(--color-button-primary-text);
   }
 
   .button-primary:hover {
     transform: translateY(-1px);
-    background-color: var(--color-accent);
+    background-color: var(--color-button-primary-hover);
+  }
+
+  .posts-search-button {
+    background-color: var(--color-button-primary-bg) !important;
+    color: var(--color-button-primary-text) !important;
+  }
+
+  .posts-search-button:hover {
+    background-color: var(--color-button-primary-hover) !important;
   }
 
   .button-secondary {
@@ -225,6 +253,103 @@ a {
   .input-shell:focus {
     border-color: var(--color-accent);
     box-shadow: 0 0 0 4px var(--color-accent-soft);
+  }
+
+  .post-body {
+    color: var(--color-text-secondary);
+  }
+
+  .post-body :where(h2, h3, h4) {
+    color: var(--color-text-primary);
+    scroll-margin-top: 6rem;
+  }
+
+  .post-body :where(p, li) {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  .post-body.post-body :where(pre) {
+    margin: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: 1rem;
+    font-size: clamp(0.78rem, 0.72rem + 0.18vw, 0.88rem) !important;
+    line-height: 1.7 !important;
+    tab-size: 2;
+  }
+
+  .post-body.post-body :where(pre code) {
+    font-size: inherit !important;
+    line-height: inherit !important;
+    white-space: pre;
+  }
+
+  .post-code-block {
+    margin: 1.75rem 0;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.26);
+    border-radius: 18px;
+    background-color: #0f1727;
+    color: #d6deeb;
+    box-shadow: 0 22px 48px rgba(2, 8, 23, 0.18);
+  }
+
+  .post-code-block :where(pre, code) {
+    color: #d6deeb;
+  }
+
+  .post-code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+    background-color: #111827;
+    padding: 0.6rem 0.75rem 0.6rem 1rem;
+  }
+
+  .post-code-language {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #94a3b8;
+  }
+
+  .post-code-copy-button {
+    min-width: 3.25rem;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 999px;
+    background-color: rgba(15, 23, 42, 0.9);
+    color: #cbd5e1;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .post-code-copy-button:hover,
+  .post-code-copy-button:focus-visible {
+    border-color: rgba(125, 211, 252, 0.5);
+    background-color: rgba(14, 165, 233, 0.16);
+    color: #e0f2fe;
+    outline: none;
+    transform: translateY(-1px);
+  }
+
+  @media (min-width: 640px) {
+    .post-body.post-body :where(pre) {
+      padding: 1.15rem 1.25rem;
+    }
+
+    .post-code-header {
+      padding-inline: 1.25rem 1rem;
+    }
   }
 
   .nav-link {

@@ -10,6 +10,7 @@ import remarkGfm from "remark-gfm";
 import rehypePrism from "rehype-prism-plus";
 import { visit } from "unist-util-visit";
 import type { Node } from "unist";
+import { rehypeCodeBlockFrame, stripLeadingH1Html } from "@/lib/postContentHtml";
 
 const contentDirectory = path.join(process.cwd(), "src", "content");
 const publicDirectory = path.join(process.cwd(), "public");
@@ -80,10 +81,6 @@ const rehypeImageAttrs = () => {
   };
 };
 
-const stripLeadingH1Html = (html: string) => {
-  return html.replace(/^\s*<h1\b[^>]*>[\s\S]*?<\/h1>\s*/i, "");
-};
-
 export async function getPostData(type: "posts" | "games", slug: string) {
   const fullPath = path.join(contentDirectory, type, `${slug}.md`);
 
@@ -101,6 +98,7 @@ export async function getPostData(type: "posts" | "games", slug: string) {
     .use(rehypePrism)
     .use(rehypeSlug)
     .use(rehypeImageAttrs)
+    .use(rehypeCodeBlockFrame)
     .use(rehypeStringify)
     .process(content);
 

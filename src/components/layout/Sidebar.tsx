@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PostMeta } from "@/types/post";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDownIcon, ChevronRightIcon } from "@/assets/svg";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 type Props = {
   data: Record<string, PostMeta[]>;
@@ -26,12 +26,10 @@ const getPreferredOpenCategory = ({
   data,
   pathname,
   routeName,
-  searchCategory,
 }: {
   data: Record<string, PostMeta[]>;
   pathname: string;
   routeName: "posts" | "games";
-  searchCategory: string | null;
 }) => {
   if (routeName === "posts") {
     if (pathname.startsWith("/categories/")) {
@@ -42,8 +40,8 @@ const getPreferredOpenCategory = ({
       }
     }
 
-    if (pathname === "/posts" && searchCategory && data[searchCategory]) {
-      return searchCategory;
+    if (pathname === "/posts") {
+      return null;
     }
   }
 
@@ -53,13 +51,11 @@ const getPreferredOpenCategory = ({
 export default function Sidebar({ data, categoryMap, variant = "rail", scope = "auto" }: Props) {
   const [openCategory, setOpenCategory] = useState<string | null>(null);
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const isGameScope =
     scope === "games" ||
     (scope === "auto" && (pathname.startsWith("/games") || pathname.startsWith("/play")));
   const routeName = isGameScope ? "games" : "posts";
   const isMobileSubnav = variant === "mobile-subnav";
-  const searchCategory = searchParams.get("category");
 
   const toggleCategory = (category: string) => {
     setOpenCategory((prev) => (prev === category ? null : category));
@@ -73,17 +69,16 @@ export default function Sidebar({ data, categoryMap, variant = "rail", scope = "
         data,
         pathname,
         routeName,
-        searchCategory,
       }),
     );
-  }, [data, pathname, routeName, searchCategory]);
+  }, [data, pathname, routeName]);
 
   const introEyebrow = isMobileSubnav ? "Writing" : isGameScope ? "Games" : "Browse";
   const introCopy = isMobileSubnav
-    ? "카테고리 단위로 기술 문서를 빠르게 탐색할 수 있습니다."
+    ? "카테고리 단위로 작성 글을 빠르게 탐색할 수 있습니다."
     : isGameScope
       ? "카테고리별 게임 로그를 빠르게 탐색할 수 있습니다."
-      : "기술 문서와 카테고리를 탐색할 수 있습니다.";
+      : "작성 글과 카테고리를 탐색할 수 있습니다.";
 
   return (
     <div className={isMobileSubnav ? "surface-subtle space-y-3 px-4 py-4" : "space-y-3"}>
@@ -136,7 +131,7 @@ export default function Sidebar({ data, categoryMap, variant = "rail", scope = "
                         }`}
                       >
                         <span
-                          className={`block max-w-[92%] truncate pl-4 text-sm transition ${
+                          className={`sidebar-post-title block max-w-[92%] pl-4 text-sm leading-5 transition ${
                             pathname === `/${routeName}/${post.slug}`
                               ? routeName === "games"
                                 ? "font-semibold text-sky-600 dark:text-sky-300"

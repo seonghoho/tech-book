@@ -28,7 +28,7 @@ export default function PrivacyPage() {
             Seonghoho는 사이트 운영, 방문 통계 확인, 광고 제공을 위해 필요한 범위에서 쿠키와
             익명화된 이용 정보를 사용할 수 있습니다.
           </p>
-          <p className="text-sm text-[color:var(--color-text-muted)]">Last updated: 2026-05-12</p>
+          <p className="text-sm text-[color:var(--color-text-muted)]">Last updated: 2026-07-02</p>
         </div>
 
         <div className="space-y-8">
@@ -91,6 +91,17 @@ export default function PrivacyPage() {
               사이트 이용 흐름과 콘텐츠 품질을 파악하기 위해 Google Analytics 또는 Vercel Analytics
               같은 분석 도구를 사용할 수 있습니다. 이 정보는 개인을 직접 식별하기 위한 목적이 아니라
               사이트 개선과 오류 파악을 위해 사용됩니다.
+            </p>
+          </section>
+
+          <section className={sectionClass}>
+            <h2 className="text-xl font-semibold text-[color:var(--color-text-primary)]">
+              댓글 기능
+            </h2>
+            <p className={paragraphClass}>
+              게시글 댓글은 Giscus와 GitHub Discussions를 통해 제공됩니다. 댓글을 작성하려면 GitHub
+              계정으로 인증해야 하며, 작성한 댓글과 반응은 GitHub Discussions에 공개적으로 저장될 수
+              있습니다. 댓글 기능 사용 시 GitHub 및 Giscus의 정책이 함께 적용됩니다.
             </p>
           </section>
 
