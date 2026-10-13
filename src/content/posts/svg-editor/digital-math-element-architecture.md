@@ -107,5 +107,5 @@ function moveSelected(dx: number, dy: number) {
 이 구조를 만들고 나니 새 교구를 추가할 때 확인해야 할 위치가 줄었습니다.
 또한 선택, 이동, 삭제 같은 공통 동작을 수정할 때 전체 교구에 같은 기준을 적용하기 쉬워졌습니다.
 
-이 글은 [SVG 에디터 선택 상태와 렌더링 상태 분리하기](/posts/svg-editor/svg-selection-render-state)와도 연결됩니다.
+이 글은 [SVG 에디터에서 문서 상태와 편집 상태의 경계를 나눈 기준](/posts/svg-editor/svg-editor-state-boundary)와도 연결됩니다.
 객체 구조를 잡을 때도 결국 중요한 것은 “어떤 상태를 어디에서 책임질 것인가”였습니다.

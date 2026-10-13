@@ -213,7 +213,7 @@ scene.add(group);
 셋째, 면의 투명도와 선의 대비가 함께 맞아야 합니다.
 면이 너무 진하면 내부 점선이 잘 보이지 않고, 너무 연하면 박스의 부피감이 사라집니다.
 결국 geometry보다 material 조합이 사용자 이해에 더 큰 영향을 주는 부분이었습니다.
-이 문제는 이후 [Three.js 3D 수학교구에서 depth buffer와 renderOrder로 정보 가림 문제 해결하기](/posts/svg-editor/three-js-depth-render-order)에서도 같은 기준으로 이어졌습니다.
+이 문제는 이후 [Three.js 3D 수학교구의 가림 문제를 depthTest, depthWrite, renderOrder로 정리한 기준](/posts/svg-editor/three-js-rendering-priority-debugging)에서도 같은 기준으로 이어졌습니다.
 
 ## 7. 마치며
 

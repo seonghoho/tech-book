@@ -212,3 +212,17 @@ frontmatter의 `date`와 실제 최초 커밋일을 비교한 결과입니다.
 - `(main)` 라우트 그룹의 중첩 `<main>`을 `<div>`로 변경
 - 실제 공개일보다 앞선 날짜가 적힌 글 21편의 `date`를 git 최초 커밋일로 수정. 작업 시점이 크게 다른 17편에는 "○년 ○월에 진행한 작업을 ○년 ○월에 정리한 기록입니다" 안내 추가
 - 남은 Week 0 항목: voca-study 통합, 주제가 겹치는 글 통합, `mordern-js-deep-dive` 처리 (편집 판단이 필요해서 보류)
+
+### 2026-10-13 Week 0 콘텐츠 정리 완료
+
+- 겹치는 글 통합 (이전 URL은 `next.config.mjs` 에서 통합 글로 308 영구 이동)
+  - voca-study 5편 → `voca-study/study-session-state` (본문 약 5,000자)
+  - `three-js-depth-render-order` → `three-js-rendering-priority-debugging` (약 4,100자)
+  - `three-js-object-selection-debugging` → `three-js-raycaster-hit-area` (약 4,900자)
+  - `svg-selection-render-state` → `svg-editor-state-boundary` (약 3,100자)
+  - `math-tool-store-selection-flow`, `pointer-keyboard-event-flow` → `math-tool-interaction-rules` (약 4,400자)
+- 통합은 원문 내용만 재구성했고 새 경험·수치는 추가하지 않음. 통합 글은 `updated: 2026-10-13`
+- `mordern-js-deep-dive`(책 요약 4편) 삭제, `/posts` 로 이동
+- 다른 글의 내부 링크 5곳을 통합 글로 교체
+- 결과: 색인 대상 글 25편 → **16편**, 1,500자 미만 글은 남은 글 중 일부(`three-js-camera-state`, `svg-threejs-canvas-experience`, `digital-math-element-architecture` 등)만 남음
+- 재신청 기준(색인된 글 30편 이상)까지 **신규 글 약 14편** 필요 → Week 1~5 주 2~3편 페이스

@@ -130,7 +130,7 @@ function handleCanvasPointerDown(event: PointerEvent) {
 디버깅할 때는 이벤트마다 `activeTool`, `selectedIds`, `dragSession`을 함께 찍었습니다.
 단순히 포인터 좌표만 보면 정상인데, 실제로는 tool이 바뀌지 않아 다른 핸들러가 실행되는 경우가 있었습니다.
 
-이 기준은 [SVG 캔버스에서 PointerEvent와 KeyboardEvent를 함께 제어한 이유](/posts/svg-editor/pointer-keyboard-event-flow)와도 연결됩니다.
+이 기준은 [수학교구 SVG 캔버스의 인터랙션 구조](/posts/svg-editor/math-tool-interaction-rules)와도 연결됩니다.
 포인터와 키보드는 따로 움직이는 것처럼 보이지만, 편집기 안에서는 하나의 인터랙션 상태를 공유해야 했습니다.
 
 ## 4단계: 선택과 drag 시작 순서
