@@ -730,7 +730,7 @@ export default function EditorClient({ initial, categories, categoryLabels, toda
                   : "지금 발행할까요?"}
             </h2>
             <p className="muted-copy">
-              /posts/{category}/{slug} · master 브랜치에 커밋되고 Vercel 배포가 시작됩니다.
+              /posts/{category}/{slug} · 저장소에 커밋되고 Vercel 배포가 시작됩니다.
             </p>
             {failedChecks > 0 ? (
               <ul className="surface-subtle space-y-1 px-4 py-3 text-sm text-[color:var(--color-text-secondary)]">
