@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AdsenseScript from "@/components/common/AdsenseScript";
 import LandingPage from "@/components/landing/LandingPage";
 import { buildPageMetadata } from "@/lib/seo";
 import { getAllPosts } from "@/lib/getAllPosts";
@@ -21,5 +22,10 @@ export default function Home() {
   );
   const recentPosts = posts.slice(0, 10);
 
-  return <LandingPage recentPosts={recentPosts} />;
+  return (
+    <>
+      <AdsenseScript />
+      <LandingPage recentPosts={recentPosts} />
+    </>
+  );
 }

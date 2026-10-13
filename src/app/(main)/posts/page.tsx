@@ -75,7 +75,7 @@ export default async function PostsPage({ searchParams }: PageProps) {
   const hasActiveFilters = Boolean(selectedCategory || selectedTag || query);
 
   return (
-    <main id="posts-top" className="page-shell scroll-m-24">
+    <div id="posts-top" className="page-shell scroll-m-24">
       <PostsArchiveScrollToTop />
       <div className="page-stack">
         <div className="space-y-3">
@@ -213,6 +213,6 @@ export default async function PostsPage({ searchParams }: PageProps) {
           </Link>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

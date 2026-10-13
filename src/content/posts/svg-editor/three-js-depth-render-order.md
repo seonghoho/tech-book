@@ -1,6 +1,6 @@
 ---
 title: "Three.js 3D 수학교구에서 depth buffer와 renderOrder로 정보 가림 문제 해결하기"
-date: "2025-07-30"
+date: "2026-05-13"
 updated: "2026-05-29"
 description: "3D 수학교구에서 블록, 축, 숫자 라벨이 서로 가려지는 문제를 depthTest, depthWrite, renderOrder 기준으로 정리한 과정입니다."
 image: "/images/projects/mathcanvas/detail-02.png"
@@ -8,6 +8,8 @@ tags: ["Three.js", "WebGL", "Rendering", "Troubleshooting"]
 ---
 
 # Three.js 3D 수학교구에서 depth buffer와 renderOrder로 정보 가림 문제 해결하기
+
+> 2025년 7월에 진행한 작업을 2026년 5월에 정리한 기록입니다.
 
 ## 문제 상황
 

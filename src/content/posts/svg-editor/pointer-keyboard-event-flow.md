@@ -1,6 +1,6 @@
 ---
 title: "SVG 캔버스에서 PointerEvent와 KeyboardEvent를 함께 제어한 이유"
-date: "2024-10-08"
+date: "2026-05-13"
 updated: "2026-05-29"
 description: "포인터 입력과 키보드 보조 입력을 분리하지 않고 하나의 인터랙션 상태로 묶어 처리한 이유와 구현 기준을 정리합니다."
 image: "/images/projects/mathcanvas/cover-og.png"
@@ -8,6 +8,8 @@ tags: ["SVG", "PointerEvent", "KeyboardEvent", "Interaction"]
 ---
 
 # SVG 캔버스에서 PointerEvent와 KeyboardEvent를 함께 제어한 이유
+
+> 2024년 10월에 진행한 작업을 2026년 5월에 정리한 기록입니다.
 
 ## 문제 상황
 

@@ -1,6 +1,6 @@
 ---
 title: "SVG 수학교구 20종을 확장 가능하게 만든 DigitalMathElement 설계"
-date: "2024-09-03"
+date: "2026-05-13"
 updated: "2026-05-29"
 description: "교구마다 다른 생성, 선택, 이동, 렌더링 로직을 DigitalMathElement 기준으로 정리해 신규 교구 추가 비용을 줄인 과정입니다."
 image: "/images/projects/mathcanvas/cover-og.png"
@@ -8,6 +8,8 @@ tags: ["SVG", "TypeScript", "Architecture", "Refactor"]
 ---
 
 # SVG 수학교구 20종을 확장 가능하게 만든 DigitalMathElement 설계
+
+> 2024년 9월에 진행한 작업을 2026년 5월에 정리한 기록입니다.
 
 ## 문제 상황
 

@@ -73,7 +73,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
   });
 
   return (
-    <main className="py-8 sm:p-8">
+    <div className="py-8 sm:p-8">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -168,6 +168,6 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
           </Link>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

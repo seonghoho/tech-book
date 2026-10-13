@@ -1,13 +1,14 @@
 ---
 title: "학습 타이머와 문제 진행 상태를 함께 다루는 Voca Study 세션 구조"
-date: "2024-05-30"
-updated: "2024-05-30"
+date: "2026-05-13"
 description: "영단어 학습 세션에서 타이머, 현재 단계, 문제 진행 상태를 분리해 예측 가능하게 관리한 기준을 정리합니다."
 image: "/images/portfolio/voca-study-3.png"
 tags: ["React", "State", "Learning", "Architecture"]
 ---
 
 # 학습 타이머와 문제 진행 상태를 함께 다루는 Voca Study 세션 구조
+
+> 2024년 5월에 진행한 작업을 2026년 5월에 정리한 기록입니다.
 
 ## 문제 상황
 

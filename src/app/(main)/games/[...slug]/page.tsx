@@ -144,7 +144,7 @@ export default async function PostPage({ params }: PageProps) {
           ),
         }}
       />
-      <main className="min-w-0 py-6 2xl:pr-6">
+      <div className="min-w-0 py-6 2xl:pr-6">
         <PostContent
           title={post.title}
           date={new Date(post.date).toISOString().split("T")[0]}
@@ -158,7 +158,7 @@ export default async function PostPage({ params }: PageProps) {
           projectInfo={projectInfo}
           relatedLinks={relatedLinks}
         />
-      </main>
+      </div>
       <aside className="sticky-section hidden shrink-0 border-l border-[color:var(--color-border)] pl-4 2xl:block 2xl:w-56 2xl:self-start">
         <h2 className="px-4 text-xl font-bold">목차</h2>
         <PostIndex headings={headings} />

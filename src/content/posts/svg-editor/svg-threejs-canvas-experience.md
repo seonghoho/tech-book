@@ -1,6 +1,6 @@
 ---
 title: "2D SVG 교구와 3D Three.js 교구를 하나의 캔버스 경험으로 묶기"
-date: "2025-09-04"
+date: "2026-05-13"
 updated: "2026-05-29"
 description: "SVG 기반 2D 교구와 Three.js 기반 3D 교구를 같은 서비스 흐름 안에서 다루기 위해 상태와 UI 경계를 맞춘 과정을 정리합니다."
 image: "/images/projects/mathcanvas/cover-og.png"
@@ -8,6 +8,8 @@ tags: ["SVG", "Three.js", "Vue", "Architecture"]
 ---
 
 # 2D SVG 교구와 3D Three.js 교구를 하나의 캔버스 경험으로 묶기
+
+> 2025년 9월에 진행한 작업을 2026년 5월에 정리한 기록입니다.
 
 ## 문제 상황
 

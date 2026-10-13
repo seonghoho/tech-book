@@ -23,11 +23,11 @@ export default function GamesPage() {
   const postsByCategory = getPostsByCategory("games");
 
   return (
-    <main>
+    <div>
       <PostsList postsByCategory={postsByCategory} type="games" />
       {/* <div className="flex-1">
         <GameCardList />
       </div> */}
-    </main>
+    </div>
   );
 }

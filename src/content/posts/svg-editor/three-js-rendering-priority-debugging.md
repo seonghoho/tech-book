@@ -1,7 +1,6 @@
 ---
 title: "Three.js 렌더링 순서가 꼬일 때 depth와 renderOrder로 정리한 기준"
-date: "2026-06-21"
-updated: "2026-07-01"
+date: "2026-07-01"
 description: "Three.js 3D 교구에서 면, edge, 라벨, 보조선이 서로 가려질 때 depthTest, depthWrite, renderOrder를 나눠 적용한 디버깅 기준입니다."
 image: "/images/projects/mathcanvas/cover-og.png"
 tags: ["Three.js", "WebGL", "Rendering", "Debugging"]

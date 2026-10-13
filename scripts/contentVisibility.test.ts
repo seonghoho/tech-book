@@ -22,6 +22,12 @@ describe("content visibility policy", () => {
     assert.equal(isAdsenseEligiblePath("/games"), false);
   });
 
+  it("loads AdSense only on the home page and indexable post details", () => {
+    assert.equal(isAdsenseEligiblePath("/"), true);
+    assert.equal(isAdsenseEligiblePath("/about"), false);
+    assert.equal(isAdsenseEligiblePath("/projects/mathcanvas"), false);
+  });
+
   it("removes non-indexable posts from primary writing surfaces", () => {
     const posts = [
       { slug: "mordern-js-deep-dive/04", title: "04장 변수" },

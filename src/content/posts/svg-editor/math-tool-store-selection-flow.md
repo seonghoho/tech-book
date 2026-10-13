@@ -1,6 +1,6 @@
 ---
 title: "생성된 교구 객체를 store에 등록하고 선택·편집 흐름을 추적한 구조"
-date: "2024-10-24"
+date: "2026-05-13"
 updated: "2026-05-29"
 description: "SVG 캔버스에서 생성된 교구 객체를 store에 등록하고 선택, 편집, 삭제 흐름을 안정적으로 추적한 방식을 정리합니다."
 image: "/images/projects/mathcanvas/cover-og.png"
@@ -8,6 +8,8 @@ tags: ["Vue", "Pinia", "SVG", "State"]
 ---
 
 # 생성된 교구 객체를 store에 등록하고 선택·편집 흐름을 추적한 구조
+
+> 2024년 10월에 진행한 작업을 2026년 5월에 정리한 기록입니다.
 
 ## 문제 상황
 

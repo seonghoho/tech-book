@@ -41,7 +41,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
     : [];
 
   return (
-    <main className="page-shell">
+    <div className="page-shell">
       <div className="page-stack">
         <div className="space-y-3">
           <p className="eyebrow-label">Search</p>
@@ -73,6 +73,6 @@ export default async function SearchPage({ searchParams }: PageProps) {
           ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

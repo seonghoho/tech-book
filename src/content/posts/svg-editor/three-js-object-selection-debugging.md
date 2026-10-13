@@ -1,7 +1,6 @@
 ---
 title: "Three.js 오브젝트 선택이 실패할 때 확인한 것들"
-date: "2026-06-20"
-updated: "2026-07-01"
+date: "2026-07-01"
 description: "Three.js 편집 UI에서 클릭이 안 잡히거나 엉뚱한 객체가 선택되는 문제를 Raycaster 대상, hit mesh, userData, 선택 우선순위로 좁힌 과정입니다."
 image: "/images/projects/mathcanvas/cover-og.png"
 tags: ["Three.js", "Raycaster", "Debugging", "Interaction"]

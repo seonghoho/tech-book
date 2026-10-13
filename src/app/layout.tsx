@@ -3,7 +3,6 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 // components
-import GoogleAdsense from "@/components/common/GoogleAdsense";
 import GoogleAnalytics from "@/components/common/GoogleAnalytics";
 import ThemeInitializer from "@/components/common/ThemeInitializer";
 import Footer from "@/components/common/Footer";
@@ -100,7 +99,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
-        <GoogleAdsense />
         <Analytics />
         <SpeedInsights />
         <GoogleAnalytics />

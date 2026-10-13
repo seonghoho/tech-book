@@ -1,7 +1,6 @@
 ---
 title: "SVG 에디터에서 문서 상태와 편집 상태의 경계를 나눈 기준"
-date: "2026-06-18"
-updated: "2026-07-01"
+date: "2026-07-01"
 description: "SVG 에디터에서 저장해야 하는 문서 데이터와 선택, hover, drag 같은 편집 UI 상태를 분리해 히스토리와 렌더링을 안정화한 기준입니다."
 image: "/images/projects/mathcanvas/cover-og.png"
 tags: ["SVG", "State", "Architecture", "Editor"]

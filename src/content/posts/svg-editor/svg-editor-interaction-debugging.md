@@ -1,7 +1,6 @@
 ---
 title: "SVG 에디터 인터랙션이 꼬일 때 디버깅한 순서"
-date: "2026-06-19"
-updated: "2026-07-01"
+date: "2026-07-01"
 description: "SVG 에디터에서 drag, resize, keyboard 입력이 서로 간섭할 때 포인터 좌표, active tool, capture, 히스토리 기록 순서로 문제를 좁힌 경험입니다."
 image: "/images/projects/mathcanvas/cover-og.png"
 tags: ["SVG", "PointerEvent", "KeyboardEvent", "Debugging"]

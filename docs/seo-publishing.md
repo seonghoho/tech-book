@@ -150,13 +150,11 @@ AdSense 심사와 광고 품질 신호를 고려해, Google 광고 스크립트�
 광고 로드 허용 범위:
 
 - `/`
-- `/about`
-- `/projects/[slug]`
-- `/posts/[...slug]`
+- `/posts/[...slug]` (색인 대상 카테고리만)
 
 광고 로드 제외 범위:
 
-- `/projects`
+- `/about`, `/projects`, `/projects/[slug]` (포트폴리오 페이지는 게시자 콘텐츠가 아님)
 - `/posts`
 - `/games`
 - `/games/[...slug]`
@@ -167,7 +165,13 @@ AdSense 심사와 광고 품질 신호를 고려해, Google 광고 스크립트�
 - `/tags/[tag]`
 - 요약형 또는 원본 경험이 약한 글 카테고리
 
-이 기준은 `src/lib/adsense.ts` 와 `src/components/common/GoogleAdsense.tsx` 에서 관리한다.
+이 기준은 `src/lib/adsense.ts` 에서 관리한다. 스크립트는 `src/components/common/AdsenseScript.tsx` 서버 컴포넌트를 홈과 글 상세 페이지에서 직접 렌더링해 초기 HTML `<head>`에 포함시킨다. `next/script` 의 `afterInteractive` 는 정적 생성된 홈 HTML에 태그를 남기지 않아 심사 크롤러가 코드를 확인하지 못할 수 있으므로 쓰지 않는다.
+
+## Publish Date Policy
+
+- `date` 는 사이트에 실제로 공개한 날짜다. 과거 작업을 나중에 정리하는 경우에도 소급하지 않는다.
+- 작업 시점이 공개일과 크게 다르면 본문 제목 아래에 `> YYYY년 M월에 진행한 작업을 YYYY년 M월에 정리한 기록입니다.` 를 둔다.
+- 게시 후에는 `date` 를 바꾸지 않고, 내용 보강 시 `updated` 만 갱신한다.
 
 `/games`, `/ux-lab`, `/categories/*`, `/tags/*`, 원본 경험이 약한 요약형 글은 sitemap에서도 제외한다. 해당 페이지들은 내부 탐색과 실험 보존 목적은 유지하지만, 사이트의 대표 검색 자산이나 광고 인벤토리로 제출하지 않는다.
 

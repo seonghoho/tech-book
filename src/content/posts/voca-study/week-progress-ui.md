@@ -1,13 +1,14 @@
 ---
 title: "Voca Study에서 주차별 학습 진행률을 단계형 UI로 표현한 방법"
-date: "2024-05-02"
-updated: "2024-05-02"
+date: "2026-05-13"
 description: "영단어 학습 서비스에서 현재 주차, 단계 진행률, 남은 흐름을 한눈에 보여주기 위해 진행률 UI를 설계한 기준을 정리합니다."
 image: "/images/portfolio/voca-study-1.png"
 tags: ["React", "UI", "Learning", "State"]
 ---
 
 # Voca Study에서 주차별 학습 진행률을 단계형 UI로 표현한 방법
+
+> 2024년 5월에 진행한 작업을 2026년 5월에 정리한 기록입니다.
 
 ## 문제 상황
 

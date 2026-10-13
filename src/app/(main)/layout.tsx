@@ -16,9 +16,9 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           <SidebarContainer postData={postData} gameData={gameData} />
         </aside>
 
-        <main className="min-w-0 flex-1">
+        <div className="min-w-0 flex-1">
           <Suspense fallback={<Loading />}>{children}</Suspense>
-        </main>
+        </div>
       </div>
     </div>
   );

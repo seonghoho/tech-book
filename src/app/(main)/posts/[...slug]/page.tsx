@@ -1,3 +1,4 @@
+import AdsenseScript from "@/components/common/AdsenseScript";
 import PostIndex from "@/components/posts/PostIndex";
 import { extractHeadings } from "@/lib/getPostContent";
 import { getPostData } from "@/lib/getPostData";
@@ -9,7 +10,11 @@ import {
   buildPageMetadata,
   siteDefaults,
 } from "@/lib/seo";
-import { filterIndexablePosts, getPostRobots } from "@/lib/contentVisibility";
+import {
+  filterIndexablePosts,
+  getPostRobots,
+  isIndexablePostSlug,
+} from "@/lib/contentVisibility";
 import nextDynamic from "next/dynamic";
 import { categoryMap } from "@/lib/categoryMap";
 import { notFound } from "next/navigation";
@@ -160,7 +165,8 @@ export default async function PostPage({ params }: PageProps) {
           __html: JSON.stringify([jsonLd, breadcrumbJsonLd]),
         }}
       />
-      <main className="min-w-0 py-6 2xl:pr-6">
+      {isIndexablePostSlug(slugString) ? <AdsenseScript /> : null}
+      <div className="min-w-0 py-6 2xl:pr-6">
         <PostContent
           title={post.title}
           date={post.date}
@@ -174,7 +180,7 @@ export default async function PostPage({ params }: PageProps) {
           nextPost={nextPost ? { title: nextPost.title, url: `/posts/${nextPost.slug}` } : null}
           relatedLinks={relatedLinks}
         />
-      </main>
+      </div>
       <aside className="sticky-section hidden shrink-0 border-l border-[color:var(--color-border)] pl-4 2xl:block 2xl:w-56 2xl:self-start">
         <h2 className="px-4 text-xl font-bold">목차</h2>
         <PostIndex headings={headings} />

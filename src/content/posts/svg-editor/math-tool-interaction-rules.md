@@ -1,6 +1,6 @@
 ---
 title: "교구마다 다른 drag·rotate·place 규칙을 안정적으로 분기한 방법"
-date: "2024-09-19"
+date: "2026-05-13"
 updated: "2026-05-29"
 description: "수학교구 캔버스에서 교구별 조작 규칙을 하나의 이벤트 흐름 안에서 안정적으로 분기한 기준을 정리합니다."
 image: "/images/projects/mathcanvas/cover-og.png"
@@ -8,6 +8,8 @@ tags: ["SVG", "Interaction", "PointerEvent", "Architecture"]
 ---
 
 # 교구마다 다른 drag·rotate·place 규칙을 안정적으로 분기한 방법
+
+> 2024년 9월에 진행한 작업을 2026년 5월에 정리한 기록입니다.
 
 ## 문제 상황
 
