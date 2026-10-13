@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { PostMeta } from "@/types/post";
+import { isPublished } from "@/lib/publishing";
 
 const contentDirectory = path.join(process.cwd(), "src", "content");
 
@@ -48,7 +49,7 @@ export function getAllPosts(type: "posts" | "games"): PostMeta[] {
 
   const mdFilePaths = getMdFilesRecursively(targetDirectory);
 
-  return mdFilePaths.map((fullPath) => {
+  return mdFilePaths.flatMap((fullPath): PostMeta[] => {
     const slug = path
       .relative(targetDirectory, fullPath)
       .replace(/\\/g, "/")
@@ -57,7 +58,9 @@ export function getAllPosts(type: "posts" | "games"): PostMeta[] {
     const { data, content } = matter(fileContents);
     const [category] = slug.split("/");
 
-    return {
+    if (type === "posts" && !isPublished(data)) return [];
+
+    return [{
       slug,
       title: data.title,
       date: data.date,
@@ -68,7 +71,7 @@ export function getAllPosts(type: "posts" | "games"): PostMeta[] {
       readingTime: getReadingTime(content),
       image: data.image,
       featured: Boolean(data.featured),
-    };
+    }];
   });
 }
 

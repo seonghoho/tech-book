@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { PostMeta } from "@/types/post";
+import { isPublished } from "@/lib/publishing";
 
 const contentDirectory = path.join(process.cwd(), "src", "content");
 
@@ -45,13 +46,15 @@ export function getPostsByCategory(type: "posts" | "games") {
       .readdirSync(categoryPath)
       .filter((file) => file.endsWith(".md"));
 
-    const posts = files.map((file) => {
+    const posts = files.flatMap((file): PostMeta[] => {
       const slug = file.replace(/\.md$/, "");
       const fullPath = path.join(categoryPath, file);
       const content = fs.readFileSync(fullPath, "utf8");
       const { data, content: body } = matter(content);
 
-      return {
+      if (type === "posts" && !isPublished(data)) return [];
+
+      return [{
         slug: `${category}/${slug}`,
         title: data.title,
         date: data.date,
@@ -62,7 +65,7 @@ export function getPostsByCategory(type: "posts" | "games") {
         readingTime: getReadingTime(body),
         image: data.image,
         featured: Boolean(data.featured),
-      };
+      }];
     });
 
     // Sort posts by date descending
@@ -70,7 +73,7 @@ export function getPostsByCategory(type: "posts" | "games") {
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
-    result[category] = posts;
+    if (posts.length > 0) result[category] = posts;
   });
 
   return result;

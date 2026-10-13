@@ -1,0 +1,3 @@
+// 글 상세 본문과 관리자 미리보기가 같은 타이포그래피를 쓰도록 공유한다.
+export const POST_BODY_CLASS_NAME =
+  "post-body prose max-w-none dark:prose-invert prose-headings:font-semibold prose-headings:leading-tight prose-h1:text-[1.85rem] prose-h2:mt-12 prose-h2:text-[1.45rem] prose-h3:mt-9 prose-h3:text-[1.18rem] prose-p:my-5 prose-p:text-[15px] prose-p:leading-8 prose-a:font-medium prose-blockquote:my-8 prose-blockquote:px-5 prose-blockquote:py-4 prose-li:my-1.5 prose-li:text-[15px] prose-li:leading-8 prose-ul:my-5 prose-ol:my-5 sm:prose-h1:text-[2.2rem] sm:prose-h2:text-[1.7rem] sm:prose-h3:text-[1.3rem] sm:prose-p:text-base sm:prose-p:leading-8 sm:prose-li:text-base";

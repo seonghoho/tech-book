@@ -4,6 +4,7 @@ import AuthorBox from "./AuthorBox";
 import GiscusComments from "./GiscusComments";
 import { PostNavCard } from "./PostNavCard";
 import PostCodeCopyEnhancer from "./PostCodeCopyEnhancer";
+import { POST_BODY_CLASS_NAME } from "./postBodyClassName";
 import { PostNav } from "@/types/post";
 import { categoryMap } from "@/lib/categoryMap";
 import { formatDate } from "@/lib/formatDate";
@@ -137,7 +138,7 @@ export default function PostContent({
         ) : null}
 
         <div
-          className="post-body prose mt-8 max-w-none dark:prose-invert prose-headings:font-semibold prose-headings:leading-tight prose-h1:text-[1.85rem] prose-h2:mt-12 prose-h2:text-[1.45rem] prose-h3:mt-9 prose-h3:text-[1.18rem] prose-p:my-5 prose-p:text-[15px] prose-p:leading-8 prose-a:font-medium prose-blockquote:my-8 prose-blockquote:px-5 prose-blockquote:py-4 prose-li:my-1.5 prose-li:text-[15px] prose-li:leading-8 prose-ul:my-5 prose-ol:my-5 sm:mt-10 sm:prose-h1:text-[2.2rem] sm:prose-h2:text-[1.7rem] sm:prose-h3:text-[1.3rem] sm:prose-p:text-base sm:prose-p:leading-8 sm:prose-li:text-base"
+          className={`${POST_BODY_CLASS_NAME} mt-8 sm:mt-10`}
           dangerouslySetInnerHTML={{ __html: contentHtml }}
         />
 
