@@ -2,4 +2,5 @@
 export const categoryMap: Record<string, string> = {
   "svg-editor": "SVG Editor Devlog",
   "voca-study": "Voca Study Devlog",
+  "ai-workflow": "AI Workflow",
 };
