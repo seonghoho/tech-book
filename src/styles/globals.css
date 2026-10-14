@@ -160,7 +160,12 @@ a {
   .project-highlight-mark {
     margin-inline: 0.02em;
     border-radius: 0.18em;
-    background: linear-gradient(to top, var(--color-accent-soft) 42%, transparent 42%);
+    /* accent-soft(12%)는 글 사이에서 거의 안 보여서, 형광펜만 농도를 따로 올린다. */
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--color-accent) 22%, transparent) 42%,
+      transparent 42%
+    );
     color: var(--color-text-primary);
     font-weight: 650;
   }

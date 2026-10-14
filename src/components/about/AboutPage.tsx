@@ -241,7 +241,7 @@ export default function AboutPage() {
                       <p className="text-sm leading-7 text-[color:var(--color-text-secondary)]">
                         {item.summary}
                       </p>
-                      <ul className="grid gap-2 sm:grid-cols-2">
+                      <ul className="grid gap-2 xl:grid-cols-2">
                         {item.highlights.map((highlight) => (
                           <li
                             key={highlight}
