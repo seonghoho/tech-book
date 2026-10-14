@@ -371,6 +371,20 @@ a {
     stroke: var(--color-accent);
   }
 
+  .editor-hero-line-hit {
+    fill: none;
+    stroke: transparent;
+    stroke-width: 18;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+    pointer-events: stroke;
+    cursor: move;
+  }
+
+  .editor-hero-line-hit:hover + .editor-hero-shape {
+    stroke: var(--color-accent);
+  }
+
   .editor-hero-shape-line {
     stroke-width: 2;
     stroke-linecap: round;

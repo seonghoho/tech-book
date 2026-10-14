@@ -61,6 +61,21 @@ const OPPOSITE_CORNER: Record<Handle, (s: Shape) => Point> = {
   sw: (s) => ({ x: s.x + s.w, y: s.y }),
 };
 
+// 선 그리기 모션의 대시 길이. non-scaling-stroke에서는 대시가 화면 픽셀 기준일 수 있어서,
+// 스테이지가 viewBox보다 크게 보이면 그만큼 늘린다. 길게 잡는 쪽은 어느 해석이든 선이 끝까지 그려진다.
+export function drawLength(totalLength: number, screenScale: number): number {
+  return Math.ceil(totalLength * Math.max(1, screenScale));
+}
+
+// 핸들이 잡고 있는 모서리(고정 모서리의 반대편)의 화면 좌표.
+export function handlePoint(s: Shape, handle: Handle): Point {
+  const corner = {
+    x: handle.includes("w") ? s.x : s.x + s.w,
+    y: handle.includes("n") ? s.y : s.y + s.h,
+  };
+  return rotatePoint(corner, shapeCenter(s), s.r);
+}
+
 export function resizeShape(
   orig: Shape,
   handle: Handle,

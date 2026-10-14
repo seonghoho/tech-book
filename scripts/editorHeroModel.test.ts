@@ -5,6 +5,8 @@ import {
   HISTORY_LIMIT,
   MIN_SIZE,
   createHistory,
+  drawLength,
+  handlePoint,
   initialShapes,
   moveShape,
   pushHistory,
@@ -193,5 +195,28 @@ describe("history", () => {
     const h = createHistory();
     assert.equal(undo(h), h);
     assert.equal(redo(h), h);
+  });
+});
+
+describe("handlePoint", () => {
+  for (const r of [0, 90, -6]) {
+    for (const handle of ["nw", "ne", "se", "sw"] as Handle[]) {
+      it(`resizing to the handle's own corner changes nothing (r=${r}, ${handle})`, () => {
+        const orig = box({ r });
+        const next = resizeShape(orig, handle, handlePoint(orig, handle));
+        assertClose({ x: next.x, y: next.y }, { x: orig.x, y: orig.y });
+        assert.ok(Math.abs(next.w - orig.w) < 1e-6 && Math.abs(next.h - orig.h) < 1e-6);
+      });
+    }
+  }
+});
+
+describe("drawLength", () => {
+  it("stretches the dash when the stage is shown larger than the viewBox", () => {
+    assert.equal(drawLength(400, 1.16), 464);
+  });
+
+  it("never shortens the dash below the path length on small screens", () => {
+    assert.equal(drawLength(400, 0.57), 400);
   });
 });

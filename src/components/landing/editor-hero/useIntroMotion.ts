@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
-import { initialShapes, type Point } from "./editorModel";
+import { drawLength, initialShapes, type Point } from "./editorModel";
 
 export type IntroState = {
   drawing: boolean;
@@ -77,10 +77,13 @@ export function useIntroMotion(
 
     const start = () => {
       markPlayed();
-      svgRef.current?.querySelectorAll<SVGGeometryElement>("[data-shape-id]").forEach((node, i) => {
-        node.style.setProperty("--len", String(Math.ceil(node.getTotalLength())));
-        node.style.setProperty("--d", `${i * DRAW_STAGGER_MS}ms`);
-      });
+      const scale = svgRef.current?.getScreenCTM()?.a ?? 1;
+      svgRef.current
+        ?.querySelectorAll<SVGGeometryElement>(".editor-hero-shape[data-shape-id]")
+        .forEach((node, i) => {
+          node.style.setProperty("--len", String(drawLength(node.getTotalLength(), scale)));
+          node.style.setProperty("--d", `${i * DRAW_STAGGER_MS}ms`);
+        });
       setIntro({ ...IDLE, drawing: true });
       timers.push(window.setTimeout(() => setIntro((s) => ({ ...s, drawing: false })), DRAW_MS));
 

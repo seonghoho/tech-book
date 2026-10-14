@@ -14,6 +14,7 @@ import { CursorArrowIcon, RedoIcon, UndoIcon } from "@/assets/svg";
 import {
   STAGE,
   createHistory,
+  handlePoint,
   moveShape,
   pushHistory,
   redo,
@@ -40,6 +41,9 @@ type Drag = {
   orig: Shape;
   before: Shape[];
   announced: boolean;
+  pointerId: number;
+  // 리사이즈: 누른 지점과 핸들 모서리의 차이. 처음 누를 때 모서리가 포인터로 튀지 않게 한다.
+  grab: Point;
 };
 
 const ARROW_STEP: Record<string, Point> = {
@@ -51,7 +55,8 @@ const ARROW_STEP: Record<string, Point> = {
 // 방향키를 이 시간 안에 이어 누르면 히스토리 1개로 묶는다.
 const KEY_BURST_MS = 400;
 const HANDLE_GAP = 6;
-const HIT_RADIUS = 14;
+// 375px 화면(축척 약 0.57)에서도 손가락으로 잡히도록 지름 약 25px을 확보한다.
+const HIT_RADIUS = 22;
 
 function ShapeNode({ shape }: { shape: Shape }) {
   const c = shapeCenter(shape);
@@ -72,8 +77,18 @@ function ShapeNode({ shape }: { shape: Shape }) {
     const points = `${shape.x + shape.w / 2},${shape.y} ${shape.x + shape.w},${shape.y + shape.h} ${shape.x},${shape.y + shape.h}`;
     return <polygon {...common} points={points} />;
   }
+  // 선분은 2px 선만 맞아서 잡기 어렵다. 같은 대각선에 투명한 굵은 선을 깔아 히트 영역으로 쓴다.
+  const ends = { x1: shape.x, y1: shape.y + shape.h, x2: shape.x + shape.w, y2: shape.y };
   return (
-    <line {...common} x1={shape.x} y1={shape.y + shape.h} x2={shape.x + shape.w} y2={shape.y} />
+    <>
+      <line
+        data-shape-id={shape.id}
+        className="editor-hero-line-hit"
+        transform={common.transform}
+        {...ends}
+      />
+      <line {...common} className={`${common.className} pointer-events-none`} {...ends} />
+    </>
   );
 }
 
@@ -199,6 +214,8 @@ export default function EditorHero({ hintPosts }: Props) {
   }
 
   function handlePointerDown(e: PointerEvent<SVGSVGElement>) {
+    // 드래그 중에 두 번째 손가락이 닿으면 무시한다. 드래그를 빼앗기면 첫 조작이 히스토리에서 사라진다.
+    if (dragRef.current) return;
     stopIntro();
     flushKeyBurst();
     stageRef.current?.focus({ preventScroll: true });
@@ -211,25 +228,33 @@ export default function EditorHero({ hintPosts }: Props) {
     const target = e.target as Element;
     const handle = target.getAttribute("data-handle");
     const id = target.getAttribute("data-shape-id");
+    const base = {
+      start: p,
+      before: current,
+      announced: false,
+      pointerId: e.pointerId,
+      grab: { x: 0, y: 0 },
+    };
 
     if (handle && currentSelected) {
-      dragRef.current =
-        handle === "rotate"
-          ? { mode: "rotate", start: p, orig: currentSelected, before: current, announced: false }
-          : {
-              mode: "resize",
-              handle: handle as Handle,
-              start: p,
-              orig: currentSelected,
-              before: current,
-              announced: false,
-            };
+      if (handle === "rotate") {
+        dragRef.current = { ...base, mode: "rotate", orig: currentSelected };
+      } else {
+        const corner = handlePoint(currentSelected, handle as Handle);
+        dragRef.current = {
+          ...base,
+          mode: "resize",
+          handle: handle as Handle,
+          orig: currentSelected,
+          grab: { x: corner.x - p.x, y: corner.y - p.y },
+        };
+      }
     } else if (id) {
       const shape = current.find((s) => s.id === id);
       if (!shape) return;
       if (id !== selectedId) announce("select");
       setSelectedId(id);
-      dragRef.current = { mode: "move", start: p, orig: shape, before: current, announced: false };
+      dragRef.current = { ...base, mode: "move", orig: shape };
     } else {
       setSelectedId(null);
       return;
@@ -239,14 +264,17 @@ export default function EditorHero({ hintPosts }: Props) {
 
   function handlePointerMove(e: PointerEvent<SVGSVGElement>) {
     const drag = dragRef.current;
-    if (!drag) return;
+    if (!drag || e.pointerId !== drag.pointerId) return;
     const p = toSvgPoint(e);
     if (!p) return;
 
     let next: Shape;
     if (drag.mode === "move") next = moveShape(drag.orig, p.x - drag.start.x, p.y - drag.start.y);
     else if (drag.mode === "rotate") next = rotateShape(drag.orig, p);
-    else next = resizeShape(drag.orig, drag.handle as Handle, p, { keepRatio: e.shiftKey });
+    else {
+      const corner = { x: p.x + drag.grab.x, y: p.y + drag.grab.y };
+      next = resizeShape(drag.orig, drag.handle as Handle, corner, { keepRatio: e.shiftKey });
+    }
 
     if (!drag.announced) {
       drag.announced = true;
@@ -256,9 +284,9 @@ export default function EditorHero({ hintPosts }: Props) {
   }
 
   // pointerup과 pointercancel 모두 여기서 끝낸다. 변경이 있을 때만 히스토리에 남는다.
-  function endDrag() {
+  function endDrag(e: PointerEvent<SVGSVGElement>) {
     const drag = dragRef.current;
-    if (!drag) return;
+    if (!drag || e.pointerId !== drag.pointerId) return;
     dragRef.current = null;
     setHistory((h) => pushHistory(h, drag.before));
   }
