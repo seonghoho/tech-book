@@ -15,6 +15,10 @@ export default function LandingProjectsSection({ projects }: Props) {
         <div>
           <p className="eyebrow-label">Projects</p>
           <h2 className="section-title mt-2">프로젝트</h2>
+          <p className="muted-copy mt-2 [word-break:keep-all]">
+            회사와 팀 프로젝트에서 맡은 역할과 결과입니다. 구현 과정은 각 프로젝트 페이지에
+            정리했습니다.
+          </p>
         </div>
         <Link href="/projects" className="accent-link text-sm font-semibold">
           전체 프로젝트 →
