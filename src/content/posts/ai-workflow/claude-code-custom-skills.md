@@ -3,8 +3,7 @@ title: "Claude Code 스킬로 반복 작업 정리하기: handoff, sync, cleanup
 date: "2026-10-13"
 description: "세션을 넘길 때, 다른 컴퓨터에서 이어서 작업할 때, PR 머지 후 정리할 때마다 같은 요청을 반복하다가 Claude Code 스킬로 만들어 쓰게 된 과정을 정리했습니다."
 image: "/images/posts/ai-workflow/claude-code-custom-skills/body-03.png"
-tags: ["AI", "Claude Code", "Skills", "Git", "Workflow"]
-draft: true
+tags: ["AI","Claude Code","Skills","Git","Workflow"]
 ---
 
 # Claude Code 스킬로 반복 작업 정리하기: handoff, sync, cleanup
