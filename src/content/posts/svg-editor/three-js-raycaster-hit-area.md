@@ -181,7 +181,7 @@ scene 구조상으로는 같은 group에 묶고, Raycaster 대상으로는 hit m
 ### 얇은 선의 hit area는 cylinder로
 
 얇은 선은 `Line`보다 `CylinderGeometry`를 사용해 hit area를 만들기 좋습니다.
-이미 [Three.js LineGeometry 문제 해결](/posts/svg-editor/three-js-line-geometry-error)에서 렌더링 안정성을 위해 cylinder edge를 사용한 경험이 있었고, 선택 영역에도 같은 접근을 적용했습니다.
+이미 [Three.js LineGeometry 문제 해결](/posts/svg-editor/three-js-line-geometry-error)에서 시점에 따라 사라지던 선을 cylinder edge로 바꾼 적이 있어서, 선택 영역에도 같은 방식을 썼습니다.
 
 ```ts
 function createCylinderBetweenPoints(
@@ -219,7 +219,7 @@ const hitEdge = createCylinderBetweenPoints(start, end, 0.08, hitMaterial);
 이렇게 하면 화면에서는 얇은 선처럼 보이지만, 사용자는 여유 있는 선택 영역을 얻습니다.
 화면 표현과 조작 편의성을 따로 조절할 수 있는 셈입니다.
 
-Three.js에서 "선 하나"라고 생각한 대상도 실제 구현에서는 렌더링 안정성, 선택 안정성, 디버깅 가능성을 위해 여러 객체로 나눠야 할 때가 많았습니다.
+Three.js에서 "선 하나"라고 생각한 대상도 실제 구현에서는 그리는 객체, 선택용 객체, 디버깅용 표시로 나눠야 할 때가 많았습니다.
 
 ## 4. 거리순 대신 선택 우선순위 두기
 
