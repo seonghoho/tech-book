@@ -437,6 +437,41 @@ a {
   .editor-hero-flash {
     animation: editor-hero-flash 0.5s ease-out;
   }
+
+  /* 홈 프로젝트 도면형 카드 */
+  .project-glyph-grid {
+    background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+    background-size: 12px 12px;
+  }
+
+  .project-glyph-line,
+  .project-accent-stroke {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .project-glyph-line {
+    stroke: var(--color-text-primary);
+    stroke-width: 1;
+  }
+
+  .project-accent-stroke {
+    stroke: var(--project-color, var(--color-accent));
+    stroke-width: 1.5;
+  }
+
+  .project-accent-dot {
+    background-color: var(--project-color, var(--color-accent));
+  }
+
+  /* 어두운 고유색이 다크 배경에 묻히지 않도록 밝힌다. */
+  html.dark .project-accent-stroke {
+    stroke: color-mix(in srgb, var(--project-color, var(--color-accent)) 65%, white);
+  }
+
+  html.dark .project-accent-dot {
+    background-color: color-mix(in srgb, var(--project-color, var(--color-accent)) 65%, white);
+  }
 }
 
 @media (min-width: 640px) {

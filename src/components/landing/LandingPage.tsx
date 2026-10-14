@@ -19,10 +19,7 @@ export default function LandingPage({ posts }: Props) {
         <LandingHero posts={posts} />
         <LandingLatestPostsSection posts={posts.slice(0, 4)} />
         <LandingCategoriesSection posts={posts} />
-        <LandingProjectsSection
-          projects={selectedProjects}
-          sizes="(min-width: 1200px) 220px, (min-width: 768px) 30vw, (min-width: 640px) 44vw, 88vw"
-        />
+        <LandingProjectsSection projects={selectedProjects} />
       </div>
     </div>
   );
