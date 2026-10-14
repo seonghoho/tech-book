@@ -10,6 +10,7 @@ import {
   strengthHighlights,
 } from "@/lib/aboutData";
 import PortfolioRail from "@/components/portfolio/PortfolioRail";
+import { formatPeriod } from "@/lib/formatPeriod";
 
 // const featuredProject = aboutProjects.find((project) => project.featured) ?? aboutProjects[0];
 const projectArchivePreview = aboutProjects.slice(0, 4);
@@ -109,7 +110,7 @@ export default function AboutPage() {
                         <p className="eyebrow-label">Profile</p>
                         <div>
                           <h3 className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)] sm:text-3xl">
-                            {aboutProfile.name } / {aboutProfile.title}
+                            {aboutProfile.name} / {aboutProfile.title}
                           </h3>
                           <p className="mt-3 max-w-2xl text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
                             {aboutProfile.railSummary}
@@ -118,16 +119,16 @@ export default function AboutPage() {
                       </div>
                     </div>
 
-                    <dl className="grid gap-3 sm:grid-cols-2 min-[1600px]:grid-cols-3">
+                    <dl className="divide-y divide-[color:var(--color-border)] border-y border-[color:var(--color-border)]">
                       {overviewFacts.map((fact) => (
                         <div
                           key={fact.label}
-                          className="surface-subtle group px-4 py-4 transition-[transform,background-color,border-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:border-[color:var(--color-border-strong)] hover:bg-[color:var(--color-surface)] hover:shadow-[0_18px_40px_rgba(15,23,42,0.06)] dark:hover:shadow-[0_22px_46px_rgba(2,8,23,0.28)]"
+                          className="flex items-baseline justify-between gap-4 py-3"
                         >
-                          <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--color-text-muted)]">
+                          <dt className="font-mono text-xs uppercase tracking-[0.16em] text-[color:var(--color-text-muted)]">
                             {fact.label}
                           </dt>
-                          <dd className="mt-2 text-sm font-medium leading-6 text-[color:var(--color-text-primary)] transition-colors duration-200 group-hover:text-[color:var(--color-accent)]">
+                          <dd className="text-right text-sm font-medium leading-6 text-[color:var(--color-text-primary)] [word-break:keep-all]">
                             {fact.value}
                           </dd>
                         </div>
@@ -139,12 +140,9 @@ export default function AboutPage() {
                     <p className="text-sm font-semibold text-[color:var(--color-text-primary)]">
                       What I Focus On
                     </p>
-                    <div className="mt-4 grid gap-3">
+                    <div className="mt-4 grid gap-4">
                       {overviewStrengths.map((item) => (
-                        <div
-                          key={item.title}
-                          className="group flex items-start gap-3 rounded-[22px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] px-4 py-3 transition-[transform,background-color,border-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-[color:var(--color-border-strong)] hover:bg-[color:var(--color-surface)] hover:shadow-[0_18px_40px_rgba(15,23,42,0.06)] dark:hover:shadow-[0_22px_46px_rgba(2,8,23,0.28)]"
-                        >
+                        <div key={item.title} className="group flex items-start gap-3">
                           <span className="mt-2 h-2 w-2 rounded-full bg-[color:var(--color-accent)] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:scale-[1.35]" />
                           <div>
                             <p className="text-sm font-semibold text-[color:var(--color-text-primary)] transition-colors duration-200 group-hover:text-[color:var(--color-accent)]">
@@ -182,25 +180,22 @@ export default function AboutPage() {
                 <p className="mt-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
                   {aboutProfile.focus}
                 </p>
-                <div className="mt-5 grid gap-3">
+                <ul className="mt-5 space-y-2 text-sm font-medium text-[color:var(--color-text-secondary)]">
                   {overviewStrengths.map((item) => (
-                    <div
-                      key={item.title}
-                      className="surface-subtle px-4 py-3 text-sm font-medium text-[color:var(--color-text-secondary)]"
-                    >
-                      {item.title}
-                    </div>
+                    <li key={item.title} className="flex gap-2">
+                      <span aria-hidden="true" className="text-[color:var(--color-text-muted)]">
+                        —
+                      </span>
+                      <span>{item.title}</span>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </aside>
             </div>
 
             <div className="mx-auto grid w-full max-w-[1040px] gap-3 sm:grid-cols-2">
               {aboutProfile.metrics.map((metric) => (
-                <article
-                  key={metric.label}
-                  className="about-card-interactive px-5 py-4"
-                >
+                <article key={metric.label} className="about-card-interactive px-5 py-4">
                   <div className="text-xl font-semibold text-[color:var(--color-text-primary)]">
                     {metric.value}
                   </div>
@@ -222,7 +217,7 @@ export default function AboutPage() {
               description="각각의 과정에서 어떤 역할과 역량이 만들어졌는지 정리했습니다."
             />
 
-            <div className="about-card overflow-hidden divide-y divide-[color:var(--color-border)]">
+            <div className="about-card divide-y divide-[color:var(--color-border)] overflow-hidden">
               {experienceTimeline.map((item) => (
                 <article
                   key={item.company}
@@ -230,9 +225,9 @@ export default function AboutPage() {
                 >
                   <div className="grid gap-4 lg:grid-cols-[180px_minmax(0,1fr)]">
                     <div className="space-y-1 text-sm text-[color:var(--color-text-muted)]">
-                      <div className="inline-flex rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-accent-soft)] px-3 py-1 text-xs font-semibold text-[color:var(--color-accent)]">
-                        {item.period}
-                      </div>
+                      <p className="font-mono text-xs text-[color:var(--color-text-muted)]">
+                        {formatPeriod(item.period)}
+                      </p>
                     </div>
                     <div className="space-y-4">
                       <div>
@@ -250,9 +245,15 @@ export default function AboutPage() {
                         {item.highlights.map((highlight) => (
                           <li
                             key={highlight}
-                            className="surface-subtle px-4 py-3 text-sm text-[color:var(--color-text-secondary)]"
+                            className="flex gap-2 text-sm leading-6 text-[color:var(--color-text-secondary)]"
                           >
-                            {highlight}
+                            <span
+                              aria-hidden="true"
+                              className="text-[color:var(--color-text-muted)]"
+                            >
+                              —
+                            </span>
+                            <span>{highlight}</span>
                           </li>
                         ))}
                       </ul>
@@ -328,27 +329,27 @@ export default function AboutPage() {
                   </div>
                 </div> */}
 
-                <div className="grid gap-3">
+                <div className="divide-y divide-[color:var(--color-border)]">
                   {projectArchivePreview.map((project) => (
                     <Link
                       key={project.slug}
                       href={`/projects/${project.slug}`}
-                      className="about-card-interactive block px-4 py-4 sm:px-5"
+                      className="group block px-1 py-4 transition-colors duration-200 ease-out hover:bg-[color:var(--color-surface-tint)] sm:px-2"
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                            {project.period}
+                          <p className="font-mono text-xs text-[color:var(--color-text-muted)]">
+                            {formatPeriod(project.period)}
                           </p>
-                          <h4 className="mt-2 text-lg font-semibold text-[color:var(--color-text-primary)]">
+                          <h4 className="mt-2 text-lg font-semibold text-[color:var(--color-text-primary)] transition-colors duration-200 ease-out group-hover:text-[color:var(--color-accent)]">
                             {project.title}
                           </h4>
                           <p className="mt-1 text-sm leading-6 text-[color:var(--color-text-secondary)]">
                             {project.tagline}
                           </p>
                         </div>
-                        <span className="text-sm font-semibold text-[color:var(--color-accent)]">
-                          View
+                        <span className="shrink-0 text-sm font-semibold text-[color:var(--color-accent)]">
+                          View →
                         </span>
                       </div>
                     </Link>
@@ -365,7 +366,7 @@ export default function AboutPage() {
               description="특정 라이브러리 숙련도보다, 구현 난도가 높은 화면에서 어떤 판단을 했는지가 더 중요하다고 생각합니다."
             />
 
-            <div className="about-card overflow-hidden divide-y divide-[color:var(--color-border)]">
+            <div className="about-card divide-y divide-[color:var(--color-border)] overflow-hidden">
               {strengthHighlights.map((item) => (
                 <article
                   key={item.title}
@@ -398,7 +399,7 @@ export default function AboutPage() {
               description="서비스 UI, 그래픽 인터랙션, 상태 구조, 협업 도구를 분리해 보면 어떤 영역에서 실전 경험이 쌓였는지 더 분명하게 드러납니다."
             />
 
-            <div className="about-card overflow-hidden divide-y divide-[color:var(--color-border)]">
+            <div className="about-card divide-y divide-[color:var(--color-border)] overflow-hidden">
               {skillGroups.map((group) => (
                 <article
                   key={group.title}
@@ -435,10 +436,7 @@ export default function AboutPage() {
 
             <div className="grid gap-4 xl:grid-cols-2">
               {growthNotes.map((note) => (
-                <article
-                  key={note.title}
-                  className="about-card-interactive px-5 py-5"
-                >
+                <article key={note.title} className="about-card-interactive px-5 py-5">
                   <h3 className="text-base font-semibold text-[color:var(--color-text-primary)]">
                     {note.title}
                   </h3>
