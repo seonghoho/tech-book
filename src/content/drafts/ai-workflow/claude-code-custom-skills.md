@@ -7,11 +7,6 @@ tags: ["AI", "Claude Code", "Skills", "Git", "Workflow"]
 draft: true
 ---
 
-<!--
-- 본문 내용은 Claude Code 대화 기록, ~/.claude/handoffs 문서, SKILL.md 파일, dev-dotfiles 커밋에서 확인한 사실을 기준으로 작성했습니다.
-- 이 주석은 발행 전에 지우세요.
--->
-
 # Claude Code 스킬로 반복 작업 정리하기: handoff, sync, cleanup
 
 ## 반복되는 작업
