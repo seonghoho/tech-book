@@ -180,16 +180,7 @@ export default function AboutPage() {
                 <p className="mt-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
                   {aboutProfile.focus}
                 </p>
-                <ul className="mt-5 space-y-2 text-sm font-medium text-[color:var(--color-text-secondary)]">
-                  {overviewStrengths.map((item) => (
-                    <li key={item.title} className="flex gap-2">
-                      <span aria-hidden="true" className="text-[color:var(--color-text-muted)]">
-                        —
-                      </span>
-                      <span>{item.title}</span>
-                    </li>
-                  ))}
-                </ul>
+                {/* 강점 항목은 위 프로필 카드의 What I Focus On에 설명과 함께 있어 여기서는 다시 나열하지 않는다. */}
               </aside>
             </div>
 
