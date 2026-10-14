@@ -16,4 +16,9 @@ describe("formatPeriod", () => {
     assert.equal(formatPeriod("2026.03"), "2026.03");
     assert.equal(formatPeriod("2024.08-2026.02"), "2024.08-2026.02");
   });
+
+  it("tolerates stray spaces around the period and the dash", () => {
+    assert.equal(formatPeriod(" 2024.08 - 2026.02 "), "2024.08–2026.02");
+    assert.equal(formatPeriod("2024.08  -  2026.02"), "2024.08–2026.02");
+  });
 });

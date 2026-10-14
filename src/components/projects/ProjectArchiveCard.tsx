@@ -122,13 +122,15 @@ export default function ProjectArchiveCard({
           <>
             <p
               className={joinClasses(
-                "font-mono text-xs text-[color:var(--color-text-muted)]",
+                "flex flex-wrap gap-x-2 font-mono text-xs text-[color:var(--color-text-muted)]",
                 metaClassName,
               )}
             >
-              {formatPeriod(project.period)} · {project.status}
+              {/* 좁은 열(6열 그리드)에서는 상태만 다음 줄로 넘어가므로, 구분점 없이 항목 단위로 줄바꿈한다. */}
+              <span>{formatPeriod(project.period)}</span>
+              <span>{project.status}</span>
             </p>
-            <p className="line-clamp-2 text-sm leading-6 text-[color:var(--color-text-secondary)] [word-break:keep-all]">
+            <p className="line-clamp-3 text-sm leading-6 text-[color:var(--color-text-secondary)] [word-break:keep-all]">
               {project.tagline}
             </p>
           </>

@@ -145,7 +145,7 @@ export default function AboutPage() {
                         <div key={item.title} className="group flex items-start gap-3">
                           <span className="mt-2 h-2 w-2 rounded-full bg-[color:var(--color-accent)] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:scale-[1.35]" />
                           <div>
-                            <p className="text-sm font-semibold text-[color:var(--color-text-primary)] transition-colors duration-200 group-hover:text-[color:var(--color-accent)]">
+                            <p className="text-sm font-semibold text-[color:var(--color-text-primary)] transition-colors duration-200 group-hover:text-[color:var(--color-accent)] group-focus-visible:text-[color:var(--color-accent)]">
                               {item.title}
                             </p>
                             <p className="mt-1 text-sm leading-6 text-[color:var(--color-text-muted)]">
@@ -334,7 +334,7 @@ export default function AboutPage() {
                     <Link
                       key={project.slug}
                       href={`/projects/${project.slug}`}
-                      className="group block px-1 py-4 transition-colors duration-200 ease-out hover:bg-[color:var(--color-surface-tint)] sm:px-2"
+                      className="group block px-1 py-4 transition-colors duration-200 ease-out hover:bg-[color:var(--color-surface-tint)] focus-visible:bg-[color:var(--color-surface-tint)] sm:px-2"
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div>
@@ -349,7 +349,7 @@ export default function AboutPage() {
                           </p>
                         </div>
                         <span className="shrink-0 text-sm font-semibold text-[color:var(--color-accent)]">
-                          View →
+                          View <span aria-hidden="true">→</span>
                         </span>
                       </div>
                     </Link>

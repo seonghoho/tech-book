@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { formatPeriod } from "@/lib/formatPeriod";
 import Link from "next/link";
 import type { AboutProject, ProjectPreview } from "@/lib/aboutData";
+import { formatPeriod } from "@/lib/formatPeriod";
 import { splitHighlightText } from "@/lib/projectHighlights";
 import ProjectPoster from "@/components/projects/ProjectPoster";
 
