@@ -27,6 +27,7 @@ import {
   type Shape,
 } from "./editorModel";
 import { editorHints, type HintKind, type HintPostLinks } from "./editorHints";
+import { useIntroMotion } from "./useIntroMotion";
 
 type Props = {
   hintPosts: HintPostLinks;
@@ -161,6 +162,7 @@ export default function EditorHero({ hintPosts }: Props) {
   const [history, setHistory] = useState(createHistory);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hint, setHint] = useState<{ kind: HintKind; nonce: number }>({ kind: "idle", nonce: 0 });
+  const { intro, stopIntro } = useIntroMotion(stageRef, svgRef);
 
   const announce = useCallback((kind: HintKind) => {
     setHint((current) => ({ kind, nonce: current.nonce + 1 }));
@@ -176,8 +178,17 @@ export default function EditorHero({ hintPosts }: Props) {
 
   useEffect(() => () => window.clearTimeout(burstTimerRef.current), []);
 
-  const shapes = history.present;
-  const selected = shapes.find((s) => s.id === selectedId) ?? null;
+  // 시연은 상태를 건드리지 않고 화면에 보이는 값만 덮어쓴다. 그래서 히스토리에 남지 않고 끝나면 제자리로 돌아온다.
+  const demoMoving = intro.demoOffset.x !== 0 || intro.demoOffset.y !== 0;
+  const shapes = demoMoving
+    ? history.present.map((s) =>
+        s.id === "triangle"
+          ? { ...s, x: s.x + intro.demoOffset.x, y: s.y + intro.demoOffset.y }
+          : s,
+      )
+    : history.present;
+  const selected =
+    shapes.find((s) => s.id === (intro.demoSelected ? "triangle" : selectedId)) ?? null;
 
   function toSvgPoint(e: PointerEvent<SVGSVGElement>): Point | null {
     const matrix = svgRef.current?.getScreenCTM();
@@ -188,33 +199,37 @@ export default function EditorHero({ hintPosts }: Props) {
   }
 
   function handlePointerDown(e: PointerEvent<SVGSVGElement>) {
+    stopIntro();
     flushKeyBurst();
     stageRef.current?.focus({ preventScroll: true });
     const p = toSvgPoint(e);
     if (!p) return;
 
+    // 드래그 기준은 화면에 보이는 값(시연 중일 수 있음)이 아니라 실제 상태로 잡는다.
+    const current = history.present;
+    const currentSelected = current.find((s) => s.id === selectedId) ?? null;
     const target = e.target as Element;
     const handle = target.getAttribute("data-handle");
     const id = target.getAttribute("data-shape-id");
 
-    if (handle && selected) {
+    if (handle && currentSelected) {
       dragRef.current =
         handle === "rotate"
-          ? { mode: "rotate", start: p, orig: selected, before: shapes, announced: false }
+          ? { mode: "rotate", start: p, orig: currentSelected, before: current, announced: false }
           : {
               mode: "resize",
               handle: handle as Handle,
               start: p,
-              orig: selected,
-              before: shapes,
+              orig: currentSelected,
+              before: current,
               announced: false,
             };
     } else if (id) {
-      const shape = shapes.find((s) => s.id === id);
+      const shape = current.find((s) => s.id === id);
       if (!shape) return;
       if (id !== selectedId) announce("select");
       setSelectedId(id);
-      dragRef.current = { mode: "move", start: p, orig: shape, before: shapes, announced: false };
+      dragRef.current = { mode: "move", start: p, orig: shape, before: current, announced: false };
     } else {
       setSelectedId(null);
       return;
@@ -263,6 +278,11 @@ export default function EditorHero({ hintPosts }: Props) {
 
   // 프레임 안에 포커스가 있을 때만 받는다. 페이지 전역 ⌘Z는 가로채지 않는다.
   function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
+    const handled =
+      ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "z") ||
+      e.key === "Escape" ||
+      e.key in ARROW_STEP;
+    if (handled) stopIntro();
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "z") {
       e.preventDefault();
       if (e.shiftKey) handleRedo();
@@ -354,7 +374,7 @@ export default function EditorHero({ hintPosts }: Props) {
           ref={svgRef}
           viewBox={`0 0 ${STAGE.width} ${STAGE.height}`}
           aria-hidden="true"
-          className="absolute inset-0 block h-full w-full"
+          className={`absolute inset-0 block h-full w-full ${intro.drawing ? "editor-hero-drawing" : ""}`}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={endDrag}
@@ -373,6 +393,19 @@ export default function EditorHero({ hintPosts }: Props) {
           </g>
           {selected ? <SelectionOverlay shape={selected} /> : null}
         </svg>
+        {intro.ghost ? (
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 18 18"
+            className="pointer-events-none absolute z-[2] h-[18px] w-[18px]"
+            style={{
+              left: `${(intro.ghost.x / STAGE.width) * 100}%`,
+              top: `${(intro.ghost.y / STAGE.height) * 100}%`,
+            }}
+          >
+            <path className="editor-hero-ghost" d="M2 1l13 7-6 1.6L6.4 16z" />
+          </svg>
+        ) : null}
       </div>
 
       <div aria-live="polite" className="border-t border-[color:var(--color-border)]">
