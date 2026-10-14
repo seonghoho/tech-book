@@ -8,3 +8,6 @@ export { Sun as SunIcon } from "@/assets/svg/Sun";
 export { ChevronDown as ChevronDownIcon } from "@/assets/svg/ChevronDown";
 export { ChevronRight as ChevronRightIcon } from "@/assets/svg/ChevronRight";
 export { Logo as LogoSvgIcon } from "@/assets/svg/Logo";
+export { CursorArrow as CursorArrowIcon } from "@/assets/svg/CursorArrow";
+export { Undo as UndoIcon } from "@/assets/svg/Undo";
+export { Redo as RedoIcon } from "@/assets/svg/Redo";
