@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import type { AboutProject } from "@/lib/aboutData";
 import { hexToRgba } from "@/lib/color";
+import { formatPeriod } from "@/lib/formatPeriod";
 import ProjectPoster from "./ProjectPoster";
 
 function getProjectYear(period: string) {
@@ -97,33 +98,41 @@ export default function ProjectArchiveCard({
           {project.title}
         </h2>
 
-        <div
-          className={joinClasses(
-            isAccentPanel
-              ? "flex flex-wrap items-center gap-2 text-[15px] leading-7 text-[color:var(--color-text-secondary)]"
-              : "text-[15px] leading-7 text-[color:var(--color-text-secondary)]",
-            metaClassName,
-          )}
-        >
-          <span
+        {isAccentPanel ? (
+          <div
             className={joinClasses(
-              isAccentPanel ? "inline-flex rounded-full px-3 py-1 text-sm font-semibold" : "font-semibold",
+              "flex flex-wrap items-center gap-2 text-[15px] leading-7 text-[color:var(--color-text-secondary)]",
+              metaClassName,
             )}
-            style={yearBadgeStyle}
           >
-            {getProjectYear(project.period)}
-          </span>
-          <span
-            className={joinClasses(
-              isAccentPanel
-                ? "inline-flex rounded-full border px-3 py-1 text-sm font-medium"
-                : "ml-2 text-[color:var(--color-text-muted)]",
-            )}
-            style={statusBadgeStyle}
-          >
-            {project.status}
-          </span>
-        </div>
+            <span
+              className="inline-flex rounded-full px-3 py-1 text-sm font-semibold"
+              style={yearBadgeStyle}
+            >
+              {getProjectYear(project.period)}
+            </span>
+            <span
+              className="inline-flex rounded-full border px-3 py-1 text-sm font-medium"
+              style={statusBadgeStyle}
+            >
+              {project.status}
+            </span>
+          </div>
+        ) : (
+          <>
+            <p
+              className={joinClasses(
+                "font-mono text-xs text-[color:var(--color-text-muted)]",
+                metaClassName,
+              )}
+            >
+              {formatPeriod(project.period)} · {project.status}
+            </p>
+            <p className="line-clamp-2 text-sm leading-6 text-[color:var(--color-text-secondary)] [word-break:keep-all]">
+              {project.tagline}
+            </p>
+          </>
+        )}
       </div>
     </Link>
   );

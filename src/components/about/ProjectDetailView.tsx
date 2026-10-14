@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { formatPeriod } from "@/lib/formatPeriod";
 import Link from "next/link";
 import type { AboutProject, ProjectPreview } from "@/lib/aboutData";
 import { splitHighlightText } from "@/lib/projectHighlights";
@@ -21,13 +22,7 @@ function DetailSection({ title, children }: { title: string; children: React.Rea
   );
 }
 
-function HighlightedText({
-  text,
-  phrases,
-}: {
-  text: string;
-  phrases?: readonly string[];
-}) {
+function HighlightedText({ text, phrases }: { text: string; phrases?: readonly string[] }) {
   return splitHighlightText(text, phrases).map((segment, index) => {
     if (!segment.highlighted) {
       return segment.text;
@@ -142,9 +137,9 @@ export default function ProjectDetailView({
               {project.title}
             </h1>
 
-            <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] leading-7 text-[color:var(--color-text-secondary)] sm:text-lg">
-              <span>{project.period}</span>
-              <span aria-hidden>•</span>
+            <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm leading-7 text-[color:var(--color-text-muted)]">
+              <span>{formatPeriod(project.period)}</span>
+              <span aria-hidden>·</span>
               <span>{project.status}</span>
               {project.tags.map((tag) => (
                 <span key={tag} className="text-[color:var(--color-accent)]">
@@ -182,25 +177,25 @@ export default function ProjectDetailView({
               <dl className="space-y-4 text-sm leading-7">
                 <div className="flex items-start justify-between gap-4 border-b border-[color:var(--color-border)] pb-4">
                   <dt className="text-[color:var(--color-text-muted)]">Role</dt>
-                  <dd className="text-right text-[color:var(--color-text-primary)]">
+                  <dd className="text-right font-mono text-[13px] text-[color:var(--color-text-primary)]">
                     {project.role}
                   </dd>
                 </div>
                 <div className="flex items-start justify-between gap-4 border-b border-[color:var(--color-border)] pb-4">
                   <dt className="text-[color:var(--color-text-muted)]">Team</dt>
-                  <dd className="text-right text-[color:var(--color-text-primary)]">
+                  <dd className="text-right font-mono text-[13px] text-[color:var(--color-text-primary)]">
                     {project.team}
                   </dd>
                 </div>
                 <div className="flex items-start justify-between gap-4 border-b border-[color:var(--color-border)] pb-4">
                   <dt className="text-[color:var(--color-text-muted)]">Duration</dt>
-                  <dd className="text-right text-[color:var(--color-text-primary)]">
+                  <dd className="text-right font-mono text-[13px] text-[color:var(--color-text-primary)]">
                     {project.duration ?? project.period}
                   </dd>
                 </div>
                 <div className="flex items-start justify-between gap-4">
                   <dt className="text-[color:var(--color-text-muted)]">Status</dt>
-                  <dd className="text-right text-[color:var(--color-text-primary)]">
+                  <dd className="text-right font-mono text-[13px] text-[color:var(--color-text-primary)]">
                     {project.status}
                   </dd>
                 </div>

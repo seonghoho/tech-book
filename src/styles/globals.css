@@ -160,14 +160,9 @@ a {
   .project-highlight-mark {
     margin-inline: 0.02em;
     border-radius: 0.18em;
-    background: linear-gradient(to top, #fff59d 45%, transparent 45%);
+    background: linear-gradient(to top, var(--color-accent-soft) 42%, transparent 42%);
     color: var(--color-text-primary);
     font-weight: 650;
-  }
-
-  html.dark .project-highlight-mark {
-    background: linear-gradient(to top, rgba(255, 245, 157, 0.32) 45%, transparent 45%);
-    color: var(--color-text-primary);
   }
 
   .eyebrow-label {
