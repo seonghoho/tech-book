@@ -15,6 +15,10 @@ describe("formatProjectMeta", () => {
     assert.equal(formatProjectMeta("2025.03", "1명"), "2025.03 · 1명");
   });
 
+  it("drops the separator when the team is only whitespace", () => {
+    assert.equal(formatProjectMeta("2024.02 - 2024.04", "  "), "2024.02–2024.04");
+  });
+
   it("drops the separator when the team is empty", () => {
     assert.equal(formatProjectMeta("2024.02 - 2024.04", ""), "2024.02–2024.04");
   });

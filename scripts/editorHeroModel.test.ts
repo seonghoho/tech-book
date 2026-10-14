@@ -15,6 +15,7 @@ import {
   resizeShape,
   rotatePoint,
   rotateShape,
+  rotationHandleSide,
   shapeCenter,
   undo,
   type Handle,
@@ -218,5 +219,28 @@ describe("drawLength", () => {
 
   it("never shortens the dash below the path length on small screens", () => {
     assert.equal(drawLength(400, 0.57), 400);
+  });
+});
+
+describe("rotationHandleSide", () => {
+  it("keeps the rotation handle above the shape when there is room", () => {
+    assert.equal(rotationHandleSide(box({ y: 100 })), "top");
+  });
+
+  it("moves the handle below when the top would leave the stage", () => {
+    assert.equal(rotationHandleSide(box({ y: 10 })), "bottom");
+  });
+
+  it("follows the rotation: a shape turned 180° flips only when its handle would leave the bottom", () => {
+    assert.equal(rotationHandleSide(box({ y: 360, h: 80, r: 180 })), "bottom");
+    assert.equal(rotationHandleSide(box({ y: 300, h: 80, r: 180 })), "top");
+  });
+});
+
+describe("rotateShape with a bottom handle", () => {
+  // box() 중심은 (160, 140)
+  it("does not flip the shape when the handle sits below it", () => {
+    assert.equal(rotateShape(box(), { x: 160, y: 300 }, "bottom").r, 0);
+    assert.equal(rotateShape(box(), { x: 0, y: 140 }, "bottom").r, 90);
   });
 });

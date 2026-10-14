@@ -109,11 +109,29 @@ export function resizeShape(
 
 const normalizeAngle = (deg: number) => ((((deg + 180) % 360) + 360) % 360) - 180;
 
-export function rotateShape(orig: Shape, pointer: Point): Shape {
+export function rotateShape(
+  orig: Shape,
+  pointer: Point,
+  handleSide: "top" | "bottom" = "top",
+): Shape {
   const c = shapeCenter(orig);
   // atan2는 3시 방향이 0°라서 90°를 더해 12시 방향을 0°로 맞춘다.
-  const deg = Math.round((Math.atan2(pointer.y - c.y, pointer.x - c.x) * 180) / Math.PI + 90);
+  // 핸들이 도형 아래에 있으면 포인터가 6시 방향일 때 0°이므로 180°를 뺀다.
+  const offset = handleSide === "top" ? 90 : -90;
+  const deg = Math.round((Math.atan2(pointer.y - c.y, pointer.x - c.x) * 180) / Math.PI + offset);
   return { ...orig, r: normalizeAngle(deg) };
+}
+
+// 회전 핸들이 도형에서 떨어진 거리(viewBox 단위).
+export const ROTATION_HANDLE_OFFSET = 38;
+
+// 회전 핸들을 도형 위(로컬 기준)에 둘지 아래에 둘지. 위쪽 핸들이 스테이지 밖으로 나가면 아래로 옮겨
+// 도형이 가장자리에 붙어 있어도 회전 핸들을 잡을 수 있게 한다.
+export function rotationHandleSide(s: Shape, bounds: Bounds = STAGE): "top" | "bottom" {
+  const c = shapeCenter(s);
+  const top = rotatePoint({ x: c.x, y: s.y - ROTATION_HANDLE_OFFSET }, c, s.r);
+  const inside = top.x >= 0 && top.x <= bounds.width && top.y >= 0 && top.y <= bounds.height;
+  return inside ? "top" : "bottom";
 }
 
 export function replaceShape(shapes: Shape[], next: Shape): Shape[] {

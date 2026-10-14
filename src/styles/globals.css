@@ -533,17 +533,6 @@ a {
   animation: move-face 3s ease-in infinite;
 }
 
-.archive-word-shadow {
-  opacity: 0;
-  fill: #f6efe4;
-  pointer-events: none;
-  transition: opacity 180ms ease-out;
-}
-
-html.dark .archive-word-shadow {
-  opacity: 0.72;
-}
-
 @keyframes editor-hero-draw {
   to {
     stroke-dashoffset: 0;

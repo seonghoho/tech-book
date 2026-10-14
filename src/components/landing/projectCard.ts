@@ -15,5 +15,8 @@ export function projectGlyphKind(slug: string): ProjectGlyphKind {
 
 // "2024.08 - 2026.02", "4명 · FE 3 / BE 1" → "2024.08–2026.02 · 4명 · FE 3 / BE 1"
 export function formatProjectMeta(period: string, team: string): string {
-  return [period.replace(" - ", "–"), team].filter(Boolean).join(" · ");
+  return [period.replace(" - ", "–"), team]
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .join(" · ");
 }

@@ -21,6 +21,8 @@ import {
   replaceShape,
   resizeShape,
   rotateShape,
+  rotationHandleSide,
+  ROTATION_HANDLE_OFFSET,
   shapeCenter,
   undo,
   type Handle,
@@ -37,6 +39,7 @@ type Props = {
 type Drag = {
   mode: "move" | "resize" | "rotate";
   handle?: Handle;
+  handleSide?: "top" | "bottom";
   start: Point;
   orig: Shape;
   before: Shape[];
@@ -102,6 +105,13 @@ function SelectionOverlay({ shape }: { shape: Shape }) {
     ["sw", shape.x - g, shape.y + shape.h + g],
   ];
 
+  // 위쪽 회전 핸들이 스테이지 밖으로 나가면 도형 아래로 옮긴다.
+  const side = rotationHandleSide(shape);
+  const edge = side === "top" ? shape.y - g : shape.y + shape.h + g;
+  const dir = side === "top" ? -1 : 1;
+  const knobY =
+    side === "top" ? shape.y - ROTATION_HANDLE_OFFSET : shape.y + shape.h + ROTATION_HANDLE_OFFSET;
+
   // 선택 박스와 핸들을 도형과 같은 회전으로 감싸서 함께 돌게 한다.
   return (
     <g transform={`rotate(${shape.r} ${c.x} ${c.y})`}>
@@ -112,15 +122,15 @@ function SelectionOverlay({ shape }: { shape: Shape }) {
         width={shape.w + g * 2}
         height={shape.h + g * 2}
       />
-      <line className="editor-hero-stem" x1={c.x} y1={shape.y - g} x2={c.x} y2={shape.y - 32} />
+      <line className="editor-hero-stem" x1={c.x} y1={edge} x2={c.x} y2={knobY - dir * 6} />
       <circle
         className="editor-hero-hit cursor-grab"
         data-handle="rotate"
         cx={c.x}
-        cy={shape.y - 38}
+        cy={knobY}
         r={HIT_RADIUS}
       />
-      <circle className="editor-hero-handle" cx={c.x} cy={shape.y - 38} r={6} />
+      <circle className="editor-hero-handle" cx={c.x} cy={knobY} r={6} />
       {corners.map(([handle, x, y]) => (
         <g key={handle}>
           <circle
@@ -158,9 +168,10 @@ function ToolButton({
       aria-label={label}
       title={title}
       aria-pressed={pressed}
-      disabled={disabled}
-      onClick={onClick}
-      className="grid h-8 w-8 place-items-center rounded-[10px] border border-transparent text-[color:var(--color-text-secondary)] transition-colors duration-200 ease-out enabled:hover:border-[color:var(--color-border)] disabled:cursor-default disabled:opacity-40 aria-pressed:bg-[color:var(--color-accent-soft)] aria-pressed:text-[color:var(--color-accent)]"
+      // disabled 대신 aria-disabled를 쓴다. 버튼이 비활성화되며 포커스가 에디터 밖으로 빠지지 않게 하려는 것이다.
+      aria-disabled={disabled || undefined}
+      onClick={disabled ? undefined : onClick}
+      className="grid h-8 w-8 place-items-center rounded-[10px] border border-transparent text-[color:var(--color-text-secondary)] transition-colors duration-200 ease-out hover:border-[color:var(--color-border)] aria-disabled:cursor-default aria-disabled:opacity-40 aria-disabled:hover:border-transparent aria-pressed:bg-[color:var(--color-accent-soft)] aria-pressed:text-[color:var(--color-accent)]"
     >
       {children}
     </button>
@@ -176,6 +187,8 @@ export default function EditorHero({ hintPosts }: Props) {
 
   const [history, setHistory] = useState(createHistory);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // 방향키 묶음이 아직 히스토리에 들어가기 전인지. 그동안에도 되돌리기 버튼이 켜져 있어야 한다.
+  const [burstPending, setBurstPending] = useState(false);
   const [hint, setHint] = useState<{ kind: HintKind; nonce: number }>({ kind: "idle", nonce: 0 });
   const { intro, stopIntro } = useIntroMotion(stageRef, svgRef);
 
@@ -188,6 +201,7 @@ export default function EditorHero({ hintPosts }: Props) {
     const before = burstBeforeRef.current;
     if (!before) return;
     burstBeforeRef.current = null;
+    setBurstPending(false);
     setHistory((h) => pushHistory(h, before));
   }, []);
 
@@ -216,6 +230,8 @@ export default function EditorHero({ hintPosts }: Props) {
   function handlePointerDown(e: PointerEvent<SVGSVGElement>) {
     // 드래그 중에 두 번째 손가락이 닿으면 무시한다. 드래그를 빼앗기면 첫 조작이 히스토리에서 사라진다.
     if (dragRef.current) return;
+    // 오른쪽·가운데 버튼은 드래그를 시작하지 않는다(컨텍스트 메뉴와 겹치지 않게).
+    if (e.pointerType === "mouse" && e.button !== 0) return;
     stopIntro();
     flushKeyBurst();
     stageRef.current?.focus({ preventScroll: true });
@@ -238,7 +254,12 @@ export default function EditorHero({ hintPosts }: Props) {
 
     if (handle && currentSelected) {
       if (handle === "rotate") {
-        dragRef.current = { ...base, mode: "rotate", orig: currentSelected };
+        dragRef.current = {
+          ...base,
+          mode: "rotate",
+          orig: currentSelected,
+          handleSide: rotationHandleSide(currentSelected),
+        };
       } else {
         const corner = handlePoint(currentSelected, handle as Handle);
         dragRef.current = {
@@ -270,7 +291,7 @@ export default function EditorHero({ hintPosts }: Props) {
 
     let next: Shape;
     if (drag.mode === "move") next = moveShape(drag.orig, p.x - drag.start.x, p.y - drag.start.y);
-    else if (drag.mode === "rotate") next = rotateShape(drag.orig, p);
+    else if (drag.mode === "rotate") next = rotateShape(drag.orig, p, drag.handleSide);
     else {
       const corner = { x: p.x + drag.grab.x, y: p.y + drag.grab.y };
       next = resizeShape(drag.orig, drag.handle as Handle, corner, { keepRatio: e.shiftKey });
@@ -291,7 +312,9 @@ export default function EditorHero({ hintPosts }: Props) {
     setHistory((h) => pushHistory(h, drag.before));
   }
 
+  // 드래그 중에는 되돌리기·다시 실행을 받지 않는다. 드래그가 끝날 때 조작 전 스냅샷을 다시 기록해 히스토리가 꼬인다.
   function handleUndo() {
+    if (dragRef.current) return;
     if (!history.past.length && !burstBeforeRef.current) return;
     flushKeyBurst();
     setHistory((h) => undo(h));
@@ -299,6 +322,7 @@ export default function EditorHero({ hintPosts }: Props) {
   }
 
   function handleRedo() {
+    if (dragRef.current) return;
     if (!history.future.length || burstBeforeRef.current) return;
     setHistory((h) => redo(h));
     announce("undo");
@@ -328,6 +352,7 @@ export default function EditorHero({ hintPosts }: Props) {
     const scale = e.shiftKey ? 10 : 1;
     if (!burstBeforeRef.current) {
       burstBeforeRef.current = history.present;
+      setBurstPending(true);
       announce("move");
     }
     setHistory((h) => {
@@ -362,7 +387,7 @@ export default function EditorHero({ hintPosts }: Props) {
           <ToolButton
             label="되돌리기"
             title="되돌리기 (⌘Z)"
-            disabled={!history.past.length}
+            disabled={!history.past.length && !burstPending}
             onClick={handleUndo}
           >
             <UndoIcon />
@@ -370,7 +395,7 @@ export default function EditorHero({ hintPosts }: Props) {
           <ToolButton
             label="다시 실행"
             title="다시 실행 (⇧⌘Z)"
-            disabled={!history.future.length}
+            disabled={!history.future.length || burstPending}
             onClick={handleRedo}
           >
             <RedoIcon />
@@ -395,6 +420,7 @@ export default function EditorHero({ hintPosts }: Props) {
       <div
         ref={stageRef}
         tabIndex={0}
+        role="application"
         aria-label="에디터 캔버스. 도형을 선택한 뒤 방향키로 옮길 수 있습니다."
         className="relative aspect-[4/3] touch-none select-none outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[color:var(--color-accent)]"
       >

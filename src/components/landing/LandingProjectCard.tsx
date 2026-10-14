@@ -10,13 +10,16 @@ type Props = {
 
 export default function LandingProjectCard({ project }: Props) {
   // 고유색은 데이터라 className 대신 CSS 변수로 넘긴다. 실제 색 적용은 globals.css의 project-accent-* 가 맡는다.
+  // 카드 전체가 링크라 그대로 두면 스크린리더가 카드 내용을 통째로 읽는다. 링크 이름은 제목만 쓴다.
+  const titleId = `landing-project-${project.slug}`;
   const accentStyle = { "--project-color": project.posterColor } as CSSProperties;
 
   return (
     <Link
       href={`/projects/${project.slug}`}
       style={accentStyle}
-      className="surface-panel group flex min-w-0 flex-col overflow-hidden transition-[transform,border-color] duration-200 ease-out hover:-translate-y-1 hover:border-[color:var(--color-border-strong)]"
+      aria-labelledby={titleId}
+      className="surface-panel group flex min-w-0 flex-col overflow-hidden transition-[transform,border-color] duration-200 ease-out hover:-translate-y-1 hover:border-[color:var(--color-border-strong)] focus-visible:-translate-y-1 focus-visible:border-[color:var(--color-border-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)]"
     >
       <div className="project-glyph-grid flex h-[72px] items-center justify-center border-b border-[color:var(--color-border)]">
         <ProjectGlyph slug={project.slug} />
@@ -25,7 +28,10 @@ export default function LandingProjectCard({ project }: Props) {
         <p className="font-mono text-xs text-[color:var(--color-text-muted)]">
           {formatProjectMeta(project.period, project.team)}
         </p>
-        <h3 className="mt-2 flex items-center gap-2 text-lg font-semibold tracking-[-0.02em] text-[color:var(--color-text-primary)] transition-colors duration-200 ease-out group-hover:text-[color:var(--color-accent)]">
+        <h3
+          id={titleId}
+          className="mt-2 flex items-center gap-2 text-lg font-semibold tracking-[-0.02em] text-[color:var(--color-text-primary)] transition-colors duration-200 ease-out group-hover:text-[color:var(--color-accent)]"
+        >
           <span aria-hidden="true" className="project-accent-dot h-2 w-2 shrink-0 rounded-full" />
           {project.title}
         </h3>
@@ -33,8 +39,8 @@ export default function LandingProjectCard({ project }: Props) {
           {project.tagline}
         </p>
         <ul className="mt-3 space-y-1 text-sm leading-6 text-[color:var(--color-text-secondary)] [word-break:keep-all]">
-          {project.cardPoints.slice(0, 2).map((point) => (
-            <li key={point} className="flex gap-2">
+          {project.cardPoints.slice(0, 2).map((point, index) => (
+            <li key={`${index}-${point}`} className="flex gap-2">
               <span aria-hidden="true" className="text-[color:var(--color-text-muted)]">
                 —
               </span>
