@@ -324,7 +324,7 @@ export default function EditorHero({ hintPosts }: Props) {
       role="group"
       aria-label="직접 만져 볼 수 있는 미니 SVG 에디터"
       onKeyDown={handleKeyDown}
-      className="surface-panel flex min-w-0 flex-col overflow-hidden shadow-[var(--shadow-medium)]"
+      className="surface-panel flex min-w-0 flex-col self-start overflow-hidden shadow-[var(--shadow-medium)]"
     >
       <div className="flex items-center justify-between gap-3 border-b border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] px-3.5 py-2.5">
         <div className="flex shrink-0 gap-1">

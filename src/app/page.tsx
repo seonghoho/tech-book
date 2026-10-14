@@ -20,12 +20,11 @@ export default function Home() {
   const posts = filterIndexablePosts(getAllPosts("posts")).sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
-  const recentPosts = posts.slice(0, 10);
 
   return (
     <>
       <AdsenseScript />
-      <LandingPage recentPosts={recentPosts} />
+      <LandingPage posts={posts} />
     </>
   );
 }

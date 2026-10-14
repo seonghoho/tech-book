@@ -1,29 +1,24 @@
 import { aboutProjects } from "@/lib/aboutData";
-import LandingFeaturedWritingSection from "@/components/landing/LandingFeaturedWritingSection";
+import LandingCategoriesSection from "@/components/landing/LandingCategoriesSection";
+import LandingHero from "@/components/landing/LandingHero";
+import LandingLatestPostsSection from "@/components/landing/LandingLatestPostsSection";
 import LandingProjectsSection from "@/components/landing/LandingProjectsSection";
-import HeroPlayground from "@/components/landing/HeroPlayground";
 import type { PostMeta } from "@/types/post";
 
 type Props = {
-  recentPosts: PostMeta[];
+  // 색인 대상 글 전체, 최신순. 히어로 힌트 링크와 카테고리 수를 계산하려고 전체를 받는다.
+  posts: PostMeta[];
 };
 
-export default function LandingPage({ recentPosts }: Props) {
-  const featuredWriting = recentPosts.slice(0, 4);
+export default function LandingPage({ posts }: Props) {
   const selectedProjects = aboutProjects.slice(0, 3);
 
   return (
     <div className="page-shell">
-      <div className="mx-auto flex w-full max-w-[980px] flex-col gap-14 pb-6 sm:gap-16 lg:gap-20">
-        {/* 히어로가 이미지 중심이라 문서 제목(H1)은 화면에서 숨기고 검색엔진·스크린리더용으로만 둔다. */}
-        <h1 className="sr-only">Seonghoho 기술 블로그</h1>
-
-        <section>
-          <HeroPlayground />
-        </section>
-
-        {featuredWriting.length ? <LandingFeaturedWritingSection posts={featuredWriting} /> : null}
-
+      <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-12 pb-6 sm:gap-14 lg:gap-16">
+        <LandingHero posts={posts} />
+        <LandingLatestPostsSection posts={posts.slice(0, 4)} />
+        <LandingCategoriesSection posts={posts} />
         <LandingProjectsSection
           projects={selectedProjects}
           sizes="(min-width: 1200px) 220px, (min-width: 768px) 30vw, (min-width: 640px) 44vw, 88vw"
