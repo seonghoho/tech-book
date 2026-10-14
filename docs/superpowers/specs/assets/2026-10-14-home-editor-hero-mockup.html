@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>홈 시안 — 에디터 히어로</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+  :root {
+    --bg: #f4f7fb; --surface: #ffffff; --surface-elev: #f8fbfd; --text: #0f172a; --text-2: #475569;
+    --muted: #64748b; --border: #d8e0ea; --border-strong: #c4ceda; --accent: #0f766e; --accent-soft: rgba(15,118,110,.12);
+    --grid: #cfd8e3; --shape: #0f172a; --shape-fill: rgba(15,23,42,.035); --shadow: 0 24px 60px rgba(15,23,42,.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b1320; --surface: #111b2a; --surface-elev: #162234; --text: #e5edf6; --text-2: #c5d0de;
+      --muted: #8fa2b7; --border: #233247; --border-strong: #2e4058; --accent: #58c9b9; --accent-soft: rgba(88,201,185,.14);
+      --grid: #24344a; --shape: #e5edf6; --shape-fill: rgba(229,237,246,.04); --shadow: 0 28px 70px rgba(2,8,23,.34);
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: Pretendard, "Apple SD Gothic Neo", sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  .shell { max-width: 1240px; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 640px) { .shell { padding: 0 24px; } }
+
+  /* fake site header */
+  .topbar { height: 64px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+  .brand { font-weight: 700; letter-spacing: -.02em; }
+  .nav { display: flex; gap: 20px; font-size: 14px; color: var(--text-2); }
+  @media (max-width: 640px) { .nav { display: none; } }
+
+  /* hero */
+  .hero { display: grid; gap: 32px; padding: 40px 0 24px; align-items: stretch; }
+  @media (min-width: 1024px) { .hero { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; padding: 56px 0 32px; } }
+  .eyebrow { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  h1 { font-size: clamp(30px, 3.6vw, 42px); line-height: 1.22; letter-spacing: -.045em; margin: 14px 0 0; font-weight: 700; text-wrap: balance; word-break: keep-all; }
+  .intro, .latest span, .card h3, .card p { word-break: keep-all; }
+  h1 .soft { color: var(--muted); font-weight: 600; }
+  .intro { margin: 18px 0 0; font-size: 16px; line-height: 1.8; color: var(--text-2); max-width: 34em; }
+  .latest { margin-top: 28px; border-top: 1px solid var(--border); }
+  .latest a { display: grid; grid-template-columns: 74px 1fr; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--border); transition: color .2s ease-out; }
+  .latest a:hover { color: var(--accent); }
+  .latest time { font-size: 12px; color: var(--muted); padding-top: 3px; }
+  .latest span { font-size: 15px; font-weight: 600; letter-spacing: -.01em; line-height: 1.5; }
+  .more { display: inline-flex; gap: 6px; margin-top: 16px; font-size: 14px; font-weight: 600; color: var(--accent); }
+
+  /* editor frame */
+  .editor { background: var(--surface); border: 1px solid var(--border); border-radius: 28px; box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--border); background: var(--surface-elev); }
+  .tools { display: flex; gap: 4px; }
+  .tool { width: 32px; height: 32px; border-radius: 10px; border: 1px solid transparent; display: grid; place-items: center; color: var(--text-2); background: none; cursor: pointer; }
+  .tool[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); }
+  .tool:disabled { opacity: .35; cursor: default; }
+  .tool:not(:disabled):hover { border-color: var(--border); }
+  .inspector { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .inspector b { color: var(--text); font-weight: 500; }
+  .stage { position: relative; aspect-ratio: 4 / 3; touch-action: none; user-select: none; }
+  .stage svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .shape { fill: var(--shape-fill); stroke: var(--shape); stroke-width: 1.5; vector-effect: non-scaling-stroke; cursor: move; transition: stroke .15s; }
+  .shape.hover { stroke: var(--accent); }
+  .sel-box { fill: none; stroke: var(--accent); stroke-width: 1; stroke-dasharray: 4 4; vector-effect: non-scaling-stroke; pointer-events: none; }
+  .handle { fill: var(--surface); stroke: var(--accent); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+  .handle.rot { cursor: grab; }
+  .stem { stroke: var(--accent); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .hint { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-2); min-height: 48px; }
+  .hint a { color: var(--accent); font-weight: 600; white-space: nowrap; }
+  .hint .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hint.flash { animation: flash .5s ease-out; }
+  @keyframes flash { from { background: var(--accent-soft); } to { background: transparent; } }
+  .ghost { position: absolute; width: 18px; height: 18px; pointer-events: none; opacity: 0; transition: opacity .3s; z-index: 2; }
+
+  /* draw-in */
+  .draw .shape { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw .9s cubic-bezier(.65,0,.35,1) forwards; animation-delay: var(--d); fill-opacity: 0; }
+  @keyframes draw { to { stroke-dashoffset: 0; fill-opacity: 1; } }
+
+  /* below fold */
+  section.block { padding: 40px 0; border-top: 1px solid var(--border); }
+  .block h2 { font-size: 24px; letter-spacing: -.03em; margin: 8px 0 20px; }
+  .posts { display: grid; gap: 12px; }
+  @media (min-width: 768px) { .posts { grid-template-columns: 1fr 1fr; } }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 20px 22px; transition: transform .2s ease-out, border-color .2s; }
+  .card:hover { transform: translateY(-2px); border-color: var(--border-strong); }
+  .card .meta { font-size: 12px; color: var(--muted); }
+  .card h3 { font-size: 17px; line-height: 1.45; letter-spacing: -.02em; margin: 8px 0 8px; }
+  .card p { margin: 0; font-size: 14px; line-height: 1.7; color: var(--text-2); }
+  .cats { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { border: 1px solid var(--border); background: var(--surface-elev); border-radius: 999px; padding: 8px 14px; font-size: 14px; }
+  .chip em { font-style: normal; color: var(--muted); margin-left: 6px; }
+  .note { font-size: 12px; color: var(--muted); padding: 24px 0 48px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .draw .shape { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; fill-opacity: 1; }
+    .card, .hint.flash { transition: none; animation: none; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar"><span class="brand">Seonghoho</span><nav class="nav"><a>Home</a><a>Writing</a><a>Projects</a><a>About</a></nav></div>
+
+  <main class="hero">
+    <div>
+      <p class="eyebrow">Frontend · SVG · Interaction</p>
+      <h1>에디터를 만들며 부딪힌 문제를 <span class="soft">코드와 함께 기록합니다</span></h1>
+      <p class="intro">
+        SVG 에디터와 Three.js 3D 교구, 인터랙션 UI를 개발하면서 겪은 문제와 해결 과정을 정리하는
+        Seonghoho의 기술 블로그입니다. 함께 놓인 캔버스는 글에서 다룬 선택, 좌표 변환, 리사이즈, undo/redo를
+        직접 만져 볼 수 있게 줄여 만든 에디터입니다.
+      </p>
+      <nav class="latest" aria-label="최근 글">
+        <a href="#"><time class="mono">10.13</time><span>Claude Code 스킬로 반복 작업 정리하기: handoff, sync, cleanup</span></a>
+        <a href="#"><time class="mono">07.01</time><span>SVG 에디터 인터랙션이 꼬일 때 디버깅한 순서</span></a>
+        <a href="#"><time class="mono">07.01</time><span>Three.js 3D 수학교구의 가림 문제를 depthTest, depthWrite, renderOrder로 정리한 기준</span></a>
+      </nav>
+      <a class="more" href="#">전체 글 보기 →</a>
+    </div>
+
+    <div class="editor" aria-label="직접 만져 볼 수 있는 미니 SVG 에디터">
+      <div class="bar">
+        <div class="tools">
+          <button class="tool" aria-pressed="true" title="선택" aria-label="선택 도구">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2l9 5-4 1.2L6.5 13z" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="tool" id="undo" title="되돌리기 (⌘Z)" aria-label="되돌리기" disabled>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4L2 7l3 3M2.5 7H10a3.5 3.5 0 010 7H7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="tool" id="redo" title="다시 실행 (⇧⌘Z)" aria-label="다시 실행" disabled>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4l3 3-3 3M13.5 7H6a3.5 3.5 0 000 7h3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="inspector mono" id="inspector">선택 없음 · history <b>0</b></div>
+      </div>
+      <div class="stage" id="stage">
+        <svg id="svg" viewBox="0 0 600 450" aria-hidden="true">
+          <defs>
+            <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="var(--grid)" /></pattern>
+          </defs>
+          <rect width="600" height="450" fill="url(#dots)" />
+          <g id="shapes"></g>
+          <g id="overlay"></g>
+        </svg>
+        <svg class="ghost" id="ghost" viewBox="0 0 18 18"><path d="M2 1l13 7-6 1.6L6.4 16z" fill="var(--text)" stroke="var(--surface)" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="hint" id="hint"><span class="label">도형을 클릭하고 끌어 보세요. 핸들로 크기와 회전도 바꿀 수 있습니다.</span><a href="#" id="hintLink" hidden></a></div>
+    </div>
+  </main>
+
+  <section class="block">
+    <p class="eyebrow">Latest Writing</p>
+    <h2>최근 글</h2>
+    <div class="posts">
+      <a class="card" href="#"><div class="meta">AI Workflow · 2026.10.13</div><h3>Claude Code 스킬로 반복 작업 정리하기: handoff, sync, cleanup</h3><p>세션을 넘길 때, 다른 컴퓨터에서 이어서 작업할 때, PR 머지 후 정리할 때마다 같은 요청을 반복하다가 Claude Code 스킬로 만들어 쓰게 된 과정을 정리했습니다.</p></a>
+      <a class="card" href="#"><div class="meta">SVG Editor Devlog · 2026.07.01</div><h3>SVG 에디터 인터랙션이 꼬일 때 디버깅한 순서</h3><p>SVG 에디터에서 drag, resize, keyboard 입력이 서로 간섭할 때 포인터 좌표, active tool, capture, 히스토리 기록 순서로 문제를 좁힌 경험입니다.</p></a>
+      <a class="card" href="#"><div class="meta">SVG Editor Devlog · 2026.07.01</div><h3>Three.js 3D 수학교구의 가림 문제를 depthTest, depthWrite, renderOrder로 정리한 기준</h3><p>면, edge, 내부 점선, 축, 라벨, handle이 서로 가려질 때 객체 역할을 먼저 나누고 depthTest, depthWrite, renderOrder를 조합해 정보 위계를 잡은 디버깅 기준입니다.</p></a>
+      <a class="card" href="#"><div class="meta">SVG Editor Devlog · 2026.07.01</div><h3>SVG 에디터에서 문서 상태와 편집 상태의 경계를 나눈 기준</h3><p>저장할 문서 데이터와 선택, hover, drag 같은 편집 상태를 저장 가능성 기준으로 나누고, 선택 여부를 렌더링 파생값으로 계산한 과정입니다.</p></a>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Categories</p>
+    <h2>주제별로 보기</h2>
+    <div class="cats">
+      <a class="chip" href="#">SVG Editor Devlog<em>15</em></a>
+      <a class="chip" href="#">AI Workflow<em>1</em></a>
+      <a class="chip" href="#">Voca Study Devlog<em>1</em></a>
+    </div>
+  </section>
+  <p class="note">시안 — 아래에 프로젝트 섹션이 기존처럼 이어집니다. 링크는 동작하지 않습니다.</p>
+</div>
+
+<script>
+(() => {
+  const POSTS = {
+    select: ["선택 여부를 도형에 저장하지 않고 렌더링할 때 계산합니다", "문서 상태와 편집 상태의 경계"],
+    move: ["화면 좌표를 SVG 좌표로 바꿔야 커서와 도형이 어긋나지 않습니다", "SVG 좌표 변환 문제"],
+    resize: ["반대쪽 모서리를 고정한 채 최소 크기를 지키며 늘립니다", "리사이즈 핸들 제약 조건"],
+    rotate: ["회전 중에도 핸들과 박스가 도형과 함께 돌아갑니다", "인터랙션 디버깅 순서"],
+    undo: ["조작이 끝날 때마다 스냅샷을 남겨 되돌립니다", "undo/redo 스냅샷 설계"],
+  };
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.getElementById("svg"), gShapes = document.getElementById("shapes"), gOver = document.getElementById("overlay");
+  const inspector = document.getElementById("inspector"), hint = document.getElementById("hint"), hintLabel = hint.querySelector(".label"), hintLink = document.getElementById("hintLink");
+  const undoBtn = document.getElementById("undo"), redoBtn = document.getElementById("redo");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // 모든 도형을 같은 모델(박스 + 회전)로 다룬다 — 선분도 박스의 대각선이다.
+  let shapes = [
+    { id: "circle", type: "ellipse", x: 70, y: 70, w: 150, h: 150, r: 0 },
+    { id: "triangle", type: "triangle", x: 330, y: 60, w: 170, h: 150, r: 0 },
+    { id: "line", type: "line", x: 80, y: 290, w: 210, h: 90, r: 0 },
+    { id: "rect", type: "rect", x: 350, y: 270, w: 170, h: 110, r: -6 },
+  ];
+  let selected = null, past = [], future = [];
+  const clone = (v) => JSON.parse(JSON.stringify(v));
+
+  const toSvg = (e) => { const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); };
+  const center = (s) => ({ cx: s.x + s.w / 2, cy: s.y + s.h / 2 });
+  const rotate = (px, py, cx, cy, deg) => { const a = deg * Math.PI / 180, c = Math.cos(a), s = Math.sin(a); return { x: cx + (px - cx) * c - (py - cy) * s, y: cy + (px - cx) * s + (py - cy) * c }; };
+
+  function el(name, attrs) { const n = document.createElementNS(NS, name); for (const k in attrs) n.setAttribute(k, attrs[k]); return n; }
+
+  function shapeNode(s) {
+    let n;
+    if (s.type === "ellipse") n = el("ellipse", { cx: s.x + s.w / 2, cy: s.y + s.h / 2, rx: s.w / 2, ry: s.h / 2 });
+    if (s.type === "rect") n = el("rect", { x: s.x, y: s.y, width: s.w, height: s.h, rx: 14 });
+    if (s.type === "triangle") n = el("polygon", { points: `${s.x + s.w / 2},${s.y} ${s.x + s.w},${s.y + s.h} ${s.x},${s.y + s.h}` });
+    if (s.type === "line") n = el("line", { x1: s.x, y1: s.y + s.h, x2: s.x + s.w, y2: s.y, "stroke-linecap": "round", "stroke-width": 2 });
+    const { cx, cy } = center(s);
+    n.setAttribute("transform", `rotate(${s.r} ${cx} ${cy})`);
+    n.setAttribute("class", "shape");
+    n.dataset.id = s.id;
+    return n;
+  }
+
+  function render() {
+    gShapes.replaceChildren(...shapes.map(shapeNode));
+    gOver.replaceChildren();
+    const s = shapes.find((v) => v.id === selected);
+    if (s) {
+      const { cx, cy } = center(s);
+      const g = el("g", { transform: `rotate(${s.r} ${cx} ${cy})` });
+      g.append(el("rect", { class: "sel-box", x: s.x - 6, y: s.y - 6, width: s.w + 12, height: s.h + 12 }));
+      g.append(el("line", { class: "stem", x1: cx, y1: s.y - 6, x2: cx, y2: s.y - 34 }));
+      const rot = el("circle", { class: "handle rot", cx, cy: s.y - 38, r: 6 }); rot.dataset.handle = "rot"; g.append(rot);
+      [["nw", s.x - 6, s.y - 6], ["ne", s.x + s.w + 6, s.y - 6], ["se", s.x + s.w + 6, s.y + s.h + 6], ["sw", s.x - 6, s.y + s.h + 6]].forEach(([k, x, y]) => {
+        const h = el("rect", { class: "handle", x: x - 5, y: y - 5, width: 10, height: 10, rx: 2 });
+        h.dataset.handle = k; h.style.cursor = (k === "nw" || k === "se") ? "nwse-resize" : "nesw-resize"; g.append(h);
+      });
+      gOver.append(g);
+      inspector.innerHTML = `${s.id} · x <b>${Math.round(s.x)}</b> y <b>${Math.round(s.y)}</b> · ${Math.round(s.w)}×${Math.round(s.h)} · ${Math.round(s.r)}° · history <b>${past.length}</b>`;
+    } else {
+      inspector.innerHTML = `선택 없음 · history <b>${past.length}</b>`;
+    }
+    undoBtn.disabled = past.length === 0; redoBtn.disabled = future.length === 0;
+  }
+
+  function say(kind) {
+    const [label, post] = POSTS[kind];
+    hintLabel.textContent = label;
+    hintLink.hidden = false; hintLink.textContent = `${post} →`;
+    hint.classList.remove("flash"); void hint.offsetWidth; hint.classList.add("flash");
+  }
+
+  let drag = null;
+  svg.addEventListener("pointerdown", (e) => {
+    stopIntro();
+    const handle = e.target.dataset?.handle;
+    const id = e.target.dataset?.id;
+    const p = toSvg(e);
+    if (handle && selected) {
+      const s = shapes.find((v) => v.id === selected);
+      drag = { mode: handle === "rot" ? "rotate" : "resize", handle, start: p, orig: clone(s), before: clone(shapes) };
+    } else if (id) {
+      const changed = selected !== id; selected = id;
+      const s = shapes.find((v) => v.id === id);
+      drag = { mode: "move", start: p, orig: clone(s), before: clone(shapes), moved: false };
+      if (changed) say("select");
+    } else { selected = null; render(); return; }
+    svg.setPointerCapture(e.pointerId);
+    render();
+  });
+
+  svg.addEventListener("pointermove", (e) => {
+    if (!drag) {
+      document.querySelectorAll(".shape").forEach((n) => n.classList.toggle("hover", n === e.target));
+      return;
+    }
+    const p = toSvg(e), s = shapes.find((v) => v.id === selected), o = drag.orig;
+    if (drag.mode === "move") {
+      s.x = o.x + (p.x - drag.start.x); s.y = o.y + (p.y - drag.start.y);
+      if (!drag.moved) { drag.moved = true; say("move"); }
+    } else if (drag.mode === "rotate") {
+      const { cx, cy } = center(o);
+      s.r = Math.round(Math.atan2(p.y - cy, p.x - cx) * 180 / Math.PI + 90);
+      if (!drag.said) { drag.said = true; say("rotate"); }
+    } else {
+      // 회전된 도형도 로컬 좌표로 되돌려 계산하고, 반대쪽 모서리를 고정한다.
+      const { cx, cy } = center(o);
+      const lp = rotate(p.x, p.y, cx, cy, -o.r);
+      const MIN = 40;
+      const fixed = { nw: [o.x + o.w, o.y + o.h], ne: [o.x, o.y + o.h], se: [o.x, o.y], sw: [o.x + o.w, o.y] }[drag.handle];
+      let w = Math.max(MIN, Math.abs(lp.x - fixed[0])), h = Math.max(MIN, Math.abs(lp.y - fixed[1]));
+      if (e.shiftKey || o.type === "ellipse") { const k = Math.max(w / o.w, h / o.h); w = o.w * k; h = o.h * k; }
+      let nx = drag.handle.includes("w") ? fixed[0] - w : fixed[0];
+      let ny = drag.handle.includes("n") ? fixed[1] - h : fixed[1];
+      // 박스가 바뀌면 회전 중심도 바뀌므로 고정 모서리가 화면에서 제자리에 남도록 보정한다.
+      const fixedWorld = rotate(fixed[0], fixed[1], cx, cy, o.r);
+      const nc = { x: nx + w / 2, y: ny + h / 2 };
+      const fixedNew = rotate(fixed[0], fixed[1], nc.x, nc.y, o.r);
+      nx += fixedWorld.x - fixedNew.x; ny += fixedWorld.y - fixedNew.y;
+      Object.assign(s, { x: nx, y: ny, w, h });
+      if (!drag.said) { drag.said = true; say("resize"); }
+    }
+    render();
+  });
+
+  const end = () => {
+    if (!drag) return;
+    if (JSON.stringify(drag.before) !== JSON.stringify(shapes)) { past.push(drag.before); if (past.length > 30) past.shift(); future = []; }
+    drag = null; render();
+  };
+  svg.addEventListener("pointerup", end);
+  svg.addEventListener("pointercancel", end);
+
+  function undo() { if (!past.length) return; future.push(clone(shapes)); shapes = past.pop(); render(); say("undo"); }
+  function redo() { if (!future.length) return; past.push(clone(shapes)); shapes = future.pop(); render(); say("undo"); }
+  undoBtn.onclick = undo; redoBtn.onclick = redo;
+  addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "z") { e.preventDefault(); e.shiftKey ? redo() : undo(); }
+    if (e.key === "Escape") { selected = null; render(); }
+  });
+
+  // ---- 첫 진입 모션: 선이 그려지고, 유령 커서가 삼각형을 한 번 끌어 보인다 ----
+  const ghost = document.getElementById("ghost"), stage = document.getElementById("stage");
+  let introTimers = [], introRaf = 0, introDone = false;
+  function stopIntro() {
+    if (introDone) return; introDone = true;
+    introTimers.forEach(clearTimeout); cancelAnimationFrame(introRaf);
+    ghost.style.opacity = 0; svg.classList.remove("draw");
+  }
+  function placeGhost(x, y) { const r = svg.getBoundingClientRect(), sx = r.width / 600, sy = r.height / 450; ghost.style.left = `${x * sx}px`; ghost.style.top = `${y * sy}px`; }
+
+  render();
+  if (!reduced) {
+    svg.classList.add("draw");
+    document.querySelectorAll(".shape").forEach((n, i) => { const len = Math.ceil(n.getTotalLength?.() || 600); n.style.setProperty("--len", len); n.style.setProperty("--d", `${i * 120}ms`); });
+    introTimers.push(setTimeout(() => { if (introDone) return; svg.classList.remove("draw"); }, 1500));
+    introTimers.push(setTimeout(() => {
+      if (introDone) return;
+      const t = shapes.find((v) => v.id === "triangle"), start = { x: 560, y: 420 }, grab = { x: t.x + t.w / 2, y: t.y + t.h * 0.6 };
+      placeGhost(start.x, start.y); ghost.style.opacity = 1;
+      const t0 = performance.now(), ease = (k) => 1 - Math.pow(1 - k, 3);
+      const orig = clone(t);
+      const step = (now) => {
+        if (introDone) return;
+        const k = (now - t0) / 1800;
+        if (k < 0.45) { const q = ease(k / 0.45); placeGhost(start.x + (grab.x - start.x) * q, start.y + (grab.y - start.y) * q); }
+        else if (k < 0.5) { if (selected !== "triangle") { selected = "triangle"; render(); } }
+        else if (k < 0.9) { const q = ease((k - 0.5) / 0.4); t.x = orig.x - 40 * q; t.y = orig.y + 24 * q; placeGhost(grab.x - 40 * q, grab.y + 24 * q); render(); }
+        else { ghost.style.opacity = 0; introDone = true; selected = null; render(); return; }
+        introRaf = requestAnimationFrame(step);
+      };
+      introRaf = requestAnimationFrame(step);
+    }, 1700));
+  }
+})();
+</script>
+</body>
+</html>
