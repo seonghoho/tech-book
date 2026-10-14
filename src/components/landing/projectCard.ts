@@ -1,4 +1,5 @@
-// 홈 프로젝트 카드의 표시용 순수 함수. 다른 모듈을 import 하지 않는다(테스트가 바로 불러온다).
+// 홈 프로젝트 카드의 표시용 순수 함수. 테스트가 바로 불러오므로 import는 상대 경로 .ts로만 한다.
+import { formatPeriod } from "../../lib/formatPeriod.ts";
 
 export type ProjectGlyphKind = "canvas" | "route" | "pitch" | "default";
 
@@ -15,7 +16,7 @@ export function projectGlyphKind(slug: string): ProjectGlyphKind {
 
 // "2024.08 - 2026.02", "4명 · FE 3 / BE 1" → "2024.08–2026.02 · 4명 · FE 3 / BE 1"
 export function formatProjectMeta(period: string, team: string): string {
-  return [period.replace(" - ", "–"), team]
+  return [formatPeriod(period), team]
     .map((part) => part.trim())
     .filter(Boolean)
     .join(" · ");
