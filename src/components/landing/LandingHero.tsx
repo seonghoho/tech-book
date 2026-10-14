@@ -21,7 +21,7 @@ export default function LandingHero({ posts }: Props) {
     <section className="grid items-stretch gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12 lg:pt-4">
       <div className="min-w-0">
         <p className="eyebrow-label">Frontend · SVG · Interaction</p>
-        <h1 className="mt-3.5 text-[clamp(30px,3.6vw,42px)] font-bold leading-[1.22] tracking-[-0.045em] text-[color:var(--color-text-primary)] [text-wrap:balance] [word-break:keep-all]">
+        <h1 className="mt-3.5 text-[clamp(30px,3.6vw,42px)] font-semibold leading-[1.22] tracking-[-0.045em] text-[color:var(--color-text-primary)] [text-wrap:balance] [word-break:keep-all]">
           에디터를 만들며 부딪힌 문제를{" "}
           <span className="font-semibold text-[color:var(--color-text-muted)]">
             코드와 함께 기록합니다
