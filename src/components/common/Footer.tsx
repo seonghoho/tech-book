@@ -7,11 +7,10 @@ const Footer = () => {
         {/* <div className="max-w-xl space-y-3">
           <p className="eyebrow-label">Contact</p>
           <div className="text-2xl font-semibold text-[color:var(--color-text-primary)]">
-            프론트엔드와 인터랙션 설계에 대한 대화를 환영합니다.
+            프론트엔드 관련 문의는 메일로 받습니다.
           </div>
           <p className="body-copy">
-            SVG 기반 UI, Three.js 시각화, 유지보수 가능한 컴포넌트 설계와
-            관련된 작업을 중심으로 정리하고 있습니다.
+            SVG UI, Three.js 시각화, 컴포넌트 설계 작업을 정리합니다.
           </p>
         </div> */}
 

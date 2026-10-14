@@ -22,7 +22,7 @@ export default function PostsList({ postsByCategory, type }: PostsListProps) {
         {type === "posts" ? `기술` : `게임`} 문서 목록
         </h1>
         <p className="body-copy">
-          카테고리 단위로 정리된 문서를 빠르게 탐색할 수 있습니다.
+          카테고리별로 모았습니다.
         </p>
       </div>
 

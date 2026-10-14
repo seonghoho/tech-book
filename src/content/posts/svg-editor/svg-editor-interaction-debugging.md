@@ -12,7 +12,7 @@ tags: ["SVG", "PointerEvent", "KeyboardEvent", "Debugging"]
 
 SVG 에디터의 인터랙션 문제는 대부분 “가끔 이상하다”는 형태로 나타납니다.
 도형이 조금 늦게 따라오거나, resize 중에 선택이 풀리거나, 드래그가 끝났는데도 마우스를 따라오는 문제가 생깁니다.
-사용자 입장에서는 단순히 버그지만, 구현하는 입장에서는 원인이 여러 층에 걸쳐 있습니다.
+원인은 보통 아래 중 여러 곳에 걸쳐 있었습니다.
 
 - 브라우저 좌표를 SVG 좌표로 변환하는 과정
 - pointer capture 유무
@@ -105,7 +105,7 @@ function logPointer(label: string, event: PointerEvent) {
 
 `pointerup`이 누락되면 대부분 상태 정리가 되지 않습니다.
 이때 resize나 drag 계산식을 고쳐도 문제가 해결되지 않습니다.
-이벤트 흐름이 먼저 안정되어야 합니다.
+`pointerup`이 들어오는지부터 확인해야 합니다.
 
 ## 3단계: active tool 확인
 
@@ -128,10 +128,10 @@ function handleCanvasPointerDown(event: PointerEvent) {
 ```
 
 디버깅할 때는 이벤트마다 `activeTool`, `selectedIds`, `dragSession`을 함께 찍었습니다.
-단순히 포인터 좌표만 보면 정상인데, 실제로는 tool이 바뀌지 않아 다른 핸들러가 실행되는 경우가 있었습니다.
+포인터 좌표만 보면 정상인데, 실제로는 tool이 바뀌지 않아 다른 핸들러가 실행되는 경우가 있었습니다.
 
 이 기준은 [수학교구 SVG 캔버스의 인터랙션 구조](/posts/svg-editor/math-tool-interaction-rules)와도 연결됩니다.
-포인터와 키보드는 따로 움직이는 것처럼 보이지만, 편집기 안에서는 하나의 인터랙션 상태를 공유해야 했습니다.
+그 글에서 포인터와 키보드가 같은 interaction state를 보도록 바꾼 과정을 다뤘습니다.
 
 ## 4단계: 선택과 drag 시작 순서
 
@@ -200,7 +200,7 @@ resize도 같은 기준을 적용했습니다.
 계산은 `pointermove`마다 하지만, 히스토리에는 하나의 사용자 작업으로 들어가야 합니다.
 이 내용은 [SVG 도형 리사이즈 핸들 제약 조건 정리](/posts/svg-editor/svg-resize-handle-constraint)와 [SVG 에디터 undo/redo 스냅샷 설계](/posts/svg-editor/svg-history-snapshot-undo-redo)의 중간 지점에 있는 문제였습니다.
 
-## 디버깅 로그는 구조화한다
+## 디버깅 로그 형식
 
 인터랙션 문제를 잡을 때 단순 문자열 로그는 금방 한계가 옵니다.
 저는 이벤트 단계별로 같은 모양의 로그를 남기는 편이 더 도움이 됐습니다.
@@ -219,12 +219,8 @@ function debugInteraction(label: string, payload: Record<string, unknown>) {
 ```
 
 이렇게 해두면 문제가 생겼을 때 “좌표 문제인지, tool 문제인지, 선택 순서 문제인지”를 한 화면에서 비교할 수 있습니다.
-디버깅 로그도 기능 코드처럼 일관된 형식이 있어야 실제로 쓸 수 있었습니다.
 
 ## 정리
-
-SVG 에디터 인터랙션 문제는 보이는 증상만 따라가면 오래 걸립니다.
-좌표, 이벤트 흐름, tool 상태, 선택 순서, 히스토리 타이밍을 순서대로 확인하면 원인을 훨씬 빠르게 좁힐 수 있습니다.
 
 이번 구현에서 사용한 디버깅 기준은 다음과 같습니다.
 
@@ -235,5 +231,4 @@ SVG 에디터 인터랙션 문제는 보이는 증상만 따라가면 오래 걸
 - 히스토리는 사용자 작업 단위로 한 번만 기록한다.
 - 로그는 매번 같은 구조로 남긴다.
 
-에디터는 단일 기능보다 상태 전이가 더 어렵습니다.
-[MathCanvas 프로젝트](/projects/mathcanvas)에서 SVG 교구 편집 경험을 안정화하려면 계산식보다 먼저 이벤트 흐름을 예측 가능하게 만드는 일이 필요했습니다.
+이 순서는 [MathCanvas 프로젝트](/projects/mathcanvas)에서 교구 조작 버그를 고치면서 정했습니다.

@@ -5,7 +5,7 @@ import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Games",
-  description: "JavaScript와 Canvas, WebGL을 사용하여 만든 간단한 웹 게임들을 플레이해보세요.",
+  description: "JavaScript, Canvas, WebGL로 만든 웹 게임입니다.",
   path: "/games",
   robots: {
     index: false,

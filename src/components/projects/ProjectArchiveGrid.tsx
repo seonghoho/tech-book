@@ -19,7 +19,7 @@ export default function ProjectArchiveGrid({
   gridClassName = "grid-cols-2 sm:grid-cols-3 lg:grid-cols-6",
   priorityCount = 2,
   showFootnote = false,
-  footnote = "서비스, 인터랙션, 3D 시각화, 토이 프로젝트까지 다양한 분야에 도전하며 경험을 쌓고 있습니다.",
+  footnote = "회사, 팀, 개인 프로젝트를 모았습니다.",
   revealItems = false,
   posterClassName,
 }: ProjectArchiveGridProps) {

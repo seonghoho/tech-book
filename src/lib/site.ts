@@ -1,8 +1,7 @@
 export const SITE_CONFIG = {
   name: "seonghoho",
   title: "seonghoho - 프론트엔드 개발 기록",
-  description:
-    "SVG, Three.js, 프론트엔드 인터랙션, 웹 개발 실무 문제 해결 과정을 기록하는 포트폴리오와 글 아카이브입니다.",
+  description: "SVG, Three.js, 프론트엔드 인터랙션 작업을 기록하는 블로그와 포트폴리오입니다.",
   url: "https://seonghoho.com",
   author: {
     name: "최성호",

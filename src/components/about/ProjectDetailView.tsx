@@ -257,18 +257,20 @@ export default function ProjectDetailView({
               </ul>
             </DetailSection>
 
-            <DetailSection title="Technical highlights">
-              <ul className="space-y-4 text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
-                {project.technicalHighlights.map((highlight) => (
-                  <li key={highlight} className="flex gap-3">
-                    <span className="mt-[13px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
-                    <span>
-                      <HighlightedText text={highlight} phrases={project.highlightPhrases} />
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </DetailSection>
+            {project.technicalHighlights.length ? (
+              <DetailSection title="Technical highlights">
+                <ul className="space-y-4 text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
+                  {project.technicalHighlights.map((highlight) => (
+                    <li key={highlight} className="flex gap-3">
+                      <span className="mt-[13px] h-1.5 w-1.5 rounded-full bg-[color:var(--color-accent)]" />
+                      <span>
+                        <HighlightedText text={highlight} phrases={project.highlightPhrases} />
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </DetailSection>
+            ) : null}
 
             <DetailSection title="Screens">
               <div className="grid gap-6 md:grid-cols-2">

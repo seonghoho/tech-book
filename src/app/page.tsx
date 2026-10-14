@@ -12,7 +12,7 @@ export const revalidate = 180;
 export const metadata: Metadata = buildPageMetadata({
   title: "Seonghoho 기술 블로그",
   absoluteTitle: "Seonghoho 기술 블로그",
-  description: "프론트엔드, Three.js, SVG 등 실전 개발 문제를 다루는 기술 블로그.",
+  description: "SVG 에디터, Three.js, 프론트엔드 개발 문제를 정리하는 기술 블로그.",
   path: "/",
 });
 

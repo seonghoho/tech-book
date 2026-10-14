@@ -32,8 +32,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
 
   return buildPageMetadata({
     title: "Posts",
-    description:
-      "프론트엔드, JavaScript, Three.js 등 다양한 기술 주제에 대한 포스트를 확인해보세요.",
+    description: "프론트엔드, JavaScript, Three.js 글 목록입니다.",
     path: "/posts",
     robots: hasSearchParams
       ? {

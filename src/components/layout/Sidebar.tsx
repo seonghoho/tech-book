@@ -75,9 +75,9 @@ export default function Sidebar({ data, categoryMap, variant = "rail", scope = "
 
   const introEyebrow = isMobileSubnav ? "Writing" : isGameScope ? "Games" : "Browse";
   const introCopy = isMobileSubnav
-    ? "카테고리 단위로 작성 글을 빠르게 탐색할 수 있습니다."
+    ? "카테고리별로 모았습니다."
     : isGameScope
-      ? "카테고리별 게임 로그를 빠르게 탐색할 수 있습니다."
+      ? "게임 로그를 카테고리별로 모았습니다."
       : "작성 글과 카테고리를 탐색할 수 있습니다.";
 
   return (

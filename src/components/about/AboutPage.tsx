@@ -46,7 +46,6 @@ export default function AboutPage() {
     <div className="page-shell">
       <div className="grid gap-16 lg:grid-cols-[minmax(280px,360px)_minmax(0,1fr)] lg:gap-24">
         <PortfolioRail
-          eyebrow={aboutProfile.quote}
           name={aboutProfile.name}
           title={aboutProfile.tagline}
           summary={aboutProfile.railSummary}
@@ -204,8 +203,8 @@ export default function AboutPage() {
           <section id="experience" className="scroll-mt-28 space-y-8">
             <SectionHeader
               eyebrow="Experience"
-              title="실무에서 경험을 쌓아왔습니다"
-              description="각각의 과정에서 어떤 역할과 역량이 만들어졌는지 정리했습니다."
+              title="경력"
+              description="회사와 교육 과정에서 맡은 일입니다."
             />
 
             <div className="about-card divide-y divide-[color:var(--color-border)] overflow-hidden">
@@ -232,22 +231,24 @@ export default function AboutPage() {
                       <p className="text-sm leading-7 text-[color:var(--color-text-secondary)]">
                         {item.summary}
                       </p>
-                      <ul className="grid gap-2 xl:grid-cols-2">
-                        {item.highlights.map((highlight) => (
-                          <li
-                            key={highlight}
-                            className="flex gap-2 text-sm leading-6 text-[color:var(--color-text-secondary)]"
-                          >
-                            <span
-                              aria-hidden="true"
-                              className="text-[color:var(--color-text-muted)]"
+                      {item.highlights.length ? (
+                        <ul className="grid gap-2 xl:grid-cols-2">
+                          {item.highlights.map((highlight) => (
+                            <li
+                              key={highlight}
+                              className="flex gap-2 text-sm leading-6 text-[color:var(--color-text-secondary)]"
                             >
-                              —
-                            </span>
-                            <span>{highlight}</span>
-                          </li>
-                        ))}
-                      </ul>
+                              <span
+                                aria-hidden="true"
+                                className="text-[color:var(--color-text-muted)]"
+                              >
+                                —
+                              </span>
+                              <span>{highlight}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
                     </div>
                   </div>
                 </article>
@@ -258,8 +259,8 @@ export default function AboutPage() {
           <section id="projects" className="scroll-mt-28 space-y-8">
             <SectionHeader
               eyebrow="Projects"
-              title="문제를 푼 방식이 보이도록 정리했습니다"
-              description="대표 프로젝트와 저의 경험이 된 프로젝트들을 작성했습니다."
+              title="프로젝트"
+              description="회사, 팀, 개인 프로젝트입니다."
             />
 
             <article className="surface-panel-strong p-5 sm:p-6 lg:p-7">
@@ -268,7 +269,7 @@ export default function AboutPage() {
                   <div className="space-y-3">
                     <p className="eyebrow-label">Project Archive</p>
                     <h3 className="text-2xl font-semibold text-[color:var(--color-text-primary)] sm:text-3xl">
-                      목록에서 훑고, 상세에서 깊게 읽는 구조로 바꿨습니다
+                      프로젝트 목록과 상세 페이지
                     </h3>
                     <p className="body-copy max-w-2xl">
                       상단 탭의 <span className="font-semibold">Projects</span>
@@ -353,8 +354,8 @@ export default function AboutPage() {
           <section id="strengths" className="scroll-mt-28 space-y-8">
             <SectionHeader
               eyebrow="Strengths"
-              title="복합 인터랙션과 구조적 설계를 동시에 다룹니다"
-              description="특정 라이브러리 숙련도보다, 구현 난도가 높은 화면에서 어떤 판단을 했는지가 더 중요하다고 생각합니다."
+              title="강점"
+              description="구현이 어려웠던 화면에서 어떻게 처리했는지 적었습니다."
             />
 
             <div className="about-card divide-y divide-[color:var(--color-border)] overflow-hidden">
@@ -386,8 +387,8 @@ export default function AboutPage() {
           <section id="stack" className="scroll-mt-28 space-y-8">
             <SectionHeader
               eyebrow="Stack"
-              title="문제의 성격에 따라 도구를 선택하고 조합합니다"
-              description="서비스 UI, 그래픽 인터랙션, 상태 구조, 협업 도구를 분리해 보면 어떤 영역에서 실전 경험이 쌓였는지 더 분명하게 드러납니다."
+              title="기술 스택"
+              description="서비스 UI, 그래픽 인터랙션, 상태 구조, 협업 도구로 나눴습니다."
             />
 
             <div className="about-card divide-y divide-[color:var(--color-border)] overflow-hidden">
@@ -421,8 +422,8 @@ export default function AboutPage() {
           <section id="collaboration" className="scroll-mt-28 space-y-8">
             <SectionHeader
               eyebrow="Collaboration"
-              title="요구사항과 구현 디테일 사이를 연결하는 역할을 맡아왔습니다"
-              description="협업에서는 우선순위를 정리하고, 구현에서는 구조를 다듬습니다. 그 두 지점을 함께 보는 것이 제 작업 방식의 핵심입니다."
+              title="협업"
+              description="외주사, 디자이너와 주간 회의로 요구사항과 우선순위를 정리했습니다."
             />
 
             <div className="grid gap-4 xl:grid-cols-2">
@@ -440,7 +441,7 @@ export default function AboutPage() {
               {/* <aside className="rounded-[28px] border border-[color:var(--color-border)] px-5 py-5 xl:col-span-2">
                 <p className="eyebrow-label">Contact</p>
                 <h3 className="mt-3 text-xl font-semibold text-[color:var(--color-text-primary)]">
-                  채용 담당자나 협업 상대가 빠르게 확인할 수 있도록 구성했습니다
+                  연락처
                 </h3>
                 <p className="mt-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
                   프로젝트별 상세 페이지에서 문제 맥락, 구현 방식, 결과를 더

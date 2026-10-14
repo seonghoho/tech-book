@@ -99,17 +99,15 @@ export const aboutProfile = {
   name: "최성호",
   title: "프론트엔드 엔지니어",
   tagline: "SVG 기반 에디터와 3D 시각 도구를 설계·구현하는 프론트엔드 엔지니어",
-  quote: "꾸준함을 무기로, 몰입하며 성장하는 개발자",
   railSummary: "SVG·Three.js 기반 인터랙션과 서비스 UI를 설계·구현하는 프론트엔드 엔지니어입니다.",
   companyLabel: "플랜티엠 · Frontend Engineer",
   stackLabel: "Vue / React / SVG / Three.js",
-  overviewTitle: "복잡한 상호작용을 구현하면서도, 읽히는 구조를 남기는 프론트엔드 엔지니어입니다",
-  overviewDescription:
-    "사용자에게는 자연스럽고, 팀에게는 다루기 쉬운 화면을 만드는 것이 목표입니다. 특히 좌표 기반 인터랙션과 시각화가 필요한 제품에서 강점을 발휘합니다.",
+  overviewTitle: "SVG·Three.js로 수학교구 에디터를 만들어 온 프론트엔드 엔지니어입니다",
+  overviewDescription: "좌표 계산, 드래그·회전처럼 조작이 많은 화면을 주로 만들었습니다.",
   summary:
-    "2026년 3월부터 플랜티엠에서 프론트엔드 엔지니어로 근무하고 있습니다. 이전에는 코드넛에서 SVG·Three.js 기반 수학교구 캔버스를 개발하며 복잡한 사용자 상호작용을 구조화하는 일에 집중했고, React·Vue 기반 팀 프로젝트에서도 실전 문제 해결 경험을 쌓았습니다.",
+    "2026년 3월부터 플랜티엠에서 프론트엔드 엔지니어로 근무하고 있습니다. 이전에는 코드넛에서 SVG·Three.js 기반 수학교구 캔버스를 개발했고, SSAFY에서 React·Vue 팀 프로젝트를 세 번 진행했습니다.",
   focus:
-    "사용자 경험과 유지보수성을 함께 보는 설계, 그리고 인터랙션이 많은 화면에서도 흔들리지 않는 구조를 만드는 데 강점이 있습니다.",
+    "교구 46종 중 20종을 공통 상위 클래스 구조로 만들어, 새 교구를 추가할 때 고칠 곳을 줄였습니다.",
   contacts: [
     {
       label: "GitHub",
@@ -140,7 +138,7 @@ export const aboutProfile = {
     {
       value: "React · Vue",
       label: "서비스 UI 구축 경험",
-      description: "프로덕션 화면과 인터랙션 중심 기능을 모두 구현",
+      description: "서비스 화면과 교구 인터랙션 구현",
     },
     {
       value: "3회",
@@ -156,14 +154,13 @@ export const strengthHighlights: StrengthItem[] = [
     description:
       "SVG 한 화면 안에서 좌표 계산, drag·rotate·snap, PointerEvent·KeyboardEvent 흐름을 교구별 규칙에 맞게 설계했습니다.",
     bullets: [
-      "하나의 SVG 영역에서 다양한 교구 상호작용을 안정적으로 제어",
+      "하나의 SVG 안에서 교구별 drag·rotate·snap 처리",
       "교구 특성에 맞는 이벤트 분기와 커스텀 이벤트 구조 설계",
     ],
   },
   {
     title: "3D 시각화 구현",
-    description:
-      "Three.js로 공간좌표, 쌓기나무, 입체도형을 구현하며 조작감과 가독성을 함께 챙겼습니다.",
+    description: "Three.js로 공간좌표, 쌓기나무, 입체도형을 구현했습니다.",
     bullets: [
       "Raycaster, OrbitControls, DragControls 기반 상호작용 구현",
       "depth buffer와 renderOrder 조정으로 시각적 충돌 최소화",
@@ -172,7 +169,7 @@ export const strengthHighlights: StrengthItem[] = [
   {
     title: "유지보수 가능한 프론트엔드 설계",
     description:
-      "클래스 기반 모듈 구조와 타입 중심 상태 설계로 신규 기능 추가 비용을 낮추는 데 집중했습니다.",
+      "클래스 기반 모듈 구조와 타입 중심 상태 설계로 신규 교구 추가 시 수정 범위를 줄였습니다.",
     bullets: [
       "DigitalMathElement 중심 상속 구조 설계",
       "Atomic Design Pattern, Storybook, 상태 관리 패턴 활용",
@@ -181,7 +178,7 @@ export const strengthHighlights: StrengthItem[] = [
   {
     title: "협업과 제품 커뮤니케이션",
     description:
-      "외주사, 디자이너, 개발자와 주간 단위로 요구사항을 정리하고 우선순위를 조율해 개발 흐름을 맞췄습니다.",
+      "외주사, 디자이너, 개발자와 주간 단위로 요구사항을 정리하고 우선순위를 정했습니다.",
     bullets: ["실시간 피드백 반영과 일정 조율 경험", "팀 프로젝트에서 스크럼 마스터로 일정 리드"],
   },
 ];
@@ -189,7 +186,7 @@ export const strengthHighlights: StrengthItem[] = [
 export const skillGroups: SkillGroup[] = [
   {
     title: "Core Frontend",
-    summary: "서비스 UI와 인터랙션 중심 화면을 모두 다루는 기본 체력",
+    summary: "서비스 화면에 쓰는 기본 스택",
     items: [
       "TypeScript",
       "JavaScript",
@@ -203,7 +200,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "Interaction & Graphics",
-    summary: "좌표 기반 상호작용과 시각화 구현에 강한 도구들",
+    summary: "좌표 계산과 시각화에 쓴 도구",
     items: [
       "SVG",
       "Three.js",
@@ -216,7 +213,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "State & Architecture",
-    summary: "복잡한 흐름을 유지보수 가능한 구조로 묶는 패턴",
+    summary: "상태 관리와 컴포넌트 구조에 쓴 패턴",
     items: [
       "Pinia",
       "Zustand",
@@ -229,7 +226,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "Collaboration & Tooling",
-    summary: "협업 효율과 코드 품질을 함께 관리하는 운영 도구",
+    summary: "협업과 코드 관리 도구",
     items: [
       "Git",
       "GitLab",
@@ -248,7 +245,7 @@ export const experienceTimeline: ExperienceItem[] = [
     title: "프론트엔드 엔지니어",
     period: "2026.03 - 재직 중",
     summary: "2026년 3월부터 플랜티엠에서 프론트엔드 엔지니어로 근무하고 있습니다.",
-    highlights: ["2026년 3월 플랜티엠 합류", "프론트엔드 엔지니어로 근무 중"],
+    highlights: [],
   },
   {
     company: "코드넛",
@@ -259,8 +256,7 @@ export const experienceTimeline: ExperienceItem[] = [
     highlights: [
       "총 46종 중 20종의 디지털 교구를 직접 설계·구현",
       "클래스 기반 객체 구조로 확장성과 유지보수성 개선",
-      "주간 협업 회의를 통해 요구사항 정리와 우선순위 조율 수행",
-      "실제 수업 현장을 고려한 2D·3D 인터랙션 품질 확보",
+      "주간 회의에서 요구사항과 우선순위 정리",
     ],
   },
   {
@@ -268,26 +264,25 @@ export const experienceTimeline: ExperienceItem[] = [
     title: "교육 과정 수료",
     period: "2023.07 - 2024.06",
     summary:
-      "Python, Django, SQL, HTML/CSS, Vue3 등 기본기를 다진 뒤 공통·특화·자율 프로젝트를 수행하며 프론트엔드와 협업 역량을 빠르게 끌어올렸습니다.",
+      "Python, Django, SQL, HTML/CSS, Vue3 등을 배운 뒤 공통·특화·자율 프로젝트를 진행했습니다.",
     highlights: [
       "세 차례 팀 프로젝트에서 일정 리드 역할 수행",
       "WebRTC, AI 영상 분석, 빅데이터 기반 서비스 프로젝트 경험",
-      "페어 프로그래밍과 코드 리뷰 중심 협업 방식 체득",
-      "프로젝트 결과물로 우수상 성과 확보",
+      "페어 프로그래밍과 코드 리뷰로 협업",
+      "공통·특화·자율 프로젝트 경진대회 우수상",
     ],
   },
 ];
 
 export const growthNotes: GrowthNote[] = [
   {
-    title: "문제를 구조로 바꾸는 방식",
+    title: "작업 방식",
     description:
       "기능이 복잡할수록 먼저 이벤트 흐름과 책임 경계를 정리합니다. 인터랙션 구현, 상태 저장소, 컴포넌트 구조를 함께 설계해 변경 비용을 낮추는 편입니다.",
   },
   {
-    title: "빠르게 익히고 실전에 연결",
-    description:
-      "새로운 기술을 마주하면 빠르게 학습하고 실제 문제에 적용해 검증합니다. SVG, Three.js, React, Vue를 오가며 사용자 경험과 유지보수성을 동시에 고려합니다.",
+    title: "새 기술 적용",
+    description: "회사에서는 Vue와 SVG·Three.js를, 팀 프로젝트에서는 React를 썼습니다.",
   },
 ];
 
@@ -309,20 +304,19 @@ export const aboutProjects: AboutProject[] = [
     overview:
       "MathCanvas는 교사가 수학교구를 직접 배치하고 조작해 수업 자료를 만들고, 학생과 쉽게 공유할 수 있도록 설계된 캔버스 서비스입니다.",
     context:
-      "쌓기나무, 평면도형, 공간좌표처럼 난도가 높은 교구를 2D와 3D 상호작용으로 자연스럽게 다뤄야 했고, 교구마다 다른 조작 규칙을 안정적으로 관리할 구조가 필요했습니다.",
+      "쌓기나무, 평면도형, 공간좌표처럼 난도가 높은 교구를 2D·3D로 조작해야 했고, 교구마다 다른 조작 규칙을 나눠 관리할 구조가 필요했습니다.",
     tags: ["edutech", "editor", "svg", "threejs"],
     narrative: [
       "MathCanvas는 교사가 수학교구를 직접 배치하고 조작해 수업 자료를 만들고 공유할 수 있도록 만든 서비스입니다. 저는 SVG 기반 편집 인터랙션과 Vue 서비스 UI, 그리고 Three.js 기반 3D 교구 흐름을 함께 다뤘습니다.",
-      "특히 쌓기나무, 공간좌표, 평면도형처럼 조작 규칙이 서로 다른 교구를 하나의 캔버스 경험 안에서 자연스럽게 다루게 만드는 일이 핵심이었습니다. drag, rotate, place, selection 흐름을 교구별 규칙에 맞게 분기하고, PointerEvent와 KeyboardEvent를 함께 묶어 안정적으로 제어했습니다.",
-      "서비스를 계속 확장해야 하는 제품이었기 때문에 클래스 기반 모듈 구조와 store 중심 흐름을 설계해 신규 교구 추가 비용을 줄였습니다. 결과적으로 46종 중 20종의 교구를 직접 설계·구현했고, 실제 수업 현장에서 사용할 수 있는 2D·3D 인터랙션 품질을 확보했습니다.",
+      "쌓기나무, 공간좌표, 평면도형은 조작 규칙이 서로 달랐습니다. drag, rotate, place, selection 흐름을 교구별 규칙에 맞게 분기하고, PointerEvent와 KeyboardEvent를 함께 처리했습니다.",
+      "서비스를 계속 확장해야 하는 제품이었기 때문에 클래스 기반 모듈 구조와 store 중심 흐름을 설계해 신규 교구 추가 비용을 줄였습니다. 46종 중 20종의 교구를 직접 설계·구현했습니다.",
     ],
     highlightPhrases: [
       "SVG 기반 편집 인터랙션",
       "Three.js 기반 3D 교구 흐름",
       "클래스 기반 모듈 구조",
       "46종 중 20종",
-      "2D·3D 인터랙션 품질",
-      "신규 교구 확장성과 유지보수성",
+      "신규 교구 추가 시 수정 범위 축소",
     ],
     cardPoints: [
       "46종 중 20종 교구 직접 설계·구현",
@@ -331,9 +325,9 @@ export const aboutProjects: AboutProject[] = [
     ],
     keyContributions: [
       "46종 중 20종의 SVG 기반 수학교구를 직접 설계·구현하고, 마우스·터치 기반 drag, rotate, place 로직을 교구 특성에 맞게 세분화했습니다.",
-      "하나의 SVG 태그 내부에서 DOM 요소를 제어하고 PointerEvent, KeyboardEvent 흐름을 통합해 복합 상호작용을 안정적으로 관리했습니다.",
+      "하나의 SVG 태그 내부에서 DOM 요소를 제어하고 PointerEvent, KeyboardEvent 흐름을 한곳에서 처리했습니다.",
       "DigitalMathElement 상위 클래스를 중심으로 클래스 기반 모듈 구조를 설계해 신규 교구 추가 시 수정 범위를 최소화했습니다.",
-      "생성된 교구 객체를 store에 등록해 전체 목록, 선택 상태, 편집 흐름을 추적하고 Vue 기반 서비스 화면과 자연스럽게 연결했습니다.",
+      "생성된 교구 객체를 store에 등록해 전체 목록, 선택 상태, 편집 흐름을 추적하고 Vue 서비스 화면과 연결했습니다.",
     ],
     technicalHighlights: [
       "Three.js로 쌓기나무, 공간좌표계, 입체도형을 구현하고 BoxGeometry, Raycaster, OrbitControls, DragControls를 활용했습니다.",
@@ -352,8 +346,7 @@ export const aboutProjects: AboutProject[] = [
     ],
     outcomes: [
       "46종 중 20종의 수학교구를 직접 설계·구현",
-      "실제 수업 현장을 고려한 2D·3D 인터랙션 품질 확보",
-      "클래스 기반 구조로 신규 교구 확장성과 유지보수성 강화",
+      "클래스 기반 구조로 신규 교구 추가 시 수정 범위 축소",
     ],
     links: [
       {
@@ -393,7 +386,7 @@ export const aboutProjects: AboutProject[] = [
         kind: "image",
         src: "/images/projects/mathcanvas/detail-03.png",
         alt: "MathCanvas 관리자 화면",
-        caption: "콘텐츠와 운영 흐름까지 포함해 서비스 UI를 연결한 관리자 화면",
+        caption: "MathCanvas 관리자 화면",
         aspect: "landscape",
       },
     ],
@@ -417,12 +410,12 @@ export const aboutProjects: AboutProject[] = [
     overview:
       "예비 창업자가 상권을 분석하고 비용을 가늠하며 다른 사용자와 정보를 교환할 수 있도록 설계한 통합형 웹 서비스입니다.",
     context:
-      "창업 실패의 주요 원인으로 상권 분석과 준비 부족이 언급되는 문제를 해결하기 위해, 지도 기반 추천과 실시간 소통 기능을 하나의 흐름으로 묶는 것이 핵심이었습니다.",
+      "상권 분석과 준비 부족이 창업 실패 원인으로 자주 꼽혀, 지도 기반 추천과 실시간 소통 기능을 한 서비스에 넣었습니다.",
     tags: ["map", "startup", "realtime"],
     narrative: [
       "NowDoBoss는 예비 창업자가 상권을 분석하고 비용을 계산하며, 다른 사용자와 실시간으로 소통할 수 있도록 만든 창업 지원 플랫폼입니다. 저는 지도 기반 추천 경험과 커뮤니티, 채팅, 알림 흐름을 프론트엔드에서 연결했습니다.",
-      "카카오맵 위에서 사용자가 지역을 고르고 추천 상권을 확인하는 과정이 끊기지 않도록 위치 선택, 드롭다운, 실시간 검색을 하나의 UX로 정리했습니다. 화면 좌표를 서버에 넘겨 폴리곤을 그리는 방식으로 추천 영역도 시각화했습니다.",
-      "동시에 커뮤니티 CRUD, WebSocket 채팅, FCM 푸시 알림까지 연결하면서 서로 다른 기능을 하나의 제품 경험처럼 보이게 만드는 데 집중했습니다. 이 프로젝트는 SSAFY 자율 프로젝트 경진대회 우수상으로 이어졌습니다.",
+      "카카오맵 위에서 사용자가 지역을 고르고 추천 상권을 확인할 수 있도록 위치 선택, 드롭다운, 실시간 검색을 한 화면에 넣었습니다. 화면 좌표를 서버에 넘겨 폴리곤을 그리는 방식으로 추천 영역도 시각화했습니다.",
+      "커뮤니티 CRUD, WebSocket 채팅, FCM 푸시 알림도 연결했습니다. 이 프로젝트로 SSAFY 자율 프로젝트 경진대회 우수상을 받았습니다.",
     ],
     highlightPhrases: [
       "지도 기반 추천 경험",
@@ -445,8 +438,7 @@ export const aboutProjects: AboutProject[] = [
     ],
     technicalHighlights: [
       "Intersection Observer를 사용해 인터랙티브한 메인 페이지를 구현했습니다.",
-      "Styled Components 기반 컴포넌트 구조로 반응형 UI를 정리하고, 모든 화면 크기에서 사용할 수 있는 웹 경험을 구축했습니다.",
-      "지도 선택, 커뮤니티, 채팅, 알림까지 서로 다른 흐름을 하나의 제품 경험으로 연결하는 데 집중했습니다.",
+      "Styled Components로 반응형 UI를 만들었습니다.",
     ],
     techStack: [
       "React.js",
@@ -461,7 +453,7 @@ export const aboutProjects: AboutProject[] = [
     ],
     outcomes: [
       "지도 기반 상권 추천과 실시간 커뮤니티 흐름을 하나의 서비스로 통합",
-      "채팅과 푸시 알림 기능으로 사용자 소통 경험 강화",
+      "채팅과 FCM 푸시 알림 구현",
       "SSAFY 자율 프로젝트 경진대회 우수상 수상",
     ],
     links: [
@@ -497,7 +489,7 @@ export const aboutProjects: AboutProject[] = [
         kind: "image",
         src: "/images/projects/nowdoboss/detail-03.jpg",
         alt: "NowDoBoss 커뮤니티 및 채팅 화면",
-        caption: "커뮤니티, 채팅, 알림 흐름을 연결한 실시간 사용자 경험 화면",
+        caption: "NowDoBoss 커뮤니티·채팅 화면",
         aspect: "landscape",
       },
     ],
@@ -525,7 +517,7 @@ export const aboutProjects: AboutProject[] = [
     narrative: [
       "Mancity는 드론 경기 영상을 분석해 경기 기록, 하이라이트, 다시보기, 전술보드를 제공한 풋살 분석 서비스입니다. 저는 화면 전반의 프론트엔드 구조와 경기 관련 주요 인터페이스를 구현했습니다.",
       "프로젝트 초반에는 Atomic Design Pattern과 Storybook으로 컴포넌트 체계를 먼저 정리했습니다. 이후 매치 목록, 상세, 등록, 수정, 다시보기, 경기 통계 같은 화면을 같은 규칙 위에서 빠르게 확장할 수 있었습니다.",
-      "전술보드는 Draggable과 Zustand를 활용해 직접 조작할 수 있게 만들었고, 마이페이지와 회원 API, 팔로우·팔로잉 흐름도 함께 담당했습니다. 기능 수가 많은 서비스에서도 UI 구조를 먼저 잡아두면 개발 속도와 유지보수성이 모두 좋아진다는 점을 확인한 작업이었습니다.",
+      "전술보드는 Draggable과 Zustand를 활용해 직접 조작할 수 있게 만들었고, 마이페이지와 회원 API, 팔로우·팔로잉 흐름도 함께 담당했습니다.",
     ],
     highlightPhrases: [
       "프론트엔드 구조",
@@ -548,8 +540,7 @@ export const aboutProjects: AboutProject[] = [
     ],
     technicalHighlights: [
       "PWA, React Query, Zustand를 조합해 인터랙티브한 화면과 상태 흐름을 정리했습니다.",
-      "다양한 경기 데이터를 한 화면에서 다루기 위해 상세 정보, 영상, 전술보드의 정보 밀도를 균형 있게 구성했습니다.",
-      "프론트엔드 컴포넌트 체계를 먼저 다진 뒤 기능 화면을 확장하는 방식으로 개발 속도와 유지보수성을 함께 챙겼습니다.",
+      "경기 상세 정보, 영상, 전술보드를 한 화면에 배치했습니다.",
     ],
     techStack: [
       "React.js",
@@ -585,7 +576,7 @@ export const aboutProjects: AboutProject[] = [
         kind: "image",
         src: "/images/projects/mancity/cover-og.png",
         alt: "Mancity 풋살 분석 서비스 화면",
-        caption: "재사용 가능한 UI 구조 위에서 경기 분석 경험을 구현한 대표 화면",
+        caption: "Mancity 경기 분석 화면",
         aspect: "landscape",
       },
     ],
@@ -608,12 +599,12 @@ export const aboutProjects: AboutProject[] = [
     overview:
       "보호소에는 입양자와의 연결 창구를, 입양 희망자에게는 맞춤형 추천과 입양 이후 흐름까지 지원하는 서비스를 목표로 했습니다.",
     context:
-      "입양 희망자와 보호소의 목적이 다르기 때문에 같은 서비스 안에서도 역할별로 다른 경험을 설계해야 했고, 커뮤니티와 입양 설문, 데이터 조회 흐름이 자연스럽게 이어져야 했습니다.",
+      "입양 희망자와 보호소의 목적이 다르기 때문에 같은 서비스 안에서도 역할별로 다른 경험을 설계해야 했고, 커뮤니티와 입양 설문, 데이터 조회 흐름이 이어져야 했습니다.",
     tags: ["adoption", "community", "survey"],
     narrative: [
       "pawsitive는 보호소와 입양 희망자를 연결하고, 추천, 커뮤니티, 사후관리까지 이어주는 유기견 입양 지원 서비스입니다. 저는 역할별 사용자 흐름을 분리하고 설문, 데이터 조회, 위치 기반 커뮤니티를 구현했습니다.",
-      "같은 서비스 안에서도 보호소와 입양 희망자의 목적이 달랐기 때문에, 역할별로 다른 여정을 설계하는 일이 중요했습니다. 입양 희망자에게는 5단계 맞춤형 흐름을 제공하고, 설문 20문항 상태를 Jotai로 관리해 긴 입력 흐름을 단순하게 유지했습니다.",
-      "카카오맵 기반 위치 커뮤니티와 유기견 조회 API를 React Query로 연결해 데이터 흐름을 정리했고, 모바일 맥락까지 고려한 PWA 경험을 구축했습니다. 이 프로젝트는 SSAFY 공통 프로젝트 경진대회 우수상으로 마무리됐습니다.",
+      "보호소와 입양 희망자는 목적이 달라 화면 흐름을 역할별로 나눴습니다. 입양 희망자에게는 5단계 맞춤형 흐름을 제공하고, 설문 20문항 상태를 Jotai로 관리해 긴 입력 흐름을 단순하게 유지했습니다.",
+      "카카오맵 기반 위치 커뮤니티와 유기견 조회 API를 React Query로 연결해 데이터 흐름을 정리했고, PWA로 만들어 모바일에서도 쓸 수 있게 했습니다. 이 프로젝트는 SSAFY 공통 프로젝트 경진대회 우수상으로 마무리됐습니다.",
     ],
     highlightPhrases: [
       "역할별 사용자 흐름",
@@ -622,7 +613,7 @@ export const aboutProjects: AboutProject[] = [
       "20개 문항",
       "Jotai",
       "React Query",
-      "PWA 경험",
+      "PWA",
       "SSAFY 공통 프로젝트 경진대회 우수상",
     ],
     cardPoints: [
@@ -631,16 +622,12 @@ export const aboutProjects: AboutProject[] = [
       "React Query·Jotai를 활용한 설문·데이터 흐름 관리",
     ],
     keyContributions: [
-      "입양 희망자와 보호소를 역할별로 분기 처리하고, 입양 희망자에게는 5단계 맞춤형 흐름을 제공해 사용자 경험을 최적화했습니다.",
+      "입양 희망자와 보호소를 역할별로 분기 처리하고, 입양 희망자에게는 5단계 맞춤형 흐름을 만들었습니다.",
       "카카오맵 API를 활용해 위치 기반 커뮤니티를 구현하고, 카테고리와 위치 기준으로 게시글을 탐색할 수 있도록 만들었습니다.",
       "유기견 등록 및 조회 API를 React Query로 연결해 중복 호출을 줄이고 캐싱 흐름을 정리했습니다.",
       "Jotai를 사용해 20개 문항의 입양 설문 상태를 관리하고, 긴 입력 흐름을 비교적 단순한 구조로 유지했습니다.",
     ],
-    technicalHighlights: [
-      "역할별 분기 UI와 서비스 흐름을 분리해 서로 다른 사용자의 목적을 한 제품 안에서 설계했습니다.",
-      "PWA 기반 구성으로 모바일 맥락에서도 사용할 수 있는 흐름을 고려했습니다.",
-      "커뮤니티, 설문, 데이터 조회를 끊기지 않는 사용자 여정으로 연결하는 데 집중했습니다.",
-    ],
+    technicalHighlights: [],
     techStack: [
       "React.js",
       "TypeScript",
@@ -651,8 +638,8 @@ export const aboutProjects: AboutProject[] = [
       "Vite",
     ],
     outcomes: [
-      "역할별 사용자 경험 분리로 입양 흐름의 명확성 강화",
-      "위치 기반 커뮤니티와 설문 흐름을 결합한 사용자 여정 구성",
+      "역할별 입양 흐름 분리",
+      "위치 기반 커뮤니티와 입양 설문 구현",
       "SSAFY 공통 프로젝트 경진대회 우수상 수상",
     ],
     links: [
@@ -696,12 +683,12 @@ export const aboutProjects: AboutProject[] = [
     overview:
       "TripMarble은 여행지 탐색, 게임 생성, 보드 진행, 미션 인증, 리뷰 기록을 하나의 사용자 여정으로 연결하는 웹 서비스입니다.",
     context:
-      "여행지 정보 탐색과 게임 플레이가 분리되어 보이지 않도록, 홈 진입, 지역 탐색, 게임 목록, 생성 플로우, 인증 흐름을 웹 화면에서 자연스럽게 이어주는 구조가 필요했습니다.",
+      "여행지 정보 탐색과 게임 플레이가 분리되어 보이지 않도록, 홈 진입, 지역 탐색, 게임 목록, 생성 플로우, 인증 흐름을 웹 화면에서 이어주는 구조가 필요했습니다.",
     tags: ["travel", "game", "nextjs", "ux"],
     narrative: [
       "TripMarble은 여행지를 탐색하고, 그 여행을 게임 루프로 전환하고, 실제 방문 기록을 미션과 리뷰로 남기는 서비스입니다. 저는 Web 프론트엔드 담당으로 Next.js 기반 웹앱 구조와 주요 사용자 흐름을 다뤘습니다.",
       "홈에서는 3D 주사위와 보드 이미지를 활용해 서비스의 게임성을 먼저 보여주고, 사용자가 게임 만들기나 여행지 탐색으로 진입할 수 있도록 구성했습니다. 검색, 여행지 목록, 게임 목록, 로그인, 프로필 같은 주요 라우트도 웹 경험 안에서 연결했습니다.",
-      "이후에는 단순 스타일 통일보다 여행 탐색, 게임 생성, 미션 수행이 하나의 루프로 느껴지도록 서비스 UX를 다시 검토했습니다. 디자인 토큰, 공통 카드, 헤더, 게임 리스트, 지도 중심 화면의 구조를 정리하며 웹 서비스의 확장성을 높이는 방향으로 개선했습니다.",
+      "이후 여행 탐색, 게임 생성, 미션 수행 흐름을 다시 검토하고, 디자인 토큰, 공통 카드, 헤더, 게임 리스트, 지도 화면 구조를 정리했습니다.",
     ],
     highlightPhrases: [
       "Web 프론트엔드 담당",
@@ -712,7 +699,7 @@ export const aboutProjects: AboutProject[] = [
       "서비스 UX",
       "디자인 토큰",
       "공통 카드",
-      "지도 중심 화면",
+      "지도 화면 구조",
     ],
     cardPoints: [
       "Next.js 기반 Web 앱 구조와 주요 라우트 구성",
@@ -727,7 +714,7 @@ export const aboutProjects: AboutProject[] = [
     ],
     technicalHighlights: [
       "Next.js 14, TypeScript, Sass 기반으로 app, entities, features, shared, widgets 계층을 나누어 웹 코드를 구성했습니다.",
-      "Three.js와 GSAP을 활용한 3D 주사위 홈 히어로로 여행 게임 서비스의 첫인상을 시각화했습니다.",
+      "Three.js와 GSAP으로 3D 주사위 홈 히어로를 만들었습니다.",
       "React Query로 여행지, 게임, 리뷰 관련 서버 상태를 관리하고 Redux Toolkit과 redux-persist로 사용자 상태를 유지했습니다.",
       "카드, 리스트, 모달, 버튼, 헤더 같은 공통 UI를 정리해 이후 화면 확장과 리디자인 작업의 기반을 마련했습니다.",
     ],
@@ -743,8 +730,8 @@ export const aboutProjects: AboutProject[] = [
     ],
     outcomes: [
       "여행 탐색, 게임 생성, 게임 목록을 연결한 Web 서비스 흐름 구축",
-      "3D 주사위와 보드 연출로 여행 보드게임 서비스의 핵심 인상 강화",
-      "서비스 UX 리뷰와 공통 UI 정리로 후속 리디자인 기반 마련",
+      "3D 주사위와 보드 연출로 홈 화면 구성",
+      "서비스 UX 리뷰와 공통 UI 정리",
     ],
     links: [
       {
@@ -814,11 +801,10 @@ export const aboutProjects: AboutProject[] = [
       "벚꽃나무를 누르면 꽃잎이 떨어지고, 그 꽃잎을 잡으면 오늘의 소원 메시지를 확인할 수 있는 단일 페이지 인터랙티브 프로젝트입니다.",
     overview:
       "Cherry Wish는 짧고 직관적인 봄 시즌 인터랙션을 통해 사용자가 가볍게 참여하고 다시 시도할 수 있도록 만든 웹 경험입니다.",
-    context:
-      "복잡한 기능보다 한 화면 안에서 바로 이해되는 감성적인 상호작용, 모바일에서도 부드러운 애니메이션, 다시 하기까지 자연스럽게 이어지는 반복 구조에 집중했습니다.",
+    context: "기능을 줄이고, 한 화면에서 누르고 잡고 다시 하는 흐름만 남겼습니다.",
     tags: ["toy", "interaction", "animation", "seasonal"],
     narrative: [
-      "Cherry Wish는 벚꽃나무를 누르고, 흩날리는 꽃잎을 잡아 오늘의 소원 메시지를 확인하는 단일 페이지 인터랙티브 프로젝트입니다. 짧은 시간 안에 사용자가 바로 이해하고 참여할 수 있는 감성적인 봄 시즌 경험으로 설계했습니다.",
+      "Cherry Wish는 벚꽃나무를 누르고, 흩날리는 꽃잎을 잡아 오늘의 소원 메시지를 확인하는 단일 페이지 인터랙티브 프로젝트입니다.",
       "나무를 누르면 꽃잎이 흩날리고, 꽃잎을 잡으면 메시지가 열리는 흐름을 중심에 두었습니다. 모바일에서도 가볍고 부드럽게 느껴지도록 애니메이션과 반복 플레이 구조를 단순하게 유지했습니다.",
       "React, TypeScript, Pixi.js, GSAP을 사용해 캔버스 기반 시각 효과와 UI 상태를 연결했고, Vite 기반으로 빠르게 배포 가능한 작은 인터랙션 프로젝트로 완성했습니다.",
     ],
@@ -833,14 +819,14 @@ export const aboutProjects: AboutProject[] = [
     ],
     cardPoints: [
       "벚꽃나무를 중심으로 한 단일 화면 인터랙션",
-      "꽃잎을 잡으면 소원 메시지가 열리는 감성 UX",
+      "꽃잎을 잡으면 소원 메시지가 열리는 인터랙션",
       "Pixi.js·GSAP 기반의 가벼운 애니메이션 흐름",
     ],
     keyContributions: [
       "벚꽃나무를 누르고 꽃잎을 잡는 짧은 상호작용을 한 화면 안에서 이해할 수 있도록 기획하고 구현했습니다.",
       "꽃잎이 흩날리는 애니메이션과 소원 메시지 표시 흐름을 연결해 사용자의 행동이 즉시 결과로 이어지게 만들었습니다.",
       "모바일에서도 부담 없이 실행되도록 화면 구조와 인터랙션 단계를 단순하게 유지했습니다.",
-      "다시 하기까지 자연스럽게 이어지는 반복 플레이 구조를 만들어 짧은 경험의 완성도를 높였습니다.",
+      "다시 하기 버튼으로 바로 처음부터 할 수 있게 했습니다.",
     ],
     technicalHighlights: [
       "React와 TypeScript 기반으로 UI 상태를 구성하고 Vite로 가볍게 빌드·배포할 수 있는 구조를 사용했습니다.",
@@ -850,7 +836,7 @@ export const aboutProjects: AboutProject[] = [
     techStack: ["React", "TypeScript", "Pixi.js", "GSAP", "Vite", "CSS"],
     outcomes: [
       "누르기, 잡기, 메시지 확인으로 이어지는 짧고 명확한 인터랙션 완성",
-      "모바일에서도 부담 없이 볼 수 있는 계절성 웹 경험 구현",
+      "모바일에서도 가볍게 돌아가는 봄 시즌 페이지",
       "개인 도메인에 배포 가능한 독립 토이 프로젝트로 정리",
     ],
     links: [
