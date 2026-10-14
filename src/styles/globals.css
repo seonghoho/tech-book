@@ -110,10 +110,6 @@ a {
     min-height: 100vh;
   }
 
-  .hero-playground-shell {
-    height: calc(100vh - var(--header-height) - var(--page-shell-padding-y-double));
-  }
-
   .page-stack {
     @apply flex flex-col gap-8 lg:gap-10;
   }
@@ -439,12 +435,6 @@ a {
 @supports (min-height: 100svh) {
   .stable-screen-min {
     min-height: 100svh;
-  }
-}
-
-@supports (height: 100svh) {
-  .hero-playground-shell {
-    height: calc(100svh - var(--header-height) - var(--page-shell-padding-y-double));
   }
 }
 
