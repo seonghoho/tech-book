@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { absoluteUrl, SITE_CONFIG } from "./site";
+import { absoluteUrl, SITE_CONFIG } from "./site.ts";
 
 export const siteDefaults = {
   siteName: SITE_CONFIG.name,
