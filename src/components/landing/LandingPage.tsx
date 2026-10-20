@@ -17,7 +17,7 @@ export default function LandingPage({ posts }: Props) {
     <div className="page-shell">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-12 pb-6 sm:gap-14 lg:gap-16">
         <LandingHero posts={posts} />
-        <LandingLatestPostsSection posts={posts.slice(0, 4)} />
+        <LandingLatestPostsSection posts={posts.slice(3, 8)} />
         <LandingCategoriesSection posts={posts} />
         <LandingProjectsSection projects={selectedProjects} />
       </div>

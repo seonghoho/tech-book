@@ -17,20 +17,23 @@ export default function LandingCategoriesSection({ posts }: Props) {
 
   return (
     <section className="border-t border-[color:var(--color-border)] pt-10">
-      <p className="eyebrow-label">Categories</p>
-      <h2 className="section-title mt-2">주제별로 보기</h2>
-      <div className="mt-5 flex flex-wrap gap-2">
+      <h2 className="text-xl font-bold tracking-[-0.02em] text-[color:var(--color-text-primary)]">
+        주제
+      </h2>
+      <nav aria-label="주제" className="mt-4 flex flex-wrap gap-1.5">
         {categories.map(([slug, count]) => (
           <Link
             key={slug}
             href={`/posts?category=${encodeURIComponent(slug)}`}
-            className="tag-chip gap-1.5 px-3.5 py-2 text-sm transition-colors duration-200 ease-out hover:border-[color:var(--color-border-strong)] hover:text-[color:var(--color-text-primary)]"
+            className="rounded-md border border-[color:var(--color-border)] px-3 py-1.5 text-sm text-[color:var(--color-text-secondary)] transition-colors duration-200 ease-out hover:border-[color:var(--color-border-strong)] hover:text-[color:var(--color-text-primary)]"
           >
             {categoryMap[slug] ?? slug}
-            <span className="text-[color:var(--color-text-muted)]">{count}</span>
+            <span className="ml-1.5 tabular-nums text-[color:var(--color-text-muted)]">
+              {count}
+            </span>
           </Link>
         ))}
-      </div>
+      </nav>
     </section>
   );
 }

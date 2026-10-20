@@ -20,7 +20,9 @@ export default function LandingHero({ posts }: Props) {
   return (
     <section className="grid items-stretch gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12 lg:pt-4">
       <div className="min-w-0">
-        <p className="eyebrow-label">Frontend · SVG · Interaction</p>
+        <p className="text-sm font-medium text-[color:var(--color-text-muted)]">
+          프론트엔드 · SVG · 인터랙션
+        </p>
         <h1 className="mt-3.5 text-[clamp(30px,3.6vw,42px)] font-semibold leading-[1.22] tracking-[-0.045em] text-[color:var(--color-text-primary)] [text-wrap:balance] [word-break:keep-all]">
           에디터를 만들며 부딪힌 문제를{" "}
           <span className="font-semibold text-[color:var(--color-text-muted)]">
@@ -56,7 +58,7 @@ export default function LandingHero({ posts }: Props) {
         ) : null}
 
         <Link href="/posts" className="accent-link mt-4 inline-flex gap-1.5 text-sm font-semibold">
-          전체 글 보기 →
+          전체 글 보기
         </Link>
       </div>
 
