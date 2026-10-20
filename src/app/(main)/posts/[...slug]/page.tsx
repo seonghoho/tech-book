@@ -118,18 +118,18 @@ export default async function PostPage({ params }: PageProps) {
       ? {
           title: "MathCanvas 프로젝트 살펴보기",
           url: "/projects/mathcanvas",
-          categoryLabel: "Related project",
+          categoryLabel: "프로젝트",
         }
       : {
           title: "프로젝트 아카이브 살펴보기",
           url: "/projects",
-          categoryLabel: "Projects",
+          categoryLabel: "프로젝트",
         };
   const relatedLinks = [
     ...relatedCandidates.slice(0, 3).map((p) => ({
       title: p.title,
       url: `/posts/${p.slug}`,
-      categoryLabel: "관련 글",
+      categoryLabel: categoryMap[p.category ?? ""] ?? p.category ?? "",
     })),
     projectLink,
   ];
@@ -181,10 +181,15 @@ export default async function PostPage({ params }: PageProps) {
           relatedLinks={relatedLinks}
         />
       </div>
-      <aside className="sticky-section hidden shrink-0 border-l border-[color:var(--color-border)] pl-4 2xl:block 2xl:w-56 2xl:self-start">
-        <h2 className="px-4 text-xl font-bold">목차</h2>
-        <PostIndex headings={headings} />
-      </aside>
+      {headings.length ? (
+        <nav
+          aria-label="목차"
+          className="sticky-section hidden shrink-0 border-l border-[color:var(--color-border)] pl-4 2xl:block 2xl:w-56 2xl:self-start"
+        >
+          <p className="px-4 pb-2 text-xs font-semibold text-[color:var(--color-text-muted)]">목차</p>
+          <PostIndex headings={headings} />
+        </nav>
+      ) : null}
     </div>
   );
 }

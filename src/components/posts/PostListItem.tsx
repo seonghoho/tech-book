@@ -1,59 +1,59 @@
 import Link from "next/link";
 import { categoryMap } from "@/lib/categoryMap";
-import { formatDate } from "@/lib/formatDate";
+import { formatDotDate } from "@/lib/formatDate";
 import { PostMeta } from "@/types/post";
 
 type PostListItemProps = {
   post: PostMeta;
   getCategoryHref?: (category: string) => string;
-  getTagHref?: (tag: string) => string;
 };
 
-export default function PostListItem({
-  post,
-  getCategoryHref,
-  getTagHref,
-}: PostListItemProps) {
+// 목록 한 줄. 카드 대신 아래 줄로 구분하고, 날짜는 데스크톱에서 제목 오른쪽, 모바일에서 메타 줄로 옮긴다.
+export default function PostListItem({ post, getCategoryHref }: PostListItemProps) {
+  const date = formatDotDate(post.date);
+
   return (
-    <article className="surface-panel p-5 transition duration-200 hover:-translate-y-0.5">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div className="space-y-3">
-          <Link
-            href={`/posts/${post.slug}`}
-            className="text-lg font-semibold text-[color:var(--color-text-primary)] transition hover:text-[color:var(--color-accent)]"
+    <li className="border-b border-[color:var(--color-border)] py-4">
+      <article>
+        <div className="flex items-baseline justify-between gap-4">
+          <h2 className="text-base font-semibold leading-normal tracking-[-0.01em] text-[color:var(--color-text-primary)] [word-break:keep-all]">
+            <Link
+              href={`/posts/${post.slug}`}
+              className="transition-colors duration-200 ease-out hover:text-[color:var(--color-accent)]"
+            >
+              {post.title}
+            </Link>
+          </h2>
+          <time
+            dateTime={post.date}
+            className="hidden shrink-0 text-[13px] tabular-nums text-[color:var(--color-text-muted)] sm:block"
           >
-            {post.title}
-          </Link>
-          {post.description ? (
-            <p className="text-sm leading-7 text-[color:var(--color-text-secondary)]">
-              {post.description}
-            </p>
+            {date}
+          </time>
+        </div>
+        {post.description ? (
+          <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-[color:var(--color-text-secondary)] [word-break:keep-all] sm:line-clamp-1">
+            {post.description}
+          </p>
+        ) : null}
+        <p className="mt-1.5 text-xs text-[color:var(--color-text-muted)]">
+          {post.category ? (
+            <Link
+              href={
+                getCategoryHref ? getCategoryHref(post.category) : `/categories/${post.category}`
+              }
+              className="transition-colors duration-200 ease-out hover:text-[color:var(--color-accent)]"
+            >
+              {categoryMap[post.category] ?? post.category}
+            </Link>
           ) : null}
-          <div className="flex flex-wrap gap-2 text-xs">
-            {post.category ? (
-              <Link
-                href={getCategoryHref ? getCategoryHref(post.category) : `/categories/${post.category}`}
-                className="tag-chip"
-              >
-                {categoryMap[post.category] ?? post.category}
-              </Link>
-            ) : null}
-            {post.tags?.map((tag) => (
-              <Link
-                key={tag}
-                href={getTagHref ? getTagHref(tag) : `/tags/${encodeURIComponent(tag)}`}
-                className="text-[color:var(--color-text-muted)] transition hover:text-[color:var(--color-accent)]"
-              >
-                #{tag}
-              </Link>
-            ))}
-          </div>
-        </div>
-        <div className="text-xs text-[color:var(--color-text-muted)] sm:text-right">
-          <div>{formatDate(post.date)}</div>
-          {post.readingTime ? <div>{post.readingTime}분 읽기</div> : null}
-        </div>
-      </div>
-    </article>
+          <span className="tabular-nums sm:hidden">
+            {post.category ? " · " : ""}
+            {date}
+          </span>
+          {post.readingTime ? <span> · {post.readingTime}분</span> : null}
+        </p>
+      </article>
+    </li>
   );
 }

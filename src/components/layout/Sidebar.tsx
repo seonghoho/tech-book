@@ -73,19 +73,15 @@ export default function Sidebar({ data, categoryMap, variant = "rail", scope = "
     );
   }, [data, pathname, routeName]);
 
-  const introEyebrow = isMobileSubnav ? "Writing" : isGameScope ? "Games" : "Browse";
-  const introCopy = isMobileSubnav
-    ? "카테고리별로 모았습니다."
-    : isGameScope
-      ? "게임 로그를 카테고리별로 모았습니다."
-      : "작성 글과 카테고리를 탐색할 수 있습니다.";
+  const introLabel = isGameScope ? "게임" : "카테고리";
 
   return (
     <div className={isMobileSubnav ? "surface-subtle space-y-3 px-4 py-4" : "space-y-3"}>
-      <div className={isMobileSubnav ? "space-y-1" : "space-y-1 px-2"}>
-        <p className="eyebrow-label">{introEyebrow}</p>
-        <p className="muted-copy">{introCopy}</p>
-      </div>
+      <p
+        className={`text-xs font-semibold text-[color:var(--color-text-muted)] ${isMobileSubnav ? "" : "px-2"}`}
+      >
+        {introLabel}
+      </p>
       {Object.entries(data).map(([category, posts]) => {
         const isOpen = openCategory === category;
         return (

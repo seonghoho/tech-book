@@ -43,7 +43,7 @@ export default function LandingHero({ posts }: Props) {
               >
                 <time
                   dateTime={post.date}
-                  className="pt-0.5 font-mono text-xs text-[color:var(--color-text-muted)]"
+                  className="pt-0.5 text-xs tabular-nums text-[color:var(--color-text-muted)]"
                 >
                   {toMonthDay(post.date)}
                 </time>

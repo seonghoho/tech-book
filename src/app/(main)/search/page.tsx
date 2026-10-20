@@ -59,7 +59,7 @@ export default async function SearchPage({ searchParams }: PageProps) {
               name="query"
               defaultValue={query}
               placeholder="키워드 검색"
-              className="input-shell min-w-0 w-full flex-1"
+              className="input-shell min-w-0 w-full sm:flex-1"
             />
             <button type="submit" className="button-primary w-full shrink-0 sm:w-auto">
               검색
@@ -67,11 +67,11 @@ export default async function SearchPage({ searchParams }: PageProps) {
           </form>
         </div>
 
-        <div className="grid gap-4">
+        <ol className="border-t border-[color:var(--color-border)]">
           {filtered.map((post) => (
             <PostListItem key={post.slug} post={post} />
           ))}
-        </div>
+        </ol>
       </div>
     </div>
   );

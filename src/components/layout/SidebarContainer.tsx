@@ -24,7 +24,9 @@ export default function SidebarContainer({ postData, gameData, variant = "rail" 
   const isGamePath = pathname.startsWith("/games") || pathname.startsWith("/play");
 
   if (variant === "mobile-subnav") {
-    if (!isWritingPath(pathname)) {
+    // /posts 목록은 페이지 안에 카테고리 탭이 있고, 글 상세는 breadcrumb로 카테고리에 갈 수 있어
+    // 본문 위에 카테고리 패널을 겹쳐 보여 주지 않는다.
+    if (!isWritingPath(pathname) || pathname === "/posts" || pathname.startsWith("/posts/")) {
       return null;
     }
 

@@ -99,12 +99,12 @@ export default function GiscusComments() {
   return (
     <section
       ref={sectionRef}
-      className="surface-panel mt-8 p-5 sm:mt-10 sm:p-6"
+      className="mt-10 pb-8"
       aria-label="댓글"
     >
-      <div className="mb-4 space-y-1">
-        <h2 className="text-lg font-semibold text-[color:var(--color-text-primary)]">댓글</h2>
-        <p className="text-sm leading-6 text-[color:var(--color-text-muted)]">
+      <div className="mb-4">
+        <h2 className="text-sm font-semibold text-[color:var(--color-text-primary)]">댓글</h2>
+        <p className="mt-1 text-[13px] text-[color:var(--color-text-muted)]">
           GitHub 계정으로 의견을 남길 수 있습니다.
         </p>
       </div>

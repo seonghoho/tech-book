@@ -50,7 +50,7 @@ export default function PostIndex({ headings }: { headings: Heading[] }) {
 
   return (
     <div>
-      <ul className="space-y-1 px-4 text-sm">
+      <ul className="space-y-0.5 px-4">
         {headings.map((h, idx) => (
           <li
             key={`${h.id}-${h.depth}-${idx}`}
@@ -58,10 +58,10 @@ export default function PostIndex({ headings }: { headings: Heading[] }) {
           >
             <a
               href={`#${h.id}`}
-              className={`block w-full truncate text-[color:var(--color-text-secondary)] transition hover:text-[color:var(--color-accent)] hover:underline focus-visible:text-[color:var(--color-accent)] focus-visible:outline-none dark:text-[color:var(--color-text-secondary)] dark:hover:text-[color:var(--color-accent)] dark:focus-visible:text-[color:var(--color-accent)] ${
+              className={`block w-full truncate py-0.5 text-[13px] transition-colors duration-200 ease-out hover:text-[color:var(--color-text-primary)] focus-visible:text-[color:var(--color-accent)] focus-visible:outline-none ${
                 activeId === h.id
-                  ? "font-bold text-[color:var(--color-accent)] dark:text-[color:var(--color-accent)]"
-                  : ""
+                  ? "font-semibold text-[color:var(--color-accent)]"
+                  : "text-[color:var(--color-text-muted)]"
               }`}
             >
               {h.text}

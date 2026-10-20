@@ -1,6 +1,5 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
-import ProjectGlyph from "@/components/landing/ProjectGlyph";
 import { formatProjectMeta } from "@/components/landing/projectCard";
 import type { AboutProject } from "@/lib/aboutData";
 
@@ -21,11 +20,8 @@ export default function LandingProjectCard({ project }: Props) {
       aria-labelledby={titleId}
       className="surface-panel group flex min-w-0 flex-col overflow-hidden transition-[transform,border-color] duration-200 ease-out hover:-translate-y-1 hover:border-[color:var(--color-border-strong)] focus-visible:-translate-y-1 focus-visible:border-[color:var(--color-border-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)]"
     >
-      <div className="project-glyph-grid flex h-[72px] items-center justify-center border-b border-[color:var(--color-border)]">
-        <ProjectGlyph slug={project.slug} />
-      </div>
       <div className="flex flex-1 flex-col p-5">
-        <p className="font-mono text-xs text-[color:var(--color-text-muted)]">
+        <p className="text-xs tabular-nums text-[color:var(--color-text-muted)]">
           {formatProjectMeta(project.period, project.team)}
         </p>
         <h3
@@ -49,7 +45,7 @@ export default function LandingProjectCard({ project }: Props) {
           ))}
         </ul>
         {project.tags.length ? (
-          <p className="mt-auto pt-4 font-mono text-xs text-[color:var(--color-text-muted)]">
+          <p className="mt-auto pt-4 text-xs text-[color:var(--color-text-muted)]">
             {project.tags.slice(0, 3).join(" · ")}
           </p>
         ) : null}

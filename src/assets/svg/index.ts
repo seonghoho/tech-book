@@ -11,3 +11,4 @@ export { Logo as LogoSvgIcon } from "@/assets/svg/Logo";
 export { CursorArrow as CursorArrowIcon } from "@/assets/svg/CursorArrow";
 export { Undo as UndoIcon } from "@/assets/svg/Undo";
 export { Redo as RedoIcon } from "@/assets/svg/Redo";
+export { Search as SearchIcon } from "@/assets/svg/Search";

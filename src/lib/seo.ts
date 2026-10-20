@@ -182,3 +182,34 @@ export function buildProjectJsonLd({
     },
   };
 }
+
+// 글 목록 페이지용. 현재 페이지에 보이는 글만 ItemList로 담는다.
+export function buildCollectionPageJsonLd({
+  name,
+  description,
+  path,
+  items,
+}: {
+  name: string;
+  description: string;
+  path: string;
+  items: { name: string; path: string }[];
+}) {
+  const url = absoluteUrl(path);
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name,
+    description,
+    url,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: items.map((entry, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: entry.name,
+        url: absoluteUrl(entry.path),
+      })),
+    },
+  };
+}

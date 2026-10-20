@@ -401,7 +401,7 @@ export default function EditorHero({ hintPosts }: Props) {
             <RedoIcon />
           </ToolButton>
         </div>
-        <p className="min-w-0 truncate font-mono text-xs text-[color:var(--color-text-muted)]">
+        <p className="min-w-0 truncate text-xs tabular-nums text-[color:var(--color-text-muted)]">
           {selected ? (
             <>
               {selected.id} · x <b className={strong}>{Math.round(selected.x)}</b> y{" "}
