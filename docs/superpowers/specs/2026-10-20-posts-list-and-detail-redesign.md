@@ -28,9 +28,11 @@
 
 ### SEO
 
-- `?page=N`(필터 없음)은 색인 허용, canonical은 자기 자신, 제목에 페이지 번호.
-- 검색어·카테고리·태그 필터는 지금처럼 noindex, follow.
-- 목록 페이지에 `CollectionPage` + `ItemList` JSON-LD.
+- 목록은 얇은 페이지라 `/posts` 첫 페이지만 색인한다(docs/seo-publishing.md의 Categories/Tags 원칙과 같은 이유).
+- `?page=N`과 검색어·카테고리·태그 필터는 noindex, follow. canonical은 `/posts`.
+  - 처음에는 `?page=N` 색인을 열었다가, 목록 페이지가 검색 평가의 중심이 되지 않게 한다는 기존 방침과 맞지 않아 되돌렸다.
+- `/posts` 첫 페이지에만 `CollectionPage` + `ItemList` JSON-LD.
+- 글 SEO는 목록이 아니라 글 상세에서 챙긴다: `<article>`/`<h2>`/`<time datetime>` 마크업, 글 상세의 "함께 읽을 글" 내부 링크.
 
 ### 글 상세
 

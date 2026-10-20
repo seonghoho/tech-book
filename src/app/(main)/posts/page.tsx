@@ -24,25 +24,22 @@ interface PageProps {
 
 const POSTS_DESCRIPTION = "프론트엔드, SVG 에디터, Three.js, BFF, AI 워크플로우 글 목록입니다.";
 
-// 페이지 번호만 붙은 URL은 그 자체로 색인하고, 검색어·카테고리·태그 필터 결과만 noindex로 둔다.
-function parseArchivePage(page?: string) {
-  const parsed = Number(page);
-  return Number.isInteger(parsed) && parsed > 1 ? parsed : 1;
-}
-
+// 얇은 목록 페이지가 검색 평가의 중심이 되지 않도록 /posts 첫 페이지만 색인한다(docs/seo-publishing.md).
+// 2페이지 이후와 검색어·카테고리·태그 필터 결과는 noindex, follow로 두어 글 링크만 따라가게 한다.
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
-  const hasFilters = Boolean(
-    resolvedSearchParams?.query || resolvedSearchParams?.tag || resolvedSearchParams?.category,
+  const hasSearchParams = Boolean(
+    resolvedSearchParams?.query ||
+    resolvedSearchParams?.tag ||
+    resolvedSearchParams?.category ||
+    (resolvedSearchParams?.page && resolvedSearchParams.page !== "1"),
   );
-  const page = parseArchivePage(resolvedSearchParams?.page);
-  const isPaginated = !hasFilters && page > 1;
 
   return buildPageMetadata({
-    title: isPaginated ? `글 목록 (${page}페이지)` : "글 목록",
+    title: "글 목록",
     description: POSTS_DESCRIPTION,
-    path: isPaginated ? `/posts?page=${page}` : "/posts",
-    robots: hasFilters ? { index: false, follow: true } : undefined,
+    path: "/posts",
+    robots: hasSearchParams ? { index: false, follow: true } : undefined,
   });
 }
 
@@ -88,13 +85,13 @@ export default async function PostsPage({ searchParams }: PageProps) {
   const collectionJsonLd = buildCollectionPageJsonLd({
     name: "글 목록",
     description: POSTS_DESCRIPTION,
-    path: safePage > 1 && !hasActiveFilters ? `/posts?page=${safePage}` : "/posts",
+    path: "/posts",
     items: pagePosts.map((post) => ({ name: post.title, path: `/posts/${post.slug}` })),
   });
 
   return (
     <div id="posts-top" className="page-shell scroll-m-24">
-      {hasActiveFilters ? null : (
+      {hasActiveFilters || safePage > 1 ? null : (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
