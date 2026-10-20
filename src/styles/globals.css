@@ -172,9 +172,10 @@ a {
     font-weight: 650;
   }
 
+  /* 작은 보조 라벨. 대문자·넓은 자간은 쓰지 않는다. */
   .eyebrow-label {
-    @apply text-xs font-semibold uppercase tracking-[0.24em];
-    color: var(--color-accent);
+    @apply text-[13px] font-medium;
+    color: var(--color-text-muted);
   }
 
   .section-title {

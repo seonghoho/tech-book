@@ -15,24 +15,15 @@ import { formatPeriod } from "@/lib/formatPeriod";
 // const featuredProject = aboutProjects.find((project) => project.featured) ?? aboutProjects[0];
 const projectArchivePreview = aboutProjects.slice(0, 4);
 const overviewFacts = [
-  { label: "Current", value: aboutProfile.companyLabel },
-  { label: "Stack", value: aboutProfile.stackLabel },
-  { label: "Core", value: "인터랙션 · 시각화 · 서비스 UI" },
+  { label: "현재", value: aboutProfile.companyLabel },
+  { label: "스택", value: aboutProfile.stackLabel },
+  { label: "주력", value: "인터랙션 · 시각화 · 서비스 UI" },
 ];
 const overviewStrengths = strengthHighlights.slice(0, 3);
 
-function SectionHeader({
-  eyebrow,
-  title,
-  description,
-}: {
-  eyebrow: string;
-  title: string;
-  description: string;
-}) {
+function SectionHeader({ title, description }: { title: string; description: string }) {
   return (
     <div className="space-y-3">
-      <p className="eyebrow-label">{eyebrow}</p>
       <h2 className="text-2xl font-semibold text-[color:var(--color-text-primary)] sm:text-3xl">
         {title}
       </h2>
@@ -79,8 +70,8 @@ export default function AboutPage() {
                       </div>
 
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/70">
-                          Current
+                        <p className="text-xs font-semibold text-white/70">
+                          현재
                         </p>
                         <p className="mt-2 text-lg font-semibold text-white">
                           {aboutProfile.companyLabel}
@@ -106,7 +97,6 @@ export default function AboutPage() {
                         />
                       </div>
                       <div className="my-auto flex flex-col space-y-3">
-                        <p className="eyebrow-label">Profile</p>
                         <div>
                           <h3 className="text-2xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)] sm:text-3xl">
                             {aboutProfile.name} / {aboutProfile.title}
@@ -124,7 +114,7 @@ export default function AboutPage() {
                           key={fact.label}
                           className="flex items-baseline justify-between gap-4 py-3"
                         >
-                          <dt className="font-mono text-xs uppercase tracking-[0.16em] text-[color:var(--color-text-muted)]">
+                          <dt className="text-[13px] text-[color:var(--color-text-muted)]">
                             {fact.label}
                           </dt>
                           <dd className="text-right text-sm font-medium leading-6 text-[color:var(--color-text-primary)] [word-break:keep-all]">
@@ -137,7 +127,7 @@ export default function AboutPage() {
 
                   <div className="mt-6">
                     <p className="text-sm font-semibold text-[color:var(--color-text-primary)]">
-                      What I Focus On
+                      주로 하는 일
                     </p>
                     <div className="mt-4 grid gap-4">
                       {overviewStrengths.map((item) => (
@@ -162,12 +152,11 @@ export default function AboutPage() {
             <div className="mx-auto grid w-full max-w-[1040px] gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(260px,0.9fr)]">
               <div className="space-y-5">
                 <SectionHeader
-                  eyebrow="Overview"
                   title={aboutProfile.overviewTitle}
                   description={aboutProfile.overviewDescription}
                 />
                 <div className="about-card p-5 sm:p-6">
-                  <p className="eyebrow-label">Context</p>
+                  <p className="eyebrow-label">소개</p>
                   <p className="mt-4 text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
                     {aboutProfile.summary}
                   </p>
@@ -175,11 +164,11 @@ export default function AboutPage() {
               </div>
 
               <aside className="about-card p-5 sm:p-6">
-                <p className="eyebrow-label">Focus</p>
+                <p className="eyebrow-label">대표 성과</p>
                 <p className="mt-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
                   {aboutProfile.focus}
                 </p>
-                {/* 강점 항목은 위 프로필 카드의 What I Focus On에 설명과 함께 있어 여기서는 다시 나열하지 않는다. */}
+                {/* 강점 항목은 위 프로필 카드의 "주로 하는 일"에 설명과 함께 있어 여기서는 다시 나열하지 않는다. */}
               </aside>
             </div>
 
@@ -201,11 +190,7 @@ export default function AboutPage() {
           </section>
 
           <section id="experience" className="scroll-mt-28 space-y-8">
-            <SectionHeader
-              eyebrow="Experience"
-              title="경력"
-              description="회사와 교육 과정에서 맡은 일입니다."
-            />
+            <SectionHeader title="경력" description="회사와 교육 과정에서 맡은 일입니다." />
 
             <div className="about-card divide-y divide-[color:var(--color-border)] overflow-hidden">
               {experienceTimeline.map((item) => (
@@ -215,7 +200,7 @@ export default function AboutPage() {
                 >
                   <div className="grid gap-4 lg:grid-cols-[180px_minmax(0,1fr)]">
                     <div className="space-y-1 text-sm text-[color:var(--color-text-muted)]">
-                      <p className="font-mono text-xs text-[color:var(--color-text-muted)]">
+                      <p className="text-xs tabular-nums text-[color:var(--color-text-muted)]">
                         {formatPeriod(item.period)}
                       </p>
                     </div>
@@ -257,17 +242,12 @@ export default function AboutPage() {
           </section>
 
           <section id="projects" className="scroll-mt-28 space-y-8">
-            <SectionHeader
-              eyebrow="Projects"
-              title="프로젝트"
-              description="회사, 팀, 개인 프로젝트입니다."
-            />
+            <SectionHeader title="프로젝트" description="회사, 팀, 개인 프로젝트입니다." />
 
             <article className="surface-panel-strong p-5 sm:p-6 lg:p-7">
               <div className="grid gap-6">
                 {/* <div className="space-y-6">
                   <div className="space-y-3">
-                    <p className="eyebrow-label">Project Archive</p>
                     <h3 className="text-2xl font-semibold text-[color:var(--color-text-primary)] sm:text-3xl">
                       프로젝트 목록과 상세 페이지
                     </h3>
@@ -281,24 +261,24 @@ export default function AboutPage() {
 
                   <dl className="grid gap-3 sm:grid-cols-3">
                     <div className="surface-subtle px-4 py-4">
-                      <dt className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                        Projects
+                      <dt className="text-[11px] font-semibold text-[color:var(--color-text-muted)]">
+                        프로젝트
                       </dt>
                       <dd className="mt-2 text-sm font-medium text-[color:var(--color-text-primary)]">
                         {aboutProjects.length}개
                       </dd>
                     </div>
                     <div className="surface-subtle px-4 py-4">
-                      <dt className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                        Highlight
+                      <dt className="text-[11px] font-semibold text-[color:var(--color-text-muted)]">
+                        대표
                       </dt>
                       <dd className="mt-2 text-sm font-medium text-[color:var(--color-text-primary)]">
                         {featuredProject?.title ?? "대표 프로젝트"}
                       </dd>
                     </div>
                     <div className="surface-subtle px-4 py-4">
-                      <dt className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                        Structure
+                      <dt className="text-[11px] font-semibold text-[color:var(--color-text-muted)]">
+                        구성
                       </dt>
                       <dd className="mt-2 text-sm font-medium text-[color:var(--color-text-primary)]">
                         Archive + Detail
@@ -330,7 +310,7 @@ export default function AboutPage() {
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <p className="font-mono text-xs text-[color:var(--color-text-muted)]">
+                          <p className="text-xs tabular-nums text-[color:var(--color-text-muted)]">
                             {formatPeriod(project.period)}
                           </p>
                           <h4 className="mt-2 text-lg font-semibold text-[color:var(--color-text-primary)] transition-colors duration-200 ease-out group-hover:text-[color:var(--color-accent)]">
@@ -353,7 +333,6 @@ export default function AboutPage() {
 
           <section id="strengths" className="scroll-mt-28 space-y-8">
             <SectionHeader
-              eyebrow="Strengths"
               title="강점"
               description="구현이 어려웠던 화면에서 어떻게 처리했는지 적었습니다."
             />
@@ -386,7 +365,6 @@ export default function AboutPage() {
 
           <section id="stack" className="scroll-mt-28 space-y-8">
             <SectionHeader
-              eyebrow="Stack"
               title="기술 스택"
               description="서비스 UI, 그래픽 인터랙션, 상태 구조, 협업 도구로 나눴습니다."
             />
@@ -421,7 +399,6 @@ export default function AboutPage() {
 
           <section id="collaboration" className="scroll-mt-28 space-y-8">
             <SectionHeader
-              eyebrow="Collaboration"
               title="협업"
               description="외주사, 디자이너와 주간 회의로 요구사항과 우선순위를 정리했습니다."
             />
@@ -439,7 +416,6 @@ export default function AboutPage() {
               ))}
 
               {/* <aside className="rounded-[28px] border border-[color:var(--color-border)] px-5 py-5 xl:col-span-2">
-                <p className="eyebrow-label">Contact</p>
                 <h3 className="mt-3 text-xl font-semibold text-[color:var(--color-text-primary)]">
                   연락처
                 </h3>

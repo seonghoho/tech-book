@@ -6,7 +6,6 @@ export default function ProjectsPage() {
     <div className="page-shell">
       <section className="space-y-10">
         <div className="max-w-3xl space-y-4">
-          <p className="eyebrow-label">Selected Work</p>
           <h1 className="text-4xl font-semibold tracking-[-0.05em] text-[color:var(--color-text-primary)] sm:text-5xl">
             Projects
           </h1>

@@ -4,6 +4,7 @@ import type { AboutProject, ProjectPreview } from "@/lib/aboutData";
 import { formatPeriod } from "@/lib/formatPeriod";
 import { splitHighlightText } from "@/lib/projectHighlights";
 import ProjectPoster from "@/components/projects/ProjectPoster";
+import { formatProjectStatus } from "@/lib/projectStatus";
 
 type ProjectDetailViewProps = {
   project: AboutProject;
@@ -14,9 +15,7 @@ type ProjectDetailViewProps = {
 function DetailSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="about-card p-5 sm:p-6">
-      <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-[color:var(--color-text-muted)]">
-        {title}
-      </h2>
+      <h2 className="text-sm font-semibold text-[color:var(--color-text-primary)]">{title}</h2>
       <div className="mt-5">{children}</div>
     </section>
   );
@@ -62,9 +61,7 @@ function GalleryItem({ preview }: { preview: ProjectPreview }) {
     <figure className="space-y-3">
       <div className="flex aspect-[4/3] items-center justify-center rounded-[24px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] p-6 text-center">
         <div className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--color-text-muted)]">
-            {preview.label}
-          </p>
+          <p className="text-xs text-[color:var(--color-text-muted)]">{preview.label}</p>
           <p className="text-xl font-semibold text-[color:var(--color-text-primary)]">
             {preview.title}
           </p>
@@ -115,7 +112,7 @@ export default function ProjectDetailView({
     <div className="page-shell">
       <div className="mx-auto max-w-[1120px]">
         <Link href="/projects" className="button-secondary">
-          ← Projects로 돌아가기
+          ← 프로젝트 목록
         </Link>
 
         <section className="surface-panel-strong mt-8 grid gap-8 p-5 sm:p-6 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-12 lg:p-7">
@@ -137,10 +134,10 @@ export default function ProjectDetailView({
               {project.title}
             </h1>
 
-            <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm leading-7 text-[color:var(--color-text-muted)]">
+            <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm tabular-nums leading-7 text-[color:var(--color-text-muted)]">
               <span>{formatPeriod(project.period)}</span>
               <span aria-hidden>·</span>
-              <span>{project.status}</span>
+              <span>{formatProjectStatus(project.status)}</span>
               {project.tags.map((tag) => (
                 <span key={tag} className="text-[color:var(--color-accent)]">
                   #{tag}
@@ -173,36 +170,36 @@ export default function ProjectDetailView({
 
         <section className="mt-14 grid gap-6 xl:grid-cols-[280px_minmax(0,1fr)] xl:items-start">
           <aside className="space-y-6">
-            <DetailSection title="Project facts">
+            <DetailSection title="개요">
               <dl className="space-y-4 text-sm leading-7">
                 <div className="flex items-start justify-between gap-4 border-b border-[color:var(--color-border)] pb-4">
-                  <dt className="text-[color:var(--color-text-muted)]">Role</dt>
-                  <dd className="text-right font-mono text-[13px] text-[color:var(--color-text-primary)]">
+                  <dt className="text-[color:var(--color-text-muted)]">역할</dt>
+                  <dd className="text-right text-[13px] tabular-nums text-[color:var(--color-text-primary)]">
                     {project.role}
                   </dd>
                 </div>
                 <div className="flex items-start justify-between gap-4 border-b border-[color:var(--color-border)] pb-4">
-                  <dt className="text-[color:var(--color-text-muted)]">Team</dt>
-                  <dd className="text-right font-mono text-[13px] text-[color:var(--color-text-primary)]">
+                  <dt className="text-[color:var(--color-text-muted)]">팀</dt>
+                  <dd className="text-right text-[13px] tabular-nums text-[color:var(--color-text-primary)]">
                     {project.team}
                   </dd>
                 </div>
                 <div className="flex items-start justify-between gap-4 border-b border-[color:var(--color-border)] pb-4">
-                  <dt className="text-[color:var(--color-text-muted)]">Duration</dt>
-                  <dd className="text-right font-mono text-[13px] text-[color:var(--color-text-primary)]">
+                  <dt className="text-[color:var(--color-text-muted)]">기간</dt>
+                  <dd className="text-right text-[13px] tabular-nums text-[color:var(--color-text-primary)]">
                     {project.duration ?? project.period}
                   </dd>
                 </div>
                 <div className="flex items-start justify-between gap-4">
-                  <dt className="text-[color:var(--color-text-muted)]">Status</dt>
-                  <dd className="text-right font-mono text-[13px] text-[color:var(--color-text-primary)]">
-                    {project.status}
+                  <dt className="text-[color:var(--color-text-muted)]">상태</dt>
+                  <dd className="text-right text-[13px] tabular-nums text-[color:var(--color-text-primary)]">
+                    {formatProjectStatus(project.status)}
                   </dd>
                 </div>
               </dl>
             </DetailSection>
 
-            <DetailSection title="Stack">
+            <DetailSection title="기술 스택">
               <div className="flex flex-wrap gap-2 text-sm">
                 {project.techStack.map((stack) => (
                   <span key={stack} className="tag-chip">
@@ -212,7 +209,7 @@ export default function ProjectDetailView({
               </div>
             </DetailSection>
 
-            <DetailSection title="Outcomes">
+            <DetailSection title="결과">
               <ul className="space-y-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
                 {project.outcomes.map((outcome) => (
                   <li key={outcome} className="flex gap-3">
@@ -226,7 +223,7 @@ export default function ProjectDetailView({
             </DetailSection>
 
             {otherLinks.length ? (
-              <DetailSection title="More links">
+              <DetailSection title="링크">
                 <div className="space-y-4 text-sm leading-7">
                   {otherLinks.map((link) => (
                     <a
@@ -244,7 +241,7 @@ export default function ProjectDetailView({
             ) : null}
           </aside>
           <div className="space-y-6">
-            <DetailSection title="What I worked on">
+            <DetailSection title="맡은 일">
               <ul className="space-y-4 text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
                 {project.keyContributions.map((contribution) => (
                   <li key={contribution} className="flex gap-3">
@@ -258,7 +255,7 @@ export default function ProjectDetailView({
             </DetailSection>
 
             {project.technicalHighlights.length ? (
-              <DetailSection title="Technical highlights">
+              <DetailSection title="기술적으로 다룬 것">
                 <ul className="space-y-4 text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
                   {project.technicalHighlights.map((highlight) => (
                     <li key={highlight} className="flex gap-3">
@@ -272,7 +269,7 @@ export default function ProjectDetailView({
               </DetailSection>
             ) : null}
 
-            <DetailSection title="Screens">
+            <DetailSection title="화면">
               <div className="grid gap-6 md:grid-cols-2">
                 {project.gallery.map((item, index) => (
                   <GalleryItem key={`${project.slug}-gallery-${index}`} preview={item} />

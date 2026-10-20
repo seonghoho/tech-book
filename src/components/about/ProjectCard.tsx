@@ -37,7 +37,7 @@ export default function ProjectCard({
           <div className="eyebrow-label flex flex-wrap items-center gap-2">
             <span>{project.eyebrow}</span>
             {project.achievement ? (
-              <span className="rounded-full bg-[color:var(--color-accent-soft)] px-3 py-1 text-[11px] tracking-[0.14em] text-[color:var(--color-accent)]">
+              <span className="rounded-full bg-[color:var(--color-accent-soft)] px-2.5 py-0.5 text-xs text-[color:var(--color-accent)]">
                 {project.achievement}
               </span>
             ) : null}
@@ -57,7 +57,7 @@ export default function ProjectCard({
 
           <dl className="mt-5 grid gap-3 sm:grid-cols-3">
             <div className="surface-subtle px-4 py-3">
-              <dt className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
+              <dt className="text-[11px] font-semibold text-[color:var(--color-text-muted)]">
                 기간
               </dt>
               <dd className="mt-2 text-sm font-medium text-[color:var(--color-text-primary)]">
@@ -65,7 +65,7 @@ export default function ProjectCard({
               </dd>
             </div>
             <div className="surface-subtle px-4 py-3">
-              <dt className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
+              <dt className="text-[11px] font-semibold text-[color:var(--color-text-muted)]">
                 팀 구성
               </dt>
               <dd className="mt-2 text-sm font-medium text-[color:var(--color-text-primary)]">
@@ -73,7 +73,7 @@ export default function ProjectCard({
               </dd>
             </div>
             <div className="surface-subtle px-4 py-3">
-              <dt className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
+              <dt className="text-[11px] font-semibold text-[color:var(--color-text-muted)]">
                 역할
               </dt>
               <dd className="mt-2 text-sm font-medium text-[color:var(--color-text-primary)]">

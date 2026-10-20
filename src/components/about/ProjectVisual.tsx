@@ -443,7 +443,7 @@ export default function ProjectVisual({
 
       <div className="absolute inset-x-5 top-5 flex items-center justify-between">
         <span
-          className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] ${tone.chip}`}
+          className={`rounded-full border px-3 py-1 text-xs font-semibold ${tone.chip}`}
         >
           {preview.label}
         </span>

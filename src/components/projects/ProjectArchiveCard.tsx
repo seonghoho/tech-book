@@ -4,6 +4,7 @@ import type { AboutProject } from "@/lib/aboutData";
 import { hexToRgba } from "@/lib/color";
 import { formatPeriod } from "@/lib/formatPeriod";
 import ProjectPoster from "./ProjectPoster";
+import { formatProjectStatus } from "@/lib/projectStatus";
 
 function getProjectYear(period: string) {
   return period.slice(0, 4);
@@ -115,20 +116,20 @@ export default function ProjectArchiveCard({
               className="inline-flex rounded-full border px-3 py-1 text-sm font-medium"
               style={statusBadgeStyle}
             >
-              {project.status}
+              {formatProjectStatus(project.status)}
             </span>
           </div>
         ) : (
           <>
             <p
               className={joinClasses(
-                "flex flex-wrap gap-x-2 font-mono text-xs text-[color:var(--color-text-muted)]",
+                "flex flex-wrap gap-x-2 text-xs tabular-nums text-[color:var(--color-text-muted)]",
                 metaClassName,
               )}
             >
               {/* 좁은 열(6열 그리드)에서는 상태만 다음 줄로 넘어가므로, 구분점 없이 항목 단위로 줄바꿈한다. */}
               <span>{formatPeriod(project.period)}</span>
-              <span>{project.status}</span>
+              <span>{formatProjectStatus(project.status)}</span>
             </p>
             <p className="line-clamp-3 text-sm leading-6 text-[color:var(--color-text-secondary)] [word-break:keep-all]">
               {project.tagline}
