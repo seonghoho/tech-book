@@ -3,5 +3,6 @@ export const categoryMap: Record<string, string> = {
   "svg-editor": "SVG Editor Devlog",
   "voca-study": "Voca Study Devlog",
   "ai-workflow": "AI Workflow",
+  "web-performance": "Web Performance",
   "frontend-bff": "Frontend BFF",
 };
