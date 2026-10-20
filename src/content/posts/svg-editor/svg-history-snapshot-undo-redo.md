@@ -1,7 +1,7 @@
 ---
 title: "SVG 에디터 undo/redo 스냅샷 설계"
 date: "2026-05-12"
-updated: "2026-05-27"
+updated: "2026-10-20"
 description: "SVG 편집기 undo/redo에서 객체 배열 대신 직렬화 가능한 문서 스냅샷만 저장하도록 바꾼 과정입니다."
 image: "/images/posts/svg-editor/svg-history-snapshot-undo-redo/cover-og.png"
 tags: ["SVG", "State", "History", "Architecture"]
@@ -188,16 +188,73 @@ undo/redo에서 선택이 같이 되돌아가지 않으려면 선택 상태를 �
 포인터 입력 단계에서 좌표계가 섞이면, 같은 작업을 되돌려도 화면 위치가 미세하게 달라질 수 있습니다.
 그래서 [SVG 좌표 변환에서 포인터 위치가 어긋나는 문제](/posts/svg-editor/svg-pointer-coordinate-transform)에서 정리한 좌표 변환 기준도 히스토리 설계의 기반이 됩니다.
 
+## 3D 교구의 카메라 상태도 값만 저장하기
+
+같은 원칙을 Three.js 3D 교구의 카메라에도 적용했습니다. 3D 교구는 카메라 위치·각도·확대 상태를 저장해 두었다가 복원하거나 undo/redo에 사용했습니다.
+
+처음에는 3D 환경을 저장한 상위 객체의 카메라 객체(camera)를 `Lodash`의 `cloneDeep`으로 복사해서 저장했는데, 컴포넌트 언마운트 후 재생성하는 상황에서 상태가 사라져 카메라 위치가 제대로 복원되지 않는 문제가 발생했습니다.
+
+원인은 SVG 히스토리에서 클래스 인스턴스를 저장하지 않기로 한 이유와 같았습니다.
+
+- Three.js의 Camera 객체는 단순한 데이터 덩어리가 아닙니다. 내부적으로 WebGL 렌더링 상태, 컨트롤, 디스플레이와 연결된 다양한 참조와 메서드를 가집니다.
+- 일반적인 깊은 복사(예: Lodash의 \_.cloneDeep), 혹은 JSON 직렬화로 camera 객체 전체를 복제하면 prototype, getter/setter, 내부 참조 등 중요한 정보가 유실됩니다.
+- 커스텀 HTMLElement, React/Vue 컴포넌트 등에서 camera를 인스턴스 내부 프로퍼티로 저장할 경우, 컴포넌트 언마운트, 리렌더링, 히스토리 복원 등에서 camera 상태가 보존되지 않습니다.
+
+상위 plain object(데이터 모델)에 camera의 상태값만 저장하고, 복원할 때는 이 값을 camera 객체에 직접 할당했습니다.
+
+![Three.js 카메라 객체 전체를 복사하지 않고 position quaternion zoom 같은 순수 cameraState만 저장한 뒤 camera에 수동 복원하는 구조](/images/posts/svg-editor/three-js-camera-state/body-01.png)
+
+저장할 때는 이렇게 했습니다.
+
+```jsx
+// 카메라 상태를 plain object로 저장
+item.cameraState = {
+  position: camera.position.toArray(),
+  quaternion: camera.quaternion.toArray(),
+  zoom: camera.zoom,
+  left: camera.left,
+  right: camera.right,
+  top: camera.top,
+  bottom: camera.bottom,
+  near: camera.near,
+  far: camera.far,
+};
+```
+
+복원할 때는 저장한 값을 camera에 다시 넣었습니다.
+
+```jsx
+// 복원 시 cameraState에서 값을 수동 할당
+if (item.cameraState) {
+  camera.position.fromArray(item.cameraState.position);
+  camera.quaternion.fromArray(item.cameraState.quaternion);
+  camera.zoom = item.cameraState.zoom;
+  camera.left = item.cameraState.left;
+  camera.right = item.cameraState.right;
+  camera.top = item.cameraState.top;
+  camera.bottom = item.cameraState.bottom;
+  camera.near = item.cameraState.near;
+  camera.far = item.cameraState.far;
+  camera.updateProjectionMatrix();
+}
+```
+
+camera 객체는 WebGL 렌더링 상태나 컨트롤과 연결된 내부 참조를 갖고 있어서, cloneDeep으로 복사해 두어도 컴포넌트가 다시 만들어진 뒤에는 시점이 복원되지 않았습니다.
+camera 객체를 통째로 저장하면 내부 참조까지 함께 복사되므로 값만 따로 저장했습니다.
+
+cameraState에는 position, quaternion, zoom, left, right, top, bottom, near, far 값만 들어 있습니다.
+숫자 값뿐이라 JSON으로 저장하거나 Pinia 히스토리에 그대로 넣을 수 있습니다.
+
+복원할 때는 저장한 값을 camera에 다시 넣고 `updateProjectionMatrix()`를 호출합니다.
+이렇게 바꾼 뒤에는 컴포넌트가 다시 만들어져도 저장한 값으로 카메라 시점을 복원할 수 있었습니다.
+
 ## 정리
 
 이번 구현에서 얻은 기준은 다음과 같습니다.
 
 - 히스토리에는 문서 상태만 저장한다.
 - DOM 참조, 선택 상태, 드래그 상태는 저장하지 않는다.
-- 클래스 인스턴스 대신 직렬화 가능한 스냅샷을 저장한다.
+- 클래스 인스턴스 대신 직렬화 가능한 스냅샷을 저장한다. 3D 카메라도 객체 대신 값만 저장한다.
 - 드래그 중이 아니라 작업 완료 시점에 커밋한다.
 - 새 작업이 들어오면 redo stack을 비운다.
 - 복원 후 UI 임시 상태는 현재 문서 기준으로 초기화한다.
-
-이 방식은 [Three.js 카메라 상태 저장](/posts/svg-editor/three-js-camera-state)에서 정리한 원칙과도 비슷합니다.
-카메라도 런타임 객체 대신 복원에 필요한 값만 plain object로 저장했습니다.

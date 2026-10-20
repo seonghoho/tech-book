@@ -10,6 +10,9 @@ const mergedPosts = {
   "svg-editor/svg-selection-render-state": "svg-editor/svg-editor-state-boundary",
   "svg-editor/math-tool-store-selection-flow": "svg-editor/math-tool-interaction-rules",
   "svg-editor/pointer-keyboard-event-flow": "svg-editor/math-tool-interaction-rules",
+  // 2026-10-20: 1,500자 미만 글을 같은 주제의 글에 합쳤다.
+  "svg-editor/three-js-camera-state": "svg-editor/svg-history-snapshot-undo-redo",
+  "svg-editor/svg-threejs-canvas-experience": "svg-editor/digital-math-element-architecture",
 };
 
 const contentRedirects = [

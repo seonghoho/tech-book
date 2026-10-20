@@ -166,7 +166,7 @@ function moveCameraToAxis(axis) {
 회전 방향 문제는 버튼을 누른 순간보다 그 뒤의 조작에서 더 잘 드러나서, top view로 이동한 뒤 드래그했을 때 화면이 반대로 움직이지 않는지 확인했습니다.
 
 이 카메라 전환 문제는 [MathCanvas 프로젝트](/projects/mathcanvas)의 3D 수학교구 경험을 하나의 캔버스 흐름으로 맞추는 과정에서 나온 이슈였습니다.
-2D와 3D 교구를 한 캔버스에서 쓰게 만든 과정은 [2D SVG 교구와 3D Three.js 교구를 하나의 캔버스 경험으로 묶기](/posts/svg-editor/svg-threejs-canvas-experience)에 정리했습니다.
+2D와 3D 교구를 한 캔버스에서 쓰게 만든 과정은 [수학교구 캔버스 구조: DigitalMathElement와 2D·3D 렌더러 경계](/posts/svg-editor/digital-math-element-architecture)에 정리했습니다.
 
 ## 참고 문서
 
