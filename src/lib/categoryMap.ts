@@ -4,5 +4,6 @@ export const categoryMap: Record<string, string> = {
   "voca-study": "Voca Study Devlog",
   "ai-workflow": "AI Workflow",
   "web-performance": "Web Performance",
+  "frontend-troubleshooting": "Frontend Troubleshooting",
   "frontend-bff": "Frontend BFF",
 };
