@@ -13,6 +13,7 @@ import {
 import { games } from "@/lib/gamesData";
 import nextDynamic from "next/dynamic";
 import { gameCategoryMap } from "@/lib/gameCategoryMap";
+import { notFound } from "next/navigation";
 
 const PostContent = nextDynamic(() => import("@/components/posts/PostContent"), {
   ssr: true, // optional
@@ -28,6 +29,19 @@ interface PageProps {
 
 const createExcerpt = (raw: string) => raw.replace(/\n+/g, " ").trim().slice(0, 150);
 
+// 없는 게임 로그는 500 대신 404로 응답한다.
+const getGameOrNotFound = async (slugString: string) => {
+  try {
+    return await getPostData("games", slugString);
+  } catch (error) {
+    if (error instanceof Error && error.message.startsWith("Post not found for slug:")) {
+      notFound();
+    }
+
+    throw error;
+  }
+};
+
 export async function generateStaticParams() {
   const posts = getAllPosts("games");
   return posts.map((post) => ({ slug: post.slug.split("/") }));
@@ -35,7 +49,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   const slugString = slug.join("/");
-  const post = await getPostData("games", slugString);
+  const post = await getGameOrNotFound(slugString);
   const summary = post.description ?? createExcerpt(post.rawMarkdown);
   const baseSlug = slugString.split("/")[0];
   const gameMeta = games.find((game) => game.slug === baseSlug);
@@ -66,7 +80,7 @@ export default async function PostPage({ params }: PageProps) {
   const postsByCategory = getPostsByCategory("games");
   const allPosts = Object.values(postsByCategory).flat();
 
-  const post = await getPostData("games", slugString);
+  const post = await getGameOrNotFound(slugString);
   const summary = post.description ?? createExcerpt(post.rawMarkdown);
   const headings = extractHeadings(post.rawMarkdown);
 

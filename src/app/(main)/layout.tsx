@@ -1,8 +1,6 @@
 import SidebarContainer from "@/components/layout/SidebarContainer";
 import { getPostsByCategory } from "@/lib/getPostsByCategory";
 import { filterIndexablePostGroups } from "@/lib/contentVisibility";
-import Loading from "@/app/(main)/posts/[...slug]/loading";
-import { Suspense } from "react";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const postData = filterIndexablePostGroups(getPostsByCategory("posts"));
@@ -16,9 +14,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           <SidebarContainer postData={postData} gameData={gameData} />
         </aside>
 
-        <div className="min-w-0 flex-1">
-          <Suspense fallback={<Loading />}>{children}</Suspense>
-        </div>
+        <div className="min-w-0 flex-1">{children}</div>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 import { getAllPosts } from "@/lib/getAllPosts";
 import { categoryMap } from "@/lib/categoryMap";
 import { filterIndexablePosts } from "@/lib/contentVisibility";
+import { notFound } from "next/navigation";
 
 const POSTS_PER_PAGE = 10;
 
@@ -54,6 +55,9 @@ export default async function TagPage({ params, searchParams }: PageProps) {
   const posts = filterIndexablePosts(getAllPosts("posts"))
     .filter((post) => post.tags?.includes(tagName))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  // 글이 없는 태그는 빈 목록(200) 대신 404로 응답한다.
+  if (posts.length === 0) notFound();
 
   const totalPages = Math.max(1, Math.ceil(posts.length / POSTS_PER_PAGE));
   const currentPage = Math.max(1, Number(resolvedSearchParams?.page ?? "1"));

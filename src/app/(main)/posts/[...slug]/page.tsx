@@ -33,6 +33,9 @@ interface PageProps {
 
 const createExcerpt = (raw: string) => raw.replace(/\n+/g, " ").trim().slice(0, 150);
 
+// 이 경로와 (main) 레이아웃에는 loading.tsx·Suspense를 두지 않는다. 경계가 있으면 응답이
+// 200으로 먼저 나간 뒤 notFound()가 불려, 없는 글(초안·예약 글 포함)이 404 대신
+// "찾을 수 없음" 화면 + 200(소프트 404)으로 나간다.
 const getPostOrNotFound = async (slugString: string) => {
   try {
     return await getPostData("posts", slugString);
