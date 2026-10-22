@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { buildArticleJsonLd } from "../src/lib/seo.ts";
+import { buildArticleJsonLd, toKstIsoDate } from "../src/lib/seo.ts";
 import { absoluteUrl, getSiteUrl } from "../src/lib/site.ts";
 
 describe("site SEO configuration", () => {
@@ -53,9 +53,15 @@ describe("site SEO configuration", () => {
       "@type": "Person",
       name: "최성호",
       url: "https://seonghoho.com/about",
+      sameAs: ["https://github.com/seonghoho"],
     });
+    assert.equal(jsonLd.inLanguage, "ko-KR");
     assert.equal((jsonLd.publisher as Record<string, unknown>)["@type"], "Person");
     assert.equal(jsonLd.image, "https://seonghoho.com/og-image.png");
     assert.deepEqual(jsonLd.keywords, ["Three.js", "Raycaster"]);
+  });
+
+  it("dates posts at midnight Korea time", () => {
+    assert.equal(toKstIsoDate("2026-10-22"), "2026-10-22T00:00:00+09:00");
   });
 });

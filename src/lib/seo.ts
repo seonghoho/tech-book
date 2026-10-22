@@ -87,6 +87,12 @@ export function buildPageMetadata({
   };
 }
 
+// 글 날짜는 frontmatter에 "YYYY-MM-DD"로 적고 한국 시간 기준으로 발행한다.
+// new Date("2026-10-22")는 UTC 자정(한국 오전 9시)이 되므로 +09:00을 붙여 넘긴다.
+export function toKstIsoDate(date: string) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(date) ? `${date}T00:00:00+09:00` : new Date(date).toISOString();
+}
+
 export function buildArticleJsonLd({
   title,
   description,
@@ -119,12 +125,14 @@ export function buildArticleJsonLd({
     image: absoluteUrl(image),
     datePublished,
     dateModified: dateModified ?? datePublished,
+    inLanguage: "ko-KR",
     keywords: tags?.length ? tags : undefined,
     articleSection: category,
     author: {
       "@type": "Person",
       name: SITE_CONFIG.author.name,
       url: SITE_CONFIG.author.url,
+      sameAs: SITE_CONFIG.author.sameAs,
     },
     publisher: {
       "@type": "Person",

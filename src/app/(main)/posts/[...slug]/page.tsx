@@ -9,6 +9,7 @@ import {
   buildBreadcrumbJsonLd,
   buildPageMetadata,
   siteDefaults,
+  toKstIsoDate,
 } from "@/lib/seo";
 import {
   filterIndexablePosts,
@@ -78,8 +79,8 @@ export async function generateMetadata({ params }: PageProps) {
     images: shouldUseDynamicOg
       ? [{ url: imageUrl, width: 1200, height: 630 }]
       : [{ url: imageUrl }],
-    publishedTime: new Date(post.date).toISOString(),
-    modifiedTime: new Date(modifiedTime).toISOString(),
+    publishedTime: toKstIsoDate(post.date),
+    modifiedTime: toKstIsoDate(modifiedTime),
   });
 }
 
@@ -145,8 +146,8 @@ export default async function PostPage({ params }: PageProps) {
     title: post.title,
     description: summary,
     path: `/posts/${slugString}`,
-    datePublished: new Date(post.date).toISOString(),
-    dateModified: new Date(post.updated ?? post.date).toISOString(),
+    datePublished: toKstIsoDate(post.date),
+    dateModified: toKstIsoDate(post.updated ?? post.date),
     image: resolvedImageUrl,
     tags: post.tags,
     category: categoryMap[category] ?? category,
@@ -161,7 +162,7 @@ export default async function PostPage({ params }: PageProps) {
   });
 
   return (
-    <div className="w-full 2xl:grid 2xl:grid-cols-[minmax(0,1fr)_14rem] 2xl:gap-6">
+    <div className="w-full 2xl:grid 2xl:grid-cols-[minmax(0,1fr)_15rem] 2xl:gap-6">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -182,14 +183,15 @@ export default async function PostPage({ params }: PageProps) {
           prevPost={prevPost ? { title: prevPost.title, url: `/posts/${prevPost.slug}` } : null}
           nextPost={nextPost ? { title: nextPost.title, url: `/posts/${nextPost.slug}` } : null}
           relatedLinks={relatedLinks}
+          headings={headings}
         />
       </div>
       {headings.length ? (
         <nav
           aria-label="목차"
-          className="sticky-section hidden shrink-0 border-l border-[color:var(--color-border)] pl-4 2xl:block 2xl:w-56 2xl:self-start"
+          className="sticky-section hidden shrink-0 2xl:block 2xl:w-60 2xl:self-start"
         >
-          <p className="px-4 pb-2 text-xs font-semibold text-[color:var(--color-text-muted)]">목차</p>
+          <p className="pb-3 text-xs font-semibold text-[color:var(--color-text-primary)]">목차</p>
           <PostIndex headings={headings} />
         </nav>
       ) : null}

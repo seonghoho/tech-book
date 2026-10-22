@@ -102,7 +102,7 @@ export const rehypeCodeBlockFrame = () => {
       parent.children[index] = createElement(
         "div",
         {
-          className: ["post-code-block", "post-code-block--dark"],
+          className: ["post-code-block"],
           "data-code-language": language,
         },
         [

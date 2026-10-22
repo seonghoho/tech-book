@@ -8,6 +8,8 @@ import { POST_BODY_CLASS_NAME } from "./postBodyClassName";
 import { PostNav } from "@/types/post";
 import { categoryMap } from "@/lib/categoryMap";
 import { formatDotDate } from "@/lib/formatDate";
+import { SITE_CONFIG } from "@/lib/site";
+import { ChevronDownIcon } from "@/assets/svg";
 
 type ProjectInfo = {
   summary: string;
@@ -23,6 +25,12 @@ type RelatedLink = {
   categoryLabel: string;
 };
 
+type Heading = {
+  text: string;
+  depth: number;
+  id: string;
+};
+
 type Props = {
   title: string;
   date: string;
@@ -36,6 +44,7 @@ type Props = {
   nextPost?: PostNav | null;
   projectInfo?: ProjectInfo | null;
   relatedLinks?: RelatedLink[];
+  headings?: Heading[];
 };
 
 export default function PostContent({
@@ -51,7 +60,11 @@ export default function PostContent({
   nextPost,
   projectInfo,
   relatedLinks,
+  headings,
 }: Props) {
+  // 오른쪽 목차가 보이지 않는 폭(2xl 미만)에서는 본문 위에 접는 목차를 둔다.
+  const inlineTocItems = headings?.filter((h) => h.depth === 2) ?? [];
+
   return (
     <article className="page-shell w-full">
       <PostCodeCopyEnhancer />
@@ -86,8 +99,16 @@ export default function PostContent({
             </p>
           ) : null}
           <p className="mt-4 text-[13px] tabular-nums text-[color:var(--color-text-muted)]">
+            <Link
+              href="/about"
+              rel="author"
+              className="font-medium text-[color:var(--color-text-secondary)] transition-colors hover:text-[color:var(--color-accent)]"
+            >
+              {SITE_CONFIG.author.name}
+            </Link>
+            <span> · </span>
             <time dateTime={date}>{formatDotDate(date)}</time>
-            {readingTime ? <span> · {readingTime}분</span> : null}
+            {readingTime ? <span> · {readingTime}분 읽기</span> : null}
             {updated && updated !== date ? (
               <span>
                 {" "}
@@ -146,6 +167,30 @@ export default function PostContent({
               ) : null}
             </div>
           </div>
+        ) : null}
+
+        {inlineTocItems.length > 2 ? (
+          <details className="group mt-6 rounded-[12px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] 2xl:hidden">
+            <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold text-[color:var(--color-text-primary)] [&::-webkit-details-marker]:hidden">
+              목차
+              <ChevronDownIcon
+                aria-hidden="true"
+                className="h-4 w-4 text-[color:var(--color-text-muted)] transition-transform duration-200 group-open:rotate-180"
+              />
+            </summary>
+            <ol className="list-decimal space-y-1.5 border-t border-[color:var(--color-border)] py-3 pl-9 pr-4 text-sm marker:text-[color:var(--color-text-muted)]">
+              {inlineTocItems.map((h) => (
+                <li key={h.id}>
+                  <a
+                    href={`#${h.id}`}
+                    className="text-[color:var(--color-text-secondary)] [word-break:keep-all] transition-colors hover:text-[color:var(--color-accent)]"
+                  >
+                    {h.text}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </details>
         ) : null}
 
         <div

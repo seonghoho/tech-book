@@ -1,6 +1,5 @@
 @import "../styles/layout.css";
 @import "./fonts.css";
-@import "prismjs/themes/prism-tomorrow.css";
 
 @tailwind base;
 @tailwind components;
@@ -27,6 +26,20 @@
   --color-button-primary-text: #ffffff;
   --color-link: #0f766e;
   --color-code: #eff4f9;
+  /* 코드 블록: 라이트 모드에서는 본문과 같은 밝은 면, 다크 모드에서만 어두운 면을 쓴다. */
+  --code-block-bg: #f6f8fb;
+  --code-block-header-bg: #eef2f7;
+  --code-block-border: #dde4ed;
+  --code-fg: #1f2933;
+  --code-muted: #6a7480;
+  --code-token-comment: #6a7480;
+  --code-token-keyword: #cf222e;
+  --code-token-string: #0a3069;
+  --code-token-function: #8250df;
+  --code-token-number: #0550ae;
+  --code-token-tag: #116329;
+  --code-token-attr: #953800;
+  --code-token-punctuation: #57606a;
   --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.06);
   --shadow-medium: 0 24px 60px rgba(15, 23, 42, 0.08);
 }
@@ -51,6 +64,19 @@ html.dark {
   --color-button-primary-text: #ffffff;
   --color-link: #7edfd1;
   --color-code: #0f1727;
+  --code-block-bg: #0f1727;
+  --code-block-header-bg: #111c2d;
+  --code-block-border: rgba(148, 163, 184, 0.2);
+  --code-fg: #dbe4ee;
+  --code-muted: #8fa2b7;
+  --code-token-comment: #8b949e;
+  --code-token-keyword: #ff7b72;
+  --code-token-string: #a5d6ff;
+  --code-token-function: #d2a8ff;
+  --code-token-number: #79c0ff;
+  --code-token-tag: #7ee787;
+  --code-token-attr: #ffa657;
+  --code-token-punctuation: #b6c2cf;
   --shadow-soft: 0 18px 48px rgba(2, 8, 23, 0.28);
   --shadow-medium: 0 28px 70px rgba(2, 8, 23, 0.34);
 }
@@ -286,15 +312,15 @@ a {
   .post-code-block {
     margin: 1.75rem 0;
     overflow: hidden;
-    border: 1px solid rgba(148, 163, 184, 0.26);
-    border-radius: 18px;
-    background-color: #0f1727;
-    color: #d6deeb;
-    box-shadow: 0 22px 48px rgba(2, 8, 23, 0.18);
+    border: 1px solid var(--code-block-border);
+    border-radius: 12px;
+    background-color: var(--code-block-bg);
+    color: var(--code-fg);
   }
 
   .post-code-block :where(pre, code) {
-    color: #d6deeb;
+    color: var(--code-fg);
+    text-shadow: none;
   }
 
   .post-code-header {
@@ -302,51 +328,85 @@ a {
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.22);
-    background-color: #111827;
-    padding: 0.6rem 0.75rem 0.6rem 1rem;
+    border-bottom: 1px solid var(--code-block-border);
+    background-color: var(--code-block-header-bg);
+    padding: 0.3rem 0.4rem 0.3rem 1rem;
   }
 
   .post-code-language {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #94a3b8;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--code-muted);
   }
 
   .post-code-copy-button {
-    min-width: 3.25rem;
-    border: 1px solid rgba(148, 163, 184, 0.3);
-    border-radius: 999px;
-    background-color: rgba(15, 23, 42, 0.9);
-    color: #cbd5e1;
-    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    background-color: transparent;
+    color: var(--code-muted);
+    padding: 0.25rem 0.6rem;
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 500;
     transition:
       background-color 160ms ease,
-      border-color 160ms ease,
-      color 160ms ease,
-      transform 160ms ease;
+      color 160ms ease;
   }
 
   .post-code-copy-button:hover,
   .post-code-copy-button:focus-visible {
-    border-color: rgba(125, 211, 252, 0.5);
-    background-color: rgba(14, 165, 233, 0.16);
-    color: #e0f2fe;
+    background-color: var(--color-accent-soft);
+    color: var(--color-accent);
     outline: none;
-    transform: translateY(-1px);
+  }
+
+  .post-code-copy-button:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-accent);
+  }
+
+  /* 구문 강조 색. prism 테마 파일 대신 라이트/다크 토큰을 따른다. */
+  .post-code-block .token:where(.comment, .prolog, .doctype, .cdata) {
+    color: var(--code-token-comment);
+    font-style: italic;
+  }
+
+  .post-code-block .token:where(.punctuation, .operator) {
+    color: var(--code-token-punctuation);
+  }
+
+  .post-code-block .token:where(.keyword, .atrule, .important, .rule, .builtin.keyword) {
+    color: var(--code-token-keyword);
+  }
+
+  .post-code-block .token:where(.string, .char, .template-string, .regex, .url, .attr-value) {
+    color: var(--code-token-string);
+  }
+
+  .post-code-block .token:where(.function, .class-name, .maybe-class-name) {
+    color: var(--code-token-function);
+  }
+
+  .post-code-block .token:where(.number, .boolean, .constant, .symbol, .property, .variable) {
+    color: var(--code-token-number);
+  }
+
+  .post-code-block .token:where(.tag, .selector, .inserted) {
+    color: var(--code-token-tag);
+  }
+
+  .post-code-block .token:where(.attr-name, .builtin, .deleted, .parameter) {
+    color: var(--code-token-attr);
+  }
+
+  .post-code-block .token:where(.tag) .token:where(.punctuation) {
+    color: var(--code-token-punctuation);
   }
 
   @media (min-width: 640px) {
     .post-body.post-body :where(pre) {
-      padding: 1.15rem 1.25rem;
+      padding: 1rem 1.25rem;
     }
 
     .post-code-header {
-      padding-inline: 1.25rem 1rem;
+      padding-inline: 1.25rem 0.5rem;
     }
   }
 

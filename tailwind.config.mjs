@@ -60,9 +60,11 @@ const config = {
             },
             code: {
               backgroundColor: "var(--color-code)",
-              padding: "0.18rem 0.45rem",
-              borderRadius: "0.4rem",
+              padding: "0.15rem 0.4rem",
+              borderRadius: "0.35rem",
               fontFamily: theme("fontFamily.mono"),
+              fontSize: "0.875em",
+              fontWeight: "500",
               color: "var(--color-text-primary)",
             },
 

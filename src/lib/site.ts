@@ -8,6 +8,7 @@ export const SITE_CONFIG = {
     englishName: "Choi Seongho",
     url: "https://seonghoho.com/about",
     bio: "프론트엔드 엔지니어. SVG, Three.js, 인터랙션 UI, 에디터 구조를 다룹니다.",
+    sameAs: ["https://github.com/seonghoho"],
   },
   locale: "ko_KR",
 } as const;

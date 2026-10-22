@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 type Heading = {
   text: string;
@@ -9,14 +9,8 @@ type Heading = {
 };
 
 export default function PostIndex({ headings }: { headings: Heading[] }) {
-  const indentClassMap: Record<number, string> = {
-    2: "ml-0",
-    3: "ml-4",
-    4: "ml-8",
-    5: "ml-12",
-    6: "ml-16",
-  };
-
+  // 목차는 h2와 h3만 보여 준다. 더 깊은 제목까지 넣으면 옆 칸이 본문보다 길어진다.
+  const items = useMemo(() => headings.filter((h) => h.depth <= 3), [headings]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -40,35 +34,37 @@ export default function PostIndex({ headings }: { headings: Heading[] }) {
       }
     );
 
-    headings.forEach((h) => {
+    items.forEach((h) => {
       const el = document.getElementById(h.id);
       if (el) observer.observe(el);
     });
 
     return () => observer.disconnect();
-  }, [headings]);
+  }, [items]);
 
   return (
-    <div>
-      <ul className="space-y-0.5 px-4">
-        {headings.map((h, idx) => (
-          <li
-            key={`${h.id}-${h.depth}-${idx}`}
-            className={indentClassMap[h.depth] || "ml-0"}
-          >
+    <ul className="border-l border-[color:var(--color-border)]">
+      {items.map((h, idx) => {
+        const isActive = activeId === h.id;
+
+        return (
+          <li key={`${h.id}-${h.depth}-${idx}`}>
             <a
               href={`#${h.id}`}
-              className={`block w-full truncate py-0.5 text-[13px] transition-colors duration-200 ease-out hover:text-[color:var(--color-text-primary)] focus-visible:text-[color:var(--color-accent)] focus-visible:outline-none ${
-                activeId === h.id
-                  ? "font-semibold text-[color:var(--color-accent)]"
-                  : "text-[color:var(--color-text-muted)]"
+              aria-current={isActive ? "location" : undefined}
+              className={`-ml-px block border-l-2 py-1 pr-1 leading-snug [word-break:keep-all] transition-colors duration-200 ease-out hover:text-[color:var(--color-text-primary)] focus-visible:text-[color:var(--color-accent)] focus-visible:outline-none ${
+                h.depth === 3 ? "pl-6 text-[12px]" : "pl-3 text-[13px]"
+              } ${
+                isActive
+                  ? "border-[color:var(--color-accent)] font-medium text-[color:var(--color-accent)]"
+                  : "border-transparent text-[color:var(--color-text-muted)]"
               }`}
             >
               {h.text}
             </a>
           </li>
-        ))}
-      </ul>
-    </div>
+        );
+      })}
+    </ul>
   );
 }

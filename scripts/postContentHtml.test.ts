@@ -29,7 +29,7 @@ describe("post content html", () => {
   it("wraps code blocks with language labels and copy buttons", async () => {
     const html = await renderMarkdown("```ts\nconst value = 1;\n```");
 
-    assert.match(html, /class="post-code-block post-code-block--dark"/);
+    assert.match(html, /class="post-code-block"/);
     assert.match(html, /class="post-code-language"/);
     assert.match(html, />TypeScript</);
     assert.match(html, /data-code-copy-button/);
