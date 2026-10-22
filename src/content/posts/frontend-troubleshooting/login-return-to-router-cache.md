@@ -1,9 +1,8 @@
 ---
 title: "로그인한 뒤 원래 화면으로 돌아가지 않던 이유: Next.js 라우터 캐시"
-date: "2026-11-07"
+date: "2026-10-22"
 description: "로그인이 필요한 화면에서 로그인 화면으로 넘어간 뒤 로그인하면, returnTo 주소로 가지 않고 \"이미 로그인되어 있어요\" 안내가 떴습니다. Next.js 클라이언트 라우터가 비로그인 때 받은 응답을 캐시에 남겨 두고 router.replace가 그 캐시를 다시 쓰고 있었습니다. 재현 조건, router.refresh로 고쳐지지 않은 이유, location.replace로 바꾼 과정을 적었습니다."
 tags: ["Next.js", "App Router", "Router Cache", "Authentication", "Playwright"]
-draft: true
 ---
 
 # 로그인한 뒤 원래 화면으로 돌아가지 않던 이유: Next.js 라우터 캐시

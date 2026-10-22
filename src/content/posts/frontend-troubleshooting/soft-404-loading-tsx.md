@@ -1,9 +1,8 @@
 ---
 title: "없는 글 주소가 404 대신 200으로 응답하던 이유: loading.tsx와 스트리밍"
-date: "2026-11-11"
+date: "2026-10-22"
 description: "이 블로그에서 초안 글 주소를 열면 \"찾을 수 없음\" 화면이 나오는데 응답 코드는 200이었습니다. 글 상세 경로의 loading.tsx와 레이아웃의 Suspense가 응답을 먼저 보내서 notFound()가 상태 코드를 바꾸지 못하고 있었습니다. 원인을 확인한 과정과 수정, 같은 이유로 초기 HTML에서 빠졌던 광고 스크립트 이야기를 함께 적었습니다."
 tags: ["Next.js", "App Router", "SEO", "404", "Streaming"]
-draft: true
 ---
 
 # 없는 글 주소가 404 대신 200으로 응답하던 이유: loading.tsx와 스트리밍
