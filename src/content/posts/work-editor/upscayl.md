@@ -1,6 +1,6 @@
 ---
 title: "Upscayl 사용법: 작은 사진을 깨지지 않게 키우는 무료 프로그램 (윈도·맥·리눅스 설치부터)"
-date: "2026-10-24"
+date: "2026-10-23"
 description: "저해상도 사진을 AI로 4배까지 키우는 무료 오픈소스 프로그램 Upscayl. OS별 설치 순서, 4단계 사용법, 모델 고르는 법, 회사 업무에 쓸 때 주의할 상업용 제한까지 정리했어요."
 image: "/images/posts/work-editor/upscayl/cover-og.png"
 tags: ["Upscayl","이미지 업스케일","무료 프로그램","오픈소스","업무 자동화"]
