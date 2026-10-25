@@ -58,6 +58,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "rcy_pt8MaVt2F6XAtMBTNX_w5pRzOZ0KykSGdw71p-U",
+    other: {
+      "naver-site-verification": "7d3c27f44c5759bbcb1c58e44ebfd6154da808a0",
+    },
   },
   other: {
     "google-adsense-account": ADSENSE_CLIENT_ID,
