@@ -7,4 +7,5 @@ export const categoryMap: Record<string, string> = {
   "frontend-troubleshooting": "Frontend Troubleshooting",
   "frontend-bff": "Frontend BFF",
   "work-editor": "Work Editor",
+  "frontend-testing": "Frontend Testing",
 };
