@@ -1,6 +1,6 @@
 ---
 title: "jsdom 없이 React 컴포넌트 테스트하기: renderToStaticMarkup과 문자열 단언"
-date: "2026-10-26"
+date: "2026-10-27"
 description: "사이드 프로젝트의 프론트엔드 테스트를 jsdom과 Testing Library 없이 node 환경의 vitest로 돌리고 있습니다. 컴포넌트는 renderToStaticMarkup으로 HTML 문자열을 만들어 단언하고, 문자열로 볼 수 없는 레이아웃과 로그인 뒤 화면은 Playwright로 넘깁니다. 설정, 테스트로 무엇을 보고 무엇을 포기했는지, 소스를 문자열로 읽을 때 주석 때문에 테스트가 거짓으로 통과한 일을 적었습니다."
 tags: ["Testing", "Vitest", "React", "Next.js", "Playwright"]
 ---
