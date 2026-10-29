@@ -105,8 +105,6 @@ export const aboutProfile = {
   overviewDescription: "좌표 계산, 드래그·회전처럼 조작이 많은 화면을 주로 만들었습니다.",
   summary:
     "2026년 3월부터 플랜티엠에서 프론트엔드 엔지니어로 근무하고 있습니다. 이전에는 코드넛에서 SVG·Three.js 기반 수학교구 캔버스를 개발했고, SSAFY에서 React 팀 프로젝트를 세 번 진행했습니다.",
-  focus:
-    "교구 46종 중 20종을 공통 상위 클래스 구조로 만들어, 새 교구를 추가할 때 고칠 곳을 줄였습니다.",
   contacts: [
     {
       label: "GitHub",

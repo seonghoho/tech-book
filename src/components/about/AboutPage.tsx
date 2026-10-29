@@ -20,7 +20,6 @@ const overviewFacts = [
   { label: "스택", value: aboutProfile.stackLabel },
   { label: "주력", value: "인터랙션 · 시각화 · 서비스 UI" },
 ];
-const overviewStrengths = strengthHighlights.slice(0, 3);
 
 function SectionHeader({ title, description }: { title: string; description: string }) {
   return (
@@ -52,127 +51,52 @@ export default function AboutPage() {
             variant="bar"
           />
           <div className="mt-8 space-y-20 sm:space-y-24 lg:mt-0">
-            <section id="overview" className="scroll-mt-[136px] space-y-10 lg:scroll-mt-28">
-              <article className="surface-panel-strong mx-auto w-full max-w-[1040px] overflow-hidden p-5 sm:p-6 lg:p-7">
-                <div className="grid gap-6">
-                  {/* <div className="relative aspect-[5/4] overflow-hidden rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-muted)]">
-                  <Image
-                    src="/images/Profile.JPG"
-                    alt="최성호 프로필 사진"
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1600px) 420px, 100vw"
-                    priority
-                  />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent p-5 sm:p-6">
-                    <div className="flex items-center gap-4">
-                      <div className="relative h-[60px] w-[60px] overflow-hidden rounded-[18px] border border-white/20 bg-white/10 shadow-[0_10px_24px_rgba(15,23,42,0.18)]">
-                        <Image
-                          src="/images/Profile.JPG"
-                          alt=""
-                          fill
-                          className="object-cover object-[center_24%]"
-                          sizes="60px"
-                        />
-                      </div>
+            {/* 개요: 섹션 제목 → 소개와 사실 정보(사진 옆) → 숫자로 보는 성과. 이름·한 줄 소개는 레일(h1)에,
+                하는 일은 아래 "강점" 섹션에 있어 여기서는 반복하지 않는다. */}
+            <section id="overview" className="scroll-mt-[136px] space-y-8 lg:scroll-mt-28">
+              <SectionHeader
+                title={aboutProfile.overviewTitle}
+                description={aboutProfile.overviewDescription}
+              />
 
-                      <div>
-                        <p className="text-xs font-semibold text-white/70">
-                          현재
-                        </p>
-                        <p className="mt-2 text-lg font-semibold text-white">
-                          {aboutProfile.companyLabel}
-                        </p>
-                        <p className="mt-2 text-sm leading-6 text-white">
-                          {aboutProfile.stackLabel}
-                        </p>
-                      </div>
-                    </div>
+              <article className="about-card p-5 sm:p-6">
+                <div className="flex flex-col gap-6 sm:flex-row sm:gap-8">
+                  <div className="relative mx-auto h-40 w-40 shrink-0 overflow-hidden rounded-[20px] border border-[color:var(--color-border)] sm:mx-0">
+                    <Image
+                      src="/images/Profile.JPG"
+                      alt={`${aboutProfile.name} 프로필 사진`}
+                      fill
+                      className="object-cover object-[center_24%]"
+                      sizes="160px"
+                    />
                   </div>
-                </div> */}
-
-                  <div className="flex h-full w-full flex-col justify-between">
-                    <div className="space-y-6">
-                      {/* 이름과 소개는 왼쪽 레일(h1)에 있어 카드에서는 반복하지 않고, 사진 옆에 사실 정보만 둔다. */}
-                      <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
-                        <div className="relative mx-auto h-[180px] w-[180px] shrink-0 overflow-hidden rounded-[24px] border border-white/20 bg-white/10 shadow-[0_10px_24px_rgba(15,23,42,0.18)] sm:mx-0 sm:h-[200px] sm:w-[200px]">
-                          <Image
-                            src="/images/Profile.JPG"
-                            alt={`${aboutProfile.name} 프로필 사진`}
-                            fill
-                            className="object-cover object-[center_24%]"
-                            sizes="200px"
-                          />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[15px] leading-8 text-[color:var(--color-text-secondary)] [word-break:keep-all]">
+                      {aboutProfile.summary}
+                    </p>
+                    <dl className="mt-5 divide-y divide-[color:var(--color-border)] border-y border-[color:var(--color-border)]">
+                      {overviewFacts.map((fact) => (
+                        <div
+                          key={fact.label}
+                          className="flex items-baseline justify-between gap-4 py-2.5"
+                        >
+                          <dt className="shrink-0 text-[13px] text-[color:var(--color-text-muted)]">
+                            {fact.label}
+                          </dt>
+                          <dd className="text-right text-sm font-medium leading-6 text-[color:var(--color-text-primary)] [word-break:keep-all]">
+                            {fact.value}
+                          </dd>
                         </div>
-                        <dl className="min-w-0 flex-1 divide-y divide-[color:var(--color-border)] border-y border-[color:var(--color-border)]">
-                          {overviewFacts.map((fact) => (
-                            <div
-                              key={fact.label}
-                              className="flex items-baseline justify-between gap-4 py-3"
-                            >
-                              <dt className="shrink-0 text-[13px] text-[color:var(--color-text-muted)]">
-                                {fact.label}
-                              </dt>
-                              <dd className="text-right text-sm font-medium leading-6 text-[color:var(--color-text-primary)] [word-break:keep-all]">
-                                {fact.value}
-                              </dd>
-                            </div>
-                          ))}
-                        </dl>
-                      </div>
-                    </div>
-
-                    <div className="mt-6">
-                      <p className="text-sm font-semibold text-[color:var(--color-text-primary)]">
-                        주로 하는 일
-                      </p>
-                      <div className="mt-4 grid gap-4">
-                        {overviewStrengths.map((item) => (
-                          <div key={item.title} className="group flex items-start gap-3">
-                            <span className="mt-2 h-2 w-2 rounded-full bg-[color:var(--color-accent)] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:scale-[1.35]" />
-                            <div>
-                              <p className="text-sm font-semibold text-[color:var(--color-text-primary)] transition-colors duration-200 group-hover:text-[color:var(--color-accent)] group-focus-visible:text-[color:var(--color-accent)]">
-                                {item.title}
-                              </p>
-                              <p className="mt-1 text-sm leading-6 text-[color:var(--color-text-muted)]">
-                                {item.bullets[0]}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                      ))}
+                    </dl>
                   </div>
                 </div>
               </article>
 
-              <div className="mx-auto grid w-full max-w-[1040px] gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(260px,0.9fr)]">
-                <div className="space-y-5">
-                  <SectionHeader
-                    title={aboutProfile.overviewTitle}
-                    description={aboutProfile.overviewDescription}
-                  />
-                  <div className="about-card p-5 sm:p-6">
-                    <p className="eyebrow-label">소개</p>
-                    <p className="mt-4 text-[15px] leading-8 text-[color:var(--color-text-secondary)]">
-                      {aboutProfile.summary}
-                    </p>
-                  </div>
-                </div>
-
-                <aside className="about-card p-5 sm:p-6">
-                  <p className="eyebrow-label">대표 성과</p>
-                  <p className="mt-4 text-sm leading-7 text-[color:var(--color-text-secondary)]">
-                    {aboutProfile.focus}
-                  </p>
-                  {/* 강점 항목은 위 프로필 카드의 "주로 하는 일"에 설명과 함께 있어 여기서는 다시 나열하지 않는다. */}
-                </aside>
-              </div>
-
-              <div className="mx-auto grid w-full max-w-[1040px] gap-3 sm:grid-cols-2">
+              <div className="grid gap-3 sm:grid-cols-2">
                 {aboutProfile.metrics.map((metric) => (
                   <article key={metric.label} className="about-card-interactive px-5 py-4">
-                    <div className="text-xl font-semibold text-[color:var(--color-text-primary)]">
+                    <div className="text-xl font-semibold tabular-nums text-[color:var(--color-text-primary)]">
                       {metric.value}
                     </div>
                     <div className="mt-2 text-sm font-medium text-[color:var(--color-text-primary)]">

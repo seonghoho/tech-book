@@ -26,7 +26,7 @@ export default function LandingTopicsSection({ posts }: Props) {
       <h2 className="text-xl font-bold tracking-[-0.02em] text-[color:var(--color-text-primary)]">
         주제별 글
       </h2>
-      <div className="mt-6 grid gap-x-12 gap-y-10 sm:grid-cols-2">
+      <div className="mt-6 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         {topics.map(([slug, topicPosts]) => (
           <section key={slug} aria-labelledby={`topic-${slug}`}>
             <div className="flex items-baseline justify-between gap-4 border-b border-[color:var(--color-border-strong)] pb-2.5">
