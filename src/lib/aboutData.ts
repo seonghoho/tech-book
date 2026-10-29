@@ -98,8 +98,7 @@ export const aboutSectionLinks = [
 export const aboutProfile = {
   name: "최성호",
   title: "프론트엔드 엔지니어",
-  tagline: "SVG 기반 에디터와 3D 시각 도구를 설계·구현하는 프론트엔드 엔지니어",
-  railSummary: "SVG·Three.js 기반 인터랙션과 서비스 UI를 설계·구현하는 프론트엔드 엔지니어입니다.",
+  tagline: "SVG·Three.js로 에디터와 3D 시각 도구, 서비스 UI를 설계·구현하는 프론트엔드 엔지니어",
   companyLabel: "플랜티엠 · Frontend Engineer",
   stackLabel: "Vue / React / SVG / Three.js",
   overviewTitle: "SVG·Three.js로 수학교구 에디터를 만들어 온 프론트엔드 엔지니어입니다",
@@ -117,11 +116,6 @@ export const aboutProfile = {
     {
       label: "Email",
       href: "mailto:chltjdgh3@naver.com",
-    },
-    {
-      label: "MathCanvas",
-      href: "https://mathcanvas.vivasam.com/",
-      external: true,
     },
   ] satisfies AboutLink[],
   metrics: [

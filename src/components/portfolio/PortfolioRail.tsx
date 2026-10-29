@@ -16,7 +16,7 @@ type PortfolioRailProps = {
   eyebrow?: string;
   name: string;
   title: string;
-  summary: string;
+  summary?: string;
   secondaryText?: string;
   sections: SectionScrollNavItem[];
   links: RailLink[];
@@ -41,14 +41,14 @@ export default function PortfolioRail({
         <div className="space-y-4">
           {eyebrow ? <p className="eyebrow-label">{eyebrow}</p> : null}
           <div className="space-y-3">
-            <h1 className="text-4xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)] sm:text-5xl">
+            <h1 className="text-4xl font-semibold tracking-[-0.04em] text-[color:var(--color-text-primary)] sm:text-5xl lg:text-4xl xl:text-5xl">
               {name}
             </h1>
-            <p className="max-w-sm text-lg font-medium leading-8 text-[color:var(--color-text-secondary)] sm:text-xl">
+            <p className="max-w-sm text-lg font-medium leading-8 text-[color:var(--color-text-secondary)] [word-break:keep-all] sm:text-xl lg:text-lg xl:text-xl">
               {title}
             </p>
           </div>
-          <p className="body-copy max-w-md">{summary}</p>
+          {summary ? <p className="body-copy max-w-md [word-break:keep-all]">{summary}</p> : null}
           {secondaryText ? <p className="muted-copy max-w-md">{secondaryText}</p> : null}
         </div>
 
@@ -88,10 +88,6 @@ export default function PortfolioRail({
               {link.label}
             </a>
           ))}
-        </div>
-
-        <div className="lg:hidden">
-          <SectionScrollNav items={sections} ariaLabel="페이지 섹션 이동" />
         </div>
       </div>
     </aside>

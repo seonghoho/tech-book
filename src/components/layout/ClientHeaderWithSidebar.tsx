@@ -104,13 +104,16 @@ export default function ClientHeaderWithSidebar() {
             : "pointer-events-none -translate-y-2 opacity-0"
         }`}
       >
-        <div className="mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
+        <div className="pointer-events-none mx-auto max-w-[1360px] px-4 sm:px-6 lg:px-8">
           <div
             ref={mobileNavRef}
             id="mobile-site-nav"
-            className="mt-3 rounded-[28px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-3 shadow-[0_24px_60px_rgba(15,23,42,0.12)]"
+            className={`ml-auto mt-3 w-[min(240px,100%)] rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-2 shadow-[0_24px_60px_rgba(15,23,42,0.12)] ${
+              mobileNavOpen ? "pointer-events-auto" : ""
+            }`}
           >
-            <nav className="flex flex-col gap-1" aria-label="모바일 전역 네비게이션">
+            {/* 메뉴 버튼이 오른쪽 위라 패널도 오른쪽에 붙이고 글자를 오른쪽 정렬해 엄지가 닿는 쪽에 둔다. */}
+            <nav className="flex flex-col gap-0.5 text-right" aria-label="모바일 전역 네비게이션">
               {mobileHeaderNavLinks.map((link) =>
                 link.external ? (
                   <a
@@ -118,7 +121,7 @@ export default function ClientHeaderWithSidebar() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-2xl px-4 py-3 text-sm font-medium text-[color:var(--color-text-secondary)] transition hover:bg-[color:var(--color-surface-elevated)] hover:text-[color:var(--color-text-primary)]"
+                    className="rounded-[12px] px-4 py-3 text-[15px] font-medium text-[color:var(--color-text-secondary)] transition hover:bg-[color:var(--color-surface-elevated)] hover:text-[color:var(--color-text-primary)]"
                     onClick={() => setMobileNavOpen(false)}
                   >
                     {link.label}
@@ -127,7 +130,7 @@ export default function ClientHeaderWithSidebar() {
                   <HeaderNavLinkItem
                     key={link.href}
                     href={link.href}
-                    className="rounded-2xl px-4 py-3 text-sm font-medium text-[color:var(--color-text-secondary)] transition hover:bg-[color:var(--color-surface-elevated)] hover:text-[color:var(--color-text-primary)]"
+                    className="rounded-[12px] px-4 py-3 text-[15px] font-medium text-[color:var(--color-text-secondary)] transition hover:bg-[color:var(--color-surface-elevated)] hover:text-[color:var(--color-text-primary)]"
                     onNavigate={() => setMobileNavOpen(false)}
                   >
                     {link.label}
