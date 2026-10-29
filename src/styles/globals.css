@@ -420,87 +420,6 @@ a {
     color: var(--color-text-primary);
   }
 
-  /* 홈 미니 SVG 에디터 */
-  .editor-hero-shape {
-    fill: color-mix(in srgb, var(--color-text-primary) 3.5%, transparent);
-    stroke: var(--color-text-primary);
-    stroke-width: 1.5;
-    vector-effect: non-scaling-stroke;
-    cursor: move;
-    transition: stroke 150ms ease-out;
-  }
-
-  .editor-hero-shape:hover {
-    stroke: var(--color-accent);
-  }
-
-  .editor-hero-line-hit {
-    fill: none;
-    stroke: transparent;
-    stroke-width: 18;
-    stroke-linecap: round;
-    vector-effect: non-scaling-stroke;
-    pointer-events: stroke;
-    cursor: move;
-  }
-
-  .editor-hero-line-hit:hover + .editor-hero-shape {
-    stroke: var(--color-accent);
-  }
-
-  .editor-hero-shape-line {
-    stroke-width: 2;
-    stroke-linecap: round;
-  }
-
-  .editor-hero-dot {
-    fill: var(--color-border);
-  }
-
-  .editor-hero-selection,
-  .editor-hero-stem {
-    fill: none;
-    stroke: var(--color-accent);
-    stroke-width: 1;
-    vector-effect: non-scaling-stroke;
-    pointer-events: none;
-  }
-
-  .editor-hero-selection {
-    stroke-dasharray: 4 4;
-  }
-
-  .editor-hero-handle {
-    fill: var(--color-surface);
-    stroke: var(--color-accent);
-    stroke-width: 1.5;
-    vector-effect: non-scaling-stroke;
-    pointer-events: none;
-  }
-
-  /* 핸들은 작게 보이되, 손가락으로도 잡히도록 투명한 히트 영역을 따로 둔다. */
-  .editor-hero-hit {
-    fill: transparent;
-  }
-
-  .editor-hero-ghost {
-    fill: var(--color-text-primary);
-    stroke: var(--color-surface);
-    stroke-width: 1.2;
-    stroke-linejoin: round;
-  }
-
-  .editor-hero-drawing .editor-hero-shape {
-    stroke-dasharray: var(--len);
-    stroke-dashoffset: var(--len);
-    fill-opacity: 0;
-    animation: editor-hero-draw 0.9s cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0ms) forwards;
-  }
-
-  .editor-hero-flash {
-    animation: editor-hero-flash 0.5s ease-out;
-  }
-
   /* 홈 프로젝트 카드 고유색 점 */
   .project-accent-dot {
     background-color: var(--project-color, var(--color-accent));
@@ -569,30 +488,4 @@ a {
 
 .move-face {
   animation: move-face 3s ease-in infinite;
-}
-
-@keyframes editor-hero-draw {
-  to {
-    stroke-dashoffset: 0;
-    fill-opacity: 1;
-  }
-}
-
-@keyframes editor-hero-flash {
-  from {
-    background-color: var(--color-accent-soft);
-  }
-  to {
-    background-color: transparent;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .editor-hero-drawing .editor-hero-shape,
-  .editor-hero-flash {
-    animation: none;
-    stroke-dasharray: none;
-    stroke-dashoffset: 0;
-    fill-opacity: 1;
-  }
 }

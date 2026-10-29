@@ -1,12 +1,12 @@
 import { aboutProjects } from "@/lib/aboutData";
-import LandingCategoriesSection from "@/components/landing/LandingCategoriesSection";
 import LandingHero from "@/components/landing/LandingHero";
 import LandingLatestPostsSection from "@/components/landing/LandingLatestPostsSection";
 import LandingProjectsSection from "@/components/landing/LandingProjectsSection";
+import LandingTopicsSection from "@/components/landing/LandingTopicsSection";
 import type { PostMeta } from "@/types/post";
 
 type Props = {
-  // 색인 대상 글 전체, 최신순. 히어로 힌트 링크와 카테고리 수를 계산하려고 전체를 받는다.
+  // 색인 대상 글 전체, 최신순. 글 수·주제별 묶음을 계산하려고 전체를 받는다.
   posts: PostMeta[];
 };
 
@@ -15,10 +15,10 @@ export default function LandingPage({ posts }: Props) {
 
   return (
     <div className="page-shell">
-      <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-12 pb-6 sm:gap-14 lg:gap-16">
+      <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-14 pb-6 sm:gap-16">
         <LandingHero posts={posts} />
-        <LandingLatestPostsSection posts={posts.slice(3, 8)} />
-        <LandingCategoriesSection posts={posts} />
+        <LandingLatestPostsSection posts={posts.slice(0, 5)} />
+        <LandingTopicsSection posts={posts} />
         <LandingProjectsSection projects={selectedProjects} />
       </div>
     </div>
