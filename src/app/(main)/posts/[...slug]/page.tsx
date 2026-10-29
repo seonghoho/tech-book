@@ -11,11 +11,7 @@ import {
   siteDefaults,
   toKstIsoDate,
 } from "@/lib/seo";
-import {
-  filterIndexablePosts,
-  getPostRobots,
-  isIndexablePostSlug,
-} from "@/lib/contentVisibility";
+import { filterIndexablePosts, getPostRobots, isIndexablePostSlug } from "@/lib/contentVisibility";
 import nextDynamic from "next/dynamic";
 import { categoryMap } from "@/lib/categoryMap";
 import { notFound } from "next/navigation";
@@ -162,7 +158,7 @@ export default async function PostPage({ params }: PageProps) {
   });
 
   return (
-    <div className="w-full 2xl:grid 2xl:grid-cols-[minmax(0,1fr)_15rem] 2xl:gap-6">
+    <div className="w-full xl:grid xl:grid-cols-[minmax(0,1fr)_15rem] xl:gap-6">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -170,7 +166,7 @@ export default async function PostPage({ params }: PageProps) {
         }}
       />
       {isIndexablePostSlug(slugString) ? <AdsenseScript /> : null}
-      <div className="min-w-0 py-6 2xl:pr-6">
+      <div className="min-w-0 py-6 xl:pr-6">
         <PostContent
           title={post.title}
           date={post.date}
@@ -189,7 +185,7 @@ export default async function PostPage({ params }: PageProps) {
       {headings.length ? (
         <nav
           aria-label="목차"
-          className="sticky-section hidden shrink-0 2xl:block 2xl:w-60 2xl:self-start"
+          className="sticky-section hidden shrink-0 xl:block xl:w-60 xl:self-start"
         >
           <p className="pb-3 text-xs font-semibold text-[color:var(--color-text-primary)]">목차</p>
           <PostIndex headings={headings} />

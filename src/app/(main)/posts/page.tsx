@@ -4,6 +4,8 @@ import { buildCollectionPageJsonLd, buildPageMetadata } from "@/lib/seo";
 import { getAllPosts } from "@/lib/getAllPosts";
 import { categoryMap } from "@/lib/categoryMap";
 import PostListItem from "@/components/posts/PostListItem";
+import ArchivePager from "@/components/posts/ArchivePager";
+import CategoryTabs from "@/components/posts/CategoryTabs";
 import { SearchIcon } from "@/assets/svg";
 import PostsArchiveScrollToTop from "@/components/posts/PostsArchiveScrollToTop";
 import { filterIndexablePosts } from "@/lib/contentVisibility";
@@ -42,9 +44,6 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
     robots: hasSearchParams ? { index: false, follow: true } : undefined,
   });
 }
-
-const pagerLinkClass =
-  "inline-flex h-9 min-w-9 items-center justify-center rounded-md px-2 text-sm tabular-nums transition-colors duration-200 ease-out";
 
 export default async function PostsPage({ searchParams }: PageProps) {
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
@@ -98,14 +97,16 @@ export default async function PostsPage({ searchParams }: PageProps) {
         />
       )}
       <PostsArchiveScrollToTop />
-      <div className="max-w-[820px]">
+      <div className="mx-auto max-w-[820px]">
         <div className="flex flex-col gap-3.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-          <h1 className="text-2xl font-bold tracking-[-0.02em] text-[color:var(--color-text-primary)]">
-            글
-            <span className="ml-1.5 text-[15px] font-medium tabular-nums text-[color:var(--color-text-muted)]">
-              {posts.length}
+          <div className="flex items-baseline gap-2">
+            <h1 className="text-2xl font-bold tracking-[-0.02em] text-[color:var(--color-text-primary)]">
+              글
+            </h1>
+            <span className="text-[15px] font-medium tabular-nums text-[color:var(--color-text-muted)]">
+              {posts.length}편
             </span>
-          </h1>
+          </div>
           <form action="/posts" method="get" role="search" className="relative w-full sm:w-64">
             <SearchIcon
               aria-hidden="true"
@@ -126,34 +127,13 @@ export default async function PostsPage({ searchParams }: PageProps) {
           </form>
         </div>
 
-        <nav
-          aria-label="카테고리"
-          className="-mx-4 mt-4 flex gap-1.5 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:mt-5 sm:flex-wrap sm:px-0 [&::-webkit-scrollbar]:hidden"
-        >
-          {sortedTabs.map((tab) => {
-            const isActive = selectedCategory === tab.value;
-
-            return (
-              <Link
-                key={tab.value || "all"}
-                href={buildHref({ category: tab.value, page: "1" })}
-                aria-current={isActive ? "page" : undefined}
-                className={`shrink-0 rounded-md px-2.5 py-1.5 text-[13px] transition-colors duration-200 ease-out ${
-                  isActive
-                    ? "bg-[color:var(--color-text-primary)] font-semibold text-[color:var(--color-bg)]"
-                    : "text-[color:var(--color-text-secondary)] hover:bg-[color:var(--color-surface)] hover:text-[color:var(--color-text-primary)]"
-                }`}
-              >
-                {tab.label}
-                <span
-                  className={`ml-1 tabular-nums ${isActive ? "opacity-70" : "text-[color:var(--color-text-muted)]"}`}
-                >
-                  {tab.count}
-                </span>
-              </Link>
-            );
-          })}
-        </nav>
+        <CategoryTabs
+          activeValue={selectedCategory}
+          tabs={sortedTabs.map((tab) => ({
+            ...tab,
+            href: buildHref({ category: tab.value, page: "1" }),
+          }))}
+        />
 
         {hasActiveFilters ? (
           <p className="mt-4 text-[13px] text-[color:var(--color-text-secondary)]">
@@ -183,50 +163,11 @@ export default async function PostsPage({ searchParams }: PageProps) {
           )}
         </ol>
 
-        {totalPages > 1 ? (
-          <nav aria-label="페이지" className="mt-7 flex items-center justify-center gap-1">
-            {safePage > 1 ? (
-              <Link
-                href={buildHref({ page: String(safePage - 1) })}
-                rel="prev"
-                className={`${pagerLinkClass} text-[color:var(--color-text-secondary)] hover:bg-[color:var(--color-surface)]`}
-              >
-                이전
-              </Link>
-            ) : (
-              <span className={`${pagerLinkClass} text-[color:var(--color-border-strong)]`}>
-                이전
-              </span>
-            )}
-            {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
-              <Link
-                key={page}
-                href={buildHref({ page: String(page) })}
-                aria-current={page === safePage ? "page" : undefined}
-                className={`${pagerLinkClass} ${
-                  page === safePage
-                    ? "bg-[color:var(--color-surface)] font-bold text-[color:var(--color-text-primary)] shadow-[inset_0_0_0_1px_var(--color-border)]"
-                    : "text-[color:var(--color-text-secondary)] hover:bg-[color:var(--color-surface)]"
-                }`}
-              >
-                {page}
-              </Link>
-            ))}
-            {safePage < totalPages ? (
-              <Link
-                href={buildHref({ page: String(safePage + 1) })}
-                rel="next"
-                className={`${pagerLinkClass} text-[color:var(--color-text-secondary)] hover:bg-[color:var(--color-surface)]`}
-              >
-                다음
-              </Link>
-            ) : (
-              <span className={`${pagerLinkClass} text-[color:var(--color-border-strong)]`}>
-                다음
-              </span>
-            )}
-          </nav>
-        ) : null}
+        <ArchivePager
+          currentPage={safePage}
+          totalPages={totalPages}
+          getHref={(page) => buildHref({ page: String(page) })}
+        />
       </div>
     </div>
   );

@@ -62,7 +62,7 @@ export default function PostContent({
   relatedLinks,
   headings,
 }: Props) {
-  // 오른쪽 목차가 보이지 않는 폭(2xl 미만)에서는 본문 위에 접는 목차를 둔다.
+  // 오른쪽 목차가 보이지 않는 폭(xl 미만)에서는 본문 위에 접는 목차를 둔다.
   const inlineTocItems = headings?.filter((h) => h.depth === 2) ?? [];
 
   return (
@@ -170,7 +170,7 @@ export default function PostContent({
         ) : null}
 
         {inlineTocItems.length > 2 ? (
-          <details className="group mt-6 rounded-[12px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] 2xl:hidden">
+          <details className="group mt-6 rounded-[12px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-elevated)] xl:hidden">
             <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold text-[color:var(--color-text-primary)] [&::-webkit-details-marker]:hidden">
               목차
               <ChevronDownIcon

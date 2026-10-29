@@ -29,37 +29,37 @@ export default async function SearchPage({ searchParams }: PageProps) {
   const query = (resolvedSearchParams?.query ?? "").trim();
 
   const posts = getAllPosts("posts").sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 
   const filtered = query
     ? posts.filter((post) =>
-        `${post.title} ${post.description ?? ""}`
-          .toLowerCase()
-          .includes(query.toLowerCase())
+        `${post.title} ${post.description ?? ""}`.toLowerCase().includes(query.toLowerCase()),
       )
     : [];
 
   return (
     <div className="page-shell">
-      <div className="page-stack">
+      <div className="page-stack mx-auto max-w-[820px]">
         <div className="space-y-3">
           <p className="eyebrow-label">Search</p>
           <h1 className="section-title">검색 결과</h1>
           <p className="body-copy">
-            {query
-              ? `"${query}"에 대한 결과 ${filtered.length}건`
-              : "검색어를 입력해 주세요."}
+            {query ? `"${query}"에 대한 결과 ${filtered.length}건` : "검색어를 입력해 주세요."}
           </p>
         </div>
 
         <div className="surface-panel p-4 sm:p-5">
-          <form action="/search" method="get" className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <form
+            action="/search"
+            method="get"
+            className="flex flex-col gap-3 sm:flex-row sm:items-center"
+          >
             <input
               name="query"
               defaultValue={query}
               placeholder="키워드 검색"
-              className="input-shell min-w-0 w-full sm:flex-1"
+              className="input-shell w-full min-w-0 sm:flex-1"
             />
             <button type="submit" className="button-primary w-full shrink-0 sm:w-auto">
               검색

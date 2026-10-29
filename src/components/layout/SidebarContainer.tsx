@@ -3,42 +3,26 @@
 import { usePathname } from "next/navigation";
 import Sidebar from "./Sidebar";
 import { PostMeta } from "@/types/post";
-import { categoryMap } from "@/lib/categoryMap";
 import { gameCategoryMap } from "@/lib/gameCategoryMap";
 
 type Props = {
-  postData: Record<string, PostMeta[]>;
   gameData: Record<string, PostMeta[]>;
-  variant?: "rail" | "mobile-subnav";
 };
 
-const isWritingPath = (pathname: string) =>
-  pathname === "/posts" ||
-  pathname.startsWith("/posts/") ||
-  pathname.startsWith("/categories/") ||
-  pathname.startsWith("/tags/") ||
-  pathname.startsWith("/search");
-
-export default function SidebarContainer({ postData, gameData, variant = "rail" }: Props) {
+// 왼쪽 레일은 게임 쪽에만 둔다. 글 쪽(/posts, /categories, /tags, /search)은 목록 위 카테고리 탭이
+// 범위를 고르는 유일한 수단이고, 글 상세는 breadcrumb로 카테고리에 돌아간다. 레일과 탭이 같은
+// 카테고리를 서로 다르게(펼치기 vs 거르기) 다루면 어느 쪽이 위계상 위인지 흐려진다.
+export default function SidebarContainer({ gameData }: Props) {
   const pathname = usePathname();
   const isGamePath = pathname.startsWith("/games") || pathname.startsWith("/play");
 
-  if (variant === "mobile-subnav") {
-    // /posts 목록은 페이지 안에 카테고리 탭이 있고, 글 상세는 breadcrumb로 카테고리에 갈 수 있어
-    // 본문 위에 카테고리 패널을 겹쳐 보여 주지 않는다.
-    if (!isWritingPath(pathname) || pathname === "/posts" || pathname.startsWith("/posts/")) {
-      return null;
-    }
-
-    return (
-      <div className="pb-4 pt-4 lg:hidden">
-        <Sidebar data={postData} categoryMap={categoryMap} scope="posts" variant="mobile-subnav" />
-      </div>
-    );
+  if (!isGamePath) {
+    return null;
   }
 
-  const data = isGamePath ? gameData : postData;
-  const currentCategoryMap = isGamePath ? gameCategoryMap : categoryMap;
-
-  return <Sidebar data={data} categoryMap={currentCategoryMap} variant={variant} />;
+  return (
+    <aside className="sticky-section hidden shrink-0 border-r border-[color:var(--color-border)] pr-6 lg:block lg:w-64">
+      <Sidebar data={gameData} categoryMap={gameCategoryMap} />
+    </aside>
+  );
 }

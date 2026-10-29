@@ -1,10 +1,12 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 import { getAllPosts } from "@/lib/getAllPosts";
 import { categoryMap } from "@/lib/categoryMap";
 import { filterIndexablePosts } from "@/lib/contentVisibility";
 import { notFound } from "next/navigation";
+import ArchivePager from "@/components/posts/ArchivePager";
+import CategoryTabs, { type CategoryTab } from "@/components/posts/CategoryTabs";
+import PostListItem from "@/components/posts/PostListItem";
 
 const POSTS_PER_PAGE = 10;
 
@@ -40,20 +42,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 }
 
-const formatDate = (date: string) => {
-  const value = new Date(date);
-  if (Number.isNaN(value.getTime())) return date;
-  return new Intl.DateTimeFormat("ko-KR", {
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
-  }).format(value);
-};
-
 export default async function CategoryPage({ params, searchParams }: PageProps) {
   const { category } = await params;
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
-  const posts = filterIndexablePosts(getAllPosts("posts"))
+  const allPosts = filterIndexablePosts(getAllPosts("posts"));
+  const posts = allPosts
     .filter((post) => post.category === category)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
@@ -67,6 +60,22 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
   const pagePosts = posts.slice(start, start + POSTS_PER_PAGE);
   const label = categoryMap[category] ?? category;
 
+  const counts = new Map<string, number>();
+  for (const post of allPosts) {
+    if (post.category) counts.set(post.category, (counts.get(post.category) ?? 0) + 1);
+  }
+  const tabs: CategoryTab[] = [
+    { value: "", label: "전체", count: allPosts.length, href: "/posts" },
+    ...[...counts.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([value, count]) => ({
+        value,
+        label: categoryMap[value] ?? value,
+        count,
+        href: `/categories/${value}`,
+      })),
+  ];
+
   const buildHref = (page: number) => `/categories/${category}${page > 1 ? `?page=${page}` : ""}`;
   const breadcrumbJsonLd = buildBreadcrumbJsonLd({
     items: [
@@ -77,100 +86,32 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
   });
 
   return (
-    <div className="py-8 sm:p-8">
+    <div className="page-shell">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(breadcrumbJsonLd),
         }}
       />
-      <div className="flex flex-col gap-6">
-        <div className="space-y-2">
-          <Link
-            href="/posts"
-            className="text-xs font-semibold text-emerald-700 hover:text-emerald-600"
-          >
-            전체 글로 돌아가기
-          </Link>
-          <h1 className="text-2xl font-semibold">{label}</h1>
-          <p className="text-sm text-slate-600 dark:text-slate-300">
-            {posts.length}개의 글이 있습니다.
-          </p>
+      <div className="mx-auto max-w-[820px]">
+        <div className="flex items-baseline gap-2">
+          <h1 className="text-2xl font-bold tracking-[-0.02em] text-[color:var(--color-text-primary)]">
+            {label}
+          </h1>
+          <span className="text-[15px] font-medium tabular-nums text-[color:var(--color-text-muted)]">
+            {posts.length}편
+          </span>
         </div>
 
-        <div className="grid gap-4">
+        <CategoryTabs tabs={tabs} activeValue={category} />
+
+        <ol className="mt-3.5 border-t border-[color:var(--color-border)]">
           {pagePosts.map((post) => (
-            <article
-              key={post.slug}
-              className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-950"
-            >
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div className="space-y-2">
-                  <Link
-                    href={`/posts/${post.slug}`}
-                    className="text-lg font-semibold text-slate-900 hover:text-emerald-700 dark:text-white"
-                  >
-                    {post.title}
-                  </Link>
-                  {post.description ? (
-                    <p className="text-sm text-slate-600 dark:text-slate-300">{post.description}</p>
-                  ) : null}
-                  <div className="flex flex-wrap gap-2 text-xs">
-                    {post.tags?.map((tag) => (
-                      <Link
-                        key={tag}
-                        href={`/tags/${encodeURIComponent(tag)}`}
-                        className="text-slate-500 hover:text-emerald-600 dark:text-slate-400"
-                      >
-                        #{tag}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 sm:text-right">
-                  <div>{formatDate(post.date)}</div>
-                  {post.readingTime ? <div>{post.readingTime}분 읽기</div> : null}
-                </div>
-              </div>
-            </article>
+            <PostListItem key={post.slug} post={post} />
           ))}
-        </div>
+        </ol>
 
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          <Link
-            href={buildHref(Math.max(1, safePage - 1))}
-            className={`rounded-full border px-4 py-2 text-xs font-semibold ${
-              safePage === 1
-                ? "pointer-events-none border-slate-200 text-slate-400"
-                : "border-slate-300 text-slate-700 hover:border-emerald-300 hover:text-emerald-700"
-            }`}
-          >
-            이전
-          </Link>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
-            <Link
-              key={page}
-              href={buildHref(page)}
-              className={`rounded-full border px-3 py-2 text-xs font-semibold ${
-                page === safePage
-                  ? "border-emerald-400 bg-emerald-50 text-emerald-700"
-                  : "border-slate-200 text-slate-600 hover:border-emerald-300"
-              }`}
-            >
-              {page}
-            </Link>
-          ))}
-          <Link
-            href={buildHref(Math.min(totalPages, safePage + 1))}
-            className={`rounded-full border px-4 py-2 text-xs font-semibold ${
-              safePage === totalPages
-                ? "pointer-events-none border-slate-200 text-slate-400"
-                : "border-slate-300 text-slate-700 hover:border-emerald-300 hover:text-emerald-700"
-            }`}
-          >
-            다음
-          </Link>
-        </div>
+        <ArchivePager currentPage={safePage} totalPages={totalPages} getHref={buildHref} />
       </div>
     </div>
   );
