@@ -130,6 +130,7 @@ export function buildArticleJsonLd({
     articleSection: category,
     author: {
       "@type": "Person",
+      "@id": authorId,
       name: SITE_CONFIG.author.name,
       url: SITE_CONFIG.author.url,
       sameAs: SITE_CONFIG.author.sameAs,
@@ -139,6 +140,58 @@ export function buildArticleJsonLd({
       name: SITE_CONFIG.author.name,
       url: SITE_CONFIG.author.url,
     },
+  };
+}
+
+// 글쓴이 엔터티. AI 답변 엔진이 "누가 쓴 글인가"를 About 페이지와 이어 볼 수 있게 @id를 고정한다.
+const authorId = `${SITE_CONFIG.author.url}#person`;
+
+function buildPersonJsonLd() {
+  return {
+    "@type": "Person",
+    "@id": authorId,
+    name: SITE_CONFIG.author.name,
+    alternateName: SITE_CONFIG.author.englishName,
+    url: SITE_CONFIG.author.url,
+    jobTitle: "Frontend Engineer",
+    description: SITE_CONFIG.author.bio,
+    sameAs: SITE_CONFIG.author.sameAs,
+  };
+}
+
+export function buildProfilePageJsonLd({ path }: { path: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    url: absoluteUrl(path),
+    inLanguage: "ko-KR",
+    mainEntity: buildPersonJsonLd(),
+  };
+}
+
+// 홈: 블로그 자체와 최근 글. 글 상세의 BlogPosting과 같은 글쓴이 @id를 가리킨다.
+export function buildBlogJsonLd({
+  description,
+  posts,
+}: {
+  description: string;
+  posts: { title: string; path: string; datePublished: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: siteDefaults.siteName,
+    url: absoluteUrl("/"),
+    description,
+    inLanguage: "ko-KR",
+    author: buildPersonJsonLd(),
+    blogPost: posts.map((post) => ({
+      "@type": "BlogPosting",
+      headline: post.title,
+      url: absoluteUrl(post.path),
+      datePublished: post.datePublished,
+      author: { "@id": authorId },
+    })),
   };
 }
 

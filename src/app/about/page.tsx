@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, buildProfilePageJsonLd } from "@/lib/seo";
 import AboutPage from "@/components/about/AboutPage";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -14,6 +14,12 @@ export const dynamic = "force-static";
 const page = () => {
   return (
     <div className="stable-screen-min w-full">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildProfilePageJsonLd({ path: "/about" })),
+        }}
+      />
       <AboutPage />
     </div>
   );
