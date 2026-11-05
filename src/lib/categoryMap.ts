@@ -8,4 +8,6 @@ export const categoryMap: Record<string, string> = {
   "frontend-bff": "Frontend BFF",
   "work-editor": "Work Editor",
   "frontend-testing": "Frontend Testing",
+  "backend-serverless": "Serverless Backend",
+  "app-link": "App Link",
 };
