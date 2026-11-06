@@ -3,7 +3,6 @@ title: "HTTP 캐시 정리: 휴리스틱 캐시, no-cache와 no-store, ETag까�
 date: "2026-11-02"
 description: "Cache-Control이 없으면 브라우저는 캐시를 안 하는 게 아니라 스스로 유효 기간을 정합니다. 휴리스틱 캐시, no-cache와 no-store의 차이, max-age와 immutable, ETag와 304 재검증, Vary, 그리고 캐시 정책을 바꿀 때 빠지기 쉬운 함정을 실제 응답 헤더와 함께 정리했습니다."
 tags: ["HTTP Cache", "Cache-Control", "ETag", "Browser", "Performance"]
-draft: true
 ---
 
 # HTTP 캐시 정리: 휴리스틱 캐시, no-cache와 no-store, ETag까지

@@ -3,7 +3,6 @@ title: "배포했는데 사용자 화면은 그대로? 정적 JS 캐시 전략 4
 date: "2026-11-03"
 description: "레거시 jQuery 뷰어를 Nuxt로 옮긴 뒤 배포해도 휴대폰에서는 예전 동작이 계속 보였습니다. 주소가 고정된 /libs 스크립트에 Cache-Control이 없어 브라우저 휴리스틱 캐시가 옛 파일을 재사용한 것이 원인이었습니다. 기존, gzip/brotli 압축, 빌드 ID 쿼리, no-cache 네 방식을 실측으로 비교하고 no-cache와 압축을 함께 쓰기로 한 이유, 그리고 헤더를 바꿔도 이미 받은 파일에는 적용되지 않는 전환 시점의 함정까지 정리했습니다."
 tags: ["Performance", "Cache-Control", "HTTP Cache", "Nuxt", "Nitro", "gzip", "brotli"]
-draft: true
 ---
 
 # 배포했는데 사용자 화면은 그대로? 정적 JS 캐시 전략 4가지 비교

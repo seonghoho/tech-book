@@ -1,7 +1,6 @@
 ---
 title: "웹에서 앱을 열 때 뜨는 iOS 오류 알림과 유니버설 링크"
 date: "2026-11-01"
-draft: true
 description: "웹 버튼으로 앱 실행 스킴을 호출하면, 앱이 없는 iPhone에서는 Safari와 Chrome이 '주소가 유효하지 않음' 알림을 먼저 띄우고 몇 초 뒤에야 App Store로 넘어갑니다. 이 알림을 없애려고 유니버설 링크(apple-app-site-association)를 찾아본 과정과, 도입하면 바뀌는 흐름, 웹·앱 각각의 수정 범위, PoC로 확인할 항목을 정리했습니다."
 tags: ["iOS", "Universal Links", "Deep Link", "Mobile Web", "apple-app-site-association"]
 ---

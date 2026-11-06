@@ -3,7 +3,6 @@ title: "Snowflake ID를 숫자로 받으면 게시글이 전부 404가 되는 �
 date: "2026-10-31"
 description: "Snowflake로 발급한 게시글 ID는 JavaScript Number가 정확히 표현할 수 있는 범위를 넘습니다. 백엔드가 ID를 문자열로 바꾼 뒤에도 프론트가 숫자로 다루고 있어서, 실제 글이 생기면 상세 페이지가 전부 404가 될 상태였습니다. 원인과 함께 고쳐진 버그들, 문자열 ID로 옮길 때 주의한 점을 정리했습니다."
 tags: ["JavaScript", "Number", "Snowflake", "API", "TypeScript"]
-draft: true
 ---
 
 # Snowflake ID를 숫자로 받으면 게시글이 전부 404가 되는 이유

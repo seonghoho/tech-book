@@ -3,7 +3,6 @@ title: "폰트 서브셋을 만들었더니 tabular-nums가 조용히 꺼진 이
 date: "2026-11-04"
 description: "Pretendard를 pyftsubset으로 서브셋해 폰트 전송량을 86% 줄였는데, 숫자 자릿수를 맞추던 font-variant-numeric: tabular-nums가 앱 전체에서 효과가 없어졌습니다. --layout-features가 기본 기능 목록을 대체하면서 tnum이 빠진 것이었습니다. 원인과 수정, 다시 놓치지 않게 넓힌 검증을 정리했습니다."
 tags: ["Performance", "Web Font", "Pretendard", "pyftsubset", "CSS"]
-draft: true
 ---
 
 # 폰트 서브셋을 만들었더니 tabular-nums가 조용히 꺼진 이유
