@@ -33,5 +33,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...projectPages, ...posts];
+  const appPages: MetadataRoute.Sitemap = [
+    {
+      url: absoluteUrl("/projects/receipt-photobooth"),
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+  ];
+
+  return [...staticPages, ...projectPages, ...appPages, ...posts];
 }

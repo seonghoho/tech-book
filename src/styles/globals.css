@@ -21,6 +21,8 @@
   --color-accent: #0f766e;
   --color-accent-hover: #115e59;
   --color-accent-soft: rgba(15, 118, 110, 0.12);
+  --color-wip-bg: #fef3c7;
+  --color-wip-text: #92400e;
   --color-button-primary-bg: #0f766e;
   --color-button-primary-hover: #115e59;
   --color-button-primary-text: #ffffff;
@@ -59,6 +61,8 @@ html.dark {
   --color-accent: #58c9b9;
   --color-accent-hover: #7edfd1;
   --color-accent-soft: rgba(88, 201, 185, 0.18);
+  --color-wip-bg: rgba(251, 191, 36, 0.16);
+  --color-wip-text: #fcd34d;
   --color-button-primary-bg: #0f766e;
   --color-button-primary-hover: #115e59;
   --color-button-primary-text: #ffffff;
