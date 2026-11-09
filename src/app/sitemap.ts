@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { aboutProjects } from "@/lib/aboutData";
+import { personalApps } from "@/lib/appsData";
 import { absoluteUrl } from "@/lib/site";
 import { getAllPosts } from "@/lib/getAllPosts";
 import { isIndexablePostSlug } from "@/lib/contentVisibility";
@@ -33,14 +34,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const appPages: MetadataRoute.Sitemap = [
-    {
-      url: absoluteUrl("/projects/receipt-photobooth"),
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-  ];
+  const appPages = personalApps.map((app) => ({
+    url: absoluteUrl(`/projects/${app.slug}`),
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
 
   return [...staticPages, ...projectPages, ...appPages, ...posts];
 }

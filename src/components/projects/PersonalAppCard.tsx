@@ -36,7 +36,12 @@ export default function PersonalAppCard({ app, priority = false }: PersonalAppCa
 
         <div className="space-y-1">
           <h2 className="text-xl font-semibold tracking-[-0.03em] text-[color:var(--color-text-primary)]">
-            {app.title}
+            <Link
+              href={`/projects/${app.slug}`}
+              className="transition duration-200 ease-out hover:text-[color:var(--color-accent)]"
+            >
+              {app.title}
+            </Link>
           </h2>
           <p className="muted-copy">{app.statusLabel}</p>
         </div>
@@ -57,11 +62,9 @@ export default function PersonalAppCard({ app, priority = false }: PersonalAppCa
               {link.label}
             </a>
           ))}
-          {app.detailHref ? (
-            <Link href={app.detailHref} className="button-secondary">
-              작업 내용 보기
-            </Link>
-          ) : null}
+          <Link href={`/projects/${app.slug}`} className="button-secondary">
+            자세히 보기
+          </Link>
         </div>
       </div>
     </article>

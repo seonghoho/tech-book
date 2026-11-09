@@ -19,7 +19,7 @@ export default function ProjectsPage() {
           <h1 className="text-4xl font-semibold tracking-[-0.05em] text-[color:var(--color-text-primary)] sm:text-5xl">
             Projects
           </h1>
-          <p className="body-copy max-w-2xl">직접 만든 앱과 팀으로 진행한 프로젝트예요.</p>
+          <p className="body-copy max-w-2xl">직접 만든 앱과 팀으로 진행한 프로젝트입니다.</p>
         </div>
 
         <ProjectsFilterClient apps={apps} team={team} />

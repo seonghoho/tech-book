@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ProjectDetailView from "@/components/about/ProjectDetailView";
+import AppDetailView from "@/components/projects/AppDetailView";
 import { aboutProjects, getAboutProjectBySlug, getAdjacentProjects } from "@/lib/aboutData";
+import { getPersonalAppBySlug, personalApps } from "@/lib/appsData";
 import { buildBreadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 
@@ -15,6 +17,16 @@ type PageProps = {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = getAboutProjectBySlug(slug);
+  const app = getPersonalAppBySlug(slug);
+
+  if (app) {
+    return buildPageMetadata({
+      title: `${app.title} — 직접 만든 앱`,
+      description: app.summary,
+      path: `/projects/${app.slug}`,
+      images: [{ url: absoluteUrl(app.thumbnail.src) }],
+    });
+  }
 
   if (!project) {
     return buildPageMetadata({
@@ -34,24 +46,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 }
 
+// 팀 프로젝트와 개인 앱이 같은 /projects/{slug} 주소 체계를 쓴다. 슬러그는 서로 겹치지 않는다.
 export function generateStaticParams() {
-  return aboutProjects.map((project) => ({ slug: project.slug }));
+  return [...aboutProjects, ...personalApps].map((item) => ({ slug: item.slug }));
 }
 
 export default async function ProjectPage({ params }: PageProps) {
   const { slug } = await params;
+  const app = getPersonalAppBySlug(slug);
   const project = getAboutProjectBySlug(slug);
+  const title = app?.title ?? project?.title;
 
-  if (!project) {
+  if (!title) {
     notFound();
   }
 
-  const { previous, next } = getAdjacentProjects(slug);
   const breadcrumbJsonLd = buildBreadcrumbJsonLd({
     items: [
       { name: "홈", item: "/" },
       { name: "Projects", item: "/projects" },
-      { name: project.title, item: `/projects/${project.slug}` },
+      { name: title, item: `/projects/${slug}` },
     ],
   });
 
@@ -63,7 +77,16 @@ export default async function ProjectPage({ params }: PageProps) {
           __html: JSON.stringify(breadcrumbJsonLd),
         }}
       />
-      <ProjectDetailView project={project} previousProject={previous} nextProject={next} />
+      {app ? (
+        <AppDetailView app={app} />
+      ) : project ? (
+        <ProjectDetailView project={project} {...getAdjacentProjectProps(slug)} />
+      ) : null}
     </div>
   );
+}
+
+function getAdjacentProjectProps(slug: string) {
+  const { previous, next } = getAdjacentProjects(slug);
+  return { previousProject: previous, nextProject: next };
 }
