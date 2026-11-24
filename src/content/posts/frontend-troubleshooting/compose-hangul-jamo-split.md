@@ -1,6 +1,7 @@
 ---
 title: "관리자 입력 칸에서 한글 자모가 흩어지던 문제: Compose TextField와 늦게 돌아오는 상태"
 date: "2026-11-13"
+updated: "2026-11-24"
 description: "Android 태블릿 키오스크 앱의 관리자 화면에서 매장 이름을 한글로 치면 '한'이 'ㅎㅏㄴ'처럼 자모로 흩어져 들어갔습니다. 입력 칸이 뷰모델 상태를 그대로 받아 그리는 구조에서, 상태가 한 박자 늦게 돌아오면 칸이 옛 값으로 다시 그려지며 키보드의 한글 조합이 끊기고 있었습니다. 원인을 찾은 과정과, 입력 칸이 글자를 직접 들고 보낸 적 없는 값만 받아들이게 바꾼 방법을 적었습니다."
 tags: ["Android", "Jetpack Compose", "TextField", "IME", "한글 입력"]
 ---
@@ -63,6 +64,8 @@ onValueChange = { onValueChange(it.filter(Char::isDigit).take(PIN_MAX_DIGITS)) }
 ```
 
 입력을 버리면 칸은 이전 값으로 다시 그려집니다. 한도 근처에서 한글을 치면 조합 중인 글자가 사라졌다 돌아오면서 역시 조합이 끊겼습니다.
+
+![고치기 전에는 뷰모델 값이 한 박자 늦게 돌아와 칸이 ㅎ으로 되돌아가고 자모가 흩어진다. 고친 뒤에는 칸이 글자를 직접 들고 늦게 온 값을 무시해 한글이 그대로 입력된다](/images/posts/frontend-troubleshooting/compose-hangul-jamo-split/composition-before-after.png)
 ## 고친 방법
 
 입력 칸이 조합 중인 글자를 직접 들고 있게 바꿨습니다. 뷰모델 값은 칸이 보낸 적 없는 값, 즉 프리셋 불러오기나 원격 설정처럼 바깥에서 바뀐 값일 때만 받아들입니다.
@@ -137,9 +140,33 @@ accept = { it.length <= PIN_MAX_DIGITS && it.all(Char::isDigit) }
 
 PIN은 예전에 숫자가 아닌 글자를 잘라 내고 넘겼는데, 이제는 숫자가 아닌 글자가 섞인 입력을 통째로 받지 않습니다.
 
+## 다른 방법
+
+같은 문제를 푸는 방법은 이것 말고도 두 가지가 더 있습니다.
+
+| 방법 | 내용 | 이 앱에 적용할 때 |
+|---|---|---|
+| 뷰모델이 글자를 Compose 상태로 든다 | 입력 글자를 `StateFlow`가 아니라 `mutableStateOf`로 두고 `onValueChange`에서 바로 바꾼다 | `AdminUiState` 하나로 묶인 설정 상태에서 입력 글자만 따로 빼야 한다 |
+| `TextFieldState`를 쓴다 | 상태 기반 TextField가 글자와 조합 상태를 직접 관리한다 | 설정 화면의 문자열 필드를 `TextFieldState`로 바꾸고 저장 흐름도 맞춰야 한다 |
+| 칸이 글자를 들고 늦은 값을 거른다 (이번 방법) | `TextFieldValue`를 칸 안에 두고 `InputEcho`로 바깥 값을 구분한다 | `AdminTextField` 한 곳과 호출부의 `accept`만 바뀐다 |
+
+Android 문서도 `StateFlow`로 UI 상태를 들고 `value`/`onValueChange`로 TextField를 그리는 구조에 동기화 문제가 있다고 설명하고, 새로 만드는 화면에는 `TextFieldState`를 권합니다. 관리자 화면의 입력 칸은 모두 `AdminTextField`를 거치기 때문에, 이번 수정은 그 컴포넌트와 호출부에서 끝났습니다. 새 입력 화면을 만든다면 문서 권장대로 처음부터 `TextFieldState`로 시작하는 편이 낫습니다.
+
+## 비슷한 문제를 알아보는 법
+
+아래 조건이 겹치면 같은 원인일 가능성이 큽니다.
+
+- 한글, 일본어, 중국어처럼 조합해서 입력하는 글자만 깨지고 영문과 숫자는 괜찮다
+- 천천히 치면 괜찮고 빠르게 치면 깨진다
+- 입력 값이 `StateFlow`, DataStore, 네트워크처럼 한 번 돌아서 화면에 돌아온다
+- `onValueChange` 안에서 글자 수를 자르거나 특정 문자를 걸러 낸다
+- 입력하는 도중에 커서가 맨 끝으로 튄다
+
+웹에서도 비슷한 일이 생깁니다. React의 제어 컴포넌트에서 입력 값을 비동기로 바꾸면 조합이 끊기고, 이때는 `compositionstart`·`compositionend` 이벤트로 조합 중인지 확인해 처리합니다.
+
 ## 테스트
 
-`InputEcho`는 Compose 없이 돌아가는 클래스라 단위 테스트로 경우를 나눠 확인했습니다.
+`InputEcho`는 Compose 없이 돌아가는 클래스라 단위 테스트로 경우를 나눠 확인했습니다. 화면을 띄우지 않고 판단 로직만 떼어 테스트하는 방식은 [jsdom 없이 React 컴포넌트 테스트하기](/posts/frontend-testing/component-test-without-jsdom)에서 쓴 방법과 같습니다.
 
 ```kotlin
 @Test
@@ -164,3 +191,9 @@ fun lateEchoDoesNotRewindComposingText() {
 - 뷰모델이 입력을 받지 않아 값이 그대로면 기다리고, 다른 값으로 바뀌면 그 값으로 맞추는지
 
 마지막으로 삼성 한글 키보드를 쓰는 실제 태블릿에서 매장 이름, 머리글·바닥글 문구를 다시 입력해 보고 자모가 흩어지지 않는 것을 확인했습니다.
+
+## 참고
+
+- [Migrate to state-based text fields](https://developer.android.com/develop/ui/compose/text/migrate-state-based) (Android Developers): `StateFlow` 기반 UI 상태와 TextField를 함께 쓸 때의 문제와 `TextFieldState` 전환 방법
+- [Configure text fields](https://developer.android.com/develop/ui/compose/text/user-input) (Android Developers): 상태 기반 TextField 사용법
+- [compositionstart event](https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionstart_event) (MDN): 웹에서 조합 입력을 감지하는 이벤트

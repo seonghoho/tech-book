@@ -1,6 +1,7 @@
 ---
 title: "서버 렌더링 요청이 방문자 요청 한도를 같이 쓰던 문제: 내부 호출을 토큰으로 구분하기"
 date: "2026-11-16"
+updated: "2026-11-24"
 description: "Next.js 서버 컴포넌트가 렌더링 중에 부르는 API는 브라우저가 아니라 웹 파드에서 나갑니다. 이 요청이 비인증 IP 한도(분당 60회)에 들어가면서 방문자 전체가 웹 파드 IP 하나의 버킷을 나눠 쓰고 있었습니다. 처음 시도한 네트워크 기반 판정이 쿠버네티스에서 브라우저 트래픽까지 내부로 넘긴 이유, 공유 토큰과 별도 버킷으로 바꾼 방법, 토큰이 브라우저 번들에 들어가지 않게 한 처리를 적었습니다."
 tags: ["Rate Limit", "Next.js", "Server Components", "Spring Boot", "Kubernetes"]
 ---
@@ -20,6 +21,8 @@ tags: ["Rate Limit", "Next.js", "Server Components", "Spring Boot", "Kubernetes"
 홈, 공개 프로필 페이지, sitemap 같은 화면은 서버 컴포넌트가 렌더링하면서 API를 부릅니다. 이 요청은 방문자의 브라우저가 아니라 웹 파드에서 나갑니다. 로그인 정보도 없으니 API 입장에서는 비로그인 요청이고, IP는 웹 파드의 IP입니다.
 
 결과적으로 비로그인 방문자 전체가 웹 파드 IP 하나에 걸린 분당 60회 버킷을 나눠 쓰고 있었습니다.
+
+![고치기 전에는 서버 컴포넌트가 부르는 API가 웹 파드 IP 하나의 비인증 버킷 60/min에 몰린다. 고친 뒤에는 내부 토큰 헤더가 붙은 호출이 파드마다 따로 잡히는 6000/min 내부 버킷으로 가고, 브라우저가 직접 부르는 요청만 비인증 IP 버킷을 쓴다](/images/posts/backend-serverless/ssr-calls-rate-limit-bucket/rate-limit-buckets.png)
 
 ## 잘 드러나지 않는 이유
 
@@ -133,6 +136,28 @@ export async function serverFetch(path: string, init?: RequestInit): Promise<Res
 
 쿠버네티스에서는 웹 파드가 앱 시크릿 가운데 이 토큰 키 하나만 참조하게 했습니다. 다른 키가 웹에 있을 이유가 없어서입니다. 참조는 optional로 뒀습니다. 키를 빠뜨린 배포에서 웹이 아예 뜨지 못하는 것보다, 예전처럼 방문자 한도를 받으며 도는 쪽이 낫다고 봤습니다.
 
+## 다른 방법
+
+내부 호출을 구분하는 방법을 정리하면 이렇습니다.
+
+| 방법 | 문제 |
+|---|---|
+| 내부 호출을 한도에서 아예 뺀다 | 렌더링 코드가 API를 반복해서 부르는 버그가 생겨도 막을 수 없다 |
+| 프록시 헤더 유무와 소켓 주소로 판정한다 | 프레임워크가 프록시 헤더를 먼저 처리해 버리면 판정이 틀어진다 (위에서 겪은 일) |
+| 서비스 메시의 mTLS 인증서로 호출한 서비스를 확인한다 | 서비스 메시를 쓰는 클러스터라면 가장 확실하지만, 메시가 없으면 도입 비용이 크다 |
+| 웹과 API가 공유하는 토큰 헤더로 판정한다 (이번 방법) | 토큰을 안전하게 나눠 줘야 한다. 대역 조건을 함께 걸어 토큰이 새도 밖에서는 못 쓰게 했다 |
+
+한도를 나누는 것과 별개로, 서버 렌더링이 API를 부르는 횟수 자체를 줄이는 방법도 있습니다. 같은 데이터를 쓰는 화면이라면 렌더링 결과나 fetch 응답을 캐시해 호출 수를 줄일 수 있습니다. 캐시 헤더와 재검증 방식은 [HTTP 캐시 정리](/posts/web-performance/http-cache-basics)에 정리해 뒀습니다.
+
+## 비슷한 문제를 알아보는 법
+
+- 로그인한 상태에서는 화면이 정상인데, 로그아웃하거나 시크릿 창으로 열면 목록이 비어 있다
+- 트래픽이 몰리는 시간에만 빈 화면이 생긴다
+- API 로그에서 429 응답이 특정 IP 하나에 몰려 있고, 그 IP가 웹 서버나 파드의 주소다
+- Search Console의 URL 검사에서 렌더링된 페이지 내용이 비어 있다
+
+서버 렌더링을 쓰는 앱이라면 Next.js가 아니어도 같은 구조가 생깁니다. 서버에서 나가는 API 호출이 방문자 한 명의 요청처럼 세어지고 있지 않은지 확인해 볼 만합니다.
+
 ## 테스트
 
 API 쪽에는 판정기 테스트(`InternalCallDetectorTest`)와 한도 필터 테스트(`RateLimitInternalTest`)를 넣었습니다. 웹 쪽에는 `serverFetch`가 토큰이 있을 때 헤더를 붙이고 없을 때 붙이지 않는지 확인하는 테스트를 넣었습니다. 헤더가 빠져도 화면이 깨지지 않고 비기만 하기 때문에, 테스트가 아니면 잡을 방법이 마땅치 않았습니다.
@@ -151,3 +176,9 @@ resolve: {
 ## 따로 남긴 문제
 
 네트워크 판정을 확인하는 과정에서, API의 `X-Forwarded-For` 처리가 두 군데에서 의도대로 동작하지 않는다는 것도 알게 됐습니다. 클라이언트 IP를 구하는 코드가 클러스터에서는 사실상 쓰이지 않고 있었고, 신뢰할 프록시 목록 설정은 효과가 없었습니다. 이 문제는 범위가 달라서 별도 이슈로 나눴습니다.
+
+## 참고
+
+- [Running Behind a Front-end Proxy Server](https://docs.spring.io/spring-boot/how-to/webserver.html#howto.webserver.use-behind-a-proxy-server) (Spring Boot): `X-Forwarded-*` 헤더 처리 방식과, 지원하는 클라우드 플랫폼에서 이 처리가 기본으로 켜지는 동작
+- [Environment Variables](https://nextjs.org/docs/app/guides/environment-variables) (Next.js): `NEXT_PUBLIC_` 접두사가 붙은 변수만 브라우저 번들에 들어가는 규칙
+- [Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components) (Next.js): `server-only`로 서버 전용 모듈이 클라이언트에 섞이는 것을 막는 방법

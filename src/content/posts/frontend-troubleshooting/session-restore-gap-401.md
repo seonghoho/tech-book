@@ -1,6 +1,7 @@
 ---
 title: "새로고침 직후 보낸 요청이 401을 받던 이유: 메모리 토큰과 세션 복구 공백"
 date: "2026-11-14"
+updated: "2026-11-24"
 description: "access 토큰을 메모리에만 두는 Next.js 앱에서, 주소를 직접 열고 곧바로 폼을 보내면 로그인한 상태인데도 401을 받았습니다. refresh 쿠키로 토큰을 되찾아 오기 전의 짧은 공백에 나간 요청이었고, 기존 재시도 코드는 토큰이 있을 때만 refresh를 불러 이 경우를 놓쳤습니다. E2E를 쓰다 발견한 과정, 복구 약속을 하나로 묶어 공백의 요청을 다시 보내게 한 방법, 비로그인 사용자의 401에는 refresh를 붙이지 않은 기준을 적었습니다."
 tags: ["Authentication", "Access Token", "Refresh Token", "Next.js", "Playwright"]
 ---
@@ -15,7 +16,7 @@ tags: ["Authentication", "Access Token", "Refresh Token", "Next.js", "Playwright
 
 ## 토큰을 보관하는 방식
 
-이 앱은 access 토큰을 메모리(zustand store)에만 둡니다. localStorage에 두면 XSS로 토큰을 읽어 갈 수 있어서 이렇게 정했습니다. 대신 새로고침하면 토큰이 사라지므로, 앱이 뜰 때 `AuthProvider`가 HttpOnly refresh 쿠키로 토큰을 다시 받아 옵니다.
+이 앱은 access 토큰을 메모리(zustand store)에만 둡니다. localStorage에 두면 XSS로 토큰을 읽어 갈 수 있어서 이렇게 정했습니다. OWASP 치트시트도 스크립트 하나만 주입되면 localStorage와 sessionStorage의 값이 모두 노출될 수 있다며 민감한 값을 두지 말라고 안내합니다. 대신 새로고침하면 토큰이 사라지므로, 앱이 뜰 때 `AuthProvider`가 HttpOnly refresh 쿠키로 토큰을 다시 받아 옵니다.
 
 ```tsx
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -48,6 +49,8 @@ if (response.status === 401 && retryOnUnauthorized && token) {
 ```
 
 토큰 만료만 생각하고 만든 재시도라서, 토큰을 붙여 보냈다가 401을 받은 경우에만 동작했습니다. 토큰이 아직 없는 복구 공백에서 받은 401은 그대로 화면에 전달됐습니다.
+
+![주소를 직접 열면 AuthProvider의 refresh 응답을 기다리는 동안 폼 요청이 토큰 없이 나가 401을 받는다. 고친 뒤에는 API 클라이언트가 restoreSession을 기다렸다가 토큰을 붙여 다시 보내 201을 받는다](/images/posts/frontend-troubleshooting/session-restore-gap-401/session-gap-sequence.png)
 
 ## 발견한 과정
 
@@ -108,6 +111,30 @@ export function restoreSession(): Promise<boolean> {
 
 복구가 끝나면 변수를 비웁니다. 그래야 테스트 사이에 이전 Promise가 남지 않습니다. `AuthProvider`도 `tryRefresh` 대신 `restoreSession`을 부르게 바꿨습니다.
 
+## 다른 방법
+
+복구 공백을 다루는 방법은 몇 가지가 더 있습니다.
+
+| 방법 | 장점 | 단점 |
+|---|---|---|
+| 복구가 끝날 때까지 화면이나 버튼을 막는다 | 공백에 요청이 나갈 일이 없다 | 로그인이 필요 없는 화면까지 늦게 뜨고, 막아야 할 곳을 화면마다 챙겨야 한다 |
+| 토큰을 localStorage나 sessionStorage에 둔다 | 새로고침해도 토큰이 남아 공백이 없다 | XSS 한 번에 토큰이 노출된다 |
+| BFF가 쿠키로 인증을 맡는다 | 브라우저가 토큰을 다루지 않는다 | 서버 계층이 하나 늘고, 모든 API 호출이 그 서버를 거친다 |
+| API 클라이언트가 공백의 401을 다시 보낸다 (이번 방법) | 화면 코드를 건드리지 않는다 | 401을 받는 요청 하나만큼 왕복이 늘어난다 |
+
+이번 수정은 API 클라이언트와 `AuthProvider` 두 파일에서 끝났고, 화면 코드는 바꾸지 않았습니다. BFF 방식의 구조와 보안상 차이는 [사이드 프로젝트에 BFF를 PoC로 넣은 구조](/posts/frontend-bff/bff-poc-structure)와 [BFF 도입을 검토하며 정리한 보안상 차이](/posts/frontend-bff/bff-security-review)에 적었습니다.
+
+## 비슷한 문제를 알아보는 법
+
+- 새로고침, 북마크, 공유 링크로 들어왔을 때만 실패하고 화면 안 링크로 이동하면 괜찮다
+- 화면을 연 뒤 잠시 기다렸다가 누르면 괜찮다
+- 빠르게 움직이는 E2E 테스트에서만 자주 실패한다
+- 실패한 요청의 헤더에 `Authorization`이 없다
+
+브라우저 개발자 도구의 네트워크 속도 제한(throttling)을 켜고 새로고침 직후 바로 버튼을 누르면 손으로도 재현할 수 있습니다. refresh 응답이 늦어지는 만큼 공백이 길어집니다.
+
+로그인 전후로 화면 상태가 어긋나는 문제는 다른 형태로도 나옵니다. 로그인한 뒤 원래 화면으로 돌아가지 않던 경우는 Next.js 라우터 캐시가 원인이었고, [로그인한 뒤 원래 화면으로 돌아가지 않던 이유](/posts/frontend-troubleshooting/login-return-to-router-cache)에 정리했습니다.
+
 ## 테스트
 
 API 클라이언트 단위 테스트에 아래 경우를 넣었습니다.
@@ -142,3 +169,7 @@ test('복구가 늦어도 곧바로 보낸 요청이 성공한다', async ({ pag
 ```
 
 이 테스트는 고치기 전 코드에서 실패하는 것을 먼저 확인한 뒤 수정을 넣었습니다.
+
+## 참고
+
+- [HTML5 Security Cheat Sheet: Local Storage](https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html) (OWASP): localStorage에 민감한 값을 두지 말라는 이유
