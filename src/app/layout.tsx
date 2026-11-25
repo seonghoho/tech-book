@@ -80,7 +80,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     },
   };
   return (
-    <html lang="ko" suppressHydrationWarning style={{ colorScheme: "light" }}>
+    // globals.css가 html에 scroll-behavior: smooth를 건다. 이 속성이 없으면 Next.js가 페이지 이동 때
+    // smooth를 끄지 못해 scrollTop = 0이 애니메이션으로 진행되고, 그사이 새 페이지 첫 요소로
+    // scrollIntoView가 덮어써서 헤더 높이(65px)만큼 내려간 채 멈춘다.
+    <html
+      lang="ko"
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+      style={{ colorScheme: "light" }}
+    >
       <head />
       <body className="stable-screen-min flex w-full flex-col">
         <a
