@@ -14,12 +14,8 @@
 | 날짜 | 제목(가안) | 카테고리 | 출처 | 직접 채울 것 |
 |---|---|---|---|---|
 | 11/13 | 관리자 입력 칸에서 한글 자모가 흩어지던 문제 | frontend-troubleshooting | receipt-photobooth-android `fix: 관리자 입력 칸에서 한글 자모가…` | 재현 화면, Compose 입력 처리에서 원인을 찾은 과정 |
-| 11/14 | 세션 복구가 끝나기 전에 보낸 요청을 살리는 방법 | frontend-bff | LitMood `#58` | 토큰 갱신 중 동시 요청이 몇 개였는지, 대기열을 둔 이유 |
-| 11/15 | 서버 렌더링 요청이 방문자 요청 한도를 같이 쓰던 문제 | backend-serverless | LitMood `#79` | 한도에 걸린 로그, SSR 호출을 따로 센 기준 |
 | 11/16 | 정적 블로그 HTML을 60% 줄인 방법: 인라인 font-face 빼기 | web-performance | blog `perf: cut home/post HTML by ~60%` | 전후 HTML 크기, LCP 측정값 |
 | 11/17 | "36만 9천 원"을 한 덩어리로 강조하는 정규식 | frontend-troubleshooting | blog `fix: highlight compound amounts…` | 깨지던 예시들, 최종 정규식과 테스트 케이스 |
-| 11/18 | 백엔드에 닿지 못해도 랜딩 페이지는 뜨게 하기 | frontend-bff | LitMood `#51` | 장애 때 실제로 보이던 화면, 폴백 기준 |
-| 11/19 | kind 배포 스크립트가 새 이미지를 실행하지 않던 이유 | backend-serverless | LitMood `fix: kind 배포 스크립트…`, `#47` | 이미지 태그·pull 정책을 확인한 순서 |
 
 ## 2주차
 
@@ -31,7 +27,6 @@
 | 11/23 | 같은 요청이 동시에 들어올 때 한 번만 처리하는 single-flight | backend-serverless | dogear `fix(sync): single-flight per request key…` | 중복 호출 로그, 키를 정한 기준 |
 | 11/24 | 약관·개인정보처리방침 버전과 시행일 관리하기 | frontend-bff | hankan `fix(F08)`, `fix(F15)` | 이전 버전 동의를 인정한 이유, 시행일 확정 과정 |
 | 11/25 | 미리보기에서 돌아와도 게임이 멈춰 있던 이유: 정지 사유를 집합으로 관리하기 | frontend-troubleshooting | 3D `fix(healing): 미리보기 복귀 때…` 2개 | 버그 재현 순서, 전후 구조 |
-| 11/26 | Playwright E2E가 요청이 끝나기 전에 화면을 옮기던 문제 | frontend-testing | LitMood `#9` 커밋들 | 실패하던 테스트, 대기 조건을 바꾼 방법 |
 
 ## 3주차
 
@@ -51,3 +46,38 @@
 - 캐디 표정 이미지 80장을 기본 얼굴 위치에 맞춰 정렬하기 (green-putt)
 - GitHub에서 "가장 최근 브랜치"를 커밋 날짜로 고르고 gh-pages·봇 브랜치 거르기 (dogear)
 - Claude Code Stop 훅에서 세션 이전 커밋을 건너뛰기 (dogear)
+
+## passedu · benefitkr · 바로툴 제작기 (2026-11-26 추가)
+
+이미 쓴 글(inlineCss HTML 크기, 금액 정규식)은 뺐다. AI로 만든 콘텐츠를 다루는 글은 AI 에이전트로 했다는 사실을 그대로 밝힌다.
+
+### passedu (데이터 자격증 문제은행)
+
+| 제목(가안) | 근거 자료 | 핵심 수치 |
+|---|---|---|
+| AI가 쓴 문제에서 "가장 긴 보기가 정답" 단서 줄이기 | `docs/review/answer-length-cue-2026-11-18.md` | 빅분기 정답이 가장 긴 문항 35%→21%, 1.3배 이상 91문항→0 (무작위 기대 8%) |
+| 문항 1,251개를 다른 모델로 교차 풀이해 검수 순서 정하기 | `docs/review/crosscheck-all-2026-11-19.md`, `crosscheck-record-2026-11-24.md` | 1,241 일치, 정답 표시 오류 0, 지문을 고치면 테스트가 깨지는 fingerprint 기록 |
+| 기출과 문제은행의 부정형 발문 비율 맞추기 | `docs/review/bigdata-polarity-2026-11-23.md` | 복원 기출 42.6% vs 문제은행 14.3% → 과목별 30% 이상, 새 문항 153개 |
+| 공식 출제기준과 문제은행 범위 대조하기 | `docs/analysis/official-scope-2026-11-18.md` | 세 시험 출제기준 대조, 빠진 범위 |
+| 개념 노트 그림을 기능별 8종으로 좁혀 넣기 | `docs/review/concept-visuals-report.md` | 노트 76개에 그림 99개, Astro 7 마크다운 처리기(Sätteri) 플러그인 차이 |
+| 서버 없는 풀이 앱에서 자동 저장 실패·다른 탭 동시 풀이 알리기 | 커밋 `Exam runs: warn when the auto-save fails…` | 확인 필요 |
+
+### benefitkr (생활정보·지원금 블로그)
+
+| 제목(가안) | 근거 자료 | 핵심 수치 |
+|---|---|---|
+| 자동 생성 블로그가 AdSense "가치가 별로 없는 콘텐츠"로 반려된 뒤 바꾼 것 | `docs/decisions.md` D18, `docs/reports/2026-11-23-adsense-low-value-audit.md` | 배포 532쪽 중 직접 쓴 글 13%, 자동 머지 68편, 검수 기록 0 → 공고 페이지 배포 제외, 1,500자 게이트 |
+| "크롤링됨 - 현재 색인이 생성되지 않음" 237개를 noindex로 정리하기 | D17 | 사이트맵 312 → 80, `noindex, follow` |
+| 지원금 대표 금액 자동 추출을 그만둔 이유 | D15 | 40건 중 21건 추출, 대출·납입 한도가 지원 금액으로 강조됨 → 확정값 8건만 |
+| 연봉 실수령액: 간이세액표를 계산식 대신 공식 표로 옮기기 | D16 | 시행령 별표 2 646행, 홈택스 조회 25건 대조 |
+| AI 글 품질 게이트에서 출처 URL을 검사하는 규칙 | D10 | 정확 일치 + `*.go.kr`·`korea.kr`은 경고 |
+| 지역 사업 160개가 모든 독자의 목록을 덮은 문제 | 커밋 `keep regional programs out of lists…` | 홈 "지금 신청할 수 있어요"가 전부 지역 사업 |
+| 같은 날 올린 글 순서가 섞여 보이던 이유 | 커밋 `sort same-day posts by publish time` | publishedTime 추가, git 최초 추가 시각으로 63편 채움 |
+
+### 바로툴 (tools.benefitkr.com)
+
+| 제목(가안) | 근거 자료 | 핵심 수치 |
+|---|---|---|
+| 브라우저에서만 도는 배경 제거 모델 고르기 | `docs/research/background-removal.md` | 비상업·AGPL 라이선스 제외, Cloudflare Pages 파일 25 MiB 제한, 용량 실측 |
+| 같은 도메인 두 사이트에서 계산기가 겹칠 때 | `docs/work/stage4-money.md` | 9개 계획 → 5개 출시, 연봉·퇴직금 등 4개는 benefitkr로 |
+| 도구 설명 글의 법령 근거를 원문과 대조한 기록 | `docs/work/review-log-legal.md` | TODO(review) 11건 |
